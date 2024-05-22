@@ -19,7 +19,8 @@ const config: Config = {
       3: '3px',
     },
     boxShadow: {
-      primary: '0px 4px 8px 4px rgba(173, 210, 236, 0.28)',
+      primary: '0px 4px 4px 0px rgba(70, 167, 235, 0.30)',
+      'primary-slated': '0px 4px 8px 4px rgba(173, 210, 236, 0.28)',
     },
     colors: {
       black: '#474E53',
