@@ -5,9 +5,9 @@ import Icon from '@/components/core/Icon';
 
 export default function Header() {
   return (
-    <div className="flex items-center justify-between bg-black p-24">
+    <div className="fixed left-0 top-0 z-50 flex w-full items-center justify-between p-24">
       <ArtisticText type="maeum" className="h-24" />
-      <Icon type="search" className="w-24 text-primary-500" />
+      <Icon type="search" className="w-24 text-white" />
     </div>
   );
 }

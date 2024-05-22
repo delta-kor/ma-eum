@@ -6,6 +6,7 @@
     "perfectionist/sort-interfaces": [
       "error",
       {
+        "type": "natural",
         "groups": ["unknown", "callback", "class", "children"],
         "custom-groups": {
           "callback": "on*",
@@ -17,6 +18,7 @@
     "perfectionist/sort-objects": [
       "error",
       {
+        "type": "natural",
         "groups": ["unknown", "callback", "class", "children"],
         "custom-groups": {
           "callback": "on*",
@@ -29,14 +31,15 @@
       "error",
       {
         "type": "natural",
-        "order": "asc",
         "ignore-case": true,
-        "groups": ["key", "ref", "unknown" ,"callback", "shorthand", "class"],
+        "groups": ["key", "ref", "unknown", "width", "height", "callback", "shorthand", "class"],
         "custom-groups": {
           "key": "key",
           "ref": "ref",
           "callback": "on*",
-          "class": "className"
+          "class": "className",
+          "width": "width",
+          "height": "height"
         }
       }
     ]
