@@ -3,7 +3,28 @@
   "rules": {
     "tailwindcss/classnames-order": "error",
     "perfectionist/sort-imports": "off",
-    "perfectionist/sort-interfaces": "error",
+    "perfectionist/sort-interfaces": [
+      "error",
+      {
+        "groups": ["unknown", "callback", "class", "children"],
+        "custom-groups": {
+          "callback": "on*",
+          "class": "className",
+          "children": "children"
+        }
+      }
+    ],
+    "perfectionist/sort-objects": [
+      "error",
+      {
+        "groups": ["unknown", "callback", "class", "children"],
+        "custom-groups": {
+          "callback": "on*",
+          "class": "className",
+          "children": "children"
+        }
+      }
+    ],
     "perfectionist/sort-jsx-props": [
       "error",
       {
