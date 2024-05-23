@@ -27,7 +27,7 @@ export default function IconMenuItem({ type }: Props) {
   }
 
   return (
-    <div className="flex shrink-0 grow flex-col items-center gap-8">
+    <div className="flex shrink-0 grow cursor-pointer flex-col items-center gap-8">
       <GradientIcon type={type} className="w-32" />
       <div className="text-center text-18 font-500 text-black">{text}</div>
     </div>
