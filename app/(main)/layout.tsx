@@ -1,3 +1,4 @@
+import Transistor from '@/components/core/Transitor';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -5,5 +6,5 @@ interface Props {
 }
 
 export default function MainLayout({ children }: Props) {
-  return children;
+  return <Transistor>{children}</Transistor>;
 }

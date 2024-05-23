@@ -2,12 +2,15 @@
 
 import ArtisticText from '@/components/core/ArtisticText';
 import Icon from '@/components/core/Icon';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
 
-  function handleBackClick() {}
+  function handleBackClick() {
+    router.back();
+  }
 
   if (pathname === '/')
     return (

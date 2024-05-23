@@ -35,8 +35,17 @@ const config: Config = {
       white: '#FFFFFF',
     },
     extend: {
+      animation: {
+        fade: 'fadeIn 0.5s',
+      },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(90deg, #3098E1 0%, #5EB6F5 100%)',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
       },
     },
     fontSize: {

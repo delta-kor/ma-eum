@@ -39,7 +39,7 @@ export default function StrongMenuItem({ type }: Props) {
       style={{ background: gradient, boxShadow: shadow }}
       className="relative h-[112px] shrink-0 grow cursor-pointer rounded-16 border-3 border-white/70"
     >
-      <div className="absolute inset-x-16 top-16 truncate whitespace-pre text-20 font-700 leading-[100%] text-white">
+      <div className="absolute left-16 right-0 top-16 truncate whitespace-pre text-20 font-700 leading-[100%] text-white">
         {text}
       </div>
       <GradientIcon type={type} className="absolute bottom-16 right-16 w-32" />
