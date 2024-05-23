@@ -1,8 +1,8 @@
+import { revalidate } from '@/actions/revalidate';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsTextInput from '@/components/cms/CmsTextInput';
 import { CmsModelField, ItemBase } from '@/components/cms/model/CmsModelPanel';
 import { trpc } from '@/hooks/trpc';
-import { revalidate } from '@/services/revalidate';
 import getFieldText from '@/utils/field';
 
 interface Props<T extends ItemBase> {

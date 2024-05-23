@@ -1,7 +1,7 @@
 'use client';
 
+import { revalidate } from '@/actions/revalidate';
 import CmsButton from '@/components/cms/CmsButton';
-import { revalidate } from '@/services/revalidate';
 
 interface Props {
   path: string;

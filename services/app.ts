@@ -1,8 +1,12 @@
 import { AlbumService } from '@/services/album';
 import { router } from '@/trpc/router';
 
-export const appRouter = router({
+const AppRouter = router({
   album: AlbumService.router,
 });
 
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof AppRouter;
+
+export class AppService {
+  public static router = AppRouter;
+}

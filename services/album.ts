@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
-import { LongCache } from '@/services/cache';
 import { cmsProcedure, router } from '@/trpc/router';
+import { LongCache } from '@/utils/cache';
 import { Album } from '@prisma/client';
 import { z } from 'zod';
 
