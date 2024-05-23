@@ -5,7 +5,7 @@ interface Props {
   children: ReactNode;
 }
 
-export default function LargeLayout({ children }: Props) {
+export default function StemLayout({ children }: Props) {
   return (
     <div>
       <Header />
