@@ -1,3 +1,9 @@
+import IconMenu from '@/components/menu/IconMenu';
+
 export default function VideosPage() {
-  return <div>videos</div>;
+  return (
+    <div className="flex flex-col pt-18">
+      <IconMenu />
+    </div>
+  );
 }
