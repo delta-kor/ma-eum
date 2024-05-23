@@ -37,11 +37,12 @@ export default function Header() {
 
   return (
     <div className="sticky left-0 top-0 z-50 w-full items-center bg-white py-16">
-      <Icon
-        type="back"
+      <div
         onClick={handleBackClick}
-        className="absolute left-24 top-1/2 w-16 -translate-y-1/2 cursor-pointer text-gray-200"
-      />
+        className="absolute left-16 top-1/2 -translate-y-1/2 cursor-pointer p-8 "
+      >
+        <Icon type="back" className="w-16 text-gray-200" />
+      </div>
       <div className="text-center text-20 font-700 text-black">{title}</div>
     </div>
   );
