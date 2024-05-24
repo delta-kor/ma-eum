@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-export type IconType = 'back' | 'csr' | 'search';
+export type IconType = 'csr' | 'left' | 'right' | 'search';
 
 interface Props extends SVGProps<SVGSVGElement> {
   type: IconType;
@@ -29,7 +29,7 @@ export default function Icon({ type, ...props }: Props) {
       </svg>
     );
 
-  if (type === 'back')
+  if (type === 'left')
     return (
       <svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" {...props}>
         <path
@@ -41,5 +41,17 @@ export default function Icon({ type, ...props }: Props) {
       </svg>
     );
 
-  throw new Error('Invalid Icon type');
+  if (type === 'right')
+    return (
+      <svg fill="none" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" {...props}>
+        <path
+          clipRule="evenodd"
+          d="M7.3015 7.1056C7.35353 7.04724 7.35353 6.95913 7.3015 6.90073C6.91583 6.46665 5.34293 4.69874 3.34609 2.47945C3.03969 2.13942 2.8586 1.68124 3.06469 1.27276C3.15601 1.09164 3.28992 0.890183 3.48708 0.688699C3.67544 0.492495 3.89766 0.331845 4.14304 0.214479C4.49785 0.0481702 4.89277 0.179304 5.20129 0.42057C7.34995 2.10241 9.47173 4.513 10.6238 5.90233C11.1566 6.53965 11.1566 7.467 10.6238 8.10435C9.47173 9.49368 7.34962 11.9043 5.20007 13.5808C4.89216 13.8212 4.49847 13.9511 4.14488 13.786C3.89877 13.6686 3.67591 13.5076 3.48708 13.3109C3.31727 13.1392 3.17491 12.9424 3.06501 12.7274C2.85828 12.3186 3.0397 11.8604 3.34577 11.5198C4.66769 10.0514 5.98629 8.58 7.3015 7.1056Z"
+          fill="currentColor"
+          fillRule="evenodd"
+        />
+      </svg>
+    );
+
+  throw new Error(`Invalid Icon type: ${type}`);
 }

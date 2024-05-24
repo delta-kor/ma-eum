@@ -41,7 +41,7 @@ export default function Header() {
         onClick={handleBackClick}
         className="absolute left-16 top-1/2 -translate-y-1/2 cursor-pointer p-8 "
       >
-        <Icon type="back" className="w-16 text-gray-200" />
+        <Icon type="left" className="w-16 text-gray-200" />
       </div>
       <div className="text-center text-20 font-700 text-black">{title}</div>
     </div>

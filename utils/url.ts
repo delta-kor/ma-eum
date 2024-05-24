@@ -4,4 +4,8 @@ export class ImageUrl {
   public static album(id: string): string {
     return `${ImageUrl.base}/album/${id}.jpg`;
   }
+
+  public static category(id: string): string {
+    return `${ImageUrl.base}/category/${id}.jpg`;
+  }
 }
