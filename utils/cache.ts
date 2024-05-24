@@ -1,5 +1,6 @@
 import NodeCache from 'node-cache';
 import { cache } from 'react';
+import 'server-only';
 
 export const ServerCacheMap: Map<string, NodeCache> = new Map();
 export const StaticDataTtl = 60 * 5;

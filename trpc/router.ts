@@ -1,4 +1,5 @@
 import { initTRPC } from '@trpc/server';
+import 'server-only';
 import superjson from 'superjson';
 
 const t = initTRPC.create({

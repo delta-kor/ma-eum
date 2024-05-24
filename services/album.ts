@@ -3,6 +3,7 @@ import { cmsProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache';
 import createId from '@/utils/id';
 import { Album } from '@prisma/client';
+import 'server-only';
 import { z } from 'zod';
 
 const AlbumRouter = router({
