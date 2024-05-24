@@ -1,5 +1,6 @@
 import AlbumCardList from '@/components/card/AlbumCardList';
 import ImageCardList from '@/components/card/ImageCardList';
+import LineCardList from '@/components/card/LineCardList';
 import ProgramCardList from '@/components/card/ProgramCardList';
 import IconMenu from '@/components/menu/IconMenu';
 
@@ -14,6 +15,7 @@ export default function VideosPage() {
         <ProgramCardList />
       </div>
       <ImageCardList />
+      <LineCardList />
     </div>
   );
 }

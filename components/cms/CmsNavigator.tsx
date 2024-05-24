@@ -10,6 +10,7 @@ export default function CmsNavigator() {
 
   if (pathname === '/cms') title = 'CMS';
   if (pathname === '/cms/albums') title = 'Albums';
+  if (pathname === '/cms/categories') title = 'Categories';
 
   return (
     <div className="flex flex-col gap-12">
