@@ -1,6 +1,8 @@
 import CmsModelPanel from '@/components/cms/model/CmsModelPanel';
 import prisma from '@/prisma/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CmsAlbumsPage() {
   const albums = await prisma.album.findMany();
 

@@ -1,10 +1,12 @@
 import NodeCache from 'node-cache';
+import { cache } from 'react';
 
-const caches: NodeCache[] = [];
+export const ServerCacheMap: Map<string, NodeCache> = new Map();
+export const StaticDataTtl = 60 * 5;
 
-function Cache(ttl: number) {
+export function ControlledCache(name: string, ttl: number) {
   const functionCache = new NodeCache({ stdTTL: ttl });
-  caches.push(functionCache);
+  ServerCacheMap.set(name, functionCache);
 
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const method = descriptor.value;
@@ -20,6 +22,10 @@ function Cache(ttl: number) {
   };
 }
 
-export const LongCache = Cache(60 * 60 * 24);
+export function ReactCache() {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const method = descriptor.value;
 
-export default Cache;
+    descriptor.value = cache(method);
+  };
+}
