@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
-import { LongCache } from '@/utils/cache';
+import { ControlledCache, StaticDataTtl } from '@/utils/cache';
 import createId from '@/utils/id';
 import { Album } from '@prisma/client';
 import { z } from 'zod';
@@ -41,8 +41,9 @@ const AlbumRouter = router({
 export class AlbumService {
   public static router = AlbumRouter;
 
-  @LongCache
+  @ControlledCache('album.getAll', StaticDataTtl)
   public static async getAll(): Promise<Album[]> {
-    return prisma.album.findMany();
+    console.log('fetching all albums');
+    return prisma.album.findMany({ orderBy: { release: 'desc' } });
   }
 }
