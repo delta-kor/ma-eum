@@ -14,6 +14,7 @@ export function getCmsFieldText(field: CmsModelField, item: any): string {
 
 export function getCmsTrpcRecordByName(name: string) {
   if (name === 'album') return trpc.album;
+  if (name === 'category') return trpc.category;
   throw new Error('Unknown model name');
 }
 

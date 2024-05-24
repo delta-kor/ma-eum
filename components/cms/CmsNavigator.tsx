@@ -24,6 +24,9 @@ export default function CmsNavigator() {
         <Link href={'/cms/albums'} className="text-20 text-primary-500 underline">
           Albums
         </Link>
+        <Link href={'/cms/categories'} className="text-20 text-primary-500 underline">
+          Categories
+        </Link>
       </div>
     </div>
   );

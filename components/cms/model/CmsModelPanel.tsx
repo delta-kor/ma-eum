@@ -14,6 +14,7 @@ export interface ItemBase {
 }
 
 export interface CmsModelField {
+  auto?: boolean;
   key: string;
   label: string;
   style?: string;

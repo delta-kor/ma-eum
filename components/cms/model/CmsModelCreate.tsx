@@ -31,9 +31,11 @@ export default function CmsModelCreate<T extends ItemBase>({
   return (
     <form action={handleCreate} className="flex flex-col gap-16">
       <div className="code text-20 font-700 text-black">CREATE</div>
-      {fields.map(field => (
-        <CmsInput key={field.key} field={field} placeholder="..." />
-      ))}
+      {fields
+        .filter(field => !field.auto)
+        .map(field => (
+          <CmsInput key={field.key} field={field} placeholder="..." />
+        ))}
 
       <div className="flex gap-8">
         <CmsButton type="submit" className="!bg-primary-500 !text-white">

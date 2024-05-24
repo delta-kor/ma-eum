@@ -14,3 +14,17 @@ model Album {
   release     DateTime
   colors      String[]
 }
+
+enum CategoryType {
+  PROGRAM
+  REALITY
+  OTHERS
+}
+
+model Category {
+  id          String       @id
+  title       String
+  description String?
+  type        CategoryType
+  order       Int
+}
