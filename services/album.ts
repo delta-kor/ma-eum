@@ -43,7 +43,6 @@ export class AlbumService {
 
   @ControlledCache('album.getAll', StaticDataTtl)
   public static async getAll(): Promise<Album[]> {
-    console.log('fetching all albums');
     return prisma.album.findMany({ orderBy: { release: 'desc' } });
   }
 }
