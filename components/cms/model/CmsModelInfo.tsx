@@ -1,66 +1,54 @@
 import { revalidate } from '@/actions/revalidate';
 import CmsButton from '@/components/cms/CmsButton';
-import CmsTextInput from '@/components/cms/CmsTextInput';
+import CmsInput from '@/components/cms/CmsInput';
 import { CmsModelField, ItemBase } from '@/components/cms/model/CmsModelPanel';
-import { trpc } from '@/hooks/trpc';
-import getFieldText from '@/utils/field';
+import { cmsFormToObject, getCmsTrpcRecordByName } from '@/utils/cms';
 
 interface Props<T extends ItemBase> {
   fields: CmsModelField[];
   name: string;
   path: string;
-  selected: T | null;
+  selectedItem: T | null;
 }
 
 export default function CmsModelInfo<T extends ItemBase>({
   fields,
   name,
   path,
-  selected,
+  selectedItem,
 }: Props<T>) {
-  let record;
-  if (name === 'album') record = trpc.album;
-  else throw new Error('Unknown model name');
-
+  const record = getCmsTrpcRecordByName(name);
   const deleteMutation = record.delete.useMutation();
+  const updateMutation = record.update.useMutation();
 
   async function handleDelete() {
-    if (!selected) return;
+    if (!selectedItem) return;
 
-    await deleteMutation.mutateAsync({ id: selected.id });
+    await deleteMutation.mutateAsync({ id: selectedItem.id });
     await revalidate(path);
   }
 
   async function handleSubmit(formData: FormData) {
-    // await updateGroup(formData);
+    const data = cmsFormToObject(formData, fields, true);
+
+    await updateMutation.mutateAsync(data);
     await revalidate(path);
   }
 
-  if (selected === null) {
+  if (selectedItem === null) {
     return (
-      <div
-        style={{ height: 'calc(100vh - 242px)' }}
-        className="flex w-[360px] flex-col items-center justify-center border-l-1 border-gray-100 px-4"
-      >
+      <div className="flex flex-col items-center justify-center">
         <div className="text-20 text-gray-500">Select item</div>
       </div>
     );
   }
 
   return (
-    <form
-      key={selected.id}
-      action={handleSubmit}
-      style={{ height: 'calc(100vh - 242px)' }}
-      className="flex w-[360px] flex-col gap-16 border-l-1 border-gray-100 px-16"
-    >
-      <input name="id" type="hidden" value={selected.id} />
-      <div className="code text-20 font-700 text-black">{selected.id}</div>
+    <form key={selectedItem.id} action={handleSubmit} className="flex flex-col gap-16">
+      <input name="id" type="hidden" value={selectedItem.id} />
+      <div className="code text-20 font-700 text-black">INFO: {selectedItem.id}</div>
       {fields.map(field => (
-        <div key={field.key} className="flex flex-col gap-4">
-          <div className="text-16 font-600">{field.label}</div>
-          <CmsTextInput defaultValue={getFieldText(field, selected)} name={field.key} />
-        </div>
+        <CmsInput key={field.key} field={field} item={selectedItem} />
       ))}
 
       <div className="flex gap-8">

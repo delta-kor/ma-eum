@@ -1,5 +1,5 @@
 import { CmsModelField, ItemBase } from '@/components/cms/model/CmsModelPanel';
-import getFieldText from '@/utils/field';
+import { getCmsFieldText } from '@/utils/cms';
 
 interface Props<T extends ItemBase> {
   fields: CmsModelField[];
@@ -27,7 +27,7 @@ export default function CmsModelList<T extends ItemBase>({
           <div className="code text-16 text-gray-500">{item.id}</div>
           {fields.map(field => (
             <div key={field.key} className={`shrink-0 ${field.style}`}>
-              {getFieldText(field, item)}
+              {getCmsFieldText(field, item)}
             </div>
           ))}
         </div>
