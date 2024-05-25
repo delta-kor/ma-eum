@@ -1,4 +1,7 @@
 {
+  "404_back_to_home": "Back to home",
+  "404_description": "We cannot find the page you’re looking for.",
+  "404_title": "Page not found",
   "challenge": "Challenge",
   "cover": "Cover",
   "live": "Live",
@@ -6,5 +9,6 @@
   "performance": "Performance",
   "promotion": "Promotion",
   "reality_shows": "Reality Shows",
-  "shorts": "Shorts"
+  "shorts": "Shorts",
+  "view_calendar": "View Calendar"
 }

@@ -1,4 +1,7 @@
 {
+  "404_back_to_home": "메인화면",
+  "404_description": "존재하지 않는 페이지입니다.",
+  "404_title": "Page not found",
   "challenge": "챌린지",
   "cover": "커버",
   "live": "라이브",
@@ -6,5 +9,6 @@
   "performance": "퍼포먼스",
   "promotion": "프로모션",
   "reality_shows": "리얼리티",
-  "shorts": "Shorts"
+  "shorts": "Shorts",
+  "view_calendar": "달력 보기"
 }
