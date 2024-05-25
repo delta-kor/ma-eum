@@ -1,4 +1,5 @@
 import TRPCProvider from '@/providers/TRPCProvider';
+import TranslateProvider from '@/providers/TranslateProvider';
 import { ReactNode } from 'react';
 import './globals.css';
 
@@ -10,7 +11,9 @@ export default function RootLayout({ children }: Props) {
   return (
     <html lang="ko">
       <body>
-        <TRPCProvider>{children}</TRPCProvider>
+        <TranslateProvider>
+          <TRPCProvider>{children}</TRPCProvider>
+        </TranslateProvider>
       </body>
     </html>
   );

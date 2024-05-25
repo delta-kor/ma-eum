@@ -13,7 +13,7 @@ export default async function MusicCardList() {
 
   musics.forEach(music => {
     const albumId = music.albumId;
-    albumsMap.get(albumId)!.push(music);
+    albumId && albumsMap.get(albumId)!.push(music);
   });
 
   return (
