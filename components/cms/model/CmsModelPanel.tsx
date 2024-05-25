@@ -71,7 +71,7 @@ export default function CmsModelPanel<T extends ItemBase>({ options }: Props<T>)
           Total <span className="font-700 text-primary-500">{items.length}</span> item(s)
         </div>
       </div>
-      <div style={{ minHeight: 'calc(100vh - 200px)' }} className="flex gap-12">
+      <div style={{ height: 'calc(100vh - 200px)' }} className="flex gap-12">
         <CmsModelList fields={options.fields} items={items} onItemSelect={handleItemSelect} />
         <div className="w-[1px] self-stretch bg-gray-100" />
         <div className="flex w-[280px] shrink-0 flex-col gap-16">

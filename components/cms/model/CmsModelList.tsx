@@ -17,7 +17,7 @@ export default function CmsModelList<T extends ItemBase>({
   }
 
   return (
-    <div className="scrollbar-hide flex max-h-[747px] grow flex-col overflow-y-scroll">
+    <div className="scrollbar-hide flex grow flex-col overflow-y-scroll">
       {items.map(item => (
         <div
           key={item.id}
