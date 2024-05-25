@@ -57,6 +57,7 @@ const config: Config = {
       24: ['24px', '29px'],
       28: ['28px', '33px'],
       32: ['32px', '38px'],
+      36: ['36px', '43px'],
     },
     fontWeight: {
       400: '400',
@@ -80,6 +81,7 @@ const config: Config = {
       24: '24px',
       28: '28px',
       32: '32px',
+      36: '36px',
       48: '48px',
       64: '64px',
     },
