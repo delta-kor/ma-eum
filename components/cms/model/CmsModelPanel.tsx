@@ -7,7 +7,7 @@ import CmsModelInfo from '@/components/cms/model/CmsModelInfo';
 import CmsModelList from '@/components/cms/model/CmsModelList';
 import { useEffect, useState } from 'react';
 
-export type CmsModelFieldType = 'date' | 'number' | 'string' | 'strings';
+export type CmsModelFieldType = 'date' | 'model' | 'number' | 'string' | 'strings';
 
 export interface ItemBase {
   id: string;
@@ -17,6 +17,8 @@ export interface CmsModelField {
   auto?: boolean;
   key: string;
   label: string;
+  modelName?: string;
+  optional?: boolean;
   style?: string;
   type: CmsModelFieldType;
 }
@@ -59,6 +61,7 @@ export default function CmsModelPanel<T extends ItemBase>({ options }: Props<T>)
 
   async function handleCreate() {
     setViewMode('info');
+    setSelectedItem(null);
   }
 
   return (

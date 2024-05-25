@@ -21,7 +21,7 @@ export default function CmsModelCreate<T extends ItemBase>({
   const createMutation = record.create.useMutation();
 
   async function handleCreate(formData: FormData) {
-    const data = cmsFormToObject(formData, fields);
+    const data = cmsFormToObject(formData, fields, false, true);
 
     await createMutation.mutateAsync(data);
     await revalidate(path);
@@ -34,7 +34,7 @@ export default function CmsModelCreate<T extends ItemBase>({
       {fields
         .filter(field => !field.auto)
         .map(field => (
-          <CmsInput key={field.key} field={field} placeholder="..." />
+          <CmsInput key={field.key} field={field} placeholder="..." required={!field.optional} />
         ))}
 
       <div className="flex gap-8">

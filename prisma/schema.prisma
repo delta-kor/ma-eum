@@ -13,6 +13,7 @@ model Album {
   description String
   release     DateTime
   colors      String[]
+  musics      Music[]
 }
 
 enum CategoryType {
@@ -27,4 +28,27 @@ model Category {
   description String?
   type        CategoryType
   order       Int
+}
+
+enum VideoSource {
+  YOUTUBE
+}
+
+model Video {
+  id       String      @id
+  title    String
+  source   VideoSource
+  sourceId String
+  date     DateTime
+  duration Int
+  meta     Json
+}
+
+model Music {
+  id         String  @id
+  title      String
+  shortTitle String
+  order      Int
+  albumId    String?
+  album      Album?  @relation(fields: [albumId], references: [id])
 }

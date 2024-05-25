@@ -29,10 +29,15 @@ export default function CmsModelInfo<T extends ItemBase>({
   }
 
   async function handleSubmit(formData: FormData) {
-    const data = cmsFormToObject(formData, fields, true);
+    try {
+      const data = cmsFormToObject(formData, fields, true);
 
-    await updateMutation.mutateAsync(data);
-    await revalidate(path);
+      await updateMutation.mutateAsync(data);
+      await revalidate(path);
+    } catch (e) {
+      alert(e);
+      console.error(e);
+    }
   }
 
   if (selectedItem === null) {
@@ -48,7 +53,13 @@ export default function CmsModelInfo<T extends ItemBase>({
       <input name="id" type="hidden" value={selectedItem.id} />
       <div className="code text-20 font-700 text-black">INFO: {selectedItem.id}</div>
       {fields.map(field => (
-        <CmsInput key={field.key} field={field} item={selectedItem} />
+        <CmsInput
+          key={field.key}
+          field={field}
+          item={selectedItem}
+          placeholder="Unset"
+          required={!field.optional}
+        />
       ))}
 
       <div className="flex gap-8">
