@@ -24,8 +24,13 @@ export default function CmsModelInfo<T extends ItemBase>({
   async function handleDelete() {
     if (!selectedItem) return;
 
-    await deleteMutation.mutateAsync({ id: selectedItem.id });
-    await revalidate(path);
+    try {
+      await deleteMutation.mutateAsync({ id: selectedItem.id });
+      await revalidate(path);
+    } catch (e) {
+      alert(e);
+      console.error(e);
+    }
   }
 
   async function handleSubmit(formData: FormData) {

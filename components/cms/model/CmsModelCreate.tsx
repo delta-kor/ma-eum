@@ -21,11 +21,16 @@ export default function CmsModelCreate<T extends ItemBase>({
   const createMutation = record.create.useMutation();
 
   async function handleCreate(formData: FormData) {
-    const data = cmsFormToObject(formData, fields, false, true);
+    try {
+      const data = cmsFormToObject(formData, fields, false, true);
 
-    await createMutation.mutateAsync(data);
-    await revalidate(path);
-    onCreate();
+      await createMutation.mutateAsync(data);
+      await revalidate(path);
+      onCreate();
+    } catch (e) {
+      console.error(e);
+      alert(e);
+    }
   }
 
   return (
