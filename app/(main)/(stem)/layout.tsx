@@ -1,5 +1,5 @@
-import Header from '@/components/core/Header';
 import Navigator from '@/components/core/Navigator';
+import ArtisticHeader from '@/components/core/header/ArtisticHeader';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 export default function StemLayout({ children }: Props) {
   return (
     <div className="pb-[69px]">
-      <Header />
+      <ArtisticHeader />
       {children}
       <Navigator />
     </div>

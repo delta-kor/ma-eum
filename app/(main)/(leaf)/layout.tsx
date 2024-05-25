@@ -1,4 +1,4 @@
-import Header from '@/components/core/Header';
+import DetailsHeader from '@/components/core/header/DetailsHeader';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -7,8 +7,8 @@ interface Props {
 
 export default function LeafLayout({ children }: Props) {
   return (
-    <div>
-      <Header />
+    <div className="mt-[56px]">
+      <DetailsHeader />
       {children}
     </div>
   );
