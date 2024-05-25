@@ -4,9 +4,10 @@ import { format } from 'date-fns';
 
 interface Props {
   album: Album;
+  menu?: boolean;
 }
 
-export default function AlbumCard({ album }: Props) {
+export default function AlbumCard({ album, menu }: Props) {
   const [gradientFrom, gradientTo] = album.colors;
 
   return (
@@ -27,15 +28,17 @@ export default function AlbumCard({ album }: Props) {
           </div>
         </div>
       </div>
-      <div className="relative flex h-32 items-stretch">
-        <div className="flex grow cursor-pointer items-center justify-center text-center text-18 font-600 text-white">
-          프로모션
+      {menu && (
+        <div className="relative flex h-32 items-stretch">
+          <div className="flex grow cursor-pointer items-center justify-center text-center text-18 font-600 text-white">
+            프로모션
+          </div>
+          <div className="flex grow cursor-pointer items-center justify-center text-center text-18 font-600 text-white">
+            퍼포먼스
+          </div>
+          <div className="absolute left-1/2 h-full w-2 -translate-x-1/2 bg-white opacity-30" />
         </div>
-        <div className="flex grow cursor-pointer items-center justify-center text-center text-18 font-600 text-white">
-          퍼포먼스
-        </div>
-        <div className="absolute left-1/2 h-full w-2 -translate-x-1/2 bg-white opacity-30" />
-      </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default async function AlbumCardList() {
   return (
     <div className="flex flex-col gap-12 px-24">
       {albums.map(album => (
-        <AlbumCard key={album.id} album={album} />
+        <AlbumCard key={album.id} album={album} menu />
       ))}
     </div>
   );

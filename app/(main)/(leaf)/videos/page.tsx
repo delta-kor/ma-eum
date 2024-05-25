@@ -8,7 +8,7 @@ export const revalidate = 0;
 
 export default function VideosPage() {
   return (
-    <div className="flex flex-col gap-32 pt-18">
+    <div className="flex flex-col gap-32 pb-24 pt-18">
       <IconMenu />
       <div className="flex flex-col gap-12">
         <AlbumCardList />
