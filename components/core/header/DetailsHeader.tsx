@@ -2,10 +2,15 @@
 
 import Icon from '@/components/core/Icon';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function DetailsHeader() {
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    window.scrollTo(0, -1);
+  }, []);
 
   function handleBackClick() {
     router.back();

@@ -2,6 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator json {
+  provider  = "prisma-json-types-generator"
+  namespace = "PrismaJson"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -28,6 +33,7 @@ model Category {
   description String?
   type        CategoryType
   order       Int
+  videos      Video[]
 }
 
 enum VideoSource {
@@ -35,13 +41,15 @@ enum VideoSource {
 }
 
 model Video {
-  id       String      @id
-  title    String
-  source   VideoSource
-  sourceId String
-  date     DateTime
-  duration Int
-  meta     Json
+  id         String      @id
+  title      String
+  source     VideoSource
+  sourceId   String
+  date       DateTime
+  categories Category[]
+
+  /// [VideoMeta]
+  meta Json[]
 }
 
 model Music {
@@ -51,4 +59,18 @@ model Music {
   order      Int
   albumId    String?
   album      Album?  @relation(fields: [albumId], references: [id])
+}
+
+enum StageType {
+  SHOWCASE
+  FANSIGN
+  PROGRAM
+}
+
+model Stage {
+  id    String    @id
+  type  StageType
+  title String
+  date  DateTime
+  order Int
 }

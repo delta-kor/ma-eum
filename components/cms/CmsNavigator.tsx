@@ -12,6 +12,7 @@ export default function CmsNavigator() {
   if (pathname === '/cms/albums') title = 'Albums';
   if (pathname === '/cms/categories') title = 'Categories';
   if (pathname === '/cms/musics') title = 'Musics';
+  if (pathname === '/cms/videos') title = 'Videos';
 
   return (
     <div className="flex flex-col gap-12">
@@ -31,6 +32,9 @@ export default function CmsNavigator() {
         </Link>
         <Link href={'/cms/musics'} className="text-20 text-primary-500 underline">
           Musics
+        </Link>
+        <Link href={'/cms/videos'} className="text-20 text-primary-500 underline">
+          Videos
         </Link>
       </div>
     </div>

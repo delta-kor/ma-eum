@@ -49,6 +49,7 @@ const config: Config = {
       },
     },
     fontSize: {
+      12: ['12px', '14px'],
       14: ['14px', '17px'],
       16: ['16px', '19px'],
       18: ['18px', '21px'],
