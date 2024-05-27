@@ -7,7 +7,7 @@ interface Props {
 
 export default function LeafLayout({ children }: Props) {
   return (
-    <div className="mt-[56px]">
+    <div>
       <DetailsHeader />
       {children}
     </div>

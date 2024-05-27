@@ -4,7 +4,7 @@ import { ReactNode, createContext, useState } from 'react';
 
 interface Context {
   content: null | string;
-  setTitle: (title: string) => void;
+  setTitle: (title: null | string) => void;
 }
 
 export const TitleContext = createContext<Context>({

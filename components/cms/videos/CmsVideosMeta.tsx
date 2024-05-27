@@ -128,6 +128,7 @@ export default function CmsVideosMeta<T extends VideoMeta>({
         action={formData =>
           onSet({
             order: parseInt(formData.get('order') as string),
+            title: formData.get('title'),
             type: 'official',
           } as T)
         }
@@ -135,6 +136,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
         type={type}
         onRemove={onRemove}
       >
+        <CmsMetaInput
+          defaultValue={(data as OfficialVideoMeta)?.title}
+          id="title"
+          label="Title"
+          type="text"
+        />
         <CmsMetaInput
           defaultValue={(data as OfficialVideoMeta)?.order}
           id="order"
@@ -335,7 +342,6 @@ export default function CmsVideosMeta<T extends VideoMeta>({
         action={formData =>
           onSet({
             from: formData.get('from') || null,
-            musicId: formData.get('musicId'),
             type: 'inbound_challenge',
           } as T)
         }
@@ -343,12 +349,6 @@ export default function CmsVideosMeta<T extends VideoMeta>({
         type={type}
         onRemove={onRemove}
       >
-        <CmsMetaInput
-          defaultValue={(data as InboundChallengeVideoMeta)?.musicId}
-          id="musicId"
-          label="Music Id"
-          type="text"
-        />
         <CmsMetaInput
           defaultValue={(data as InboundChallengeVideoMeta)?.from}
           id="from"

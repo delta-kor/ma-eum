@@ -12,7 +12,13 @@ export default function Title({ children }: Props) {
 
   useEffect(() => {
     title.setTitle(children);
-  }, [children]);
+
+    return () => {
+      if (title.content === children) {
+        title.setTitle(null);
+      }
+    };
+  }, [children, title.content]);
 
   return null;
 }

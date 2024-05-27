@@ -11,7 +11,7 @@ export default function ImageCard({ category }: Props) {
       <img
         alt={category.title}
         src={ImageUrl.category(category.id)}
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        className="absolute left-1/2 top-1/2 w-3/5 -translate-x-1/2 -translate-y-1/2"
       />
     </div>
   );

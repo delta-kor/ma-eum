@@ -32,6 +32,7 @@ export interface MusicVideoMeta extends VideoMetaBase {
 
 export interface OfficialVideoMeta extends VideoMetaBase {
   order: number;
+  title: string;
   type: 'official';
 }
 
@@ -76,7 +77,6 @@ export interface LinkVideoMeta extends VideoMetaBase {
 
 export interface InboundChallengeVideoMeta extends VideoMetaBase {
   from: null | string;
-  musicId: string;
   type: 'inbound_challenge';
 }
 

@@ -9,6 +9,7 @@ const config: Config = {
   plugins: [],
   theme: {
     aspectRatio: {
+      auto: 'auto',
       square: '1/1',
       video: '16/8.95',
     },
@@ -40,7 +41,7 @@ const config: Config = {
     },
     extend: {
       animation: {
-        fade: 'fadeIn 0.5s',
+        fade: 'fadeIn 1s',
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(90deg, #3098E1 0%, #5EB6F5 100%)',

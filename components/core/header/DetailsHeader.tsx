@@ -3,16 +3,11 @@
 import Icon from '@/components/core/Icon';
 import useTitle from '@/hooks/title';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 export default function DetailsHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const { content } = useTitle();
-
-  useEffect(() => {
-    if (window.scrollY < 100) window.scrollTo(0, -1);
-  }, [pathname]);
 
   function handleBackClick() {
     router.back();

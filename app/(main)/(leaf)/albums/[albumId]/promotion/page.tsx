@@ -1,4 +1,5 @@
 import AlbumCardLarge from '@/components/card/AlbumCardLarge';
+import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import PromotionSection from '@/components/video/PromotionSection';
 import { AlbumService } from '@/services/album';
@@ -28,12 +29,14 @@ export default async function AlbumPromotionPage({ params: { albumId } }: Props)
   );
 
   return (
-    <div className="flex flex-col gap-20">
-      <Title>{album.title}</Title>
-      <div className="px-24">
-        <AlbumCardLarge album={album} />
+    <DetailsContent>
+      <div className="flex flex-col gap-20">
+        <Title key={album.title}>{album.title}</Title>
+        <div className="px-24">
+          <AlbumCardLarge album={album} />
+        </div>
+        <PromotionSection videos={videosSorted} />
       </div>
-      <PromotionSection videos={videosSorted} />
-    </div>
+    </DetailsContent>
   );
 }
