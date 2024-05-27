@@ -1,5 +1,20 @@
 import CmsMetaInput from '@/components/cms/videos/CmsMetaInput';
-import { EpisodeVideoMeta, VideoMeta } from '@/utils/video';
+import {
+  CoverVideoMeta,
+  EpisodeVideoMeta,
+  FancamVideoMeta,
+  InboundChallengeVideoMeta,
+  LinkVideoMeta,
+  LiveVideoMeta,
+  Members,
+  MembersVideoMeta,
+  MusicVideoMeta,
+  OfficialVideoMeta,
+  OutboundChallengeVideoMeta,
+  PromotionVideoMeta,
+  StageVideoMeta,
+  VideoMeta,
+} from '@/utils/video';
 import { DetailedHTMLProps, FormHTMLAttributes } from 'react';
 
 interface Props<T extends VideoMeta> {
@@ -47,6 +62,209 @@ export default function CmsVideosMeta<T extends VideoMeta>({
   onRemove,
   onSet,
 }: Props<T>) {
+  if (type === 'promotion') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            albumId: formData.get('albumId'),
+            order: parseInt(formData.get('order') as string),
+            title: formData.get('title'),
+            type: 'promotion',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as PromotionVideoMeta)?.albumId}
+          id="albumId"
+          label="Album Id"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as PromotionVideoMeta)?.title}
+          id="title"
+          label="Title"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as PromotionVideoMeta)?.order}
+          id="order"
+          label="Order"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'music') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            musicId: formData.get('musicId'),
+            type: 'music',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as MusicVideoMeta)?.musicId}
+          id="musicId"
+          label="Music Id"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'official') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            order: parseInt(formData.get('order') as string),
+            type: 'official',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as OfficialVideoMeta)?.order}
+          id="order"
+          label="Order"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'stage') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            order: parseInt(formData.get('order') as string),
+            sessionId: formData.get('sessionId'),
+            tag: formData.get('tag'),
+            type: 'stage',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as StageVideoMeta)?.sessionId}
+          id="sessionId"
+          label="Session Id"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as StageVideoMeta)?.tag}
+          id="tag"
+          label="Tag"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as StageVideoMeta)?.order}
+          id="order"
+          label="Order"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'fancam') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            embed: formData.get('embed') === 'on',
+            ownerId: formData.get('ownerId'),
+            type: 'fancam',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as FancamVideoMeta)?.ownerId}
+          id="ownerId"
+          label="Owner Id"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as FancamVideoMeta)?.embed}
+          id="embed"
+          label="Embed"
+          type="checkbox"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'members') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            members: Members.filter(member => formData.get(member) === 'on'),
+            type: 'members',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as MembersVideoMeta)?.members}
+          id="member"
+          label="Members"
+          type="members"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'cover') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            kind: formData.get('kind'),
+            title: formData.get('title'),
+            type: 'cover',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as CoverVideoMeta)?.kind}
+          id="kind"
+          label="Kind (dance | vocal)"
+          type="cover"
+        />
+        <CmsMetaInput
+          defaultValue={(data as CoverVideoMeta)?.title}
+          id="title"
+          label="Title"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
   if (type === 'shorts') {
     return (
       <CmsVideosMetaBase
@@ -83,6 +301,114 @@ export default function CmsVideosMeta<T extends VideoMeta>({
           id="title"
           label="Title"
           type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'link') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            type: 'link',
+            videoId: formData.get('videoId'),
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as LinkVideoMeta)?.videoId}
+          id="videoId"
+          label="Video Id"
+          type="text"
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'inbound_challenge') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            from: formData.get('from') || null,
+            musicId: formData.get('musicId'),
+            type: 'inbound_challenge',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as InboundChallengeVideoMeta)?.musicId}
+          id="musicId"
+          label="Music Id"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as InboundChallengeVideoMeta)?.from}
+          id="from"
+          label="From"
+          type="text"
+          optional
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'outbound_challenge') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            music: formData.get('music'),
+            to: formData.get('to') || null,
+            type: 'outbound_challenge',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as OutboundChallengeVideoMeta)?.music}
+          id="music"
+          label="Music"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as OutboundChallengeVideoMeta)?.to}
+          id="to"
+          label="To"
+          type="text"
+          optional
+        />
+      </CmsVideosMetaBase>
+    );
+  }
+
+  if (type === 'live') {
+    return (
+      <CmsVideosMetaBase
+        action={formData =>
+          onSet({
+            disable: formData.get('disable') === 'on',
+            type: 'live',
+          } as T)
+        }
+        data={data}
+        type={type}
+        onRemove={onRemove}
+      >
+        <CmsMetaInput
+          defaultValue={(data as LiveVideoMeta)?.disable}
+          id="disable"
+          label="Disable"
+          type="checkbox"
         />
       </CmsVideosMetaBase>
     );

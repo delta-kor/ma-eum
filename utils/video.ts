@@ -19,6 +19,7 @@ export interface VideoMetaBase {
 export interface PromotionVideoMeta extends VideoMetaBase {
   albumId: string;
   order: number;
+  title: string;
   type: 'promotion';
 }
 
@@ -56,23 +57,49 @@ export interface CoverVideoMeta extends VideoMetaBase {
   type: 'cover';
 }
 
+export interface ShortsVideoMeta extends VideoMetaBase {
+  type: 'shorts';
+}
+
 export interface EpisodeVideoMeta extends VideoMetaBase {
   episode: string;
   title: string;
   type: 'episode';
 }
 
-export interface ShortsVideoMeta extends VideoMetaBase {
-  type: 'shorts';
+export interface LinkVideoMeta extends VideoMetaBase {
+  type: 'link';
+  videoId: string;
+}
+
+export interface InboundChallengeVideoMeta extends VideoMetaBase {
+  from: null | string;
+  musicId: string;
+  type: 'inbound_challenge';
+}
+
+export interface OutboundChallengeVideoMeta extends VideoMetaBase {
+  music: string;
+  to: null | string;
+  type: 'outbound_challenge';
+}
+
+export interface LiveVideoMeta extends VideoMetaBase {
+  disable: boolean;
+  type: 'live';
 }
 
 type MergedVideoData =
   | CoverVideoMeta
   | EpisodeVideoMeta
   | FancamVideoMeta
+  | InboundChallengeVideoMeta
+  | LinkVideoMeta
+  | LiveVideoMeta
   | MembersVideoMeta
   | MusicVideoMeta
   | OfficialVideoMeta
+  | OutboundChallengeVideoMeta
   | PromotionVideoMeta
   | ShortsVideoMeta
   | StageVideoMeta;
@@ -85,3 +112,20 @@ declare global {
 
 export type VideoMeta = PrismaJson.VideoMeta;
 export type VideoMetaType = VideoMeta['type'];
+
+export const Members: Member[] = ['geumhee', 'sihyeon', 'seoyeon', 'yuna', 'duna', 'sua', 'yeham'];
+export const AvailableMetaTypes: VideoMetaType[] = [
+  'shorts',
+  'link',
+  'members',
+  'episode',
+  'cover',
+  'stage',
+  'fancam',
+  'music',
+  'official',
+  'promotion',
+  'inbound_challenge',
+  'outbound_challenge',
+  'live',
+];

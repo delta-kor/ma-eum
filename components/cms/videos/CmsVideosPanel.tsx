@@ -51,7 +51,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
         </div>
       </div>
       <div style={{ height: 'calc(100vh - 200px)' }} className="flex gap-12">
-        <div className="scrollbar-hide flex grow flex-col overflow-y-scroll">
+        <div className="flex grow flex-col overflow-y-scroll">
           {videos.map(video => (
             <div
               key={video.id}
@@ -81,7 +81,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
           ))}
         </div>
         <div className="w-[1px] self-stretch bg-gray-100" />
-        <div className="w-[280px] shrink-0">
+        <div className="scrollbar-hide w-[280px] shrink-0 overflow-y-scroll pb-24">
           <CmsVideosInfo categories={categories} selectedVideo={selectedVideo} />
         </div>
       </div>

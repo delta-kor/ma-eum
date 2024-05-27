@@ -2,7 +2,7 @@
 
 import prisma from '@/prisma/prisma';
 import createId from '@/utils/id';
-import { VideoMeta } from '@/utils/video';
+import { AvailableMetaTypes, VideoMeta } from '@/utils/video';
 import { VideoSource } from '@prisma/client';
 
 interface YoutubeVideoJson {
@@ -66,6 +66,8 @@ export async function addMetaToVideo(videoId: string, meta: VideoMeta) {
   const existingMeta = metas.find(item => item.type === meta.type);
   if (existingMeta) metas[metas.indexOf(existingMeta)] = meta;
   else metas.push(meta);
+
+  metas.sort((a, b) => AvailableMetaTypes.indexOf(a.type) - AvailableMetaTypes.indexOf(b.type));
 
   await prisma.video.update({
     data: { meta: metas },

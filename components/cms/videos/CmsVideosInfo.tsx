@@ -9,7 +9,7 @@ import {
 import { revalidate } from '@/actions/revalidate';
 import CmsModal from '@/components/cms/CmsModal';
 import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
-import { VideoMeta, VideoMetaType } from '@/utils/video';
+import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video';
 import { Category, Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
@@ -20,8 +20,6 @@ interface Props {
   categories: Category[];
   selectedVideo: VideoExtended | null;
 }
-
-const availableMetaTypes: VideoMetaType[] = ['shorts', 'episode', 'members'];
 
 export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
   const [categoryModalActive, setCategoryModalActive] = useState(false);
@@ -159,7 +157,7 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
         </div>
       </div>
       <div className="h-2 bg-gray-200" />
-      <div className="flex flex-col gap-16">
+      <div key={selectedVideo.id} className="flex flex-col gap-16">
         <div onClick={handleMetaAdd} className="cursor-pointer text-16 text-gray-500 underline">
           Add
         </div>
@@ -175,7 +173,7 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
         {metaModalActive && (
           <CmsModal onCancel={() => setMetaModalActive(false)}>
             <div className="flex flex-col">
-              {availableMetaTypes.map(type => (
+              {AvailableMetaTypes.map(type => (
                 <div
                   key={type}
                   onClick={() => handleMetaSketchAdd(type)}
