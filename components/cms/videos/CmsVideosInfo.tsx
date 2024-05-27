@@ -27,8 +27,24 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
   const [sketchMetaTypes, setSketchMetaTypes] = useState<VideoMetaType[]>([]);
 
   useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [metaModalActive, handleKeyDown, sketchMetaTypes]);
+
+  useEffect(() => {
     setSketchMetaTypes([]);
   }, [selectedVideo]);
+
+  function handleKeyDown(e: KeyboardEvent) {
+    const key = e.key;
+    if (!metaModalActive) return false;
+
+    if (key === 's') handleMetaSketchAdd('shorts');
+    if (key === 'm') handleMetaSketchAdd('music');
+    if (key === 'b') handleMetaSketchAdd('members');
+    if (key === 'e') handleMetaSketchAdd('episode');
+    if (key === 'i') handleMetaSketchAdd('inbound_challenge');
+  }
 
   async function handleCategoryAdd(category: Category) {
     if (selectedVideo === null) return;
@@ -62,7 +78,6 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
 
   async function handleMetaSet(data: VideoMeta) {
     if (selectedVideo === null) return;
-    console.log(data);
 
     try {
       await addMetaToVideo(selectedVideo!.id, data);

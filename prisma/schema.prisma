@@ -19,6 +19,7 @@ model Album {
   release     DateTime
   colors      String[]
   musics      Music[]
+  isMini      Boolean
 }
 
 enum CategoryType {

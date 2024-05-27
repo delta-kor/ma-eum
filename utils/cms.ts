@@ -3,6 +3,8 @@ import { trpc } from '@/hooks/trpc';
 import { format } from 'date-fns';
 
 export function getCmsFieldText(field: CmsModelField, item: any): null | string {
+  if (field.type === 'boolean') return item[field.key] ? 'on' : 'off';
+
   const value = field.type === 'model' ? item[`${field.key}Id`] : item[field.key];
   if (typeof value === 'undefined') return null;
 
@@ -34,7 +36,7 @@ export function cmsFormToObject(
 
   for (const field of fields) {
     const value = form.get(field.key);
-    if (value === null) continue;
+    if (value === null && field.type !== 'boolean') continue;
 
     if (field.type === 'string') result[field.key] = value;
     else if (field.type === 'number') result[field.key] = Number(value);
@@ -42,6 +44,7 @@ export function cmsFormToObject(
     else if (field.type === 'strings') result[field.key] = (value as string).split(',');
     else if (field.type === 'model')
       result[field.key] = value ? { connect: { id: value } } : create ? {} : { disconnect: true };
+    else if (field.type === 'boolean') result[field.key] = value === 'on';
   }
 
   if (includeId) {

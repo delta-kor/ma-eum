@@ -65,7 +65,7 @@ export interface ShortsVideoMeta extends VideoMetaBase {
 }
 
 export interface EpisodeVideoMeta extends VideoMetaBase {
-  episode: string;
+  episode: null | string;
   title: string;
   type: 'episode';
 }

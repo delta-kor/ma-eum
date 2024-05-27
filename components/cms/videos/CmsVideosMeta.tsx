@@ -288,7 +288,7 @@ export default function CmsVideosMeta<T extends VideoMeta>({
       <CmsVideosMetaBase
         action={formData =>
           onSet({
-            episode: formData.get('episode'),
+            episode: formData.get('episode') || null,
             title: formData.get('title'),
             type: 'episode',
           } as T)
@@ -302,6 +302,7 @@ export default function CmsVideosMeta<T extends VideoMeta>({
           id="episode"
           label="Episode"
           type="text"
+          optional
         />
         <CmsMetaInput
           defaultValue={(data as EpisodeVideoMeta)?.title}

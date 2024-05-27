@@ -4,6 +4,7 @@ import { importYoutubeVideosFromJson } from '@/actions/cms/videos';
 import { revalidate } from '@/actions/revalidate';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsVideosInfo, { VideoExtended } from '@/components/cms/videos/CmsVideosInfo';
+import { VideoMeta } from '@/utils/video';
 import { Category } from '@prisma/client';
 import { format } from 'date-fns';
 import { useState } from 'react';
@@ -39,6 +40,15 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
     await revalidate('/cms/videos');
   }
 
+  function getMetaSummary(meta: VideoMeta) {
+    if (meta.type === 'official') return `${meta.type}(${meta.order})`;
+    if (meta.type === 'promotion') return `${meta.type}(${meta.order})`;
+    if (meta.type === 'inbound_challenge') return `inbound`;
+    if (meta.type === 'outbound_challenge') return `outbound`;
+
+    return meta.type;
+  }
+
   return (
     <div className="flex flex-col gap-16">
       <div className="flex items-center justify-between">
@@ -55,8 +65,9 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
           {videos.map(video => (
             <div
               key={video.id}
+              data-active={selectedVideoId === video.id}
               onClick={() => handleVideoClick(video)}
-              className="flex cursor-pointer items-center gap-16 rounded-8 px-18 py-8 text-18 hover:bg-gray-100"
+              className="flex cursor-pointer items-center gap-16 rounded-8 px-18 py-8 text-18 hover:bg-gray-100 data-[active=true]:bg-primary-100"
             >
               <div className="code text-14 text-gray-500">{video.id}</div>
               <div className="code text-14 text-primary-500">{format(video.date, 'yyMMdd')}</div>
@@ -74,7 +85,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
               )}
               <div className="grow text-14 text-black">{video.title}</div>
               <div className="code text-14 text-gray-500">
-                {video.meta.map(item => item.type).join(', ')}
+                {video.meta.map(item => getMetaSummary(item)).join(', ')}
               </div>
               <div className="code text-14 text-gray-500">{video.source}</div>
             </div>
