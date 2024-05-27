@@ -31,7 +31,7 @@ export default function AlbumCard({ album, menu }: Props) {
         </div>
       </div>
       {menu && (
-        <div className="relative flex h-32 items-stretch">
+        <div className="relative -mx-8 flex h-32 items-stretch">
           <Link
             href={`/albums/${album.id}/promotion`}
             className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-18 font-500 text-white"

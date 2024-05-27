@@ -11,8 +11,8 @@ export default function DetailsHeader() {
   const { content } = useTitle();
 
   useEffect(() => {
-    window.scrollTo(0, -1);
-  }, []);
+    if (window.scrollY < 100) window.scrollTo(0, -1);
+  }, [pathname]);
 
   function handleBackClick() {
     router.back();

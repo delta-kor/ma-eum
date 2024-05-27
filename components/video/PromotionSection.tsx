@@ -9,7 +9,7 @@ export default function PromotionSection({ videos }: Props) {
   return (
     <div className="flex flex-col gap-12 px-24">
       <div className="text-20 font-700 text-black">Promotion</div>
-      <div className="flex flex-col gap-32">
+      <div className="flex flex-col">
         {videos.map(video => (
           <PromotionItem key={video.id} video={video} />
         ))}

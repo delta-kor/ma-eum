@@ -8,6 +8,10 @@ const config: Config = {
   ],
   plugins: [],
   theme: {
+    aspectRatio: {
+      square: '1/1',
+      video: '16/8.95',
+    },
     borderRadius: {
       4: '4px',
       8: '8px',
