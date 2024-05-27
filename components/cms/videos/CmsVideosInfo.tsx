@@ -1,11 +1,18 @@
 'use client';
 
-import { addCategoryToVideo, removeCategoryFromVideo } from '@/actions/cms/videos';
+import {
+  addCategoryToVideo,
+  addMetaToVideo,
+  removeCategoryFromVideo,
+  removeMetaFromVideo,
+} from '@/actions/cms/videos';
 import { revalidate } from '@/actions/revalidate';
-import Modal from '@/components/cms/CmsModal';
+import CmsModal from '@/components/cms/CmsModal';
+import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
+import { VideoMeta, VideoMetaType } from '@/utils/video';
 import { Category, Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export type VideoExtended = { categories: Category[] } & Video;
 
@@ -14,13 +21,23 @@ interface Props {
   selectedVideo: VideoExtended | null;
 }
 
+const availableMetaTypes: VideoMetaType[] = ['shorts', 'episode', 'members'];
+
 export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
   const [categoryModalActive, setCategoryModalActive] = useState(false);
+  const [metaModalActive, setMetaModalActive] = useState(false);
+  const [sketchMetaTypes, setSketchMetaTypes] = useState<VideoMetaType[]>([]);
+
+  useEffect(() => {
+    setSketchMetaTypes([]);
+  }, [selectedVideo]);
 
   async function handleCategoryAdd(category: Category) {
+    if (selectedVideo === null) return;
+
     try {
       setCategoryModalActive(false);
-      await addCategoryToVideo(selectedVideo!.id, category.id);
+      await addCategoryToVideo(selectedVideo.id, category.id);
       await revalidate('/cms/videos');
     } catch (e) {
       console.error(e);
@@ -29,14 +46,58 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
   }
 
   async function handleCategoryRemove(category: Category) {
+    if (selectedVideo === null) return;
+
     try {
-      await removeCategoryFromVideo(selectedVideo!.id, category.id);
+      await removeCategoryFromVideo(selectedVideo.id, category.id);
       await revalidate('/cms/videos');
     } catch (e) {
       console.error(e);
       alert(e);
     }
   }
+
+  function getMeta<T extends VideoMeta>(type: T['type']): T | undefined {
+    if (selectedVideo === null) return;
+    return (selectedVideo.meta.find(meta => meta.type === type) as T) || undefined;
+  }
+
+  async function handleMetaSet(data: VideoMeta) {
+    if (selectedVideo === null) return;
+    console.log(data);
+
+    try {
+      await addMetaToVideo(selectedVideo!.id, data);
+      await revalidate('/cms/videos');
+    } catch (e) {
+      console.error(e);
+      alert(e);
+    }
+  }
+
+  async function handleMetaRemove(type: VideoMetaType) {
+    if (selectedVideo === null) return;
+
+    try {
+      await removeMetaFromVideo(selectedVideo!.id, type);
+      await revalidate('/cms/videos');
+    } catch (e) {
+      console.error(e);
+      alert(e);
+    }
+  }
+
+  function handleMetaAdd() {
+    setMetaModalActive(true);
+  }
+
+  function handleMetaSketchAdd(type: VideoMetaType) {
+    setSketchMetaTypes([...sketchMetaTypes, type]);
+    setMetaModalActive(false);
+  }
+
+  const currentMetaTypes = selectedVideo?.meta.map(meta => meta.type) || [];
+  const activeMetaTypes = Array.from(new Set([...sketchMetaTypes, ...currentMetaTypes]));
 
   if (selectedVideo === null)
     return <div className="grow text-center text-20 text-gray-500">Select video</div>;
@@ -67,7 +128,7 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
           </div>
         </div>
         {categoryModalActive && (
-          <Modal onCancel={() => setCategoryModalActive(false)}>
+          <CmsModal onCancel={() => setCategoryModalActive(false)}>
             <div className="flex flex-col">
               {categories.map(category => (
                 <div
@@ -75,11 +136,11 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
                   onClick={() => handleCategoryAdd(category)}
                   className="cursor-pointer rounded-8 px-16 py-8 hover:bg-gray-100"
                 >
-                  <div className="text-18 text-black">{category.title}</div>
+                  <div className="text-16 text-black">{category.title}</div>
                 </div>
               ))}
             </div>
-          </Modal>
+          </CmsModal>
         )}
         <div className="flex flex-col gap-8">
           {selectedVideo.categories.map(category => (
@@ -96,6 +157,36 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
             </div>
           ))}
         </div>
+      </div>
+      <div className="h-2 bg-gray-200" />
+      <div className="flex flex-col gap-16">
+        <div onClick={handleMetaAdd} className="cursor-pointer text-16 text-gray-500 underline">
+          Add
+        </div>
+        {activeMetaTypes.map(displayedMeta => (
+          <CmsVideosMeta
+            key={displayedMeta}
+            data={getMeta(displayedMeta)}
+            type={displayedMeta}
+            onRemove={handleMetaRemove}
+            onSet={handleMetaSet}
+          />
+        ))}
+        {metaModalActive && (
+          <CmsModal onCancel={() => setMetaModalActive(false)}>
+            <div className="flex flex-col">
+              {availableMetaTypes.map(type => (
+                <div
+                  key={type}
+                  onClick={() => handleMetaSketchAdd(type)}
+                  className="cursor-pointer rounded-8 px-16 py-8 hover:bg-gray-100"
+                >
+                  <div className="text-16 text-black">{type}</div>
+                </div>
+              ))}
+            </div>
+          </CmsModal>
+        )}
       </div>
     </div>
   );

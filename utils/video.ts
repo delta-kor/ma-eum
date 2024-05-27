@@ -52,22 +52,29 @@ export interface MembersVideoMeta extends VideoMetaBase {
 
 export interface CoverVideoMeta extends VideoMetaBase {
   kind: 'dance' | 'vocal';
+  title: string;
   type: 'cover';
 }
 
-export interface ShorthandVideoMeta extends VideoMetaBase {
-  content: string;
-  type: 'shorthand';
+export interface EpisodeVideoMeta extends VideoMetaBase {
+  episode: string;
+  title: string;
+  type: 'episode';
+}
+
+export interface ShortsVideoMeta extends VideoMetaBase {
+  type: 'shorts';
 }
 
 type MergedVideoData =
   | CoverVideoMeta
+  | EpisodeVideoMeta
   | FancamVideoMeta
   | MembersVideoMeta
   | MusicVideoMeta
   | OfficialVideoMeta
   | PromotionVideoMeta
-  | ShorthandVideoMeta
+  | ShortsVideoMeta
   | StageVideoMeta;
 
 declare global {
@@ -77,3 +84,4 @@ declare global {
 }
 
 export type VideoMeta = PrismaJson.VideoMeta;
+export type VideoMetaType = VideoMeta['type'];

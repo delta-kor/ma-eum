@@ -8,7 +8,7 @@ interface Props {
 export default function Modal({ onCancel, children }: Props) {
   return (
     <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-black/20">
-      <div className="flex min-w-[1200px] flex-col gap-4 rounded-16 bg-white p-16">
+      <div className="flex min-w-[400px] flex-col gap-4 rounded-16 bg-white p-16">
         {children}
         <div className="flex justify-center gap-2">
           <div

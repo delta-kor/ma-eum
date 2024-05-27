@@ -2,6 +2,7 @@
 
 import prisma from '@/prisma/prisma';
 import createId from '@/utils/id';
+import { VideoMeta } from '@/utils/video';
 import { VideoSource } from '@prisma/client';
 
 interface YoutubeVideoJson {
@@ -53,6 +54,32 @@ export async function removeCategoryFromVideo(videoId: string, categoryId: strin
 
   await prisma.video.update({
     data: { categories: { disconnect: { id: categoryId } } },
+    where: { id: videoId },
+  });
+}
+
+export async function addMetaToVideo(videoId: string, meta: VideoMeta) {
+  const video = await prisma.video.findFirst({ where: { id: videoId } });
+  if (!video) throw new Error('Video not found');
+
+  const metas = video.meta;
+  const existingMeta = metas.find(item => item.type === meta.type);
+  if (existingMeta) metas[metas.indexOf(existingMeta)] = meta;
+  else metas.push(meta);
+
+  await prisma.video.update({
+    data: { meta: metas },
+    where: { id: videoId },
+  });
+}
+
+export async function removeMetaFromVideo(videoId: string, type: VideoMeta['type']) {
+  const video = await prisma.video.findFirst({ where: { id: videoId } });
+  if (!video) throw new Error('Video not found');
+
+  const metas = video.meta;
+  await prisma.video.update({
+    data: { meta: metas.filter(item => item.type !== type) },
     where: { id: videoId },
   });
 }

@@ -73,6 +73,9 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
                 </div>
               )}
               <div className="grow text-14 text-black">{video.title}</div>
+              <div className="code text-14 text-gray-500">
+                {video.meta.map(item => item.type).join(', ')}
+              </div>
               <div className="code text-14 text-gray-500">{video.source}</div>
             </div>
           ))}
