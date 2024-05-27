@@ -2,6 +2,7 @@ import Translate from '@/components/core/Translate';
 import { ImageUrl } from '@/utils/url';
 import { Album } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   album: Album;
@@ -31,12 +32,18 @@ export default function AlbumCard({ album, menu }: Props) {
       </div>
       {menu && (
         <div className="relative flex h-32 items-stretch">
-          <div className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-18 font-500 text-white">
+          <Link
+            href={`/albums/${album.id}/promotion`}
+            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-18 font-500 text-white"
+          >
             <Translate>$promotion</Translate>
-          </div>
-          <div className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-18 font-500 text-white">
+          </Link>
+          <Link
+            href={`/albums/${album.id}/performance`}
+            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-18 font-500 text-white"
+          >
             <Translate>$performance</Translate>
-          </div>
+          </Link>
           <div className="absolute left-1/2 h-full w-2 -translate-x-1/2 bg-white opacity-30" />
         </div>
       )}

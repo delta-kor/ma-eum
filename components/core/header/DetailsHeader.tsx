@@ -1,12 +1,14 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
+import useTitle from '@/hooks/title';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function DetailsHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const { content } = useTitle();
 
   useEffect(() => {
     window.scrollTo(0, -1);
@@ -28,11 +30,11 @@ export default function DetailsHeader() {
       title = 'Photocards';
       break;
     default:
-      return null;
+      title = content || '';
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 w-full items-center bg-white py-16">
+    <div className="fixed left-0 top-0 z-50 h-[56px] w-full items-center bg-white py-16">
       <div
         onClick={handleBackClick}
         className="absolute left-16 top-1/2 -translate-y-1/2 cursor-pointer p-8 "

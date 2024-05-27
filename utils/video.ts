@@ -1,3 +1,5 @@
+import { Video } from '@prisma/client';
+
 export type Member = 'duna' | 'geumhee' | 'seoyeon' | 'sihyeon' | 'sua' | 'yeham' | 'yuna';
 export type StageVideoTag =
   | '1take'
@@ -129,3 +131,7 @@ export const AvailableMetaTypes: VideoMetaType[] = [
   'outbound_challenge',
   'live',
 ];
+
+export function getMetaFromVideo<T extends VideoMeta>(video: Video, metaType: T['type']): T | null {
+  return (video.meta.find(meta => meta.type === metaType) as T) || null;
+}
