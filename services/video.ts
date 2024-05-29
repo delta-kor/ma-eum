@@ -17,6 +17,10 @@ const VideoRouter = router({
     .query(opts => {
       return VideoService.getCategoryVideos(opts.input.categoryId, opts.input.member as Member);
     }),
+
+  getCoverVideos: publicProcedure.input(z.object({ member: z.string().nullable() })).query(opts => {
+    return VideoService.getCoverVideos(opts.input.member as Member);
+  }),
 });
 
 export class VideoService {
@@ -47,6 +51,17 @@ export class VideoService {
     const videos = await VideoService.getCategoryVideos(categoryId, null);
     return videos.filter(video =>
       video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
+    );
+  }
+
+  @ControlledCache('video.getCoverVideos', StaticDataTtl)
+  public static async getCoverVideos(member: Member | null): Promise<Video[]> {
+    const videos = await VideoService.getAll();
+    return videos.filter(
+      video =>
+        video.meta.some(meta => meta.type === 'cover') &&
+        (member === null ||
+          video.meta.some(meta => meta.type === 'members' && meta.members.includes(member)))
     );
   }
 

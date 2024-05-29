@@ -22,7 +22,7 @@ export default function CategoryVideoItem({ video }: Props) {
       <div className="flex flex-col justify-between">
         {episode ? (
           <div className="flex flex-col gap-2">
-            <span className="font-700 text-primary-500">{episode}</span>
+            <div className="font-700 text-primary-500">{episode}</div>
             <div className="line-clamp-2 text-16 font-500 text-black"> {title}</div>
           </div>
         ) : (

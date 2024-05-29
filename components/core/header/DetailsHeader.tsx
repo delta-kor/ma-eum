@@ -24,6 +24,9 @@ export default function DetailsHeader() {
     case '/photocards':
       title = 'Photocards';
       break;
+    case '/videos/cover':
+      title = 'Cover';
+      break;
     default:
       title = content || '';
   }
