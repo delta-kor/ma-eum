@@ -13,6 +13,20 @@ export class VideoService {
     return prisma.video.findMany({ orderBy: { date: 'desc' } });
   }
 
+  @ControlledCache('video.getCategoryVideos', StaticDataTtl)
+  public static async getCategoryVideos(categoryId: string): Promise<Video[]> {
+    return prisma.video.findMany({
+      orderBy: { date: 'desc' },
+      where: {
+        categories: {
+          some: {
+            id: categoryId,
+          },
+        },
+      },
+    });
+  }
+
   @ControlledCache('video.getPromotionVideos', StaticDataTtl)
   public static async getPromotionVideos(albumId: string): Promise<Video[]> {
     const videos = await VideoService.getAll();

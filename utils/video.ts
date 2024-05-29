@@ -135,3 +135,24 @@ export const AvailableMetaTypes: VideoMetaType[] = [
 export function getMetaFromVideo<T extends VideoMeta>(video: Video, metaType: T['type']): T | null {
   return (video.meta.find(meta => meta.type === metaType) as T) || null;
 }
+
+export function getMemberName(member: Member | null): string {
+  switch (member) {
+    case 'geumhee':
+      return '금희';
+    case 'sihyeon':
+      return '시현';
+    case 'seoyeon':
+      return '서연';
+    case 'yuna':
+      return '유나';
+    case 'duna':
+      return '두나';
+    case 'sua':
+      return '수아';
+    case 'yeham':
+      return '예함';
+    default:
+      return 'CSR';
+  }
+}

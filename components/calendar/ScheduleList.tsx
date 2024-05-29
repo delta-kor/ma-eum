@@ -1,7 +1,7 @@
 import ScheduleCalendarLink from '@/components/calendar/ScheduleCalendarLink';
 import ScheduleItem from '@/components/calendar/ScheduleItem';
 
-export default function ScheduleSection() {
+export default function ScheduleList() {
   return (
     <div className="flex flex-col gap-12 px-24">
       <div className="text-22 font-700 text-primary-500">Schedule</div>

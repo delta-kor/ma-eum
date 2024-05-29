@@ -28,13 +28,19 @@ enum CategoryType {
   OTHERS
 }
 
+enum CategoryOptions {
+  MEMBERS
+  EPISODE
+}
+
 model Category {
-  id          String       @id
+  id          String            @id
   title       String
   description String?
   type        CategoryType
   order       Int
   videos      Video[]
+  options     CategoryOptions[]
 }
 
 enum VideoSource {

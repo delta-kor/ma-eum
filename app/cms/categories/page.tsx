@@ -20,6 +20,7 @@ export default async function CmsCategoriesPage() {
             style: 'grow',
             type: 'string',
           },
+          { key: 'options', label: 'Options', style: 'text-16 code', type: 'strings' },
           { key: 'order', label: 'Order', style: 'text-16 code', type: 'number' },
           { key: 'type', label: 'Type', style: 'text-16 code', type: 'string' },
         ],

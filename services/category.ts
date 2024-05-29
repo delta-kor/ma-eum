@@ -48,4 +48,13 @@ export class CategoryService {
       orderBy: [{ type: 'asc' }, { order: 'asc' }],
     });
   }
+
+  @ControlledCache('category.getOne', StaticDataTtl)
+  public static async getOne(id: string): Promise<Category | null> {
+    return prisma.category.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }
