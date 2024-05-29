@@ -1,6 +1,7 @@
 'use client';
 
 import LazyImage from '@/components/core/LazyImage';
+import Translate from '@/components/core/Translate';
 import { ImageUrl } from '@/utils/url';
 import { Member, Members, getMemberName } from '@/utils/video';
 
@@ -17,14 +18,14 @@ export default function MemberMenu({ selected, onSelect }: Props) {
           key={member || 'all'}
           data-active={selected === member}
           onClick={() => onSelect(member)}
-          className="group flex snap-start flex-col items-center gap-6 rounded-8 px-14 py-10 data-[active=true]:bg-gradient-primary data-[active=true]:shadow-primary"
+          className="group flex w-[76px] snap-start flex-col items-center gap-6 rounded-8 px-14 py-10 data-[active=true]:bg-gradient-primary data-[active=true]:shadow-primary"
         >
           <LazyImage
             src={ImageUrl.member(member)}
             className="size-48 rounded-full border-2 border-transparent bg-gray-100 group-data-[active=true]:border-white"
           />
-          <div className="max-w-[42px] truncate text-14 font-500 text-black group-data-[active=true]:text-white">
-            {getMemberName(member)}
+          <div className="text-center text-14 font-500 text-black group-data-[active=true]:text-white">
+            <Translate>{getMemberName(member)}</Translate>
           </div>
         </div>
       ))}

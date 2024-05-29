@@ -1,7 +1,8 @@
 'use client';
 
+import NoItems from '@/components/core/NoItems';
 import MemberMenu from '@/components/menu/MemberMenu';
-import CoverVideoItem from '@/components/video/CoverVideoItem';
+import CoverVideoItem, { CoverVideoItemPlaceholder } from '@/components/video/CoverVideoItem';
 import { trpc } from '@/hooks/trpc';
 import { Member } from '@/utils/video';
 import { Video } from '@prisma/client';
@@ -31,12 +32,20 @@ export default function CoverVideoList({ preloadedVideos }: Props) {
   return (
     <div className="flex flex-col gap-18">
       <MemberMenu selected={member} onSelect={handleMemberSelect} />
-      {!videos.isFetching && (
+      {videos.isFetching ? (
+        <div className="flex flex-col gap-16 px-24 pb-24">
+          <CoverVideoItemPlaceholder />
+          <CoverVideoItemPlaceholder />
+          <CoverVideoItemPlaceholder />
+        </div>
+      ) : videos.data.length > 0 ? (
         <div className="flex flex-col gap-16 px-24 pb-24">
           {videos.data.map(video => (
             <CoverVideoItem key={video.id} video={video} />
           ))}
         </div>
+      ) : (
+        <NoItems />
       )}
     </div>
   );

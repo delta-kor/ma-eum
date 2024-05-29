@@ -139,19 +139,19 @@ export function getMetaFromVideo<T extends VideoMeta>(video: Video, metaType: T[
 export function getMemberName(member: Member | null): string {
   switch (member) {
     case 'geumhee':
-      return '금희';
+      return '$member_geumhee';
     case 'sihyeon':
-      return '시현';
+      return '$member_sihyeon';
     case 'seoyeon':
-      return '서연';
+      return '$member_seoyeon';
     case 'yuna':
-      return '유나';
+      return '$member_yuna';
     case 'duna':
-      return '두나';
+      return '$member_duna';
     case 'sua':
-      return '수아';
+      return '$member_sua';
     case 'yeham':
-      return '예함';
+      return '$member_yeham';
     default:
       return 'CSR';
   }

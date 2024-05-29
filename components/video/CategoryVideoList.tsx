@@ -1,7 +1,10 @@
 'use client';
 
+import NoItems from '@/components/core/NoItems';
 import MemberMenu from '@/components/menu/MemberMenu';
-import CategoryVideoItem from '@/components/video/CategoryVideoItem';
+import CategoryVideoItem, {
+  CategoryVideoItemPlaceholder,
+} from '@/components/video/CategoryVideoItem';
 import { trpc } from '@/hooks/trpc';
 import { Member } from '@/utils/video';
 import { Category, CategoryOptions, Video } from '@prisma/client';
@@ -34,12 +37,20 @@ export default function CategoryVideoList({ category, preloadedVideos }: Props) 
       {category.options.includes(CategoryOptions.MEMBERS) && (
         <MemberMenu selected={member} onSelect={handleMemberSelect} />
       )}
-      {!videos.isFetching && (
+      {videos.isFetching ? (
+        <div className="flex flex-col gap-16 px-24 pb-24">
+          <CategoryVideoItemPlaceholder />
+          <CategoryVideoItemPlaceholder />
+          <CategoryVideoItemPlaceholder />
+        </div>
+      ) : videos.data.length > 0 ? (
         <div className="flex flex-col gap-16 px-24 pb-24">
           {videos.data.map(video => (
             <CategoryVideoItem key={video.id} video={video} />
           ))}
         </div>
+      ) : (
+        <NoItems />
       )}
     </div>
   );

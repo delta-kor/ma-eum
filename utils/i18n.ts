@@ -9,6 +9,9 @@ export function i18n(key: string, lang: string): string {
   else if (lang === 'en') locales = en;
   else locales = en;
 
-  if (key in locales) return locales[key];
-  return `!$${key}`;
+  if (key[0] === '$') {
+    const slicedKey = key.slice(1);
+    if (slicedKey in locales) return locales[slicedKey];
+    return `!$${key}`;
+  } else return key;
 }

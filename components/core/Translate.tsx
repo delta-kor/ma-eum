@@ -9,7 +9,7 @@ interface Props {
 
 export default function Translate({ children }: Props) {
   const { language } = useTranslate();
-  const text = i18n(children.slice(1), language);
+  const text = i18n(children, language);
 
   return <>{text}</>;
 }
