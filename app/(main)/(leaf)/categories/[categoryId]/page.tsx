@@ -15,7 +15,7 @@ interface Props {
 
 export default async function CategoryPage({ params: { categoryId } }: Props) {
   const categoryData = CategoryService.getOne(categoryId);
-  const videosData = VideoService.getCategoryVideos(categoryId);
+  const videosData = VideoService.getCategoryVideos(categoryId, null);
 
   const [category, videos] = await Promise.all([categoryData, videosData]);
   if (!category) return notFound();

@@ -17,7 +17,7 @@ export default function TRPCProvider({ children }: Props) {
       links: [
         httpBatchLink({
           transformer: superjson,
-          url: 'http://localhost:3000/api/trpc',
+          url: process.env.NEXT_PUBLIC_TRPC_URL as string,
         }),
       ],
     })
