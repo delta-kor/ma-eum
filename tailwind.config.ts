@@ -38,6 +38,7 @@ const config: Config = {
       'primary-300': '#B4DBF8',
       'primary-400': '#72BBEE',
       'primary-500': '#3098E1',
+      transparent: 'transparent',
       white: '#FFFFFF',
     },
     extend: {

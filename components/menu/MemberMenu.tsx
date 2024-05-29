@@ -1,6 +1,7 @@
 'use client';
 
 import LazyImage from '@/components/core/LazyImage';
+import { ImageUrl } from '@/utils/url';
 import { Member, Members, getMemberName } from '@/utils/video';
 
 interface Props {
@@ -18,7 +19,10 @@ export default function MemberMenu({ selected, onSelect }: Props) {
           onClick={() => onSelect(member)}
           className="group flex snap-start flex-col items-center gap-6 rounded-8 px-14 py-10 data-[active=true]:bg-gradient-primary data-[active=true]:shadow-primary"
         >
-          <LazyImage className="size-[42px] rounded-full bg-gray-100" />
+          <LazyImage
+            src={ImageUrl.member(member)}
+            className="size-48 rounded-full border-2 border-transparent bg-gray-100 group-data-[active=true]:border-white"
+          />
           <div className="max-w-[42px] truncate text-14 font-500 text-black group-data-[active=true]:text-white">
             {getMemberName(member)}
           </div>

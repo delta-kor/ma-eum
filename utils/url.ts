@@ -1,3 +1,5 @@
+import { Member } from '@/utils/video';
+
 export class ImageUrl {
   private static base = 'http://x.izflix.net/maeum';
 
@@ -7,6 +9,10 @@ export class ImageUrl {
 
   public static category(id: string): string {
     return `${ImageUrl.base}/category/${id}.png`;
+  }
+
+  public static member(id: Member | null): string {
+    return `${ImageUrl.base}/member/${id || 'csr'}.jpg`;
   }
 
   public static youtubeThumbnail(id: string): string {
