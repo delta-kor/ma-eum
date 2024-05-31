@@ -2,6 +2,7 @@ import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
+import { paginate } from '@/utils/pagination.util';
 import { Member } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import 'server-only';
@@ -30,6 +31,13 @@ const VideoRouter = router({
 
   getCoverVideos: publicProcedure.input(z.object({ member: z.string().nullable() })).query(opts => {
     return VideoService.getCoverVideos(opts.input.member as Member);
+  }),
+
+  getShortsVideos: publicProcedure.input(z.object({ cursor: z.string().nullish() })).query(opts => {
+    return VideoService.getShortsVideos({
+      cursor: opts.input.cursor || null,
+      limit: 20,
+    });
   }),
 });
 
@@ -81,18 +89,7 @@ export class VideoService {
         video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
     );
 
-    const cursorIndex = pagination.cursor
-      ? memberVideos.findIndex(video => video.id === pagination.cursor)
-      : 0;
-    const to = cursorIndex + pagination.limit;
-
-    const items = memberVideos.slice(cursorIndex, to);
-    const nextCursor = memberVideos[to]?.id || null;
-
-    return {
-      items,
-      nextCursor,
-    };
+    return paginate(memberVideos, pagination);
   }
 
   @ControlledCache('video.getCoverVideos', StaticDataTtl)
@@ -106,11 +103,26 @@ export class VideoService {
     );
   }
 
+  @ControlledCache('video.getLiveVideos', StaticDataTtl)
+  public static async getLiveVideos(): Promise<Video[]> {
+    const videos = await VideoService.getAll();
+    return videos.filter(video => video.meta.some(meta => meta.type === 'live' && !meta.disable));
+  }
+
   @ControlledCache('video.getPromotionVideos', StaticDataTtl)
   public static async getPromotionVideos(albumId: string): Promise<Video[]> {
     const videos = await VideoService.getAll();
     return videos.filter(video =>
       video.meta.some(meta => meta.type === 'promotion' && meta.albumId === albumId)
     );
+  }
+
+  @ControlledCache('video.getShortsVideos', StaticDataTtl)
+  public static async getShortsVideos(
+    pagination: PaginationOptions
+  ): Promise<PaginationResult<Video>> {
+    const videos = await VideoService.getAll();
+    const shortsVideos = videos.filter(video => video.meta.some(meta => meta.type === 'shorts'));
+    return paginate(shortsVideos, pagination);
   }
 }
