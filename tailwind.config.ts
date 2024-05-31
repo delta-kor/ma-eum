@@ -46,6 +46,7 @@ const config: Config = {
         fade: 'fadeIn 1s',
       },
       backgroundImage: {
+        'gradient-orange': 'linear-gradient(90deg, #EB8D48 0%, #EBA776 100%);',
         'gradient-primary': 'linear-gradient(90deg, #3098E1 0%, #5EB6F5 100%)',
       },
       keyframes: {

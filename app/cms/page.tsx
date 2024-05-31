@@ -1,5 +1,5 @@
 import CmsCacheItem, { CacheInfo } from '@/components/cms/cache/CmsCacheItem';
-import { ServerCacheMap } from '@/utils/cache';
+import { ServerCacheMap } from '@/utils/cache.util';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';

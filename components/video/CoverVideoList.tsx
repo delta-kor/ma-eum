@@ -4,7 +4,7 @@ import NoItems from '@/components/core/NoItems';
 import MemberMenu from '@/components/menu/MemberMenu';
 import CoverVideoItem, { CoverVideoItemPlaceholder } from '@/components/video/CoverVideoItem';
 import { trpc } from '@/hooks/trpc';
-import { Member } from '@/utils/video';
+import { Member } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { useState } from 'react';
 

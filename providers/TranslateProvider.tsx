@@ -1,6 +1,6 @@
 'use client';
 
-import Storage from '@/utils/storage';
+import Storage from '@/utils/storage.util';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 
 interface Translate {

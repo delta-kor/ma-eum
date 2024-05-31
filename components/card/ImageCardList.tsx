@@ -1,6 +1,6 @@
 import ImageCard from '@/components/card/ImageCard';
 import Translate from '@/components/core/Translate';
-import { CategoryService } from '@/services/category';
+import { CategoryService } from '@/services/category.service';
 import { CategoryType } from '@prisma/client';
 
 export default async function ImageCardList() {

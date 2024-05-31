@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidate } from '@/actions/revalidate';
+import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsModelCreate from '@/components/cms/model/CmsModelCreate';
 import CmsModelInfo from '@/components/cms/model/CmsModelInfo';

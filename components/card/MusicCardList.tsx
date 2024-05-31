@@ -1,6 +1,6 @@
 import MusicCard from '@/components/card/MusicCard';
-import { AlbumService } from '@/services/album';
-import { MusicService } from '@/services/music';
+import { AlbumService } from '@/services/album.service';
+import { MusicService } from '@/services/music.service';
 import { Music } from '@prisma/client';
 
 export default async function MusicCardList() {

@@ -14,7 +14,7 @@ import {
   PromotionVideoMeta,
   StageVideoMeta,
   VideoMeta,
-} from '@/utils/video';
+} from '@/utils/video.util';
 import { DetailedHTMLProps, FormHTMLAttributes } from 'react';
 
 interface Props<T extends VideoMeta> {

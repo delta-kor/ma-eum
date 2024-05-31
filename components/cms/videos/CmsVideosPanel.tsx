@@ -1,10 +1,10 @@
 'use client';
 
-import { importYoutubeVideosFromJson } from '@/actions/cms/videos';
-import { revalidate } from '@/actions/revalidate';
+import { importYoutubeVideosFromJson } from '@/actions/cms/videos.action';
+import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsVideosInfo, { VideoExtended } from '@/components/cms/videos/CmsVideosInfo';
-import { VideoMeta } from '@/utils/video';
+import { VideoMeta } from '@/utils/video.util';
 import { Category } from '@prisma/client';
 import { format } from 'date-fns';
 import { useState } from 'react';

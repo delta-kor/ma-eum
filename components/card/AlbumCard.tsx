@@ -1,5 +1,5 @@
 import Translate from '@/components/core/Translate';
-import { ImageUrl } from '@/utils/url';
+import { ImageUrl } from '@/utils/url.util';
 import { Album } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';

@@ -1,5 +1,5 @@
 import ProgramCard from '@/components/card/ProgramCard';
-import { CategoryService } from '@/services/category';
+import { CategoryService } from '@/services/category.service';
 import { CategoryType } from '@prisma/client';
 
 export default async function ProgramCardList() {

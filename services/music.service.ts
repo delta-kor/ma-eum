@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache';
-import createId from '@/utils/id';
+import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import createId from '@/utils/id.util';
 import { Music } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';

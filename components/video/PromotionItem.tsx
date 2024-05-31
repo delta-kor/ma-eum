@@ -1,7 +1,7 @@
 import GradientIcon from '@/components/core/GradientIcon';
 import LazyImage from '@/components/core/LazyImage';
-import { ImageUrl } from '@/utils/url';
-import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video';
+import { ImageUrl } from '@/utils/url.util';
+import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 

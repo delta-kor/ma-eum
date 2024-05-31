@@ -2,8 +2,8 @@
 
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
-import { ImageUrl } from '@/utils/url';
-import { Member, Members, getMemberName } from '@/utils/video';
+import { ImageUrl } from '@/utils/url.util';
+import { Member, Members, getMemberName } from '@/utils/video.util';
 
 interface Props {
   selected: Member | null;

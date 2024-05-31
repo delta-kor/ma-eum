@@ -1,8 +1,8 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import CategoryVideoList from '@/components/video/CategoryVideoList';
-import { CategoryService } from '@/services/category';
-import { VideoService } from '@/services/video';
+import { CategoryService } from '@/services/category.service';
+import { VideoService } from '@/services/video.service';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 0;

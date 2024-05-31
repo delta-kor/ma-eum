@@ -1,7 +1,7 @@
 'use client';
 
 import useTranslate from '@/hooks/translate';
-import { i18n } from '@/utils/i18n';
+import { i18n } from '@/utils/i18n.util';
 
 interface Props {
   children: string;

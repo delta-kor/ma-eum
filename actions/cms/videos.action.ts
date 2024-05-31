@@ -1,8 +1,8 @@
 'use server';
 
 import prisma from '@/prisma/prisma';
-import createId from '@/utils/id';
-import { AvailableMetaTypes, VideoMeta } from '@/utils/video';
+import createId from '@/utils/id.util';
+import { AvailableMetaTypes, VideoMeta } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
 
 interface YoutubeVideoJson {

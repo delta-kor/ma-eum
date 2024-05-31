@@ -2,9 +2,9 @@ import AlbumCardLarge from '@/components/card/AlbumCardLarge';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import PromotionList from '@/components/video/PromotionList';
-import { AlbumService } from '@/services/album';
-import { VideoService } from '@/services/video';
-import { sortVideoByMeta } from '@/utils/sort';
+import { AlbumService } from '@/services/album.service';
+import { VideoService } from '@/services/video.service';
+import { sortVideoByMeta } from '@/utils/sort.util';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 0;

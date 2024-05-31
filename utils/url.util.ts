@@ -1,4 +1,4 @@
-import { Member } from '@/utils/video';
+import { Member } from '@/utils/video.util';
 
 export class ImageUrl {
   private static base = 'http://x.izflix.net/maeum';

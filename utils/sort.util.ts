@@ -1,4 +1,4 @@
-import { VideoMetaType, getMetaFromVideo } from '@/utils/video';
+import { VideoMetaType, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 
 export function sortVideoByMeta<T extends Video>(array: T[], metaType: VideoMetaType) {

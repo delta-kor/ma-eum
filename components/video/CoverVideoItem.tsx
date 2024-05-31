@@ -1,6 +1,6 @@
 import LazyImage from '@/components/core/LazyImage';
-import { ImageUrl } from '@/utils/url';
-import { CoverVideoMeta, getMetaFromVideo } from '@/utils/video';
+import { ImageUrl } from '@/utils/url.util';
+import { CoverVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { format } from 'date-fns';
 
@@ -22,7 +22,11 @@ export default function CoverVideoItem({ video }: Props) {
       <div className="flex flex-col justify-between">
         <div className="flex flex-col gap-4">
           {kind && (
-            <div className="self-start rounded-8 bg-gradient-primary px-8 py-4 text-14 font-700 text-white">
+            <div
+              className={`self-start rounded-8 px-8 py-4 text-14 font-700 text-white ${
+                kind === 'dance' ? 'bg-gradient-orange' : 'bg-gradient-primary'
+              }`}
+            >
               {kind.toUpperCase()}
             </div>
           )}

@@ -1,5 +1,5 @@
 import AlbumCard from '@/components/card/AlbumCard';
-import { AlbumService } from '@/services/album';
+import { AlbumService } from '@/services/album.service';
 
 export default async function AlbumCardList() {
   const albums = await AlbumService.getAll();

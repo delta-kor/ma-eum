@@ -41,7 +41,8 @@ export function cmsFormToObject(
     if (field.type === 'string') result[field.key] = value;
     else if (field.type === 'number') result[field.key] = Number(value);
     else if (field.type === 'date') result[field.key] = new Date(value as string);
-    else if (field.type === 'strings') result[field.key] = (value as string).split(',');
+    else if (field.type === 'strings')
+      result[field.key] = value ? (value as string).split(',') : [];
     else if (field.type === 'model')
       result[field.key] = value ? { connect: { id: value } } : create ? {} : { disconnect: true };
     else if (field.type === 'boolean') result[field.key] = value === 'on';

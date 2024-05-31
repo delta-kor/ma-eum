@@ -1,4 +1,4 @@
-import { ImageUrl } from '@/utils/url';
+import { ImageUrl } from '@/utils/url.util';
 import { Album } from '@prisma/client';
 
 interface Props {

@@ -5,11 +5,11 @@ import {
   addMetaToVideo,
   removeCategoryFromVideo,
   removeMetaFromVideo,
-} from '@/actions/cms/videos';
-import { revalidate } from '@/actions/revalidate';
+} from '@/actions/cms/videos.action';
+import { revalidate } from '@/actions/revalidate.action';
 import CmsModal from '@/components/cms/CmsModal';
 import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
-import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video';
+import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { Category, Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';

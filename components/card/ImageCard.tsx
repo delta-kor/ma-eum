@@ -1,4 +1,4 @@
-import { ImageUrl } from '@/utils/url';
+import { ImageUrl } from '@/utils/url.util';
 import { Category } from '@prisma/client';
 import Link from 'next/link';
 

@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache';
-import { Member } from '@/utils/video';
+import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { Member } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';

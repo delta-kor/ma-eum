@@ -1,8 +1,8 @@
-import { revalidate } from '@/actions/revalidate';
+import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsInput from '@/components/cms/CmsInput';
 import { CmsModelField, ItemBase } from '@/components/cms/model/CmsModelPanel';
-import { cmsFormToObject, getCmsTrpcRecordByName } from '@/utils/cms';
+import { cmsFormToObject, getCmsTrpcRecordByName } from '@/utils/cms.util';
 
 interface Props<T extends ItemBase> {
   fields: CmsModelField[];

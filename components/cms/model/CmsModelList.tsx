@@ -1,5 +1,5 @@
 import { CmsModelField, ItemBase } from '@/components/cms/model/CmsModelPanel';
-import { getCmsFieldText } from '@/utils/cms';
+import { getCmsFieldText } from '@/utils/cms.util';
 
 interface Props<T extends ItemBase> {
   fields: CmsModelField[];

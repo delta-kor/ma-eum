@@ -1,4 +1,4 @@
-import { Members } from '@/utils/video';
+import { Members } from '@/utils/video.util';
 
 interface Props {
   defaultValue?: any;

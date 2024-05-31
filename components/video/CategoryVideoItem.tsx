@@ -1,6 +1,6 @@
 import LazyImage from '@/components/core/LazyImage';
-import { ImageUrl } from '@/utils/url';
-import { EpisodeVideoMeta, getMetaFromVideo } from '@/utils/video';
+import { ImageUrl } from '@/utils/url.util';
+import { EpisodeVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { format } from 'date-fns';
 

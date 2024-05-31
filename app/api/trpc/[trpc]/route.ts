@@ -1,4 +1,4 @@
-import { AppService } from '@/services/app';
+import { AppService } from '@/services/app.service';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
 const handler = (req: Request) =>

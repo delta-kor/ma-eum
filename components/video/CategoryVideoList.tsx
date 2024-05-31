@@ -6,7 +6,7 @@ import CategoryVideoItem, {
   CategoryVideoItemPlaceholder,
 } from '@/components/video/CategoryVideoItem';
 import { trpc } from '@/hooks/trpc';
-import { Member } from '@/utils/video';
+import { Member } from '@/utils/video.util';
 import { Category, CategoryOptions, Video } from '@prisma/client';
 import { useState } from 'react';
 
