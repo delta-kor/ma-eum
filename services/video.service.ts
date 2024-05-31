@@ -1,6 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { Member } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import 'server-only';
@@ -18,6 +19,15 @@ const VideoRouter = router({
       return VideoService.getCategoryVideos(opts.input.categoryId, opts.input.member as Member);
     }),
 
+  getChallengeVideos: publicProcedure
+    .input(z.object({ cursor: z.string().nullish(), member: z.string().nullable() }))
+    .query(opts => {
+      return VideoService.getChallengeVideos(opts.input.member as Member, {
+        cursor: opts.input.cursor || null,
+        limit: 20,
+      });
+    }),
+
   getCoverVideos: publicProcedure.input(z.object({ member: z.string().nullable() })).query(opts => {
     return VideoService.getCoverVideos(opts.input.member as Member);
   }),
@@ -28,7 +38,7 @@ export class VideoService {
 
   @ControlledCache('video.getAll', StaticDataTtl)
   public static async getAll(): Promise<Video[]> {
-    return prisma.video.findMany({ orderBy: { date: 'desc' } });
+    return prisma.video.findMany({ orderBy: [{ date: 'desc' }, { id: 'asc' }] });
   }
 
   @ControlledCache('video.getCategoryVideos', StaticDataTtl)
@@ -52,6 +62,37 @@ export class VideoService {
     return videos.filter(video =>
       video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
     );
+  }
+
+  @ControlledCache('video.getChallengeVideos', StaticDataTtl)
+  public static async getChallengeVideos(
+    member: Member | null,
+    pagination: PaginationOptions
+  ): Promise<PaginationResult<Video>> {
+    const videos = await VideoService.getAll();
+    const challengeVideos = videos.filter(video =>
+      video.meta.some(
+        meta => meta.type === 'inbound_challenge' || meta.type === 'outbound_challenge'
+      )
+    );
+    const memberVideos = challengeVideos.filter(
+      video =>
+        member === null ||
+        video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
+    );
+
+    const cursorIndex = pagination.cursor
+      ? memberVideos.findIndex(video => video.id === pagination.cursor)
+      : 0;
+    const to = cursorIndex + pagination.limit;
+
+    const items = memberVideos.slice(cursorIndex, to);
+    const nextCursor = memberVideos[to]?.id || null;
+
+    return {
+      items,
+      nextCursor,
+    };
   }
 
   @ControlledCache('video.getCoverVideos', StaticDataTtl)

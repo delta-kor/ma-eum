@@ -20,6 +20,7 @@
     "node-cache": "^5.1.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-intersection-observer": "^9.10.2",
     "react-lazy-load-image-component": "^1.6.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",

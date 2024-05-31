@@ -1,6 +1,7 @@
 {
   "extends": ["next/core-web-vitals", "prettier", "plugin:perfectionist/recommended-natural", "plugin:tailwindcss/recommended"],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "tailwindcss/classnames-order": "error",
     "perfectionist/sort-imports": "off",
     "perfectionist/sort-interfaces": [

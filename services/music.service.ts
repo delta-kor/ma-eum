@@ -1,5 +1,5 @@
 import prisma from '@/prisma/prisma';
-import { cmsProcedure, router } from '@/trpc/router';
+import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import { Music } from '@prisma/client';
@@ -26,6 +26,12 @@ const MusicRouter = router({
     });
   }),
 
+  getOne: publicProcedure.input(z.object({ id: z.string().nullable() })).query(async opts => {
+    if (!opts.input.id) return null;
+
+    return MusicService.getOne(opts.input.id);
+  }),
+
   update: cmsProcedure.input(z.object({ id: z.string() }).passthrough()).mutation(async opts => {
     const { id } = opts.input;
     await prisma.music.update({
@@ -45,5 +51,11 @@ export class MusicService {
   @ControlledCache('music.getAll', StaticDataTtl)
   public static async getAll(): Promise<Music[]> {
     return prisma.music.findMany({ orderBy: { order: 'asc' } });
+  }
+
+  @ControlledCache('music.getOne', StaticDataTtl)
+  public static async getOne(id: string): Promise<Music | null> {
+    const musics = await MusicService.getAll();
+    return musics.find(music => music.id === id) || null;
   }
 }

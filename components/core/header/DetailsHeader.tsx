@@ -27,6 +27,9 @@ export default function DetailsHeader() {
     case '/videos/cover':
       title = 'Cover';
       break;
+    case '/videos/challenge':
+      title = 'Challenge';
+      break;
     default:
       title = content || '';
   }
