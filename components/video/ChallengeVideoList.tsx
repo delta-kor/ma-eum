@@ -1,5 +1,6 @@
 'use client';
 
+import EndItems from '@/components/core/EndItems';
 import NoItems from '@/components/core/NoItems';
 import MemberMenu from '@/components/menu/MemberMenu';
 import ChallengeVideoItem, {
@@ -71,7 +72,7 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
               <ChallengeVideoItemPlaceholder />
             </>
           )}
-          {videos.hasNextPage && <div ref={ref} className="h-2" />}
+          {videos.hasNextPage ? <div ref={ref} className="h-2" /> : <EndItems />}
         </div>
       ) : (
         <NoItems />

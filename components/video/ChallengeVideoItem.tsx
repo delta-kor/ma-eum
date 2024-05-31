@@ -1,3 +1,4 @@
+import GradientIcon from '@/components/core/GradientIcon';
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
@@ -39,7 +40,7 @@ export default function ChallengeVideoItem({ video }: Props) {
       staleTime: Infinity,
     }
   );
-  const title = music?.title || outboundChallengeMeta?.music;
+  const title = music?.shortTitle || outboundChallengeMeta?.music;
 
   const left = inboundChallengeMeta ? inboundChallengeMeta.from || '' : 'CSR';
   const right = outboundChallengeMeta ? outboundChallengeMeta.to || '' : 'CSR';
@@ -60,7 +61,14 @@ export default function ChallengeVideoItem({ video }: Props) {
         />
         <div className="flex min-w-0 flex-col justify-between">
           <div className="flex min-w-0 flex-col gap-4">
-            <div className="line-clamp-2 text-16 font-500 text-black">{title}</div>
+            <div className="flex items-center gap-6">
+              {musicMeta ? (
+                <GradientIcon type="cover" className="w-16 shrink-0" />
+              ) : (
+                <GradientIcon type="challenge" className="w-16 shrink-0" />
+              )}
+              <div className="line-clamp-2 text-16 font-500 text-black">{title}</div>
+            </div>
             <div className="truncate text-14 font-500 text-gray-500">
               {format(video.date, 'yy. MM. dd.')}
             </div>
