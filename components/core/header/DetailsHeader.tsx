@@ -33,6 +33,9 @@ export default function DetailsHeader() {
     case '/videos/live':
       title = 'Live';
       break;
+    case '/videos/shorts':
+      title = 'Shorts';
+      break;
     default:
       title = content || '';
   }

@@ -36,7 +36,7 @@ const VideoRouter = router({
   getShortsVideos: publicProcedure.input(z.object({ cursor: z.string().nullish() })).query(opts => {
     return VideoService.getShortsVideos({
       cursor: opts.input.cursor || null,
-      limit: 20,
+      limit: 24,
     });
   }),
 });

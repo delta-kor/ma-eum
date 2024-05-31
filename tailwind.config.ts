@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     aspectRatio: {
       auto: 'auto',
+      shorts: '8.95/16',
       square: '1/1',
       video: '16/8.95',
     },
@@ -30,6 +31,7 @@ const config: Config = {
     },
     colors: {
       black: '#474E53',
+      'black-real': '#000000',
       'gray-100': '#E5EDF2',
       'gray-200': '#CDDAE4',
       'gray-500': '#8D959B',

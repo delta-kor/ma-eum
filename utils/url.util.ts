@@ -15,6 +15,10 @@ export class ImageUrl {
     return `${ImageUrl.base}/member/${id || 'csr'}.jpg`;
   }
 
+  public static youtubeShortsThumbnail(id: string): string {
+    return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  }
+
   public static youtubeThumbnail(id: string): string {
     return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   }
