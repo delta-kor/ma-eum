@@ -1,5 +1,3 @@
-'use client';
-
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
@@ -16,14 +14,15 @@ import { useMemo, useState } from 'react';
 
 interface Props {
   dateInfo: CalendarDateInfo;
+  selectedDate: Date;
+  onDateSelect: (date: Date) => void;
 }
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function Calendar({ dateInfo }: Props) {
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const [month, setMonth] = useState<number>(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props) {
+  const [year, setYear] = useState<number>(selectedDate.getFullYear());
+  const [month, setMonth] = useState<number>(selectedDate.getMonth());
 
   const currentDate = new Date(year, month);
 
@@ -43,7 +42,11 @@ export default function Calendar({ dateInfo }: Props) {
   }, [startDate, endDate]);
 
   const handleDateSelect = (date: Date) => {
-    setSelectedDate(date);
+    if (dateInfo[format(date, 'yyyy-MM-dd')] === undefined) return false;
+
+    setYear(date.getFullYear());
+    setMonth(date.getMonth());
+    onDateSelect(date);
   };
 
   const handleMonthChange = (direction: 'next' | 'prev') => {
@@ -100,7 +103,7 @@ export default function Calendar({ dateInfo }: Props) {
               key={date.getTime()}
               data-selected={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
               onClick={() => handleDateSelect(date)}
-              className="group relative flex flex-col gap-4 px-2 py-8"
+              className="group relative flex cursor-pointer flex-col gap-4 px-2 py-8"
             >
               <div className="absolute inset-0 hidden rounded-4 bg-gradient-primary group-data-[selected=true]:block"></div>
               <div

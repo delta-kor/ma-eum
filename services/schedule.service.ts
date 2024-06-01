@@ -2,7 +2,7 @@ import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
-import { ScheduleType } from '@prisma/client';
+import { Schedule, ScheduleType } from '@prisma/client';
 import { format } from 'date-fns';
 import 'server-only';
 import { z } from 'zod';
@@ -27,6 +27,10 @@ const ScheduleRouter = router({
         id,
       },
     });
+  }),
+
+  getSchedules: cmsProcedure.input(z.object({ date: z.date() })).query(async opts => {
+    return ScheduleService.getSchedules(opts.input.date);
   }),
 
   update: cmsProcedure.input(z.object({ id: z.string() }).passthrough()).mutation(async opts => {
@@ -60,5 +64,18 @@ export class ScheduleService {
     }
 
     return result;
+  }
+
+  @ControlledCache('schedule.getSchedules', StaticDataTtl)
+  public static async getSchedules(date: Date): Promise<Schedule[]> {
+    return prisma.schedule.findMany({
+      orderBy: { date: 'asc' },
+      where: {
+        date: {
+          gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+          lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+        },
+      },
+    });
   }
 }
