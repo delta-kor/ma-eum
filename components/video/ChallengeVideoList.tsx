@@ -72,7 +72,7 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
               <ChallengeVideoItemPlaceholder />
             </>
           )}
-          {videos.hasNextPage ? <div ref={ref} /> : <EndItems />}
+          {videos.hasNextPage ? <div ref={ref} className="size-1" /> : <EndItems />}
         </div>
       ) : (
         <NoItems />

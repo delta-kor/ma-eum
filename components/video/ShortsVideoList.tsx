@@ -62,7 +62,7 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
               <ShortsVideoItemPlaceholder />
             </>
           )}
-          {videos.hasNextPage && <div ref={ref} />}
+          {videos.hasNextPage && <div ref={ref} className="size-1" />}
         </div>
       ) : (
         <NoItems />
