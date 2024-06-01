@@ -48,7 +48,7 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
           <ShortsVideoItemPlaceholder />
         </div>
       ) : items.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] items-center pb-24">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] items-center">
           {items.map(video => (
             <ShortsVideoItem key={video.id} video={video} />
           ))}

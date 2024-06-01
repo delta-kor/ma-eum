@@ -18,7 +18,7 @@ export default function MemberMenu({ selected, onSelect }: Props) {
           key={member || 'all'}
           data-active={selected === member}
           onClick={() => onSelect(member)}
-          className="group flex w-[76px] snap-start flex-col items-center gap-6 rounded-8 px-14 py-10 data-[active=true]:bg-gradient-primary data-[active=true]:shadow-primary"
+          className="group flex w-[76px] cursor-pointer snap-start flex-col items-center gap-6 rounded-8 px-14 py-10 data-[active=true]:bg-gradient-primary data-[active=true]:shadow-primary"
         >
           <LazyImage
             src={ImageUrl.member(member)}

@@ -25,6 +25,7 @@ export function ShortsVideoItemPlaceholder() {
   return (
     <div className="relative animate-pulse">
       <div className="aspect-shorts bg-gray-100" />
+      <div className="absolute left-0 top-0 size-full bg-gradient-to-b from-transparent from-30% to-black-real/80" />
     </div>
   );
 }
