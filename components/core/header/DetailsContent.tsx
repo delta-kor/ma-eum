@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function DetailsContent({ children }: Props) {

@@ -8,21 +8,26 @@ export function getCmsFieldText(field: CmsModelField, item: any): null | string 
   const value = field.type === 'model' ? item[`${field.key}Id`] : item[field.key];
   if (typeof value === 'undefined') return null;
 
+  console.log(value, field.type);
+
   return field.type === 'string' || field.type === 'number'
     ? value
     : field.type === 'strings'
       ? value.join(',')
       : field.type === 'date'
         ? format(value, 'yyyy-MM-dd')
-        : field.type === 'model'
-          ? value
-          : '';
+        : field.type === 'datetime'
+          ? format(value, "yyyy-MM-dd'T'HH:mm")
+          : field.type === 'model'
+            ? value
+            : '';
 }
 
 export function getCmsTrpcRecordByName(name: string) {
   if (name === 'album') return trpc.album;
   if (name === 'category') return trpc.category;
   if (name === 'music') return trpc.music;
+  if (name === 'schedule') return trpc.schedule;
   throw new Error('Unknown model name');
 }
 
@@ -41,6 +46,7 @@ export function cmsFormToObject(
     if (field.type === 'string') result[field.key] = value;
     else if (field.type === 'number') result[field.key] = Number(value);
     else if (field.type === 'date') result[field.key] = new Date(value as string);
+    else if (field.type === 'datetime') result[field.key] = new Date(value as string);
     else if (field.type === 'strings')
       result[field.key] = value ? (value as string).split(',') : [];
     else if (field.type === 'model')

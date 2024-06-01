@@ -7,7 +7,14 @@ import CmsModelInfo from '@/components/cms/model/CmsModelInfo';
 import CmsModelList from '@/components/cms/model/CmsModelList';
 import { useEffect, useState } from 'react';
 
-export type CmsModelFieldType = 'boolean' | 'date' | 'model' | 'number' | 'string' | 'strings';
+export type CmsModelFieldType =
+  | 'boolean'
+  | 'date'
+  | 'datetime'
+  | 'model'
+  | 'number'
+  | 'string'
+  | 'strings';
 
 export interface ItemBase {
   id: string;

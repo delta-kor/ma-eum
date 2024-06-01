@@ -64,6 +64,24 @@ export default function CmsInput({ field, item, placeholder, required }: Props) 
       </div>
     );
 
+  if (field.type === 'datetime')
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="text-16 font-600">{field.label}</div>
+        <input
+          autoComplete="off"
+          autoCorrect="off"
+          defaultValue={defaultValue}
+          name={field.key}
+          placeholder={placeholder}
+          required={required}
+          spellCheck="false"
+          type="datetime-local"
+          className="rounded-8 bg-gray-100 px-16 py-12 text-16 outline-primary-500"
+        />
+      </div>
+    );
+
   if (field.type === 'model')
     return (
       <div className="flex flex-col gap-4">
