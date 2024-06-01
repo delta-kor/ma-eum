@@ -8,8 +8,6 @@ export function getCmsFieldText(field: CmsModelField, item: any): null | string 
   const value = field.type === 'model' ? item[`${field.key}Id`] : item[field.key];
   if (typeof value === 'undefined') return null;
 
-  console.log(value, field.type);
-
   return field.type === 'string' || field.type === 'number'
     ? value
     : field.type === 'strings'

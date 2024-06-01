@@ -36,6 +36,9 @@ export default function DetailsHeader() {
     case '/videos/shorts':
       title = 'Shorts';
       break;
+    case '/schedules':
+      title = 'Calendar';
+      break;
     default:
       title = content || '';
   }
