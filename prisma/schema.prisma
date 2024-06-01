@@ -81,3 +81,19 @@ model Stage {
   date  DateTime
   order Int
 }
+
+enum ScheduleType {
+  PROGRAM
+  FANSIGN
+  OTHERS
+}
+
+model Schedule {
+  id          String       @id
+  title       String
+  date        DateTime
+  dateDetails String
+  type        ScheduleType
+  members     String[]
+  url         String?
+}
