@@ -1,5 +1,6 @@
 'use client';
 
+import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
 import {
@@ -7,6 +8,7 @@ import {
   differenceInCalendarDays,
   endOfMonth,
   endOfWeek,
+  format,
   startOfMonth,
   startOfWeek,
 } from 'date-fns';
@@ -18,9 +20,10 @@ interface Props {
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function Calendar({}: Props) {
+export default function Calendar({ dateInfo }: Props) {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const currentDate = new Date(year, month);
 
@@ -39,16 +42,48 @@ export default function Calendar({}: Props) {
     return monthArray;
   }, [startDate, endDate]);
 
+  const handleDateSelect = (date: Date) => {
+    setSelectedDate(date);
+  };
+
+  const handleMonthChange = (direction: 'next' | 'prev') => {
+    if (direction === 'prev') {
+      if (month === 0) {
+        setYear(year - 1);
+        setMonth(11);
+      } else {
+        setMonth(month - 1);
+      }
+    } else {
+      if (month === 11) {
+        setYear(year + 1);
+        setMonth(0);
+      } else {
+        setMonth(month + 1);
+      }
+    }
+  };
+
   return (
     <div className="flex flex-col items-center gap-24">
-      <div className="flex items-center gap-36">
-        <Icon type="left" className="w-16 text-gray-200" />
-        <div className="text-24 font-700 text-primary-500">
+      <div className="flex items-stretch gap-32">
+        <div
+          onClick={() => handleMonthChange('prev')}
+          className="flex w-32 cursor-pointer items-center justify-center"
+        >
+          <Icon type="left" className="w-16 text-gray-200" />
+        </div>
+        <div className="w-[110px] text-center text-24 font-700 text-primary-500">
           {year}. {month + 1}.
         </div>
-        <Icon type="right" className="w-16 text-gray-200" />
+        <div
+          onClick={() => handleMonthChange('next')}
+          className="flex w-32 cursor-pointer items-center justify-center"
+        >
+          <Icon type="right" className="w-16 text-gray-200" />
+        </div>
       </div>
-      <div className="flex flex-col gap-16 self-stretch px-24">
+      <div className="flex flex-col gap-8 self-stretch px-24">
         <div className="flex items-center justify-between">
           {days.map(day => (
             <div
@@ -59,16 +94,30 @@ export default function Calendar({}: Props) {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-[repeat(7,40px)] justify-between gap-y-24">
+        <div className="grid grid-cols-[repeat(7,40px)] justify-between gap-y-12">
           {dates.map(date => (
-            <div key={date.getTime()} className="flex flex-col gap-4">
+            <div
+              key={date.getTime()}
+              data-selected={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
+              onClick={() => handleDateSelect(date)}
+              className="group relative flex flex-col gap-4 px-2 py-8"
+            >
+              <div className="absolute inset-0 hidden rounded-4 bg-gradient-primary group-data-[selected=true]:block"></div>
               <div
                 data-inactive={date.getMonth() !== month}
-                className="text-center text-16 font-600 text-black data-[inactive=true]:text-gray-200"
+                className="relative text-center text-16 font-600 text-black data-[inactive=true]:text-gray-200"
               >
-                {date.getDate()}
+                <div className="group-data-[selected=true]:text-white">{date.getDate()}</div>
               </div>
-              <div className="flex h-6 items-center justify-center gap-2"></div>
+              <div className="relative flex h-6 items-center justify-center gap-2">
+                {dateInfo[format(date, 'yyyy-MM-dd')]?.map((item, index) => (
+                  <ScheduleTypeChip
+                    key={index}
+                    active={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
+                    type={item}
+                  />
+                ))}
+              </div>
             </div>
           ))}
         </div>

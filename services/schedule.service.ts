@@ -2,11 +2,12 @@ import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
+import { ScheduleType } from '@prisma/client';
 import { format } from 'date-fns';
 import 'server-only';
 import { z } from 'zod';
 
-export type CalendarDateInfo = Record<string, string[]>;
+export type CalendarDateInfo = Record<string, ScheduleType[]>;
 
 const ScheduleRouter = router({
   create: cmsProcedure.input(z.object({}).passthrough()).mutation(async opts => {
