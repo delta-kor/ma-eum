@@ -2,6 +2,8 @@ import DetailsContent from '@/components/core/header/DetailsContent';
 import LiveVideoList from '@/components/video/LiveVideoList';
 import { VideoService } from '@/services/video.service';
 
+export const revalidate = 0;
+
 export default async function LiveVideosPage() {
   const videosData = VideoService.getLiveVideos();
 
