@@ -1,6 +1,9 @@
-import ScheduleDetailsItem from '@/components/calendar/ScheduleDetailsItem';
+import ScheduleDetailsItem, {
+  ScheduleDetailsItemPlaceholder,
+} from '@/components/calendar/ScheduleDetailsItem';
 import NoItems from '@/components/core/NoItems';
 import { trpc } from '@/hooks/trpc';
+import { format } from 'date-fns';
 
 interface Props {
   selectedDate: Date;
@@ -12,6 +15,7 @@ export default function ScheduleDetailsList({ selectedDate }: Props) {
       date: selectedDate,
     },
     {
+      queryHash: format(selectedDate, 'yyyy-MM-dd'),
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
@@ -29,7 +33,11 @@ export default function ScheduleDetailsList({ selectedDate }: Props) {
           <NoItems />
         )
       ) : (
-        <></>
+        <>
+          <ScheduleDetailsItemPlaceholder />
+          <ScheduleDetailsItemPlaceholder />
+          <ScheduleDetailsItemPlaceholder />
+        </>
       )}
     </div>
   );

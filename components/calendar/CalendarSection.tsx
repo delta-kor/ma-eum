@@ -3,15 +3,20 @@
 import Calendar from '@/components/calendar/Calendar';
 import ScheduleDetailsList from '@/components/calendar/ScheduleDetailsList';
 import type { CalendarDateInfo } from '@/services/schedule.service';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   dateInfo: CalendarDateInfo;
+  today: Date;
 }
 
-export default function CalendarSection({ dateInfo }: Props) {
-  const today = new Date();
+export default function CalendarSection({ dateInfo, today }: Props) {
   const [date, setDate] = useState<Date>(today);
+
+  useEffect(() => {
+    const today = new Date();
+    setDate(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
+  }, []);
 
   function handleDateSelect(date: Date) {
     setDate(date);

@@ -6,10 +6,11 @@ export const revalidate = 0;
 
 export default async function SchedulesPage() {
   const dateInfo = await ScheduleService.getCalendarDateInfo();
+  const today = new Date();
 
   return (
     <DetailsContent>
-      <CalendarSection dateInfo={dateInfo} />
+      <CalendarSection dateInfo={dateInfo} today={today} />
     </DetailsContent>
   );
 }
