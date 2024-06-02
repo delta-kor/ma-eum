@@ -83,8 +83,11 @@ model Stage {
 }
 
 enum ScheduleType {
+  ALBUM
   PROGRAM
   FANSIGN
+  CONCERT
+  RADIO
   OTHERS
 }
 

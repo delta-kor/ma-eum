@@ -117,6 +117,7 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
                   <ScheduleTypeChip
                     key={index}
                     active={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
+                    kind="dot"
                     type={item}
                   />
                 ))}

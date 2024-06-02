@@ -32,6 +32,12 @@ const config: Config = {
     colors: {
       black: '#474E53',
       'black-real': '#000000',
+      'c-blue': '#3098E1',
+      'c-gray': '#8D959B',
+      'c-green': '#25CE68',
+      'c-purple': '#9D44C7',
+      'c-red': '#E13065',
+      'c-yellow': '#F3C522',
       'gray-100': '#E5EDF2',
       'gray-200': '#CDDAE4',
       'gray-500': '#8D959B',
@@ -48,8 +54,13 @@ const config: Config = {
         fade: 'fadeIn 1s',
       },
       backgroundImage: {
-        'gradient-orange': 'linear-gradient(90deg, #EB8D48 0%, #EBA776 100%);',
+        'gradient-gray': 'linear-gradient(90deg, #8D959B 0%, #A8B8C3 100%)',
+        'gradient-green': 'linear-gradient(90deg, #25CE68 0%, #4AE588 100%)',
+        'gradient-orange': 'linear-gradient(90deg, #EB8D48 0%, #EBA776 100%)',
         'gradient-primary': 'linear-gradient(90deg, #3098E1 0%, #5EB6F5 100%)',
+        'gradient-purple': 'linear-gradient(90deg, #9D44C7 0%, #C965F8 100%)',
+        'gradient-red': 'linear-gradient(90deg, #E13065 0%, #FA85A8 100%)',
+        'gradient-yellow': 'linear-gradient(90deg, #F3C522 0%, #FFD84F 100%)',
       },
       keyframes: {
         fadeIn: {

@@ -24,7 +24,7 @@ export default function CoverVideoItem({ video }: Props) {
           {kind && (
             <div
               className={`self-start rounded-8 px-8 py-4 text-14 font-700 text-white ${
-                kind === 'dance' ? 'bg-gradient-orange' : 'bg-gradient-primary'
+                kind === 'dance' ? 'bg-gradient-red' : 'bg-gradient-primary'
               }`}
             >
               {kind.toUpperCase()}
