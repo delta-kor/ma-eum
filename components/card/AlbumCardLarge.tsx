@@ -11,7 +11,7 @@ export default function AlbumCardLarge({ album }: Props) {
   return (
     <div
       style={{ background: `linear-gradient(101deg, ${gradientFrom} 7.15%, ${gradientTo} 96.7%)` }}
-      className="flex flex-col items-center gap-12 rounded-16 p-16"
+      className="flex flex-col items-center gap-12 rounded-16 p-16 lg:sticky lg:top-artistic-header-height-lg"
     >
       <img
         alt={album.title}

@@ -37,7 +37,7 @@ export default function CategoryVideoList({ category, preloadedVideos }: Props) 
   return (
     <div
       data-members={displayMembers}
-      className="flex flex-col gap-18 lg:mx-auto lg:grid lg:max-w-screen-lgx lg:grid-cols-1 lg:items-start lg:gap-16 lg:px-24 data-[members=true]:lg:grid-cols-[160px,1fr]"
+      className="flex flex-col gap-18 lg:mx-auto lg:grid lg:max-w-screen-lgx lg:grid-cols-1 lg:items-start lg:gap-16 lg:px-24 data-[members=true]:lg:grid-cols-[160px_1fr]"
     >
       {displayMembers && <MemberMenu selected={member} onSelect={handleMemberSelect} />}
       {videos.isFetching ? (

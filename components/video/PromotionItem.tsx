@@ -18,9 +18,9 @@ export default function PromotionItem({ video }: Props) {
         <div className="rounded-8 bg-primary-200 p-8">
           <GradientIcon type="live" className="h-16" />
         </div>
-        <div className="w-[1px] grow border-l-3 border-gray-100" />
+        <div className="w-1 grow border-l-3 border-gray-100" />
       </div>
-      <div className="flex grow flex-col gap-12 pb-32">
+      <div className="flex grow flex-col gap-12 pb-32 lg:flex-row-reverse lg:justify-end">
         <div className="flex flex-col gap-4">
           <div className="text-16 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
           <div className="text-18 font-600 text-black">{promotionMeta?.title || video.title}</div>
@@ -29,7 +29,7 @@ export default function PromotionItem({ video }: Props) {
           <LazyImage
             alt={video.title}
             src={ImageUrl.youtubeThumbnail(video.sourceId)}
-            className="aspect-video rounded-16 bg-gray-100 object-cover"
+            className="aspect-video rounded-16 bg-gray-100 object-cover lg:w-[240px]"
           />
         )}
       </div>

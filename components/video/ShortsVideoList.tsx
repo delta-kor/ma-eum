@@ -37,10 +37,9 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
   const items = videos.data?.pages.map(page => page.items).flat() || [];
 
   return (
-    <div className="flex flex-col gap-18">
+    <div className="flex flex-col gap-18 lg:mx-auto lg:max-w-screen-lgx lg:px-24">
       {videos.isFetching && !videos.isFetchingNextPage ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))]">
-          <ShortsVideoItemPlaceholder />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] lg:grid-cols-5 lg:gap-x-8 lg:gap-y-16">
           <ShortsVideoItemPlaceholder />
           <ShortsVideoItemPlaceholder />
           <ShortsVideoItemPlaceholder />
@@ -48,13 +47,12 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
           <ShortsVideoItemPlaceholder />
         </div>
       ) : items.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] items-center">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] lg:grid-cols-5 lg:gap-x-8 lg:gap-y-16">
           {items.map(video => (
             <ShortsVideoItem key={video.id} video={video} />
           ))}
           {videos.isFetchingNextPage && (
             <>
-              <ShortsVideoItemPlaceholder />
               <ShortsVideoItemPlaceholder />
               <ShortsVideoItemPlaceholder />
               <ShortsVideoItemPlaceholder />

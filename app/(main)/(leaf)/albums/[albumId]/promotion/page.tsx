@@ -27,11 +27,11 @@ export default async function AlbumPromotionPage({ params: { albumId } }: Props)
   return (
     <DetailsContent>
       <Title>{album.title}</Title>
-      <div className="flex flex-col gap-20">
-        <div className="px-24">
+      <div className="px-24">
+        <div className="mx-auto flex max-w-screen-lg flex-col gap-20 lg:grid lg:grid-cols-[360px_1fr] lg:items-start">
           <AlbumCardLarge album={album} />
+          <PromotionList videos={videosSorted} />
         </div>
-        <PromotionList videos={videosSorted} />
       </div>
     </DetailsContent>
   );
