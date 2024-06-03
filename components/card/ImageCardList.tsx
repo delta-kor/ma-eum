@@ -8,7 +8,7 @@ export default async function ImageCardList() {
   const realityCategories = categories.filter(category => category.type === CategoryType.REALITY);
 
   return (
-    <div className="flex flex-col gap-10 px-24">
+    <div className="flex flex-col gap-10">
       <div className="text-20 font-700 text-black">
         <Translate>$reality_shows</Translate>
       </div>

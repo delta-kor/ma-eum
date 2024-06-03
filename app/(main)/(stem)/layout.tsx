@@ -9,7 +9,7 @@ interface Props {
 
 export default function StemLayout({ children }: Props) {
   return (
-    <div className="pb-[69px]">
+    <div className="pb-[69px] lg:pb-0">
       <ArtisticHeader />
       {children}
       <Mobile>

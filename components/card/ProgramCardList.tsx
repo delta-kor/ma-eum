@@ -7,7 +7,7 @@ export default async function ProgramCardList() {
   const programCategories = categories.filter(category => category.type === CategoryType.PROGRAM);
 
   return (
-    <div className="flex flex-wrap items-center gap-12 px-24">
+    <div className="flex flex-wrap items-center gap-12">
       {programCategories.map(category => (
         <ProgramCard key={category.id} category={category} />
       ))}

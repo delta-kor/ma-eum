@@ -8,11 +8,11 @@ export default async function LineCardList() {
   const othersCategories = categories.filter(category => category.type === CategoryType.OTHERS);
 
   return (
-    <div className="flex flex-col gap-10 px-24">
+    <div className="flex flex-col gap-10">
       <div className="text-20 font-700 text-black">
         <Translate>$others</Translate>
       </div>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 lg:grid lg:grid-cols-2">
         {othersCategories.map(category => (
           <LineCard key={category.id} category={category} />
         ))}
