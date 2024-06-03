@@ -1,4 +1,5 @@
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
+import Translate from '@/components/core/Translate';
 import { Schedule } from '@prisma/client';
 
 interface Props {
@@ -11,7 +12,7 @@ export default function ScheduleDetailsItem({ schedule }: Props) {
       <ScheduleTypeChip kind="icon" type={schedule.type} />
       <div className="flex flex-col gap-4">
         <div className="text-16 font-500 text-gray-500">
-          {schedule.isAllDay ? '하루종일' : schedule.dateDetails}
+          <Translate>{schedule.isAllDay ? '$all_day' : schedule.dateDetails!}</Translate>
         </div>
         <div className="text-18 font-600 text-black">{schedule.title}</div>
       </div>

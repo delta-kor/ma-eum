@@ -66,6 +66,19 @@ export class ScheduleService {
     return result;
   }
 
+  @ControlledCache('schedule.getScheduleFeeds', StaticDataTtl)
+  public static async getScheduleFeeds(date: Date): Promise<Schedule[]> {
+    return prisma.schedule.findMany({
+      orderBy: { date: 'asc' },
+      take: 2,
+      where: {
+        date: {
+          gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+        },
+      },
+    });
+  }
+
   @ControlledCache('schedule.getSchedules', StaticDataTtl)
   public static async getSchedules(date: Date): Promise<Schedule[]> {
     return prisma.schedule.findMany({

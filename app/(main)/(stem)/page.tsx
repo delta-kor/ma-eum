@@ -1,4 +1,4 @@
-import ScheduleList from '@/components/calendar/ScheduleList';
+import ScheduleFeedList from '@/components/calendar/ScheduleFeedList';
 import LandingLayer from '@/components/landing/LandingLayer';
 import StrongMenu from '@/components/menu/StrongMenu';
 
@@ -7,7 +7,7 @@ export default function MainPage() {
     <div className="flex min-h-dvh flex-col">
       <LandingLayer />
       <div className="flex grow flex-col gap-28 bg-gradient-to-b from-primary-200 to-white pt-48">
-        <ScheduleList />
+        <ScheduleFeedList />
         <StrongMenu />
       </div>
     </div>
