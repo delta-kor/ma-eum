@@ -86,7 +86,7 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
           <Icon type="right" className="w-16 text-gray-200" />
         </div>
       </div>
-      <div className="flex flex-col gap-8 self-stretch px-24">
+      <div className="flex flex-col gap-8 self-stretch">
         <div className="flex items-center justify-between">
           {days.map(day => (
             <div

@@ -1,3 +1,4 @@
+import Mobile from '@/components/core/responsive/Mobile';
 import LandingWidget from '@/components/landing/LandingWidget';
 
 export default function LandingLayer() {
@@ -16,9 +17,11 @@ export default function LandingLayer() {
             className="absolute left-0 top-0 size-full object-cover md:scale-[1.08] lg:scale-[1.35] xl:scale-100"
           />
         </picture>
-        <div className="absolute inset-0 bg-gradient-to-b from-primary-200/0 from-80% via-primary-200/45 via-90% to-primary-200" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-200/0 from-80% via-primary-200/45 via-90% to-primary-200 lg:via-white/45 lg:to-white" />
       </div>
-      <LandingWidget />
+      <Mobile>
+        <LandingWidget />
+      </Mobile>
     </div>
   );
 }

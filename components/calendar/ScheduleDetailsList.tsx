@@ -25,7 +25,7 @@ export default function ScheduleDetailsList({ selectedDate }: Props) {
   const items = schedules.data;
 
   return (
-    <div className="flex flex-col gap-16 px-24 pb-24">
+    <div className="flex flex-col gap-16 pb-24">
       {items ? (
         items.length > 0 ? (
           items.map(schedule => <ScheduleDetailsItem key={schedule.id} schedule={schedule} />)

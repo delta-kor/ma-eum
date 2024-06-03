@@ -1,5 +1,6 @@
 import Navigator from '@/components/core/Navigator';
 import ArtisticHeader from '@/components/core/header/ArtisticHeader';
+import Mobile from '@/components/core/responsive/Mobile';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -11,7 +12,9 @@ export default function StemLayout({ children }: Props) {
     <div className="pb-[69px]">
       <ArtisticHeader />
       {children}
-      <Navigator />
+      <Mobile>
+        <Navigator />
+      </Mobile>
     </div>
   );
 }
