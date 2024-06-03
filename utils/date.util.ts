@@ -19,3 +19,9 @@ export function getRelativeTime(date: Date, today: Date, isAllDay: boolean): str
   if (diffMinutes > 0) return `${diffMinutes}m`;
   return 'Today';
 }
+
+export function getTime(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const sec = Math.floor(seconds % 60);
+  return `${minutes}:${sec < 10 ? `0${sec}` : sec}`;
+}
