@@ -11,7 +11,7 @@ interface Props {
 
 export default async function PlayPage({ params: { musicId } }: Props) {
   const music = await MusicService.getOneWithPlayData(musicId);
-  if (!music || !music.albumId || !music.playData) return notFound();
+  if (!music || !music.albumId || !music.playData || !music.playData.lyrics) return notFound();
 
   const album = await AlbumService.getOne(music.albumId);
   if (!album) return notFound();

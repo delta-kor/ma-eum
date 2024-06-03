@@ -36,7 +36,7 @@ export default function PlayController({
   );
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex shrink-0 flex-col gap-16">
       <div className="flex flex-col gap-8">
         <div
           ref={barRef}

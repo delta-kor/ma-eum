@@ -1,5 +1,6 @@
 'use client';
 
+import LyricsChatWrapper from '@/components/play/LyricsChatWrapper';
 import MusicInfo from '@/components/play/MusicInfo';
 import PlayController from '@/components/play/PlayController';
 import { MusicWithPlayData } from '@/services/music.service';
@@ -58,7 +59,7 @@ export default function PlayFrame({ album, music }: Props) {
   return (
     <div
       style={{ background: `linear-gradient(180deg, ${gradientFrom} 7.15%, ${gradientMid} 96.7%)` }}
-      className="flex h-dvh w-full flex-col p-24 pb-36"
+      className="flex h-dvh w-full flex-col gap-16 p-24 pb-36"
     >
       <MusicInfo album={album} music={music}>
         <YouTube
@@ -67,7 +68,7 @@ export default function PlayFrame({ album, music }: Props) {
           onReady={handleReady}
         />
       </MusicInfo>
-      <div className="grow" />
+      <LyricsChatWrapper color={gradientMid} currentTime={currentTime} playData={playData} />
       <PlayController
         currentTime={currentTime}
         duration={duration}

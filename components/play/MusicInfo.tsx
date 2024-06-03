@@ -10,7 +10,7 @@ interface Props {
 
 export default function MusicInfo({ album, music, children }: Props) {
   return (
-    <div className="flex items-center gap-16">
+    <div className="flex shrink-0 items-center gap-16">
       {/*<LazyImage*/}
       {/*  alt={music.title}*/}
       {/*  src={ImageUrl.album(album.id)}*/}
