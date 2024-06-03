@@ -1,17 +1,20 @@
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
+import LyricsChatChip from '@/components/play/LyricsChatChip';
 import { Line } from '@/utils/lily.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Member, getMemberName } from '@/utils/video.util';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface Props {
+  color: string;
+  currentTime: number;
   index: number;
   lines: Line[];
   members: (Member | null)[];
 }
 
-export default function LyricsChatBubble({ index, lines, members }: Props) {
+export default function LyricsChatBubble({ color, currentTime, index, lines, members }: Props) {
   const member = members.length > 1 ? null : members[0];
 
   const transition = { duration: 0.5, ease: 'circOut' };
@@ -23,7 +26,7 @@ export default function LyricsChatBubble({ index, lines, members }: Props) {
       exit={{ opacity: 0, scale: 0 }}
       initial={{ opacity: 1, scale: 0 }}
       transition={transition}
-      className="flex items-start gap-12"
+      className="flex min-w-0 items-start gap-12"
     >
       <motion.div layout="position" layoutId={`image_${index}`} transition={transition}>
         <LazyImage
@@ -31,7 +34,7 @@ export default function LyricsChatBubble({ index, lines, members }: Props) {
           className="size-[42px] shrink-0 rounded-full border-3 border-white bg-gray-100"
         />
       </motion.div>
-      <div className="flex flex-col justify-end gap-6">
+      <div className="flex min-w-0 flex-col justify-end gap-6">
         <motion.div
           layout="position"
           layoutId={`member_${index}`}
@@ -54,12 +57,15 @@ export default function LyricsChatBubble({ index, lines, members }: Props) {
                 initial={{ scale: 0 }}
                 layoutId={`text_${index}_${lineIndex}`}
                 transition={{ duration: 0.3 }}
-                className="text-black"
+                className="flex flex-wrap"
               >
                 {line.chips.map((chip, chipIndex) => (
-                  <span key={chipIndex} className="text-18 font-600">
-                    {chip.text}
-                  </span>
+                  <LyricsChatChip
+                    key={chipIndex}
+                    chip={chip}
+                    color={color}
+                    currentTime={currentTime}
+                  />
                 ))}
               </motion.div>
             ))}

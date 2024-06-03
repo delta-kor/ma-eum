@@ -23,5 +23,5 @@ export default function LyricsChatWrapper({ color, currentTime, playData }: Prop
     return lyrics.slice(0, lastActiveLineIndex === -1 ? 0 : lastActiveLineIndex + 1);
   }, [currentTime, lyrics]);
 
-  return <LyricsChatList lines={firstToCurrentLyrics} />;
+  return <LyricsChatList color={color} currentTime={currentTime} lines={firstToCurrentLyrics} />;
 }

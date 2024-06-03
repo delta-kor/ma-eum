@@ -20,5 +20,9 @@ export interface TextChip {
   type: 'text';
 }
 
-export const LineOffsetDelay = 0.4;
+export const LineOffsetDelay = 0.6;
 export const OffsetDelay = 0.2;
+
+export function rangePercentage(number: number): number {
+  return Math.min(100, Math.max(0, number));
+}

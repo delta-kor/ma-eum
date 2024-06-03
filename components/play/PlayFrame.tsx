@@ -58,7 +58,7 @@ export default function PlayFrame({ album, music }: Props) {
 
   return (
     <div
-      style={{ background: `linear-gradient(180deg, ${gradientFrom} 7.15%, ${gradientMid} 96.7%)` }}
+      style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
       className="flex h-dvh w-full flex-col gap-16 p-24 pb-36"
     >
       <MusicInfo album={album} music={music}>
