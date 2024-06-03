@@ -2,9 +2,13 @@ import prisma from '@/prisma/prisma';
 import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
-import { Music } from '@prisma/client';
+import { Music, MusicPlayData } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
+
+export interface MusicWithPlayData extends Music {
+  playData: MusicPlayData | null;
+}
 
 const MusicRouter = router({
   create: cmsProcedure.input(z.object({}).passthrough()).mutation(async opts => {
@@ -57,5 +61,13 @@ export class MusicService {
   public static async getOne(id: string): Promise<Music | null> {
     const musics = await MusicService.getAll();
     return musics.find(music => music.id === id) || null;
+  }
+
+  @ControlledCache('music.getOneWithPlayData', StaticDataTtl)
+  public static async getOneWithPlayData(musicId: string): Promise<MusicWithPlayData | null> {
+    return prisma.music.findUnique({
+      include: { playData: true },
+      where: { id: musicId },
+    });
   }
 }

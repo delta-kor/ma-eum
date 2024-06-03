@@ -60,12 +60,20 @@ model Video {
 }
 
 model Music {
-  id         String  @id
+  id         String         @id
   title      String
   shortTitle String
   order      Int
   albumId    String?
-  album      Album?  @relation(fields: [albumId], references: [id])
+  album      Album?         @relation(fields: [albumId], references: [id])
+  playData   MusicPlayData?
+}
+
+model MusicPlayData {
+  musicId   String @id
+  music     Music  @relation(fields: [musicId], references: [id])
+  youtubeId String
+  lyrics    Json?
 }
 
 enum StageType {
