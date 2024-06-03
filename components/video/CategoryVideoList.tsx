@@ -32,19 +32,23 @@ export default function CategoryVideoList({ category, preloadedVideos }: Props) 
     setMember(member);
   }
 
+  const displayMembers = category.options.includes(CategoryOptions.MEMBERS);
+
   return (
-    <div className="flex flex-col gap-18">
-      {category.options.includes(CategoryOptions.MEMBERS) && (
-        <MemberMenu selected={member} onSelect={handleMemberSelect} />
-      )}
+    <div
+      data-members={displayMembers}
+      className="flex flex-col gap-18 lg:mx-auto lg:grid lg:max-w-screen-lgx lg:grid-cols-1 lg:items-start lg:gap-16 lg:px-24 data-[members=true]:lg:grid-cols-[160px,1fr]"
+    >
+      {displayMembers && <MemberMenu selected={member} onSelect={handleMemberSelect} />}
       {videos.isFetching ? (
-        <div className="flex flex-col gap-16 px-24 pb-24">
+        <div className="flex flex-col gap-16 px-24 pb-24 lg:grid lg:grid-cols-2 lg:px-0">
+          <CategoryVideoItemPlaceholder />
           <CategoryVideoItemPlaceholder />
           <CategoryVideoItemPlaceholder />
           <CategoryVideoItemPlaceholder />
         </div>
       ) : videos.data.length > 0 ? (
-        <div className="flex flex-col gap-16 px-24 pb-24">
+        <div className="flex flex-col gap-16 px-24 pb-24 lg:grid lg:grid-cols-2 lg:px-0">
           {videos.data.map(video => (
             <CategoryVideoItem key={video.id} video={video} />
           ))}

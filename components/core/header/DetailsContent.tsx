@@ -14,5 +14,7 @@ export default function DetailsContent({ children }: Props) {
     window.scrollTo(0, -1);
   }, [pathname]);
 
-  return <div className="pt-[56px]">{children}</div>;
+  return (
+    <div className="pt-details-header-height lgx:pt-artistic-header-height-lg">{children}</div>
+  );
 }

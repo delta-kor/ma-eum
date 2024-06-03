@@ -11,3 +11,11 @@ export default function Mobile({ className, children, ...props }: Props) {
     </div>
   );
 }
+
+export function MobileX({ className, children, ...props }: Props) {
+  return (
+    <div className={`block lgx:hidden ${className}`} {...props}>
+      {children}
+    </div>
+  );
+}

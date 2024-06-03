@@ -8,6 +8,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family:
     'Wanted Sans Variable',

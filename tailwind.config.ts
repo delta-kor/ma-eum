@@ -38,6 +38,7 @@ const config: Config = {
       'c-purple': '#9D44C7',
       'c-red': '#E13065',
       'c-yellow': '#F3C522',
+      'gray-50': '#EEF4F8',
       'gray-100': '#E5EDF2',
       'gray-200': '#CDDAE4',
       'gray-500': '#8D959B',
@@ -67,6 +68,9 @@ const config: Config = {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+      },
+      screens: {
+        lgx: '1072px',
       },
     },
     fontSize: {
@@ -108,6 +112,8 @@ const config: Config = {
       40: '40px',
       48: '48px',
       64: '64px',
+      'artistic-header-height-lg': '68px',
+      'details-header-height': '56px',
     },
   },
 };
