@@ -8,7 +8,7 @@ interface Props {
 
 export default function LyricsChatChip({ chip, color, currentTime }: Props) {
   if (chip.type === 'punctuation')
-    return <span className="whitespace-pre text-18 font-600 text-black">{chip.text}</span>;
+    return <span className="whitespace-pre text-18 font-600 text-gray-200">{chip.text}</span>;
 
   if (chip.type === 'text') {
     const percentage = rangePercentage(
@@ -16,7 +16,7 @@ export default function LyricsChatChip({ chip, color, currentTime }: Props) {
     );
     return (
       <span className="relative">
-        <div className="text-18 font-600 text-black">{chip.text}</div>
+        <div className="text-18 font-600 text-gray-200">{chip.text}</div>
         <div
           style={{
             color,

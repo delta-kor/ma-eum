@@ -34,7 +34,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
           className="size-[42px] shrink-0 rounded-full border-3 border-white bg-gray-100"
         />
       </motion.div>
-      <div className="flex min-w-0 flex-col justify-end gap-6">
+      <div className="flex min-w-0 flex-col items-start justify-end gap-6">
         <motion.div
           layout="position"
           layoutId={`member_${index}`}
@@ -56,7 +56,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
                 animate={{ scale: 1 }}
                 initial={{ scale: 0 }}
                 layoutId={`text_${index}_${lineIndex}`}
-                transition={{ duration: 0.3 }}
+                transition={transition}
                 className="flex flex-wrap"
               >
                 {line.chips.map((chip, chipIndex) => (

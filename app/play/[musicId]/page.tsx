@@ -3,6 +3,8 @@ import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { notFound } from 'next/navigation';
 
+export const revalidate = 0;
+
 interface Props {
   params: {
     musicId: string;
