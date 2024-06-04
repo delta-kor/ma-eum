@@ -6,8 +6,10 @@ export const revalidate = 0;
 export default function MusicsPage() {
   return (
     <DetailsContent>
-      <div className="px-24 pb-24 lg:mx-auto lg:max-w-screen-lg">
-        <MusicCardList />
+      <div className="px-24">
+        <div className="pb-24 lg:mx-auto lg:max-w-screen-lg">
+          <MusicCardList />
+        </div>
       </div>
     </DetailsContent>
   );

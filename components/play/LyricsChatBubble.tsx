@@ -15,7 +15,8 @@ interface Props {
 }
 
 export default function LyricsChatBubble({ color, currentTime, index, lines, members }: Props) {
-  const member = members.length > 1 ? null : members[0];
+  if (members.length === 0) members = [null];
+  const profileMember = members.length > 1 ? null : members[0];
 
   const transition = { duration: 0.5, ease: 'circOut' };
 
@@ -30,7 +31,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
     >
       <motion.div layout="position" layoutId={`image_${index}`} transition={transition}>
         <LazyImage
-          src={ImageUrl.member(member)}
+          src={ImageUrl.member(profileMember)}
           className="size-[42px] shrink-0 rounded-full border-3 border-white bg-gray-100"
         />
       </motion.div>
@@ -41,7 +42,12 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
           transition={transition}
           className="text-16 font-600 text-white"
         >
-          <Translate>{getMemberName(member)}</Translate>
+          {members.map((member, index) => (
+            <>
+              <Translate key={member}>{getMemberName(member)}</Translate>
+              {index < members.length - 1 ? ' & ' : ''}
+            </>
+          ))}
         </motion.div>
         <motion.div
           layoutId={`bubble_${index}`}
