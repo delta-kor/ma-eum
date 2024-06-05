@@ -57,30 +57,38 @@ export default function PlayFrame({ album, music }: Props) {
   );
 
   return (
-    <div
-      style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
-      className="flex h-dvh w-full flex-col gap-16 p-24 pb-36"
-    >
-      <MusicInfo album={album} music={music}>
-        <YouTube
-          iframeClassName="size-72 rounded-8"
-          videoId={playData.youtubeId}
-          onReady={handleReady}
-        />
-      </MusicInfo>
-      <LyricsChatWrapper
-        color={gradientMid}
-        currentTime={currentTime}
-        music={music}
-        playData={playData}
-      />
-      <PlayController
-        currentTime={currentTime}
-        duration={duration}
-        isPlaying={isPlaying}
-        onActionClick={handleActionClick}
-        onSeek={handleSeek}
-      />
+    <div style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}>
+      <div className="flex h-dvh w-full flex-col gap-16 p-24 pb-36 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-[400px_1fr] lg:items-center lg:gap-64 lg:p-0">
+        <MusicInfo album={album} music={music}>
+          <YouTube
+            iframeClassName="size-72 rounded-8 lg:border-3 lg:border-white/70 lg:size-[100%] lg:aspect-square"
+            opts={{
+              playerVars: {
+                autoplay: 1,
+                controls: 0,
+              },
+            }}
+            videoId={playData.youtubeId}
+            onReady={handleReady}
+            className="lg:w-full"
+          />
+        </MusicInfo>
+        <div className="flex min-h-0 grow flex-col gap-16 lg:h-full lg:max-h-[960px] lg:py-64">
+          <LyricsChatWrapper
+            color={gradientMid}
+            currentTime={currentTime}
+            music={music}
+            playData={playData}
+          />
+          <PlayController
+            currentTime={currentTime}
+            duration={duration}
+            isPlaying={isPlaying}
+            onActionClick={handleActionClick}
+            onSeek={handleSeek}
+          />
+        </div>
+      </div>
     </div>
   );
 }
