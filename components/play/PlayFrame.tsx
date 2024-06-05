@@ -68,7 +68,12 @@ export default function PlayFrame({ album, music }: Props) {
           onReady={handleReady}
         />
       </MusicInfo>
-      <LyricsChatWrapper color={gradientMid} currentTime={currentTime} playData={playData} />
+      <LyricsChatWrapper
+        color={gradientMid}
+        currentTime={currentTime}
+        music={music}
+        playData={playData}
+      />
       <PlayController
         currentTime={currentTime}
         duration={duration}

@@ -5,6 +5,7 @@ import { Line } from '@/utils/lily.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Member, getMemberName } from '@/utils/video.util';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Fragment } from 'react';
 
 interface Props {
   color: string;
@@ -43,10 +44,10 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
           className="text-16 font-600 text-white"
         >
           {members.map((member, index) => (
-            <>
-              <Translate key={member}>{getMemberName(member)}</Translate>
+            <Fragment key={member}>
+              <Translate>{getMemberName(member)}</Translate>
               {index < members.length - 1 ? ' & ' : ''}
-            </>
+            </Fragment>
           ))}
         </motion.div>
         <motion.div

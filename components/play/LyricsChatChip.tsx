@@ -22,7 +22,7 @@ export default function LyricsChatChip({ chip, color, currentTime }: Props) {
             color,
             width: `${percentage}%`,
           }}
-          className="absolute left-0 top-0 h-full overflow-hidden text-18 font-600"
+          className="absolute left-0 top-0 h-full select-none overflow-hidden text-18 font-600"
         >
           {chip.text}
         </div>
