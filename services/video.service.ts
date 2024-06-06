@@ -3,8 +3,9 @@ import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { paginate } from '@/utils/pagination.util';
+import { sortVideoByMeta } from '@/utils/sort.util';
 import { Member } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import type { Video } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
@@ -31,6 +32,10 @@ const VideoRouter = router({
 
   getCoverVideos: publicProcedure.input(z.object({ member: z.string().nullable() })).query(opts => {
     return VideoService.getCoverVideos(opts.input.member as Member);
+  }),
+
+  getOfficialVideos: publicProcedure.input(z.object({ musicId: z.string() })).query(opts => {
+    return VideoService.getOfficialVideos(opts.input.musicId);
   }),
 
   getShortsVideos: publicProcedure.input(z.object({ cursor: z.string().nullish() })).query(opts => {
@@ -109,12 +114,24 @@ export class VideoService {
     return videos.filter(video => video.meta.some(meta => meta.type === 'live' && !meta.disable));
   }
 
+  @ControlledCache('video.getOfficialVideos', StaticDataTtl)
+  public static async getOfficialVideos(musicId: string): Promise<Video[]> {
+    const videos = await VideoService.getAll();
+    const officialVideos = videos.filter(
+      video =>
+        video.meta.some(meta => meta.type === 'official') &&
+        video.meta.some(meta => meta.type === 'music' && meta.musicId === musicId)
+    );
+    return sortVideoByMeta(officialVideos, 'official');
+  }
+
   @ControlledCache('video.getPromotionVideos', StaticDataTtl)
   public static async getPromotionVideos(albumId: string): Promise<Video[]> {
     const videos = await VideoService.getAll();
-    return videos.filter(video =>
+    const promotionVideos = videos.filter(video =>
       video.meta.some(meta => meta.type === 'promotion' && meta.albumId === albumId)
     );
+    return sortVideoByMeta(promotionVideos, 'promotion');
   }
 
   @ControlledCache('video.getShortsVideos', StaticDataTtl)

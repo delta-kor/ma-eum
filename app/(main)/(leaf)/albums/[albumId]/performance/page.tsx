@@ -2,6 +2,7 @@ import AlbumCardLarge from '@/components/card/AlbumCardLarge';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import PerformanceMusicMenu from '@/components/menu/PerformanceMusicMenu';
+import OfficialVideoList from '@/components/video/OfficialVideoList';
 import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { notFound } from 'next/navigation';
@@ -25,9 +26,10 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
     <DetailsContent>
       <Title>{album.title}</Title>
       <div className="px-24">
-        <div className="mx-auto flex max-w-screen-lg flex-col gap-20 lg:grid lg:grid-cols-[360px_1fr] lg:items-start">
+        <div className="mx-auto flex max-w-screen-lg flex-col gap-20">
           <AlbumCardLarge album={album} horizontal />
           <PerformanceMusicMenu musics={musics} />
+          <OfficialVideoList musics={musics} />
         </div>
       </div>
     </DetailsContent>

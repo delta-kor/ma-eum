@@ -18,8 +18,6 @@ export default function PerformanceMusicMenu({ musics }: Props) {
     ? musicQueryValue
     : musics.find(music => music.isTitle)?.id || musics[0].id;
 
-  function handleItemClick(musicId: string) {}
-
   return (
     <div className="flex items-center justify-center gap-24">
       {musics.map(music => (
