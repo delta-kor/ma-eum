@@ -1,7 +1,7 @@
 import LazyImage from '@/components/core/LazyImage';
 import { ImageUrl } from '@/utils/url.util';
 import { CoverVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 
 interface Props {
@@ -9,6 +9,8 @@ interface Props {
 }
 
 export default function CoverVideoItem({ video }: Props) {
+  if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
+
   const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
   const title = coverMeta?.title || video.title;
   const kind = coverMeta?.kind;

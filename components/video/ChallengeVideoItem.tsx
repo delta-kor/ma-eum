@@ -12,7 +12,7 @@ import {
   getMemberName,
   getMetaFromVideo,
 } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 
 interface Props {
@@ -20,6 +20,8 @@ interface Props {
 }
 
 export default function ChallengeVideoItem({ video }: Props) {
+  if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
+
   const inboundChallengeMeta = getMetaFromVideo<InboundChallengeVideoMeta>(
     video,
     'inbound_challenge'

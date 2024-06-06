@@ -1,7 +1,7 @@
 import LazyImage from '@/components/core/LazyImage';
 import { ImageUrl } from '@/utils/url.util';
 import { EpisodeVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 
 interface Props {
@@ -9,6 +9,8 @@ interface Props {
 }
 
 export default function CategoryVideoItem({ video }: Props) {
+  if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
+
   const episodeMeta = getMetaFromVideo<EpisodeVideoMeta>(video, 'episode');
   const title = episodeMeta?.title || video.title;
   const episode = episodeMeta?.episode || null;
