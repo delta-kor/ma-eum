@@ -20,7 +20,15 @@ export default function OfficialVideoList({ musics }: Props) {
     ? (musicQueryValue as string)
     : musics.find(music => music.isTitle)?.id || musics[0].id;
 
-  const videos = trpc.video.getOfficialVideos.useQuery({ musicId: selectedMusicId });
+  const videos = trpc.video.getOfficialVideos.useQuery(
+    { musicId: selectedMusicId },
+    {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+    }
+  );
   const items = videos.data;
 
   return (
