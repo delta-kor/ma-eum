@@ -44,24 +44,35 @@ export default function PlayFrame({ album, music }: Props) {
 
   const handleActionClick = useCallback(() => {
     if (!player) return;
-    if (player.getPlayerState() === 1) player.pauseVideo();
-    else player.playVideo();
+    try {
+      if (player.getPlayerState() === 1) player.pauseVideo();
+      else player.playVideo();
+    } catch (e) {
+      console.error(e);
+    }
   }, [player]);
 
   const handleSeek = useCallback(
     (time: number) => {
       if (!player) return;
-      player.seekTo(time);
+      try {
+        player.seekTo(time);
+      } catch (e) {
+        console.error(e);
+      }
     },
     [player]
   );
 
   return (
-    <div style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}>
+    <div
+      style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
+      className="lg:px-24"
+    >
       <div className="flex h-dvh w-full flex-col gap-16 p-24 pb-36 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-[400px_1fr] lg:items-center lg:gap-64 lg:p-0">
         <MusicInfo album={album} music={music}>
           <YouTube
-            iframeClassName="size-72 rounded-8 lg:border-3 lg:border-white/70 lg:size-[100%] lg:aspect-square"
+            iframeClassName="size-72 rounded-8 lg:border-3 lg:border-white/70 lg:size-[100%] lg:aspect-square lg:rounded-16"
             opts={{
               playerVars: {
                 autoplay: 1,
