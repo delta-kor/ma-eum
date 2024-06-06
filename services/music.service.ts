@@ -70,4 +70,15 @@ export class MusicService {
       where: { id: musicId },
     });
   }
+
+  @ControlledCache('music.getPerformedMusics', StaticDataTtl)
+  public static async getPerformedMusics(albumId: string): Promise<Music[]> {
+    return prisma.music.findMany({
+      orderBy: { order: 'asc' },
+      where: {
+        albumId,
+        isPerformed: true,
+      },
+    });
+  }
 }

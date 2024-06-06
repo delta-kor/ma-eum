@@ -23,3 +23,11 @@ export class ImageUrl {
     return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
   }
 }
+
+export function searchParamsToObject(searchParams: URLSearchParams): Record<string, string> {
+  const object: Record<string, string> = {};
+  for (const [key, value] of Array.from(searchParams.entries())) {
+    object[key] = value;
+  }
+  return object;
+}

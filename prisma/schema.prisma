@@ -60,13 +60,15 @@ model Video {
 }
 
 model Music {
-  id         String         @id
-  title      String
-  shortTitle String
-  order      Int
-  albumId    String?
-  album      Album?         @relation(fields: [albumId], references: [id])
-  playData   MusicPlayData?
+  id          String         @id
+  title       String
+  shortTitle  String
+  order       Int
+  albumId     String?
+  album       Album?         @relation(fields: [albumId], references: [id])
+  playData    MusicPlayData?
+  isPerformed Boolean
+  isTitle     Boolean
 }
 
 model MusicPlayData {

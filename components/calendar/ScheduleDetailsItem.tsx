@@ -21,7 +21,7 @@ export default function ScheduleDetailsItem({ schedule }: Props) {
       </div>
       {schedule.url && (
         <a href={schedule.url} target="_blank" className="flex items-center gap-8">
-          <Icon type="link" className="w-14 text-gray-500" />
+          <Icon type="link" className="w-14 shrink-0 text-gray-500" />
           <div className="truncate text-14 font-600 text-gray-500 underline">{schedule.url}</div>
         </a>
       )}
