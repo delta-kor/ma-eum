@@ -27,3 +27,15 @@ export default function OfficialVideoItem({ video }: Props) {
     </div>
   );
 }
+
+export function OfficialVideoItemPlaceholder() {
+  return (
+    <div className="flex animate-pulse items-center gap-16">
+      <div className="aspect-video h-64 shrink-0 rounded-8 bg-gray-100" />
+      <div className="flex grow flex-col gap-4">
+        <div className="h-[21px] w-full rounded-4 bg-gray-100" />
+        <div className="h-[17px] w-[70px] rounded-4 bg-gray-100" />
+      </div>
+    </div>
+  );
+}

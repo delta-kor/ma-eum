@@ -2,27 +2,21 @@
 
 import NoItems from '@/components/core/NoItems';
 import OfficialVideoCarousel from '@/components/video/OfficialVideoCarousel';
-import OfficialVideoItem from '@/components/video/OfficialVideoItem';
+import OfficialVideoItem, {
+  OfficialVideoItemPlaceholder,
+} from '@/components/video/OfficialVideoItem';
 import { trpc } from '@/hooks/trpc';
-import { Music } from '@prisma/client';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
+import { useContext } from 'react';
 
-interface Props {
-  musics: Music[];
-}
-
-export default function OfficialVideoList({ musics }: Props) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const musicQueryValue = searchParams.get('music');
-  const selectedMusicId = musics.some(music => music.id === musicQueryValue)
-    ? (musicQueryValue as string)
-    : musics.find(music => music.isTitle)?.id || musics[0].id;
+export default function OfficialVideoList() {
+  const selectedMusic = useContext(PerformanceMusicContext);
+  const selectedMusicId = selectedMusic?.id;
 
   const videos = trpc.video.getOfficialVideos.useQuery(
-    { musicId: selectedMusicId },
+    { musicId: selectedMusicId! },
     {
+      enabled: !!selectedMusicId,
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
@@ -35,7 +29,11 @@ export default function OfficialVideoList({ musics }: Props) {
     <div className="flex flex-col gap-12">
       <div className="text-20 font-700 text-black">Performance</div>
       {videos.isFetching || !items ? (
-        <></>
+        <div className="flex flex-col gap-8">
+          <OfficialVideoItemPlaceholder />
+          <OfficialVideoItemPlaceholder />
+          <OfficialVideoItemPlaceholder />
+        </div>
       ) : items.length > 0 ? (
         <OfficialVideoCarousel>
           {items.map(video => (

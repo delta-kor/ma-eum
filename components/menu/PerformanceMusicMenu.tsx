@@ -1,9 +1,11 @@
 'use client';
 
+import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
 import { searchParamsToObject } from '@/utils/url.util';
 import { Music } from '@prisma/client';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { useContext } from 'react';
 
 interface Props {
   musics: Music[];
@@ -13,10 +15,8 @@ export default function PerformanceMusicMenu({ musics }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const musicQueryValue = searchParams.get('music');
-  const selectedMusicId = musics.some(music => music.id === musicQueryValue)
-    ? musicQueryValue
-    : musics.find(music => music.isTitle)?.id || musics[0].id;
+  const selectedMusic = useContext(PerformanceMusicContext);
+  const selectedMusicId = selectedMusic?.id;
 
   return (
     <div className="flex items-center justify-center gap-24">

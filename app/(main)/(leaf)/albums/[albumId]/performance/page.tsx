@@ -3,6 +3,8 @@ import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import PerformanceMusicMenu from '@/components/menu/PerformanceMusicMenu';
 import OfficialVideoList from '@/components/video/OfficialVideoList';
+import StageVideoList from '@/components/video/StageVideoList';
+import PerformanceMusicProvider from '@/providers/PerformanceMusicProvider';
 import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { notFound } from 'next/navigation';
@@ -23,15 +25,18 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
   if (!album || !musics.length) return notFound();
 
   return (
-    <DetailsContent>
-      <Title>{album.title}</Title>
-      <div className="px-24">
-        <div className="mx-auto flex max-w-screen-lg flex-col gap-20">
-          <AlbumCardLarge album={album} horizontal />
-          <PerformanceMusicMenu musics={musics} />
-          <OfficialVideoList musics={musics} />
+    <PerformanceMusicProvider musics={musics}>
+      <DetailsContent>
+        <Title>{album.title}</Title>
+        <div className="px-24">
+          <div className="mx-auto flex max-w-screen-lg flex-col gap-20">
+            <AlbumCardLarge album={album} horizontal />
+            <PerformanceMusicMenu musics={musics} />
+            <OfficialVideoList />
+            <StageVideoList />
+          </div>
         </div>
-      </div>
-    </DetailsContent>
+      </DetailsContent>
+    </PerformanceMusicProvider>
   );
 }
