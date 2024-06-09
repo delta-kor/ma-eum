@@ -21,7 +21,7 @@ export default function SessionVideoList({ session }: Props) {
         </div>
         <div className="text-14 font-600 text-gray-500">{format(session.date, 'yy. MM. dd')}</div>
       </div>
-      <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-2 flex-col gap-8 md:grid-cols-3 lg:grid-cols-2">
         {sortedVideos.map(video => (
           <SessionVideoItem key={video.id} video={video} />
         ))}
