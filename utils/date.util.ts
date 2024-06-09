@@ -25,3 +25,10 @@ export function getTime(seconds: number): string {
   const sec = Math.floor(seconds % 60);
   return `${minutes}:${sec < 10 ? `0${sec}` : sec}`;
 }
+
+export function parseVoyageDate(date: string): Date {
+  const year = 2000 + Number(date.slice(0, 2));
+  const month = Number(date.slice(2, 4)) - 1;
+  const day = Number(date.slice(4, 6));
+  return new Date(year, month, day);
+}

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function CmsMusicsPage() {
   const videosData = prisma.video.findMany({
-    include: { categories: true },
+    include: { categories: true, session: true },
     orderBy: [{ date: 'desc' }],
   });
   const categoriesData = prisma.category.findMany({

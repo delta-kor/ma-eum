@@ -10,11 +10,11 @@ import { revalidate } from '@/actions/revalidate.action';
 import CmsModal from '@/components/cms/CmsModal';
 import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
 import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video.util';
-import { Category, Video, VideoSource } from '@prisma/client';
+import { Category, Session, Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-export type VideoExtended = { categories: Category[] } & Video;
+export type VideoExtended = { categories: Category[]; session: Session | null } & Video;
 
 interface Props {
   categories: Category[];

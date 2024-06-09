@@ -1,9 +1,12 @@
 'use server';
 
 import prisma from '@/prisma/prisma';
+import { MusicService } from '@/services/music.service';
+import { parseVoyageDate } from '@/utils/date.util';
 import createId from '@/utils/id.util';
 import { AvailableMetaTypes, VideoMeta } from '@/utils/video.util';
-import { VideoSource } from '@prisma/client';
+import { VoyageSession, getCSRMemberByVoyageMember } from '@/utils/voyage.util';
+import { SessionType, Video, VideoSource } from '@prisma/client';
 
 interface YoutubeVideoJson {
   date: string;
@@ -27,6 +30,47 @@ export async function importYoutubeVideosFromJson(data: YoutubeVideoJson[]) {
         source: VideoSource.YOUTUBE,
         sourceId: item.id,
         title: item.title,
+      },
+    });
+  }
+}
+
+export async function importVoyageVideosFromJson(data: VoyageSession[], musicId: string) {
+  if (!Array.isArray(data)) throw new Error('Invalid json data');
+
+  const music = await MusicService.getOne(musicId);
+  if (!music) throw new Error('Music not found');
+
+  for (const session of data) {
+    const sessionId = createId(6);
+    const date = parseVoyageDate(session.date);
+    await prisma.session.create({
+      data: {
+        date,
+        id: sessionId,
+        music: { connect: { id: musicId } },
+        program: session.program,
+        title: session.program,
+        type: SessionType.PROGRAM,
+        videos: {
+          create: session.videos.map(video => {
+            const member = getCSRMemberByVoyageMember(video.member);
+
+            const meta: VideoMeta[] = [];
+            if (member) meta.push({ members: [member], type: 'members' });
+            meta.push({ sessionId, tag: video.tag, time: video.time, type: 'stage' });
+            meta.push({ musicId, type: 'music' });
+
+            return {
+              date,
+              id: createId(6),
+              meta,
+              source: VideoSource.YOUTUBE,
+              sourceId: video.youtubeId,
+              title: video.title,
+            } as Video;
+          }),
+        },
       },
     });
   }

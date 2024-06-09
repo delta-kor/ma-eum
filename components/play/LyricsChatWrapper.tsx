@@ -14,6 +14,8 @@ export default function LyricsChatWrapper({ color, currentTime, music, playData 
   const lyrics = playData.lyrics! as Line[];
 
   const firstToCurrentLyrics = useMemo(() => {
+    if (currentTime === 0) return [];
+
     // @ts-ignore
     const breakPoints = lyrics.map(line => line.chips.find(chip => chip.type === 'text').start);
     const firstInactiveLineIndex = breakPoints.findIndex(

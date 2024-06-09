@@ -157,9 +157,9 @@ export default function CmsVideosMeta<T extends VideoMeta>({
       <CmsVideosMetaBase
         action={formData =>
           onSet({
-            order: parseInt(formData.get('order') as string),
             sessionId: formData.get('sessionId'),
             tag: formData.get('tag'),
+            time: parseFloat(formData.get('order') as string),
             type: 'stage',
           } as T)
         }
@@ -180,9 +180,9 @@ export default function CmsVideosMeta<T extends VideoMeta>({
           type="text"
         />
         <CmsMetaInput
-          defaultValue={(data as StageVideoMeta)?.order}
-          id="order"
-          label="Order"
+          defaultValue={(data as StageVideoMeta)?.time}
+          id="time"
+          label="Time"
           type="text"
         />
       </CmsVideosMetaBase>

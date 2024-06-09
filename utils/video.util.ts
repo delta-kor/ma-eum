@@ -37,15 +37,16 @@ export interface OfficialVideoMeta extends VideoMetaBase {
 }
 
 export interface StageVideoMeta extends VideoMetaBase {
-  order: number;
   sessionId: string;
   tag: StageVideoTag;
+  time: number;
   type: 'stage';
 }
 
 export interface FancamVideoMeta extends VideoMetaBase {
   embed: boolean;
   ownerId: string;
+  sessionId: string;
   type: 'fancam';
 }
 

@@ -57,6 +57,9 @@ model Video {
 
   /// [VideoMeta]
   meta Json[]
+
+  session   Session? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  sessionId String?
 }
 
 model Music {
@@ -69,6 +72,7 @@ model Music {
   playData    MusicPlayData?
   isPerformed Boolean
   isTitle     Boolean
+  sessions    Session[]
 }
 
 model MusicPlayData {
@@ -110,4 +114,21 @@ model Schedule {
   members     String[]
   url         String?
   isAllDay    Boolean
+}
+
+enum SessionType {
+  SHOWCASE
+  FANSIGN
+  PROGRAM
+}
+
+model Session {
+  id      String      @id
+  type    SessionType
+  videos  Video[]
+  program String?
+  title   String
+  date    DateTime
+  music   Music?      @relation(fields: [musicId], references: [id])
+  musicId String?
 }

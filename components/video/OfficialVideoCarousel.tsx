@@ -48,7 +48,7 @@ export default function OfficialVideoCarousel({ children }: Props) {
         className="scrollbar-hide -mx-24 flex snap-x snap-mandatory overflow-x-scroll"
       >
         {items.map((item, index) => (
-          <div key={index} className="w-screen shrink-0 snap-start px-24">
+          <div key={index} className="w-full shrink-0 snap-start px-24">
             {item}
           </div>
         ))}

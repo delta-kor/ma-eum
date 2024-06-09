@@ -1,6 +1,9 @@
 'use client';
 
-import { importYoutubeVideosFromJson } from '@/actions/cms/videos.action';
+import {
+  importVoyageVideosFromJson,
+  importYoutubeVideosFromJson,
+} from '@/actions/cms/videos.action';
 import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsVideosInfo, { VideoExtended } from '@/components/cms/videos/CmsVideosInfo';
@@ -32,6 +35,23 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
     }
   }
 
+  async function handleImportVoyageJson() {
+    const data = prompt('Paste the json data');
+    if (!data) return;
+
+    const musicId = prompt('Enter music id');
+    if (!musicId) return;
+
+    try {
+      const json = JSON.parse(data);
+      await importVoyageVideosFromJson(json, musicId);
+      alert('Imported successfully');
+      await revalidate('/cms/videos');
+    } catch (error) {
+      alert('Invalid json data');
+    }
+  }
+
   async function handleVideoClick(video: VideoExtended) {
     setSelectedVideoId(video.id);
   }
@@ -56,7 +76,8 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
           Total <span className="font-700 text-primary-500">{videos.length}</span> item(s)
         </div>
         <div className="flex gap-12">
-          <CmsButton onClick={handleImportJson}>Import Json</CmsButton>
+          <CmsButton onClick={handleImportJson}>Import Youtube Json</CmsButton>
+          <CmsButton onClick={handleImportVoyageJson}>Import Voyage Json</CmsButton>
           <CmsButton onClick={handleRefresh}>Refresh</CmsButton>
         </div>
       </div>
@@ -83,6 +104,13 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
                   ))}
                 </div>
               )}
+              {video.session !== null && (
+                <div className="flex gap-4">
+                  <div className="code rounded-4 bg-c-green px-6 py-2 text-12 text-white">
+                    {video.session.id} {video.session.title}
+                  </div>
+                </div>
+              )}
               <div className="grow text-14 text-black">{video.title}</div>
               <div className="code text-14 text-gray-500">
                 {video.meta.map(item => getMetaSummary(item)).join(', ')}
@@ -91,7 +119,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
             </div>
           ))}
         </div>
-        <div className="w-[1px] self-stretch bg-gray-100" />
+        <div className="w-1 self-stretch bg-gray-100" />
         <div className="scrollbar-hide w-[280px] shrink-0 overflow-y-scroll pb-24">
           <CmsVideosInfo categories={categories} selectedVideo={selectedVideo} />
         </div>
