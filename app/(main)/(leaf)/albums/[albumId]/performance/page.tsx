@@ -32,7 +32,9 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
           <div className="mx-auto flex max-w-screen-lg flex-col gap-20">
             <AlbumCardLarge album={album} horizontal />
             <PerformanceMusicMenu musics={musics} />
+            <div className="h-1 self-stretch bg-gray-100" />
             <OfficialVideoList />
+            <div className="h-1 self-stretch bg-gray-100" />
             <StageVideoList />
           </div>
         </div>

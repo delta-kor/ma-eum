@@ -29,3 +29,7 @@ export default function SessionVideoList({ session }: Props) {
     </div>
   );
 }
+
+export function SessionVideoListPlaceholder() {
+  return <div className="h-[129px] animate-pulse rounded-16 bg-primary-100" />;
+}

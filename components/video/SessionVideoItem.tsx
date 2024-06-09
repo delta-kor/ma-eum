@@ -27,15 +27,3 @@ export default function SessionVideoItem({ video }: Props) {
     </div>
   );
 }
-
-export function SessionVideoItemPlaceholder() {
-  return (
-    <div className="flex animate-pulse items-center gap-12">
-      <div className="aspect-video h-64 shrink-0 rounded-8 bg-primary-200" />
-      <div className="flex grow flex-col gap-4">
-        <div className="h-[17px] w-[80px] rounded-4 bg-gray-100" />
-        <div className="h-[19px] w-full rounded-4 bg-gray-100" />
-      </div>
-    </div>
-  );
-}
