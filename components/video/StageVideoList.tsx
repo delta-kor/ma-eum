@@ -12,6 +12,7 @@ export default function StageVideoList() {
 
   const sessions = trpc.session.getSessionsByMusicId.useQuery(
     {
+      member: null,
       musicId: selectedMusicId!,
     },
     {
