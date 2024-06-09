@@ -18,10 +18,10 @@ export default function OfficialVideoItem({ video }: Props) {
     <div className="flex items-center gap-16">
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
-        className="aspect-video h-64 shrink-0 rounded-8"
+        className="aspect-video h-64 shrink-0 rounded-8 bg-gray-100"
       />
-      <div className="flex flex-col gap-4">
-        <div className="text-18 font-600 text-black">{title}</div>
+      <div className="flex min-w-0 flex-col gap-4">
+        <div className="line-clamp-2 text-18 font-600 text-black">{title}</div>
         <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
       </div>
     </div>

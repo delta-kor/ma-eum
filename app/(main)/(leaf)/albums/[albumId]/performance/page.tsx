@@ -28,7 +28,7 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
     <PerformanceMusicProvider musics={musics}>
       <DetailsContent>
         <Title>{album.title}</Title>
-        <div className="px-24">
+        <div className="px-24 pb-24">
           <div className="mx-auto flex max-w-screen-lg flex-col gap-20">
             <AlbumCardLarge album={album} horizontal />
             <PerformanceMusicMenu musics={musics} />

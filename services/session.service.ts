@@ -1,7 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
-import { Session } from '@prisma/client';
+import { ExtendedSession } from '@/utils/session.util';
 import { z } from 'zod';
 
 const SessionRouter = router({
@@ -16,8 +16,11 @@ export class SessionService {
   public static router = SessionRouter;
 
   @ControlledCache('session.getSessionsByMusicId', StaticDataTtl)
-  public static async getSessionsByMusicId(musicId: string): Promise<Session[]> {
+  public static async getSessionsByMusicId(musicId: string): Promise<ExtendedSession[]> {
     return prisma.session.findMany({
+      include: {
+        videos: true,
+      },
       orderBy: {
         date: 'asc',
       },
