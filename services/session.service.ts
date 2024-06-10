@@ -27,8 +27,8 @@ export class SessionService {
     musicId: string,
     member?: Member | null
   ): Promise<ExtendedSession[]> {
-    if (typeof member === 'undefined')
-      return prisma.session.findMany({
+    if (typeof member === 'undefined') {
+      const sessions = await prisma.session.findMany({
         include: {
           videos: true,
         },
@@ -39,6 +39,9 @@ export class SessionService {
           musicId,
         },
       });
+      for (const session of sessions) sortVideoByTag(session.videos);
+      return sessions;
+    }
 
     const sessions = await SessionService.getSessionsByMusicId(musicId);
     for (const session of sessions) {
@@ -47,7 +50,6 @@ export class SessionService {
           ? video.meta.every(meta => meta.type !== 'members')
           : video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
       );
-      sortVideoByTag(session.videos);
     }
 
     const filteredSessions = sessions.filter(session => session.videos.length > 0);
