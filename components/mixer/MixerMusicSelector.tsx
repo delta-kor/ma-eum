@@ -2,6 +2,7 @@
 
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
+import MixerEnterButton from '@/components/mixer/MixerEnterButton';
 import StageVideoList from '@/components/video/StageVideoList';
 import { getTime } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
@@ -42,6 +43,9 @@ export default function MixerMusicSelector({ musics }: Props) {
         <div className="select-none text-16 font-400 text-gray-500 lg:text-18">
           {getTime(selectedMusic.duration!)}
         </div>
+      </div>
+      <div className="w-[320px] self-center">
+        <MixerEnterButton music={selectedMusic} />
       </div>
       <StageVideoList music={selectedMusic} />
     </div>
