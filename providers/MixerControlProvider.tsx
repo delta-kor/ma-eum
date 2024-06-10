@@ -8,6 +8,7 @@ import { YouTubePlayer } from 'react-youtube';
 interface Context {
   duration: number;
   isPlaying: boolean;
+  play: () => void;
   seekTo: (time: number) => void;
   selectVideo: (video: Video) => void;
   setPlayer: (player: YouTubePlayer) => void;
@@ -77,10 +78,16 @@ export default function MixerControlProvider({ initialVideo, music, children }: 
     [player]
   );
 
+  const handlePlay = useCallback(() => {
+    if (!player) return;
+    player.playVideo();
+  }, [player]);
+
   const value: Context = useMemo(
     () => ({
       duration,
       isPlaying,
+      play: handlePlay,
       seekTo: handleSeekTo,
       selectVideo: handleSelectVideo,
       setPlayer,

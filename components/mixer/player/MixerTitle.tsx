@@ -15,8 +15,10 @@ export default function MixerTitle({ music }: Props) {
 
   const title = music.title;
   const video = mixerControl.video;
+
   const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
   const musicAnchor = music.anchor || 0;
+
   const musicDuration = music.duration || mixerControl.duration;
   const relativeTime = mixerControlTime - (videoAnchor - musicAnchor);
   const percentage = rangePercentage((relativeTime / musicDuration) * 100);
@@ -32,13 +34,13 @@ export default function MixerTitle({ music }: Props) {
   return (
     <div
       onClick={handleSeek}
-      className="relative h-details-header-height w-full cursor-pointer bg-white/10"
+      className="relative h-details-header-height w-full cursor-pointer overflow-hidden rounded-8 bg-white/5"
     >
       <div
         style={{
           width: `${percentage}%`,
         }}
-        className="h-full bg-gradient-primary"
+        className="h-full bg-white/30"
       />
       <div className="absolute left-0 top-1/2 w-full -translate-y-1/2 text-center text-18 font-600 text-white">
         {title}

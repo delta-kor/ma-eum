@@ -17,7 +17,7 @@ export default function MixerSelector({ sessions }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-24 p-24">
+    <div className="flex flex-col gap-24 rounded-8 bg-white/5 px-20 py-16">
       <MixerSelectorPageMenu session={activeSession} onChange={handlePageChange} />
       <MixerSelectorSessionMenu session={activeSession} />
     </div>

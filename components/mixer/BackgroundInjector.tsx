@@ -4,7 +4,7 @@ export default function BackgroundInjector() {
   return (
     <style global jsx>{`
       body {
-        background: #000000;
+        background: #161719;
       }
     `}</style>
   );

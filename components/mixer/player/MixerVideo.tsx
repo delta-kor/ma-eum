@@ -19,7 +19,7 @@ export default function MixerVideo() {
   }
 
   return (
-    <div className="sticky left-0 top-0 z-10 aspect-video w-full bg-black-real">
+    <div className="size-full bg-black-real">
       <YouTube
         iframeClassName="w-full h-full"
         opts={{

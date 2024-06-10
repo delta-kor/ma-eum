@@ -13,10 +13,14 @@ interface Props {
 
 export default function MixerPlayerFrame({ music, sessions }: Props) {
   return (
-    <div>
-      <MixerVideo />
-      <MixerTitle music={music} />
-      <MixerSelector sessions={sessions} />
+    <div className="min-h-dvh lg:grid lg:grid-cols-[1fr_360px]">
+      <div className="sticky left-0 top-0 z-10 aspect-video self-stretch lg:static lg:aspect-auto">
+        <MixerVideo />
+      </div>
+      <div className="flex flex-col gap-12 p-12">
+        <MixerTitle music={music} />
+        <MixerSelector sessions={sessions} />
+      </div>
     </div>
   );
 }
