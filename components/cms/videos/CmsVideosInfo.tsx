@@ -14,11 +14,11 @@ import { Category, Session, Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-export type VideoExtended = { categories: Category[]; session: Session | null } & Video;
+export type ExtendedVideo = { categories: Category[]; session: Session | null } & Video;
 
 interface Props {
   categories: Category[];
-  selectedVideo: VideoExtended | null;
+  selectedVideo: ExtendedVideo | null;
 }
 
 export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
