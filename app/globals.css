@@ -28,6 +28,9 @@ body {
     'Segoe UI Symbol',
     sans-serif;
 
+  background: #ffffff;
+  transition: background 0.3s;
+
   @apply text-black;
 }
 

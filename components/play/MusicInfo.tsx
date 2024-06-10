@@ -15,7 +15,7 @@ export default function MusicInfo({ album, music, children }: Props) {
   return (
     <div className="flex shrink-0 items-center gap-16 lg:flex-col lg:items-stretch">
       <Mobile>
-        <Link href={`/musics`} className="-m-16 shrink-0 cursor-pointer p-16">
+        <Link href={`/musics`} replace className="-m-16 shrink-0 cursor-pointer p-16">
           <Icon type="left" className="w-16 text-white" />
         </Link>
       </Mobile>

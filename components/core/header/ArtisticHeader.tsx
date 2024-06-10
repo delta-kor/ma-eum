@@ -57,11 +57,11 @@ export default function ArtisticHeader() {
                 Discover
               </div>
               <div
-                data-active={pathname === '/settings'}
-                onClick={() => handlePush('/settings')}
+                data-active={pathname === '/mixer'}
+                onClick={() => handlePush('/mixer')}
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
-                Settings
+                Stage Mixer
               </div>
             </div>
           </Pc>
