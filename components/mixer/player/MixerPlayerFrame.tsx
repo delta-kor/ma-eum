@@ -1,5 +1,6 @@
 'use client';
 
+import MixerPlayerCloseIcon from '@/components/mixer/player/MixerPlayerCloseIcon';
 import MixerSelector from '@/components/mixer/player/MixerSelector';
 import MixerTitle from '@/components/mixer/player/MixerTitle';
 import MixerVideo from '@/components/mixer/player/MixerVideo';
@@ -18,7 +19,10 @@ export default function MixerPlayerFrame({ music, sessions }: Props) {
         <MixerVideo />
       </div>
       <div className="flex flex-col gap-12 p-12">
-        <MixerTitle music={music} />
+        <div className="flex gap-12">
+          <MixerTitle music={music} />
+          <MixerPlayerCloseIcon />
+        </div>
         <MixerSelector sessions={sessions} />
       </div>
     </div>

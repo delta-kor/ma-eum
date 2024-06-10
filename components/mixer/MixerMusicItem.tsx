@@ -17,7 +17,7 @@ export default async function MixerMusicItem({ music }: Props) {
         src={ImageUrl.album(music.albumId!)}
         className="size-64 shrink-0 rounded-8 border-3 border-white/40"
       />
-      <div className="line-clamp-2 text-18 font-500 text-black">{music.title}</div>
+      <div className="line-clamp-2 text-18 font-600 text-black">{music.title}</div>
     </Link>
   );
 }

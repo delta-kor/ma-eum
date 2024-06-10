@@ -62,7 +62,7 @@ export default function MixerControlProvider({ initialVideo, music, children }: 
       const delta = nextAnchor - currentAnchor;
 
       const currentTime = player.getCurrentTime();
-      const nextTime = currentTime - delta;
+      const nextTime = currentTime - delta + 0.2;
 
       player.loadVideoById(video.sourceId, nextTime);
       setSelectedVideo(video);
