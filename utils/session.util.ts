@@ -19,19 +19,19 @@ export function getSessionTitle(session: Session): string {
   if (session.program) {
     switch (session.program) {
       case 'mcountdown':
-        return '엠카운트다운';
+        return '$program_mcountdown';
       case 'musicbank':
-        return '뮤직뱅크';
+        return '$program_musicbank';
       case 'musiccore':
-        return '음악중심';
+        return '$program_musiccore';
       case 'inkigayo':
-        return '인기가요';
+        return '$program_inkigayo';
       case 'theshow':
-        return '더쇼';
+        return '$program_theshow';
       case 'simplykpop':
-        return '심플리케이팝';
+        return '$program_simplykpop';
       case 'showchampion':
-        return '쇼 챔피언';
+        return '$program_showchampion';
     }
   }
   return session.title;

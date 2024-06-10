@@ -1,4 +1,5 @@
 import GradientIcon from '@/components/core/GradientIcon';
+import Translate from '@/components/core/Translate';
 import SessionVideoItem from '@/components/video/SessionVideoItem';
 import { ExtendedSession } from '@/services/session.service';
 import { getSessionTitle } from '@/utils/session.util';
@@ -16,7 +17,9 @@ export default function SessionVideoList({ session }: Props) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">
           <GradientIcon type="live" className="w-20" />
-          <div className="text-18 font-600 text-black">{getSessionTitle(session)}</div>
+          <div className="text-18 font-600 text-black">
+            <Translate>{getSessionTitle(session)}</Translate>
+          </div>
         </div>
         <div className="text-14 font-600 text-gray-500">{format(session.date, 'yy. MM. dd')}</div>
       </div>

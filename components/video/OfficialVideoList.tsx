@@ -1,6 +1,7 @@
 'use client';
 
 import NoItems from '@/components/core/NoItems';
+import Translate from '@/components/core/Translate';
 import OfficialVideoCarousel from '@/components/video/OfficialVideoCarousel';
 import OfficialVideoItem, {
   OfficialVideoItemPlaceholder,
@@ -27,7 +28,9 @@ export default function OfficialVideoList() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="text-20 font-700 text-black">Performance</div>
+      <div className="text-20 font-700 text-black">
+        <Translate>$performance</Translate>
+      </div>
       {videos.isFetching || !items ? (
         <div className="flex flex-col gap-8">
           <OfficialVideoItemPlaceholder />

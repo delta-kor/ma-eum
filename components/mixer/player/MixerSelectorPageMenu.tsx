@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import { ExtendedSession } from '@/services/session.service';
 import { getSessionTitle } from '@/utils/session.util';
 import { format } from 'date-fns';
@@ -21,7 +22,9 @@ export default function MixerSelectorPageMenu({ session, onChange }: Props) {
         <div className="select-none truncate text-center text-16 font-500 text-gray-500">
           {date}
         </div>
-        <div className="select-none truncate text-center text-18 font-600 text-black">{title}</div>
+        <div className="select-none truncate text-center text-18 font-600 text-black">
+          <Translate>{title}</Translate>
+        </div>
       </div>
       <div onClick={() => onChange(1)} className="-m-16 shrink-0 cursor-pointer p-16">
         <Icon type="right" className="w-16 text-gray-200" />

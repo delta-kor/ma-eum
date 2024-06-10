@@ -1,6 +1,7 @@
 'use client';
 
 import NoItems from '@/components/core/NoItems';
+import Translate from '@/components/core/Translate';
 import MemberMenu from '@/components/menu/MemberMenu';
 import SessionVideoList, { SessionVideoListPlaceholder } from '@/components/video/SessionVideoList';
 import { trpc } from '@/hooks/trpc';
@@ -36,7 +37,9 @@ export default function StageVideoList() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="text-20 font-700 text-black">Stages</div>
+      <div className="text-20 font-700 text-black">
+        <Translate>$stages</Translate>
+      </div>
       <div className="flex flex-col items-start gap-18 lg:grid lg:max-w-screen-lgx lg:grid-cols-[160px_1fr] lg:items-start">
         <div className="-mx-24 min-w-0 self-stretch lg:m-0 lg:grow">
           <MemberMenu selected={member} onSelect={handleMemberSelect} />
