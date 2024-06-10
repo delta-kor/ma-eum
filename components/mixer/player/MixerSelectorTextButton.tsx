@@ -1,4 +1,4 @@
-import GradientIcon from '@/components/core/GradientIcon';
+import Icon from '@/components/core/Icon';
 import { getShortTagName } from '@/utils/session.util';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
@@ -18,11 +18,16 @@ export default function MixerSelectorTextButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="flex grow basis-0 cursor-pointer items-center justify-center gap-12 rounded-8 bg-white/10 px-16 py-10 data-[active=true]:bg-gradient-primary"
+      className="group flex grow basis-0 cursor-pointer items-center justify-center gap-12 rounded-8 bg-gray-200/70 px-16 py-10 data-[active=true]:bg-gradient-primary"
       {...props}
     >
-      <GradientIcon type={isPortrait ? 'portrait' : 'landscape'} className="size-24" />
-      <div className="text-18 font-600 text-white">{tagName}</div>
+      <Icon
+        type={isPortrait ? 'portrait' : 'landscape'}
+        className="size-24 text-black/50 group-data-[active=true]:text-white"
+      />
+      <div className="select-none text-18 font-600 text-black group-data-[active=true]:text-white">
+        {tagName}
+      </div>
     </div>
   );
 }

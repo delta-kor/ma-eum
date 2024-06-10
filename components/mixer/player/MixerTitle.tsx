@@ -34,15 +34,15 @@ export default function MixerTitle({ music }: Props) {
   return (
     <div
       onClick={handleSeek}
-      className="relative h-details-header-height w-full cursor-pointer overflow-hidden rounded-8 bg-white/5"
+      className="relative h-details-header-height w-full cursor-pointer overflow-hidden rounded-8 bg-gray-50"
     >
       <div
         style={{
           width: `${percentage}%`,
         }}
-        className="h-full bg-white/30"
+        className="h-full bg-gray-200/70"
       />
-      <div className="absolute left-0 top-1/2 w-full -translate-y-1/2 text-center text-18 font-600 text-white">
+      <div className="absolute left-0 top-1/2 w-full -translate-y-1/2 text-center text-18 font-600 text-black">
         {title}
       </div>
     </div>

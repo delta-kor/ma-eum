@@ -14,7 +14,7 @@ export default function MixerCloseIcon() {
 
   return (
     <div onClick={handleClick} className="-m-16 cursor-pointer p-16">
-      <Icon type="close" className="w-24 text-black/70" />
+      <Icon type="close" className="w-24 text-gray-200" />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import GradientIcon from '@/components/core/GradientIcon';
+import Icon from '@/components/core/Icon';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { HTMLAttributes } from 'react';
@@ -16,10 +16,13 @@ export default function MixerSelectorIconButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="cursor-pointer rounded-8 bg-white/10 p-10 data-[active=true]:bg-gradient-primary"
+      className="group cursor-pointer rounded-8 bg-gray-200/70 p-10 data-[active=true]:bg-gradient-primary"
       {...props}
     >
-      <GradientIcon type={isPortrait ? 'portrait' : 'landscape'} className="size-20" />
+      <Icon
+        type={isPortrait ? 'portrait' : 'landscape'}
+        className="size-20 text-black/50 group-data-[active=true]:text-white"
+      />
     </div>
   );
 }

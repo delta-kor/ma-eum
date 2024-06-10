@@ -59,7 +59,7 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
       <div className="flex flex-col gap-12">
         {Members.map(member => (
           <div key={member} className="flex h-40 items-center justify-between">
-            <div className="text-18 font-400 text-white">
+            <div className="select-none text-18 font-400 text-black">
               <Translate>{getMemberName(member)}</Translate>
             </div>
             <div className="flex gap-12">
