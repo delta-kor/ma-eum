@@ -12,7 +12,7 @@ export default function VideosPage() {
     <DetailsContent>
       <div className="px-24">
         <div className="flex flex-col gap-32 pb-24 pt-18 lg:mx-auto lg:max-w-screen-lg lg:px-0">
-          <div className="flex flex-col gap-32">
+          <div className="flex flex-col gap-32 lg:gap-24">
             <IconMenu />
             <div className="flex flex-col gap-12">
               <AlbumCardList />

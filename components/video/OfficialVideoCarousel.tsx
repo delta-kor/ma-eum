@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import Mobile from '@/components/core/responsive/Mobile';
 import { ReactNode, UIEvent, useRef, useState } from 'react';
 
 interface Props {
@@ -45,37 +46,39 @@ export default function OfficialVideoCarousel({ children }: Props) {
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="scrollbar-hide -mx-24 flex snap-x snap-mandatory overflow-x-scroll"
+        className="scrollbar-hide lg:flexlg:overflow-x-auto -mx-24 flex snap-x snap-mandatory overflow-x-scroll lg:mx-0"
       >
         {items.map((item, index) => (
-          <div key={index} className="w-full shrink-0 snap-start px-24">
+          <div key={index} className="w-full shrink-0 snap-start px-24 lg:w-auto lg:grow lg:px-0">
             {item}
           </div>
         ))}
       </div>
       {pages > 1 && (
-        <div className="flex items-center justify-center gap-24">
-          <div onClick={() => handlePageChangeDelta(-1)} className="cursor-pointer p-10">
-            <Icon type="left" className="w-12 text-gray-200" />
-          </div>
-          <div className="flex gap-4">
-            {Array.from({ length: pages }, (_, index) => (
-              <div
-                key={index}
-                data-active={currentPage === index}
-                onClick={() => handlePageChange(index)}
-                className="group flex size-32 cursor-pointer items-center justify-center rounded-full transition-colors data-[active=true]:bg-primary-500"
-              >
-                <div className="text-14 font-600 text-gray-500 transition-colors group-data-[active=true]:text-white">
-                  {index + 1}
+        <Mobile>
+          <div className="flex items-center justify-center gap-24">
+            <div onClick={() => handlePageChangeDelta(-1)} className="cursor-pointer p-10">
+              <Icon type="left" className="w-12 text-gray-200" />
+            </div>
+            <div className="flex gap-4">
+              {Array.from({ length: pages }, (_, index) => (
+                <div
+                  key={index}
+                  data-active={currentPage === index}
+                  onClick={() => handlePageChange(index)}
+                  className="group flex size-32 cursor-pointer items-center justify-center rounded-full transition-colors data-[active=true]:bg-primary-500"
+                >
+                  <div className="text-14 font-600 text-gray-500 transition-colors group-data-[active=true]:text-white">
+                    {index + 1}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div onClick={() => handlePageChangeDelta(1)} className="cursor-pointer p-10">
+              <Icon type="right" className="w-12 text-gray-200" />
+            </div>
           </div>
-          <div onClick={() => handlePageChangeDelta(1)} className="cursor-pointer p-10">
-            <Icon type="right" className="w-12 text-gray-200" />
-          </div>
-        </div>
+        </Mobile>
       )}
     </div>
   );

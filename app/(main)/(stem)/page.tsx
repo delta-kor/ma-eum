@@ -7,6 +7,8 @@ import LandingWidget from '@/components/landing/LandingWidget';
 import StrongMenu from '@/components/menu/StrongMenu';
 import { Suspense } from 'react';
 
+export const revalidate = 0;
+
 export default function MainPage() {
   return (
     <div className="flex min-h-dvh flex-col pb-24 lg:min-h-0">
