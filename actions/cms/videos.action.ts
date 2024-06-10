@@ -2,8 +2,8 @@
 
 import prisma from '@/prisma/prisma';
 import { MusicService } from '@/services/music.service';
-import { parseVoyageDate } from '@/utils/date.util';
 import createId from '@/utils/id.util';
+import { parseVoyageDate } from '@/utils/time.util';
 import { AvailableMetaTypes, VideoMeta } from '@/utils/video.util';
 import { VoyageSession, getCSRMemberByVoyageMember } from '@/utils/voyage.util';
 import { SessionType, Video, VideoSource } from '@prisma/client';

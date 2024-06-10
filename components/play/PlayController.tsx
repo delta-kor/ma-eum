@@ -1,5 +1,5 @@
 import Icon from '@/components/core/Icon';
-import { getTime } from '@/utils/date.util';
+import { getTime } from '@/utils/time.util';
 import { MouseEvent, useCallback, useRef } from 'react';
 
 interface Props {

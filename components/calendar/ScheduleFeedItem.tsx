@@ -1,5 +1,5 @@
 import Translate from '@/components/core/Translate';
-import { getRelativeTime } from '@/utils/date.util';
+import { getRelativeTime } from '@/utils/time.util';
 import { Schedule } from '@prisma/client';
 
 interface Props {

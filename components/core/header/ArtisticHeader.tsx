@@ -27,10 +27,12 @@ export default function ArtisticHeader() {
     router.push(path);
   }
 
+  const isDisplayedOnMobile = ['/', '/discover', '/mixer'].includes(pathname);
+
   return (
     <div
       data-floating={isFloating}
-      data-mobile={pathname === '/'}
+      data-mobile={isDisplayedOnMobile}
       className="group fixed left-1/2 top-0 z-50 w-full max-w-screen-lgx -translate-x-1/2 p-24 text-white transition-all data-[mobile=false]:hidden data-[floating=true]:bg-gray-50/80 data-[floating=true]:py-20 data-[floating=true]:text-black data-[floating=true]:backdrop-blur-lg lgx:rounded-full data-[floating=true]:lgx:top-8 data-[mobile=false]:lgx:block data-[floating=true]:lgx:w-[1072px] data-[floating=true]:lgx:px-28 data-[floating=true]:lgx:py-16"
     >
       <div className="flex items-center justify-between lg:mx-auto lg:max-w-screen-lg">

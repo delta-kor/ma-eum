@@ -46,7 +46,7 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex items-center gap-12">
+      <div className="grid grid-cols-2 items-center gap-12">
         {groupVideos.map((video, index) => (
           <MixerSelectorTextButton
             key={video.id}

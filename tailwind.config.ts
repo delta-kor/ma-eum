@@ -114,6 +114,7 @@ const config: Config = {
       64: '64px',
       72: '72px',
       'artistic-header-height-lg': '68px',
+      'artistic-header-height-md': '76px',
       'details-header-height': '56px',
     },
   },
