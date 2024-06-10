@@ -75,6 +75,9 @@ model Music {
   isTitle     Boolean
   isMixable   Boolean
 
+  anchor   Float?
+  duration Float?
+
   sessions Session[]
 }
 

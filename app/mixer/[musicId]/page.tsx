@@ -29,7 +29,7 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
   const initialVideo = sessions[0].videos[0];
 
   return (
-    <MixerControlProvider initialVideo={initialVideo}>
+    <MixerControlProvider initialVideo={initialVideo} music={music}>
       <MixerPlayerFrame music={music} sessions={sessions} />
     </MixerControlProvider>
   );

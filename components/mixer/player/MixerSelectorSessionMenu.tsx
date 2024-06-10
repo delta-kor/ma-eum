@@ -40,7 +40,9 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
     );
   }
 
-  function handleVideoClick(video: Video) {}
+  function handleVideoClick(video: Video) {
+    mixerControl.selectVideo(video);
+  }
 
   return (
     <div className="flex flex-col gap-12">

@@ -18,7 +18,7 @@ export default function MixerSelectorTextButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="flex grow basis-0 items-center justify-center gap-12 rounded-8 bg-white/10 px-16 py-10 data-[active=true]:bg-gradient-primary"
+      className="flex grow basis-0 cursor-pointer items-center justify-center gap-12 rounded-8 bg-white/10 px-16 py-10 data-[active=true]:bg-gradient-primary"
       {...props}
     >
       <GradientIcon type={isPortrait ? 'portrait' : 'landscape'} className="size-24" />

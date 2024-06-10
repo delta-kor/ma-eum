@@ -16,7 +16,7 @@ export default function MixerSelectorIconButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="rounded-8 bg-white/10 p-10 data-[active=true]:bg-gradient-primary"
+      className="cursor-pointer rounded-8 bg-white/10 p-10 data-[active=true]:bg-gradient-primary"
       {...props}
     >
       <GradientIcon type={isPortrait ? 'portrait' : 'landscape'} className="size-20" />

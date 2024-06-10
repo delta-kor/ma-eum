@@ -1,12 +1,15 @@
 'use client';
 
-import { Video } from '@prisma/client';
+import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
+import { Music, Video } from '@prisma/client';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
 interface Context {
   duration: number;
   isPlaying: boolean;
+  seekTo: (time: number) => void;
+  selectVideo: (video: Video) => void;
   setPlayer: (player: YouTubePlayer) => void;
   video: Video;
 }
@@ -16,10 +19,11 @@ export const MixerControlTimeContext = createContext<number>(0);
 
 interface Props {
   initialVideo: Video;
+  music: Music;
   children: ReactNode;
 }
 
-export default function MixerControlProvider({ initialVideo, children }: Props) {
+export default function MixerControlProvider({ initialVideo, music, children }: Props) {
   const [selectedVideo, setSelectedVideo] = useState<Video>(initialVideo);
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 
@@ -32,10 +36,11 @@ export default function MixerControlProvider({ initialVideo, children }: Props) 
   useEffect(() => {
     intervalRef.current = setInterval(updateCurrentTime, 1000 / 30);
     return () => clearInterval(intervalRef.current);
-  }, [player]);
+  }, [player, selectedVideo]);
 
   const updateCurrentTime = useCallback(() => {
     if (!player) return;
+
     const currentTime = player.getCurrentTime();
     setCurrentTime(currentTime);
 
@@ -45,12 +50,39 @@ export default function MixerControlProvider({ initialVideo, children }: Props) 
     const playerState = player.getPlayerState();
     const isPlaying = playerState === 1 || playerState === 3;
     setIsPlaying(isPlaying);
-  }, [player]);
+  }, [player, selectedVideo]);
+
+  const handleSelectVideo = useCallback(
+    (video: Video) => {
+      if (!player) return;
+
+      const currentAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
+      const nextAnchor = getMetaFromVideo<StageVideoMeta>(selectedVideo, 'stage')?.time || 0;
+      const delta = nextAnchor - currentAnchor;
+
+      const currentTime = player.getCurrentTime();
+      const nextTime = currentTime - delta;
+
+      player.loadVideoById(video.sourceId, nextTime);
+      setSelectedVideo(video);
+    },
+    [player, selectedVideo]
+  );
+
+  const handleSeekTo = useCallback(
+    (time: number) => {
+      if (!player) return;
+      player.seekTo(time);
+    },
+    [player]
+  );
 
   const value: Context = useMemo(
     () => ({
       duration,
       isPlaying,
+      seekTo: handleSeekTo,
+      selectVideo: handleSelectVideo,
       setPlayer,
       video: selectedVideo,
     }),
