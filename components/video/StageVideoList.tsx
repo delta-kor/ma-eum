@@ -7,12 +7,18 @@ import SessionVideoList, { SessionVideoListPlaceholder } from '@/components/vide
 import { trpc } from '@/hooks/trpc';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
 import { Member } from '@/utils/video.util';
+import { Music } from '@prisma/client';
 import { useContext, useState } from 'react';
 
-export default function StageVideoList() {
+interface Props {
+  music?: Music;
+}
+
+export default function StageVideoList({ music }: Props) {
   const [member, setMember] = useState<Member | null>(null);
 
-  const selectedMusic = useContext(PerformanceMusicContext);
+  const selectedMusicContext = useContext(PerformanceMusicContext);
+  const selectedMusic = music || selectedMusicContext;
   const selectedMusicId = selectedMusic?.id;
 
   const sessions = trpc.session.getSessionsByMusicId.useQuery(
@@ -37,9 +43,11 @@ export default function StageVideoList() {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="text-20 font-700 text-black">
-        <Translate>$stages</Translate>
-      </div>
+      {!music && (
+        <div className="text-20 font-700 text-black">
+          <Translate>$stages</Translate>
+        </div>
+      )}
       <div className="flex flex-col items-start gap-18 lg:grid lg:max-w-screen-lgx lg:grid-cols-[160px_1fr] lg:items-start">
         <div className="-mx-24 min-w-0 self-stretch lg:m-0 lg:grow">
           <MemberMenu selected={member} onSelect={handleMemberSelect} />

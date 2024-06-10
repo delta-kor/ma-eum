@@ -2,6 +2,7 @@
 
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
+import StageVideoList from '@/components/video/StageVideoList';
 import { getTime } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Music } from '@prisma/client';
@@ -21,8 +22,8 @@ export default function MixerMusicSelector({ musics }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-16">
-      <div className="flex items-center justify-evenly self-stretch">
+    <div className="flex flex-col gap-32">
+      <div className="-mx-24 flex items-center justify-evenly self-stretch">
         <div onClick={() => handleMove(-1)} className="-m-16 cursor-pointer p-16">
           <Icon type="left" className="w-20 text-gray-200" />
         </div>
@@ -42,6 +43,7 @@ export default function MixerMusicSelector({ musics }: Props) {
           {getTime(selectedMusic.duration!)}
         </div>
       </div>
+      <StageVideoList music={selectedMusic} />
     </div>
   );
 }
