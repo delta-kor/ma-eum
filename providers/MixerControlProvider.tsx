@@ -1,7 +1,9 @@
 'use client';
 
+import { ExtendedSession } from '@/services/session.service';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Music, Video } from '@prisma/client';
+import { Video } from '@prisma/client';
+import { useSearchParams } from 'next/navigation';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
@@ -19,12 +21,16 @@ export const MixerControlContext = createContext<Context>({} as Context);
 export const MixerControlTimeContext = createContext<number>(0);
 
 interface Props {
-  initialVideo: Video;
-  music: Music;
+  sessions: ExtendedSession[];
   children: ReactNode;
 }
 
-export default function MixerControlProvider({ initialVideo, music, children }: Props) {
+export default function MixerControlProvider({ sessions, children }: Props) {
+  const searchParams = useSearchParams();
+  const urlVideoId = searchParams.get('videoId');
+  const videos = sessions.map(session => session.videos).flat();
+  const initialVideo = videos.find(video => video.id === urlVideoId) || sessions[0].videos[0];
+
   const [selectedVideo, setSelectedVideo] = useState<Video>(initialVideo);
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 

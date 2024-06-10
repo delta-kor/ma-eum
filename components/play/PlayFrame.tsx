@@ -85,6 +85,7 @@ export default function PlayFrame({ album, music }: Props) {
               playerVars: {
                 autoplay: 1,
                 controls: 0,
+                iv_load_policy: 3,
               },
             }}
             videoId={playData.youtubeId}

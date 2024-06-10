@@ -25,6 +25,7 @@ export default function MixerVideo() {
         opts={{
           playerVars: {
             autoplay: 1,
+            iv_load_policy: 3,
           },
         }}
         videoId={initialVideoIdRef.current}

@@ -1,5 +1,6 @@
 import MixerSelectorPageMenu from '@/components/mixer/player/MixerSelectorPageMenu';
 import MixerSelectorSessionMenu from '@/components/mixer/player/MixerSelectorSessionMenu';
+import useMixerControl from '@/hooks/mixer-control';
 import { ExtendedSession } from '@/services/session.service';
 import { useState } from 'react';
 
@@ -8,7 +9,12 @@ interface Props {
 }
 
 export default function MixerSelector({ sessions }: Props) {
-  const [activeSession, setActiveSession] = useState<ExtendedSession>(sessions[0]);
+  const mixerControl = useMixerControl();
+  const initialSession =
+    sessions.find(session => session.videos.some(video => video.id === mixerControl.video.id)) ||
+    sessions[0];
+
+  const [activeSession, setActiveSession] = useState<ExtendedSession>(initialSession);
 
   function handlePageChange(direction: number) {
     const index = sessions.indexOf(activeSession);

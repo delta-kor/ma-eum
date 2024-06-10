@@ -60,7 +60,7 @@ export class MusicService {
   @ControlledCache('music.getMixableMusics', StaticDataTtl)
   public static async getMixableMusics(): Promise<Music[]> {
     return prisma.music.findMany({
-      orderBy: { album: { release: 'asc' } },
+      orderBy: { album: { release: 'desc' } },
       where: {
         isMixable: true,
       },

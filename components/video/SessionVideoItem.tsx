@@ -1,8 +1,9 @@
 import LazyImage from '@/components/core/LazyImage';
 import { getTagName } from '@/utils/session.util';
 import { ImageUrl } from '@/utils/url.util';
-import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
+import { MusicVideoMeta, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video, VideoSource } from '@prisma/client';
+import Link from 'next/link';
 
 interface Props {
   video: Video;
@@ -12,10 +13,15 @@ export default function SessionVideoItem({ video }: Props) {
   if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
 
   const stageMeta = getMetaFromVideo<StageVideoMeta>(video, 'stage');
+  const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
+  const musicId = musicMeta?.musicId || '';
 
   if (stageMeta)
     return (
-      <div className="relative overflow-hidden rounded-8">
+      <Link
+        href={`/mixer/${musicId}?videoId=${video.id}`}
+        className="relative overflow-hidden rounded-8"
+      >
         <LazyImage
           src={ImageUrl.youtubeThumbnail(video.sourceId)}
           className="aspect-video shrink-0 bg-primary-200"
@@ -23,7 +29,7 @@ export default function SessionVideoItem({ video }: Props) {
         <div className="absolute -bottom-2 -left-2 rounded-tr-8 border-2 border-white bg-gradient-primary px-8 py-4 text-14 font-600 text-white">
           {getTagName(stageMeta.tag)}
         </div>
-      </div>
+      </Link>
     );
   else
     return (
