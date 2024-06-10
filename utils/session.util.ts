@@ -1,9 +1,5 @@
 import { StageVideoTag } from '@/utils/video.util';
-import { Session, Video } from '@prisma/client';
-
-export interface ExtendedSession extends Session {
-  videos: Video[];
-}
+import { Session } from '@prisma/client';
 
 export const TagOrder: StageVideoTag[] = [
   'main',

@@ -6,7 +6,7 @@ import { Music, MusicPlayData } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
-export interface MusicWithPlayData extends Music {
+export interface ExtendedMusic extends Music {
   playData: MusicPlayData | null;
 }
 
@@ -74,7 +74,7 @@ export class MusicService {
   }
 
   @ControlledCache('music.getOneWithPlayData', StaticDataTtl)
-  public static async getOneWithPlayData(musicId: string): Promise<MusicWithPlayData | null> {
+  public static async getOneWithPlayData(musicId: string): Promise<ExtendedMusic | null> {
     return prisma.music.findUnique({
       include: { playData: true },
       where: { id: musicId },

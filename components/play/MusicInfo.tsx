@@ -1,13 +1,13 @@
 import Icon from '@/components/core/Icon';
 import Mobile from '@/components/core/responsive/Mobile';
-import { MusicWithPlayData } from '@/services/music.service';
+import { ExtendedMusic } from '@/services/music.service';
 import { Album } from '@prisma/client';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
 interface Props {
   album: Album;
-  music: MusicWithPlayData;
+  music: ExtendedMusic;
   children: ReactNode;
 }
 

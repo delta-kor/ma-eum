@@ -5,7 +5,7 @@ import Pc from '@/components/core/responsive/Pc';
 import LyricsChatWrapper from '@/components/play/LyricsChatWrapper';
 import MusicInfo from '@/components/play/MusicInfo';
 import PlayController from '@/components/play/PlayController';
-import { MusicWithPlayData } from '@/services/music.service';
+import { ExtendedMusic } from '@/services/music.service';
 import { Album } from '@prisma/client';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -13,7 +13,7 @@ import YouTube, { YouTubeEvent, YouTubePlayer } from 'react-youtube';
 
 interface Props {
   album: Album;
-  music: MusicWithPlayData;
+  music: ExtendedMusic;
 }
 
 export default function PlayFrame({ album, music }: Props) {

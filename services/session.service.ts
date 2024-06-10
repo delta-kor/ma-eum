@@ -1,9 +1,15 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
-import { ExtendedSession } from '@/utils/session.util';
+import { sortVideoByTag } from '@/utils/sort.util';
 import { Member } from '@/utils/video.util';
+import { Session, Video } from '@prisma/client';
+import 'server-only';
 import { z } from 'zod';
+
+export interface ExtendedSession extends Session {
+  videos: Video[];
+}
 
 const SessionRouter = router({
   getSessionsByMusicId: publicProcedure
@@ -41,6 +47,7 @@ export class SessionService {
           ? video.meta.every(meta => meta.type !== 'members')
           : video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
       );
+      sortVideoByTag(session.videos);
     }
 
     const filteredSessions = sessions.filter(session => session.videos.length > 0);

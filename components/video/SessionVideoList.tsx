@@ -1,7 +1,7 @@
 import GradientIcon from '@/components/core/GradientIcon';
 import SessionVideoItem from '@/components/video/SessionVideoItem';
-import { ExtendedSession, getSessionTitle } from '@/utils/session.util';
-import { sortVideoByTag } from '@/utils/sort.util';
+import { ExtendedSession } from '@/services/session.service';
+import { getSessionTitle } from '@/utils/session.util';
 import { format } from 'date-fns';
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 
 export default function SessionVideoList({ session }: Props) {
   const videos = session.videos;
-  const sortedVideos = sortVideoByTag([...videos]);
 
   return (
     <div className="flex flex-col gap-12 rounded-16 bg-primary-100 p-16">
@@ -22,7 +21,7 @@ export default function SessionVideoList({ session }: Props) {
         <div className="text-14 font-600 text-gray-500">{format(session.date, 'yy. MM. dd')}</div>
       </div>
       <div className="grid grid-cols-2 flex-col gap-8 md:grid-cols-3 lg:grid-cols-2">
-        {sortedVideos.map(video => (
+        {videos.map(video => (
           <SessionVideoItem key={video.id} video={video} />
         ))}
       </div>
