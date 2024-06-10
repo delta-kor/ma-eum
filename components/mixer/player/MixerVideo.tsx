@@ -1,14 +1,28 @@
 import useMixerControl from '@/hooks/mixer-control';
-import YouTube from 'react-youtube';
+import { useEffect } from 'react';
+import YouTube, { YouTubeEvent } from 'react-youtube';
 
 export default function MixerVideo() {
   const mixerControl = useMixerControl();
+
+  useEffect(() => {
+    return handleDismount;
+  }, []);
+
+  function handleDismount() {
+    mixerControl.setPlayer(null);
+  }
+
+  function handleReady(e: YouTubeEvent) {
+    mixerControl.setPlayer(e.target);
+  }
 
   return (
     <YouTube
       iframeClassName="w-full h-full"
       videoId={mixerControl.video.sourceId}
-      className="fixed left-0 top-0 aspect-video w-full"
+      onReady={handleReady}
+      className="sticky left-0 top-0 aspect-video w-full"
     />
   );
 }

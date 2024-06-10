@@ -1,41 +1,71 @@
 'use client';
 
-import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
 import { Video } from '@prisma/client';
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { YouTubePlayer } from 'react-youtube';
 
 interface Context {
-  currentTime: number;
+  duration: number;
+  isPlaying: boolean;
+  setPlayer: (player: YouTubePlayer) => void;
   video: Video;
-
-  onTimeChange: (time: number) => void;
 }
 
 export const MixerControlContext = createContext<Context>({} as Context);
+export const MixerControlTimeContext = createContext<number>(0);
 
 interface Props {
-  music: ExtendedMusic;
   sessions: ExtendedSession[];
   children: ReactNode;
 }
 
-export default function MixerControlProvider({ music, sessions, children }: Props) {
+export default function MixerControlProvider({ sessions, children }: Props) {
   const initialSession = sessions[0];
   const initialVideo = initialSession.videos[0];
 
-  const [currentTime, setCurrentTime] = useState<number>(0);
   const [selectedVideo, setSelectedVideo] = useState<Video>(initialVideo);
+  const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 
-  function handleTimeChange(time: number) {
-    setCurrentTime(time);
-  }
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
 
-  const value: Context = {
-    currentTime,
-    video: selectedVideo,
-    onTimeChange: handleTimeChange,
-  };
+  const intervalRef = useRef<any>();
 
-  return <MixerControlContext.Provider value={value}>{children}</MixerControlContext.Provider>;
+  useEffect(() => {
+    intervalRef.current = setInterval(updateCurrentTime, 1000 / 30);
+    return () => clearInterval(intervalRef.current);
+  }, [player]);
+
+  const updateCurrentTime = useCallback(() => {
+    if (!player) return;
+    const currentTime = player.getCurrentTime();
+    setCurrentTime(currentTime);
+
+    const duration = player.getDuration();
+    setDuration(duration);
+
+    const playerState = player.getPlayerState();
+    const isPlaying = playerState === 1 || playerState === 3;
+    setIsPlaying(isPlaying);
+  }, [player]);
+
+  const value: Context = useMemo(
+    () => ({
+      duration,
+      isPlaying,
+      setPlayer,
+      video: selectedVideo,
+    }),
+    [player, selectedVideo, isPlaying, duration]
+  );
+
+  return (
+    <MixerControlContext.Provider value={value}>
+      <MixerControlTimeContext.Provider value={currentTime}>
+        {children}
+      </MixerControlTimeContext.Provider>
+    </MixerControlContext.Provider>
+  );
 }
