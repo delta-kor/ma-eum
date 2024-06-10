@@ -24,11 +24,11 @@ export default function Navigator() {
         <Icon type="discover" className="h-28" />
       </Link>
       <Link
-        data-active={pathname === '/settings'}
-        href={'/settings'}
+        data-active={pathname === '/mixer'}
+        href={'/mixer'}
         className="cursor-pointer p-16 text-gray-200 data-[active=true]:text-primary-500"
       >
-        <Icon type="settings" className="h-28" />
+        <Icon type="mix" className="h-28" />
       </Link>
     </div>
   );

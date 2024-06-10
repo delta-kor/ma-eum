@@ -73,7 +73,7 @@ export default function PlayFrame({ album, music }: Props) {
       className="relative lg:px-24"
     >
       <Pc>
-        <Link href={`/musics`} replace className="absolute right-32 top-32 cursor-pointer p-24">
+        <Link href={`/musics`} replace className="absolute right-32 top-32 p-24">
           <Icon type="close" className="w-32 text-white" />
         </Link>
       </Pc>
