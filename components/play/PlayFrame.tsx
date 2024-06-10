@@ -1,10 +1,13 @@
 'use client';
 
+import Icon from '@/components/core/Icon';
+import Pc from '@/components/core/responsive/Pc';
 import LyricsChatWrapper from '@/components/play/LyricsChatWrapper';
 import MusicInfo from '@/components/play/MusicInfo';
 import PlayController from '@/components/play/PlayController';
 import { MusicWithPlayData } from '@/services/music.service';
 import { Album } from '@prisma/client';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubeEvent, YouTubePlayer } from 'react-youtube';
 
@@ -67,8 +70,13 @@ export default function PlayFrame({ album, music }: Props) {
   return (
     <div
       style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
-      className="lg:px-24"
+      className="relative lg:px-24"
     >
+      <Pc>
+        <Link href={`/musics`} className="absolute right-32 top-32 cursor-pointer p-24">
+          <Icon type="close" className="w-32 text-white" />
+        </Link>
+      </Pc>
       <div className="flex h-dvh w-full flex-col gap-16 p-24 pb-36 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-[400px_1fr] lg:items-center lg:gap-64 lg:p-0">
         <MusicInfo album={album} music={music}>
           <YouTube
