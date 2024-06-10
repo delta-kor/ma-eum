@@ -22,7 +22,7 @@ export default function MixerVideo() {
       iframeClassName="w-full h-full"
       videoId={mixerControl.video.sourceId}
       onReady={handleReady}
-      className="sticky left-0 top-0 aspect-video w-full"
+      className="sticky left-0 top-0 z-10 aspect-video w-full"
     />
   );
 }

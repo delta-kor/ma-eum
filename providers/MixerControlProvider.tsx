@@ -1,6 +1,5 @@
 'use client';
 
-import { ExtendedSession } from '@/services/session.service';
 import { Video } from '@prisma/client';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
@@ -16,14 +15,11 @@ export const MixerControlContext = createContext<Context>({} as Context);
 export const MixerControlTimeContext = createContext<number>(0);
 
 interface Props {
-  sessions: ExtendedSession[];
+  initialVideo: Video;
   children: ReactNode;
 }
 
-export default function MixerControlProvider({ sessions, children }: Props) {
-  const initialSession = sessions[0];
-  const initialVideo = initialSession.videos[0];
-
+export default function MixerControlProvider({ initialVideo, children }: Props) {
   const [selectedVideo, setSelectedVideo] = useState<Video>(initialVideo);
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 

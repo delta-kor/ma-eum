@@ -63,3 +63,30 @@ export function getTagName(tag: StageVideoTag): string {
       return 'Horizontal Cam';
   }
 }
+
+export function getShortTagName(tag: StageVideoTag): string {
+  switch (tag) {
+    case 'main':
+      return 'Main';
+    case 'full_360':
+      return '360°';
+    case 'full_hd':
+      return 'Full';
+    case 'full':
+      return 'Full';
+    case '1take':
+      return 'One Take';
+    case 'tower':
+      return 'Tower';
+    case 'side':
+      return 'Side';
+    case 'live':
+      return 'Live';
+    case 'rehearsal':
+      return 'Rehearsal';
+    case 'single_full':
+      return 'Vertical';
+    case 'single_face':
+      return 'Horizontal';
+  }
+}

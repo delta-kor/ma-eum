@@ -1,9 +1,9 @@
 import useMixerControl from '@/hooks/mixer-control';
 import useMixerControlTime from '@/hooks/mixer-control-time';
-import { Music } from '@prisma/client';
+import { ExtendedMusic } from '@/services/music.service';
 
 interface Props {
-  music: Music;
+  music: ExtendedMusic;
 }
 
 export default function MixerTitle({ music }: Props) {
