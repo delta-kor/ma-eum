@@ -63,16 +63,19 @@ model Video {
 }
 
 model Music {
-  id          String         @id
-  title       String
-  shortTitle  String
-  order       Int
-  albumId     String?
-  album       Album?         @relation(fields: [albumId], references: [id])
-  playData    MusicPlayData?
+  id         String         @id
+  title      String
+  shortTitle String
+  order      Int
+  albumId    String?
+  album      Album?         @relation(fields: [albumId], references: [id])
+  playData   MusicPlayData?
+
   isPerformed Boolean
   isTitle     Boolean
-  sessions    Session[]
+  isMixable   Boolean
+
+  sessions Session[]
 }
 
 model MusicPlayData {
@@ -80,20 +83,6 @@ model MusicPlayData {
   music     Music  @relation(fields: [musicId], references: [id])
   youtubeId String
   lyrics    Json?
-}
-
-enum StageType {
-  SHOWCASE
-  FANSIGN
-  PROGRAM
-}
-
-model Stage {
-  id    String    @id
-  type  StageType
-  title String
-  date  DateTime
-  order Int
 }
 
 enum ScheduleType {
