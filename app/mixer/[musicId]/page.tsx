@@ -27,7 +27,7 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
     return notFound();
 
   return (
-    <MixerControlProvider sessions={sessions}>
+    <MixerControlProvider music={music} sessions={sessions}>
       <MixerPlayerFrame music={music} sessions={sessions} />
     </MixerControlProvider>
   );

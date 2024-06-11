@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 interface Props {
   active?: boolean;
   hide?: boolean;
-  index: number;
-  line: Line | null;
+  lyric: [number, Line | null];
 }
 
-export default function MixerLyricsLine({ active, hide, index, line }: Props) {
+export default function MixerLyricsLine({ active, hide, lyric }: Props) {
+  const [index, line] = lyric;
+
   if (!line) return <div className="h-[21px]" />;
 
   const content = line.chips.map(chip => chip.text).join('');

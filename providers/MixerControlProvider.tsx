@@ -1,6 +1,9 @@
 'use client';
 
+import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
+import { Line, OffsetDelay } from '@/utils/lily.util';
+import { getVideoRelativeTime } from '@/utils/session.util';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
@@ -8,6 +11,7 @@ import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useS
 import { YouTubePlayer } from 'react-youtube';
 
 interface Context {
+  activeLyrics: [number, Line | null][];
   duration: number;
   isPlaying: boolean;
   play: () => void;
@@ -21,11 +25,12 @@ export const MixerControlContext = createContext<Context>({} as Context);
 export const MixerControlTimeContext = createContext<number>(0);
 
 interface Props {
+  music: ExtendedMusic;
   sessions: ExtendedSession[];
   children: ReactNode;
 }
 
-export default function MixerControlProvider({ sessions, children }: Props) {
+export default function MixerControlProvider({ music, sessions, children }: Props) {
   const searchParams = useSearchParams();
   const urlVideoId = searchParams.get('videoId');
   const videos = sessions.map(session => session.videos).flat();
@@ -37,6 +42,8 @@ export default function MixerControlProvider({ sessions, children }: Props) {
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
+
+  const [activeLyrics, setActiveLyrics] = useState<[number, Line | null][]>([]);
 
   const intervalRef = useRef<any>();
 
@@ -57,7 +64,35 @@ export default function MixerControlProvider({ sessions, children }: Props) {
     const playerState = player.getPlayerState();
     const isPlaying = playerState === 1 || playerState === 3;
     setIsPlaying(isPlaying);
-  }, [player, selectedVideo]);
+
+    updateActiveLyrics(currentTime);
+  }, [music, player, selectedVideo]);
+
+  const updateActiveLyrics = useCallback(
+    (currentTime: number) => {
+      const lines = (music.playData?.lyrics as Line[]) || [];
+      const relativeTime = getVideoRelativeTime(music, selectedVideo, currentTime);
+      const breakPoints: number[] = lines.map(
+        // @ts-ignore
+        line => line.chips.find(chip => chip.type === 'text').start
+      );
+      let lineIndex =
+        breakPoints.findIndex(breakPoint => breakPoint! > relativeTime + OffsetDelay) - 1;
+
+      if (lineIndex === -1) lineIndex = 0;
+      if (lineIndex === -2) lineIndex = breakPoints.length - 1;
+
+      const slicedLines: [number, Line | null][] = [];
+      for (let i = 0; i < 4; i++) {
+        const index = lineIndex + i - 1;
+        const line = lines[index];
+        slicedLines.push([index, line || null]);
+      }
+
+      setActiveLyrics(slicedLines);
+    },
+    [music, selectedVideo]
+  );
 
   const handleSelectVideo = useCallback(
     (video: Video) => {
@@ -91,6 +126,7 @@ export default function MixerControlProvider({ sessions, children }: Props) {
 
   const value: Context = useMemo(
     () => ({
+      activeLyrics,
       duration,
       isPlaying,
       play: handlePlay,
@@ -99,7 +135,7 @@ export default function MixerControlProvider({ sessions, children }: Props) {
       setPlayer,
       video: selectedVideo,
     }),
-    [player, selectedVideo, isPlaying, duration]
+    [player, selectedVideo, isPlaying, duration, activeLyrics]
   );
 
   return (
