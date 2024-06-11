@@ -33,7 +33,7 @@ export default function AlbumCard({ album, menu }: Props) {
       {menu && (
         <div className="relative -mx-8 flex h-32 items-stretch">
           <Link
-            href={`/albums/${album.id}/promotion`}
+            href={`/videos/albums/${album.id}/promotion`}
             className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white"
           >
             <Translate>$promotion</Translate>
@@ -41,7 +41,7 @@ export default function AlbumCard({ album, menu }: Props) {
           {!album.isMini && (
             <>
               <Link
-                href={`/albums/${album.id}/performance`}
+                href={`/videos/albums/${album.id}/performance`}
                 className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white"
               >
                 <Translate>$performance</Translate>

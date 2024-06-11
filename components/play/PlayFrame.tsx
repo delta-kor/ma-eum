@@ -5,9 +5,9 @@ import Pc from '@/components/core/responsive/Pc';
 import LyricsChatWrapper from '@/components/play/LyricsChatWrapper';
 import MusicInfo from '@/components/play/MusicInfo';
 import PlayController from '@/components/play/PlayController';
+import useHistory from '@/hooks/history';
 import { ExtendedMusic } from '@/services/music.service';
 import { Album } from '@prisma/client';
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubeEvent, YouTubePlayer } from 'react-youtube';
 
@@ -19,6 +19,8 @@ interface Props {
 export default function PlayFrame({ album, music }: Props) {
   const [gradientFrom, gradientTo, gradientMid] = album.colors;
   const playData = music.playData!;
+
+  const history = useHistory();
 
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -67,15 +69,19 @@ export default function PlayFrame({ album, music }: Props) {
     [player]
   );
 
+  const handleBackClick = useCallback(() => {
+    history.back();
+  }, [history]);
+
   return (
     <div
       style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
       className="relative lg:px-24"
     >
       <Pc>
-        <Link href={`/musics`} replace className="absolute right-32 top-32 p-24">
+        <div onClick={handleBackClick} className="absolute right-32 top-32 cursor-pointer p-24">
           <Icon type="close" className="w-32 text-white" />
-        </Link>
+        </div>
       </Pc>
       <div className="flex h-dvh w-full flex-col gap-16 p-24 pb-36 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-[400px_1fr] lg:items-center lg:gap-64 lg:p-0">
         <MusicInfo album={album} music={music}>

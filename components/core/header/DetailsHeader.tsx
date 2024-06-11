@@ -1,16 +1,19 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
+import useHistory from '@/hooks/history';
 import useTitle from '@/hooks/title';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function DetailsHeader() {
   const pathname = usePathname();
   const router = useRouter();
+  const history = useHistory();
   const { content } = useTitle();
 
   function handleBackClick() {
-    router.back();
+    // router.back();
+    history.back();
   }
 
   let title: string;

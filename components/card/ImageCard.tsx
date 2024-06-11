@@ -9,7 +9,7 @@ interface Props {
 export default function ImageCard({ category }: Props) {
   return (
     <Link
-      href={`/categories/${category.id}`}
+      href={`/videos/categories/${category.id}`}
       className="relative shrink-0 grow cursor-pointer rounded-16 border-3 border-gray-100"
     >
       <img

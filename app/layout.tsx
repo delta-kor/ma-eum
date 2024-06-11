@@ -1,3 +1,4 @@
+import HistoryProvider from '@/providers/HistoryProvider';
 import TRPCProvider from '@/providers/TRPCProvider';
 import TitleProvider from '@/providers/TitleProvider';
 import TranslateProvider from '@/providers/TranslateProvider';
@@ -14,7 +15,9 @@ export default function RootLayout({ children }: Props) {
       <body>
         <TranslateProvider>
           <TRPCProvider>
-            <TitleProvider>{children}</TitleProvider>
+            <TitleProvider>
+              <HistoryProvider>{children}</HistoryProvider>
+            </TitleProvider>
           </TRPCProvider>
         </TranslateProvider>
       </body>

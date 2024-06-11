@@ -35,6 +35,9 @@ dependencies:
   node-cache:
     specifier: ^5.1.2
     version: 5.1.2
+  path-to-regexp:
+    specifier: ^6.2.2
+    version: 6.2.2
   react:
     specifier: ^18
     version: 18.3.1
@@ -2530,6 +2533,10 @@ packages:
       lru-cache: 10.2.2
       minipass: 7.1.1
     dev: true
+
+  /path-to-regexp@6.2.2:
+    resolution: {integrity: sha512-GQX3SSMokngb36+whdpRXE+3f9V8UzyAorlYvOGx87ufGHehNTn5lCxrKtLyZ4Yl/wEKnNnr98ZzOwwDZV5ogw==}
+    dev: false
 
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}

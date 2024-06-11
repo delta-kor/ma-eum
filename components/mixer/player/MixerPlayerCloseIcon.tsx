@@ -1,13 +1,11 @@
 import Icon from '@/components/core/Icon';
-import { useRouter } from 'next/navigation';
+import useHistory from '@/hooks/history';
 
 export default function MixerPlayerCloseIcon() {
-  const router = useRouter();
+  const history = useHistory();
 
   function handleClick() {
-    const referrer = document.referrer;
-    console.log(referrer);
-    router.back();
+    history.back();
   }
 
   return (

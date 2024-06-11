@@ -19,6 +19,7 @@
     "framer-motion": "^11.2.10",
     "next": "14.2.3",
     "node-cache": "^5.1.2",
+    "path-to-regexp": "^6.2.2",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.10.2",

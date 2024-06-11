@@ -9,7 +9,7 @@ interface Props {
 export default function ProgramCard({ category }: Props) {
   return (
     <Link
-      href={`/categories/${category.id}`}
+      href={`/videos/categories/${category.id}`}
       className="flex grow basis-0 cursor-pointer items-center gap-10 rounded-16 border-3 border-primary-200 bg-primary-100 px-16 py-12"
     >
       <div className="flex w-full flex-col gap-4">
