@@ -1,3 +1,4 @@
+import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import MixerSelectorIconButton from '@/components/mixer/player/MixerSelectorIconButton';
 import MixerSelectorTextButton from '@/components/mixer/player/MixerSelectorTextButton';
@@ -34,6 +35,8 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
     groupVideos.splice(groupVideosTag.indexOf('full'), 1);
   }
 
+  const activeMembers = mixerControl.activeMembers || [];
+
   function getMemberVideos(member: Member) {
     return videos.filter(video =>
       getMetaFromVideo<MembersVideoMeta>(video, 'members')?.members.includes(member)
@@ -59,8 +62,13 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
       <div className="flex flex-col gap-12">
         {Members.map(member => (
           <div key={member} className="flex h-40 items-center justify-between">
-            <div className="select-none text-18 font-400 text-black">
-              <Translate>{getMemberName(member)}</Translate>
+            <div className="flex items-center gap-8">
+              <div className="select-none text-18 font-400 text-black">
+                <Translate>{getMemberName(member)}</Translate>
+              </div>
+              {activeMembers.includes(member) && (
+                <Icon type="music" className="w-14 text-primary-500" />
+              )}
             </div>
             <div className="flex gap-12">
               {getMemberVideos(member).map(video => (

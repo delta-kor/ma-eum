@@ -3,7 +3,7 @@ import { Member } from '@/utils/video.util';
 export interface Line {
   chips: Chip[];
   inline: boolean;
-  part: (Member | null)[];
+  part: Member[];
 }
 
 export type Chip = PunctuationChip | TextChip;

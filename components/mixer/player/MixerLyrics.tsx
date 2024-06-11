@@ -1,14 +1,7 @@
 import MixerLyricsLine from '@/components/mixer/player/MixerLyricsLine';
 import useMixerControl from '@/hooks/mixer-control';
-import { Line } from '@/utils/lily.util';
-import { Music } from '@prisma/client';
 
-interface Props {
-  lines: Line[];
-  music: Music;
-}
-
-export default function MixerLyrics({ lines, music }: Props) {
+export default function MixerLyrics() {
   const mixerControl = useMixerControl();
   const activeLyrics = mixerControl.activeLyrics;
   if (activeLyrics.length !== 4) return null;

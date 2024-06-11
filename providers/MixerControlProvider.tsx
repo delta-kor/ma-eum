@@ -4,7 +4,7 @@ import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
 import { Line, OffsetDelay } from '@/utils/lily.util';
 import { getVideoRelativeTime } from '@/utils/session.util';
-import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
+import { Member, Members, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { useSearchParams } from 'next/navigation';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -12,6 +12,7 @@ import { YouTubePlayer } from 'react-youtube';
 
 interface Context {
   activeLyrics: [number, Line | null][];
+  activeMembers: Member[] | null;
   duration: number;
   isPlaying: boolean;
   play: () => void;
@@ -44,6 +45,7 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
   const [duration, setDuration] = useState(0);
 
   const [activeLyrics, setActiveLyrics] = useState<[number, Line | null][]>([]);
+  const [activeMembers, setActiveMembers] = useState<Member[] | null>([]);
 
   const intervalRef = useRef<any>();
 
@@ -65,10 +67,10 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
     const isPlaying = playerState === 1 || playerState === 3;
     setIsPlaying(isPlaying);
 
-    updateActiveLyrics(currentTime);
+    updateActive(currentTime);
   }, [music, player, selectedVideo]);
 
-  const updateActiveLyrics = useCallback(
+  const updateActive = useCallback(
     (currentTime: number) => {
       const lines = (music.playData?.lyrics as Line[]) || [];
       const relativeTime = getVideoRelativeTime(music, selectedVideo, currentTime);
@@ -89,7 +91,23 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
         slicedLines.push([index, line || null]);
       }
 
+      const activeLines = lines.filter(
+        line =>
+          // @ts-ignore
+          line.chips.find(chip => chip.start < relativeTime - OffsetDelay) &&
+          // @ts-ignore
+          line.chips.findLast(chip => chip.end > relativeTime - OffsetDelay)
+      );
+
+      const activeMembersSet = new Set<Member>();
+      for (const line of activeLines) {
+        if (line.part.length === 0) Members.forEach(member => activeMembersSet.add(member));
+        else for (const part of line.part) activeMembersSet.add(part);
+      }
+      const activeMembers = Array.from(activeMembersSet);
+
       setActiveLyrics(slicedLines);
+      setActiveMembers(activeMembers);
     },
     [music, selectedVideo]
   );
@@ -127,6 +145,7 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
   const value: Context = useMemo(
     () => ({
       activeLyrics,
+      activeMembers,
       duration,
       isPlaying,
       play: handlePlay,
@@ -135,7 +154,7 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
       setPlayer,
       video: selectedVideo,
     }),
-    [player, selectedVideo, isPlaying, duration, activeLyrics]
+    [activeLyrics, activeMembers, player, selectedVideo, isPlaying, duration]
   );
 
   return (

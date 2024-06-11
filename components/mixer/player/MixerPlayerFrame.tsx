@@ -7,7 +7,6 @@ import MixerTitle from '@/components/mixer/player/MixerTitle';
 import MixerVideo from '@/components/mixer/player/MixerVideo';
 import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
-import { Line } from '@/utils/lily.util';
 
 interface Props {
   music: ExtendedMusic;
@@ -15,8 +14,6 @@ interface Props {
 }
 
 export default function MixerPlayerFrame({ music, sessions }: Props) {
-  const lines = music.playData!.lyrics as Line[];
-
   return (
     <div className="flex min-h-dvh flex-col lg:grid lg:grid-cols-[1fr_360px]">
       <div className="sticky left-0 top-0 z-10 aspect-video max-h-[50vh] self-stretch lg:static lg:aspect-auto lg:max-h-none">
@@ -27,7 +24,7 @@ export default function MixerPlayerFrame({ music, sessions }: Props) {
           <MixerTitle music={music} />
           <MixerPlayerCloseIcon />
         </div>
-        <MixerLyrics lines={lines} music={music} />
+        <MixerLyrics />
         <MixerSelector sessions={sessions} />
       </div>
     </div>
