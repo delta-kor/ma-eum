@@ -1,5 +1,5 @@
-import { StageVideoTag } from '@/utils/video.util';
-import { Session } from '@prisma/client';
+import { StageVideoMeta, StageVideoTag, getMetaFromVideo } from '@/utils/video.util';
+import { Music, Session, Video } from '@prisma/client';
 
 export const TagOrder: StageVideoTag[] = [
   'main',
@@ -89,4 +89,16 @@ export function getShortTagName(tag: StageVideoTag): string {
     case 'single_face':
       return 'Horizontal';
   }
+}
+
+export function getVideoRelativeTime(music: Music, video: Video, absoluteTime: number): number {
+  const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
+  const musicAnchor = music.anchor || 0;
+  return absoluteTime - (videoAnchor - musicAnchor);
+}
+
+export function getVideoAbsoluteTime(music: Music, video: Video, relativeTime: number): number {
+  const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
+  const musicAnchor = music.anchor || 0;
+  return relativeTime + (videoAnchor - musicAnchor);
 }

@@ -2,7 +2,7 @@ import useMixerControl from '@/hooks/mixer-control';
 import useMixerControlTime from '@/hooks/mixer-control-time';
 import { ExtendedMusic } from '@/services/music.service';
 import { rangePercentage } from '@/utils/lily.util';
-import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
+import { getVideoAbsoluteTime, getVideoRelativeTime } from '@/utils/session.util';
 import { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, useRef } from 'react';
 
 interface Props {
@@ -18,11 +18,8 @@ export default function MixerTitle({ music }: Props) {
   const title = music.title;
   const video = mixerControl.video;
 
-  const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
-  const musicAnchor = music.anchor || 0;
-
+  const relativeTime = getVideoRelativeTime(music, video, mixerControlTime);
   const musicDuration = music.duration || mixerControl.duration;
-  const relativeTime = mixerControlTime - (videoAnchor - musicAnchor);
   const percentage = rangePercentage((relativeTime / musicDuration) * 100);
 
   function handleSeek(x: number) {
@@ -30,7 +27,7 @@ export default function MixerTitle({ music }: Props) {
 
     const { left, width } = boxRef.current.getBoundingClientRect();
     const relativeX = x - left;
-    const time = (relativeX / width) * musicDuration + videoAnchor - musicAnchor;
+    const time = getVideoAbsoluteTime(music, video, (relativeX / width) * musicDuration);
     mixerControl.seekTo(time);
   }
 
