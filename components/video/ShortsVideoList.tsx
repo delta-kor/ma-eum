@@ -1,5 +1,6 @@
 'use client';
 
+import EndItems from '@/components/core/EndItems';
 import NoItems from '@/components/core/NoItems';
 import ShortsVideoItem, { ShortsVideoItemPlaceholder } from '@/components/video/ShortsVideoItem';
 import { trpc } from '@/hooks/trpc';
@@ -35,36 +36,43 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
   }, [inView]);
 
   const items = videos.data?.pages.map(page => page.items).flat() || [];
+  const isLoading = videos.isFetching && !videos.isFetchingNextPage;
+
+  const placeholder = (
+    <>
+      <ShortsVideoItemPlaceholder />
+      <ShortsVideoItemPlaceholder />
+      <ShortsVideoItemPlaceholder />
+      <ShortsVideoItemPlaceholder />
+      <ShortsVideoItemPlaceholder />
+    </>
+  );
 
   return (
     <div className="flex flex-col gap-18 lg:mx-auto lg:max-w-screen-lgx lg:px-24">
-      {videos.isFetching && !videos.isFetchingNextPage ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] lg:grid-cols-5 lg:gap-x-8 lg:gap-y-16">
-          <ShortsVideoItemPlaceholder />
-          <ShortsVideoItemPlaceholder />
-          <ShortsVideoItemPlaceholder />
-          <ShortsVideoItemPlaceholder />
-          <ShortsVideoItemPlaceholder />
-        </div>
-      ) : items.length > 0 ? (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] lg:grid-cols-5 lg:gap-x-8 lg:gap-y-16">
-          {items.map(video => (
-            <ShortsVideoItem key={video.id} video={video} />
-          ))}
-          {videos.isFetchingNextPage && (
-            <>
-              <ShortsVideoItemPlaceholder />
-              <ShortsVideoItemPlaceholder />
-              <ShortsVideoItemPlaceholder />
-              <ShortsVideoItemPlaceholder />
-              <ShortsVideoItemPlaceholder />
-            </>
-          )}
-          {videos.hasNextPage && <div ref={ref} className="size-1" />}
-        </div>
-      ) : (
-        <NoItems />
-      )}
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] lg:grid-cols-5 lg:gap-x-8 lg:gap-y-16">
+        {isLoading ? (
+          placeholder
+        ) : items.length > 0 ? (
+          <>
+            {items.map(video => (
+              <ShortsVideoItem key={video.id} video={video} />
+            ))}
+            {videos.isFetchingNextPage && placeholder}
+            {videos.hasNextPage ? (
+              <div ref={ref} className="col-span-full h-8" />
+            ) : (
+              <div className="col-span-full py-24">
+                <EndItems />
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="col-span-full">
+            <NoItems />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -48,43 +48,45 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
   }
 
   const items = videos.data?.pages.map(page => page.items).flat() || [];
+  const isLoading = videos.isFetching && !videos.isFetchingNextPage;
+
+  const placeholder = (
+    <>
+      <ChallengeVideoItemPlaceholder />
+      <ChallengeVideoItemPlaceholder />
+      <ChallengeVideoItemPlaceholder />
+      <ChallengeVideoItemPlaceholder />
+    </>
+  );
 
   return (
     <div className="flex flex-col gap-18 lg:mx-auto lg:grid lg:max-w-screen-lgx lg:grid-cols-[160px_1fr] lg:items-start lg:gap-16 lg:px-24">
       <MemberMenu selected={member} onSelect={handleMemberSelect} />
-      {videos.isFetching && !videos.isFetchingNextPage ? (
-        <div className="flex flex-col gap-16 px-24 pb-24 lg:grid lg:grid-cols-2 lg:px-0">
-          <ChallengeVideoItemPlaceholder />
-          <ChallengeVideoItemPlaceholder />
-          <ChallengeVideoItemPlaceholder />
-          <ChallengeVideoItemPlaceholder />
-        </div>
-      ) : items.length > 0 ? (
-        <div className="flex flex-col gap-16 px-24 pb-24 lg:grid lg:grid-cols-2 lg:px-0">
-          {items.map(video => (
-            <Suspense key={video.id} fallback={<ChallengeVideoItemPlaceholder />}>
-              <ChallengeVideoItem video={video} />
-            </Suspense>
-          ))}
-          {videos.isFetchingNextPage && (
-            <>
-              <ChallengeVideoItemPlaceholder />
-              <ChallengeVideoItemPlaceholder />
-              <ChallengeVideoItemPlaceholder />
-              <ChallengeVideoItemPlaceholder />
-            </>
-          )}
-          {videos.hasNextPage ? (
-            <div ref={ref} className="size-1" />
-          ) : (
-            <div className="lg:col-span-2">
-              <EndItems />
-            </div>
-          )}
-        </div>
-      ) : (
-        <NoItems />
-      )}
+      <div className="flex flex-col gap-16 px-24 pb-24 lg:grid lg:grid-cols-2 lg:px-0">
+        {isLoading ? (
+          placeholder
+        ) : items.length > 0 ? (
+          <>
+            {items.map(video => (
+              <Suspense key={video.id} fallback={<ChallengeVideoItemPlaceholder />}>
+                <ChallengeVideoItem video={video} />
+              </Suspense>
+            ))}
+            {videos.isFetchingNextPage && placeholder}
+            {videos.hasNextPage ? (
+              <div ref={ref} className="col-span-full h-8" />
+            ) : (
+              <div className="col-span-full">
+                <EndItems />
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="col-span-full">
+            <NoItems />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
