@@ -26,6 +26,7 @@ export function getCmsTrpcRecordByName(name: string) {
   if (name === 'category') return trpc.category;
   if (name === 'music') return trpc.music;
   if (name === 'schedule') return trpc.schedule;
+  if (name === 'feed') return trpc.feed;
   throw new Error('Unknown model name');
 }
 

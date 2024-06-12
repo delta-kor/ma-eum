@@ -124,3 +124,19 @@ model Session {
   music   Music?      @relation(fields: [musicId], references: [id])
   musicId String?
 }
+
+enum FeedType {
+  TWITTER
+  TIKTOK
+  BSTAGE
+}
+
+model Feed {
+  id       String   @id
+  sourceId String
+  type     FeedType
+  title    String
+  date     DateTime
+  members  String[]
+  media    Json[]
+}

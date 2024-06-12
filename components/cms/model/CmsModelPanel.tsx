@@ -1,5 +1,6 @@
 'use client';
 
+import { importVividFeedsFromJson } from '@/actions/cms/feeds.action';
 import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsModelCreate from '@/components/cms/model/CmsModelCreate';
@@ -71,16 +72,35 @@ export default function CmsModelPanel<T extends ItemBase>({ options }: Props<T>)
     setSelectedItem(null);
   }
 
+  async function handleImportVivid() {
+    const data = prompt('Paste the json data');
+    if (!data) return;
+
+    try {
+      const json = JSON.parse(data);
+      await importVividFeedsFromJson(json);
+      alert('Imported successfully');
+      await revalidate('/cms/feeds');
+    } catch (error) {
+      alert('Invalid json data');
+    }
+  }
+
   return (
     <div className="flex flex-col gap-16">
       <div className="flex items-center justify-between">
         <div className="text-20">
           Total <span className="font-700 text-primary-500">{items.length}</span> item(s)
         </div>
+        <div className="flex items-center gap-8">
+          {options.name === 'feed' && (
+            <CmsButton onClick={handleImportVivid}>Import Vivid</CmsButton>
+          )}
+        </div>
       </div>
       <div style={{ height: 'calc(100vh - 200px)' }} className="flex gap-12">
         <CmsModelList fields={options.fields} items={items} onItemSelect={handleItemSelect} />
-        <div className="w-[1px] self-stretch bg-gray-100" />
+        <div className="w-1 self-stretch bg-gray-100" />
         <div className="flex w-[280px] shrink-0 flex-col gap-16">
           <div className="flex items-center gap-8">
             <CmsButton onClick={handleSwitchMode}>Switch</CmsButton>
