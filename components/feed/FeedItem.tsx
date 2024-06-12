@@ -8,7 +8,7 @@ interface Props {
 
 export default function FeedItem({ feed }: Props) {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-16">
       <FeedHeader feed={feed} />
       {feed.type === FeedType.TWITTER && <TwitterFeedContent feed={feed} />}
     </div>

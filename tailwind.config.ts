@@ -15,6 +15,7 @@ const config: Config = {
       video: '16/8.95',
     },
     borderRadius: {
+      0: '0px',
       4: '4px',
       8: '8px',
       16: '16px',

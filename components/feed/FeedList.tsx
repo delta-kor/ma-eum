@@ -44,7 +44,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
   const placeholder = <></>;
 
   return (
-    <div className="flex flex-col gap-24 lg:grid lg:grid-cols-3">
+    <div className="flex flex-col gap-16 lg:grid lg:grid-cols-3">
       {isLoading ? (
         placeholder
       ) : items.length > 0 ? (
@@ -52,7 +52,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
           {items.map(item => (
             <div key={item.id} className="flex flex-col justify-between gap-24">
               <FeedItem feed={item} />
-              <div className="h-2 w-full bg-gray-100" />
+              <div className="-mx-24 h-2 bg-gray-100" />
             </div>
           ))}
           {feeds.isFetchingNextPage && placeholder}
