@@ -34,19 +34,26 @@ export default function FeedList({ preloadedFeeds }: Props) {
     }
   }, [inView]);
 
-  const items = feeds.data?.pages.map(page => page.items).flat() || [];
+  const items =
+    feeds.data?.pages
+      .map(page => page.items)
+      .flat()
+      .filter(item => item.media.length > 0) || [];
   const isLoading = feeds.isFetching && !feeds.isFetchingNextPage;
 
   const placeholder = <></>;
 
   return (
-    <div className="flex flex-col gap-16">
+    <div className="flex flex-col gap-24 lg:grid lg:grid-cols-3">
       {isLoading ? (
         placeholder
       ) : items.length > 0 ? (
         <>
           {items.map(item => (
-            <FeedItem key={item.id} feed={item} />
+            <div key={item.id} className="flex flex-col justify-between gap-24">
+              <FeedItem feed={item} />
+              <div className="h-2 w-full bg-gray-100" />
+            </div>
           ))}
           {feeds.isFetchingNextPage && placeholder}
           {feeds.hasNextPage ? (

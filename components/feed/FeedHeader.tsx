@@ -11,7 +11,10 @@ export default function FeedHeader({ feed }: Props) {
 
   return (
     <div className="flex h-36 items-center justify-between">
-      <div className="text-16 font-700 text-black">{header}</div>
+      <div className="flex items-center gap-8">
+        <div className="size-36 rounded-full bg-black" />
+        <div className="text-16 font-700 text-black">{header}</div>
+      </div>
       <div className="text-16 font-600 text-gray-500">{type}</div>
     </div>
   );
