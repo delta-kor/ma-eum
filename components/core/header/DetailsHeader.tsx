@@ -47,7 +47,7 @@ export default function DetailsHeader() {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 h-details-header-height w-full bg-white py-16">
+    <div className="fixed left-0 top-0 z-20 h-details-header-height w-full bg-white py-16">
       <div className="absolute h-24 w-full lg:left-1/2 lg:max-w-screen-lgx lg:-translate-x-1/2">
         <div
           onClick={handleBackClick}
