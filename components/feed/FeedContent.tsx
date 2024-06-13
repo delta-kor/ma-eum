@@ -112,7 +112,7 @@ export default function FeedContent({ feed }: Props) {
           </div>
         )}
       </div>
-      <TextHighlighter className="whitespace-pre-line text-16 font-400 text-black">
+      <TextHighlighter className="whitespace-pre-line text-16 font-400 leading-5 text-black">
         {content}
       </TextHighlighter>
       {isHighlighted && (

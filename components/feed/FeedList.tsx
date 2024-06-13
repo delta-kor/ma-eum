@@ -44,7 +44,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
   const placeholder = <></>;
 
   return (
-    <div className="flex flex-col gap-16 lg:grid lg:grid-cols-3">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16 lg:gap-24">
       {isLoading ? (
         placeholder
       ) : items.length > 0 ? (
