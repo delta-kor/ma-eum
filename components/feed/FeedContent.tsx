@@ -1,5 +1,5 @@
 import Icon from '@/components/core/Icon';
-import TextHighlighter from '@/components/feed/TextHighlighter';
+import FeedText from '@/components/feed/FeedText';
 import useImageLoaded from '@/hooks/image-loaded';
 import { getFeedUrl, getSanitizedFeedContent } from '@/utils/feed.util';
 import { getPastRelativeTime } from '@/utils/time.util';
@@ -114,10 +114,11 @@ export default function FeedContent({ feed }: Props) {
         )}
       </div>
       <div className="flex flex-col gap-6">
-        <TextHighlighter className="whitespace-pre-line text-16 font-400 leading-5 text-black">
-          {content}
-        </TextHighlighter>
-        <div suppressHydrationWarning className="text-16 font-600 text-gray-500">
+        <FeedText>{content}</FeedText>
+        <div
+          suppressHydrationWarning
+          className="self-start rounded-8 bg-gray-100 px-8 py-4 text-14 font-500 text-gray-500"
+        >
           {getPastRelativeTime(feed.date, new Date())}
         </div>
       </div>

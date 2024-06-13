@@ -1,10 +1,11 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode, RefObject } from 'react';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
+  innerRef?: RefObject<HTMLDivElement>;
   children: string;
 }
 
-export default function TextHighlighter({ children, ...props }: Props) {
+export default function TextHighlighter({ innerRef, children, ...props }: Props) {
   const urlPattern =
     /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&\/=]*/g;
   const tagPattern =
@@ -40,5 +41,9 @@ export default function TextHighlighter({ children, ...props }: Props) {
     }
   }
 
-  return <div {...props}>{content}</div>;
+  return (
+    <div ref={innerRef} {...props}>
+      {content}
+    </div>
+  );
 }
