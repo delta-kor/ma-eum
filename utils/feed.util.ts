@@ -27,6 +27,10 @@ export function getFeedUrl(feed: Feed): string {
   switch (feed.type) {
     case FeedType.TWITTER:
       return `https://x.com/CSR_offcl/status/${feed.sourceId}`;
+    case FeedType.TIKTOK:
+      return `https://www.tiktok.com/@csr.offcl/video/${feed.sourceId}`;
+    case FeedType.BSTAGE:
+      return `https://csr.bstage.in/story/feed/${feed.sourceId}`;
     default:
       return '#';
   }
@@ -36,7 +40,32 @@ export function getHomepageUrl(feed: Feed): string {
   switch (feed.type) {
     case FeedType.TWITTER:
       return 'https://x.com/CSR_offcl/';
+    case FeedType.TIKTOK:
+      return 'https://www.tiktok.com/@csr.offcl';
+    case FeedType.BSTAGE:
+      return 'https://csr.bstage.in';
     default:
       return '#';
   }
+}
+
+export function getSanitizedFeedContent(feed: Feed): string {
+  const content = feed.title;
+  if (feed.type === FeedType.TWITTER)
+    return content.split('https://').slice(0, -1).join('https://').trim() || content;
+  if (feed.type === FeedType.TIKTOK) {
+    const chips = content
+      .replace(/#/g, ' #')
+      .trim()
+      .split(' ')
+      .map(chip => chip.trim())
+      .filter(chip => chip.length > 0);
+
+    const lastTextChipIndex = chips.findLastIndex(chip => !chip.startsWith('#'));
+    const texts = chips.slice(0, lastTextChipIndex + 1).join(' ');
+    const tags = chips.slice(lastTextChipIndex + 1).join(' ');
+    return texts + '\n\n' + tags;
+  }
+
+  return content;
 }

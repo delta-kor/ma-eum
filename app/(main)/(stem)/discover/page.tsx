@@ -4,7 +4,7 @@ import { FeedService } from '@/services/feed.service';
 export const revalidate = 0;
 
 export default async function DiscoverPage() {
-  const feedsData = await FeedService.getFeeds({ cursor: null, limit: 10 });
+  const feedsData = await FeedService.getFeeds({ cursor: null, limit: 15 });
 
   return (
     <div className="px-24 pb-24">

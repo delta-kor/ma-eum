@@ -30,7 +30,7 @@ const FeedRouter = router({
   getFeeds: publicProcedure.input(z.object({ cursor: z.string().nullish() })).query(async opts => {
     return FeedService.getFeeds({
       cursor: opts.input.cursor || null,
-      limit: 10,
+      limit: 15,
     });
   }),
 

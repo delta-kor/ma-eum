@@ -1,7 +1,7 @@
 import Icon from '@/components/core/Icon';
 import TextHighlighter from '@/components/feed/TextHighlighter';
 import useImageLoaded from '@/hooks/image-loaded';
-import { getFeedUrl } from '@/utils/feed.util';
+import { getFeedUrl, getSanitizedFeedContent } from '@/utils/feed.util';
 import { VividMedia } from '@/utils/vivid.util';
 import { Feed } from '@prisma/client';
 import { PanInfo, motion } from 'framer-motion';
@@ -12,7 +12,7 @@ interface Props {
   feed: Feed;
 }
 
-export default function TwitterFeedContent({ feed }: Props) {
+export default function FeedContent({ feed }: Props) {
   const [mediaIndex, setMediaIndex] = useState<number>(0);
   const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
@@ -25,8 +25,7 @@ export default function TwitterFeedContent({ feed }: Props) {
 
   const isMultipleMedia = media.length > 1;
   const isVideoMedia = selectedMedia.type === 'video';
-  const sanitizedTitle =
-    feed.title.split('https://').slice(0, -1).join('https://').trim() || feed.title;
+  const content = getSanitizedFeedContent(feed);
 
   function updateMediaIndex(direction: number) {
     setMediaIndex((mediaIndex + direction + media.length) % media.length);
@@ -114,7 +113,7 @@ export default function TwitterFeedContent({ feed }: Props) {
         )}
       </div>
       <TextHighlighter className="whitespace-pre-line text-16 font-400 text-black">
-        {sanitizedTitle}
+        {content}
       </TextHighlighter>
       {isHighlighted && (
         <div className="fixed inset-0 z-50 flex h-dvh w-full items-center justify-center bg-black-real/90">
