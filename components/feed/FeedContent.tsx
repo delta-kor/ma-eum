@@ -2,6 +2,7 @@ import Icon from '@/components/core/Icon';
 import TextHighlighter from '@/components/feed/TextHighlighter';
 import useImageLoaded from '@/hooks/image-loaded';
 import { getFeedUrl, getSanitizedFeedContent } from '@/utils/feed.util';
+import { getPastRelativeTime } from '@/utils/time.util';
 import { VividMedia } from '@/utils/vivid.util';
 import { Feed } from '@prisma/client';
 import { PanInfo, motion } from 'framer-motion';
@@ -112,9 +113,14 @@ export default function FeedContent({ feed }: Props) {
           </div>
         )}
       </div>
-      <TextHighlighter className="whitespace-pre-line text-16 font-400 leading-5 text-black">
-        {content}
-      </TextHighlighter>
+      <div className="flex flex-col gap-6">
+        <TextHighlighter className="whitespace-pre-line text-16 font-400 leading-5 text-black">
+          {content}
+        </TextHighlighter>
+        <div suppressHydrationWarning className="text-16 font-600 text-gray-500">
+          {getPastRelativeTime(feed.date, new Date())}
+        </div>
+      </div>
       {isHighlighted && (
         <div className="fixed inset-0 z-50 flex h-dvh w-full items-center justify-center bg-black-real/90">
           <img

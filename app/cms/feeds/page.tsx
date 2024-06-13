@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic';
 export default async function CmsFeedsPage() {
   const feeds = await prisma.feed.findMany({
     orderBy: [{ date: 'desc' }],
+    take: 100,
   });
 
   return (

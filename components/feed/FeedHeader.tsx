@@ -22,6 +22,9 @@ export default function FeedHeader({ feed }: Props) {
     case FeedType.BSTAGE:
       icon = 'bstage';
       break;
+    case FeedType.DAUM:
+      icon = 'daum';
+      break;
   }
 
   return (
@@ -29,7 +32,7 @@ export default function FeedHeader({ feed }: Props) {
       <a href={getHomepageUrl(feed)} target="_blank" className="flex items-center gap-12">
         <div
           data-feed-type={feed.type}
-          className="flex size-40 items-center justify-center rounded-full bg-black data-[feed-type=BSTAGE]:bg-gradient-orange data-[feed-type=TIKTOK]:bg-gradient-red data-[feed-type=TWITTER]:bg-gradient-gray"
+          className="flex size-40 items-center justify-center rounded-full bg-black data-[feed-type=BSTAGE]:bg-gradient-orange data-[feed-type=DAUM]:bg-gradient-primary data-[feed-type=TIKTOK]:bg-gradient-red data-[feed-type=TWITTER]:bg-gradient-gray"
         >
           <Icon type={icon} className="w-20 text-white" />
         </div>

@@ -9,6 +9,8 @@ export function getFeedHeader(feed: Feed): string[] {
       return ['@csr_offcl'];
     case FeedType.BSTAGE:
       return (feed.members as Member[]).map(getMemberName);
+    case FeedType.DAUM:
+      return ['csr.official'];
   }
 }
 
@@ -20,6 +22,8 @@ export function getFeedType(feed: Feed): string {
       return 'Tiktok';
     case FeedType.BSTAGE:
       return 'Bstage';
+    case FeedType.DAUM:
+      return 'Daum';
   }
 }
 
@@ -31,6 +35,8 @@ export function getFeedUrl(feed: Feed): string {
       return `https://www.tiktok.com/@csr.offcl/video/${feed.sourceId}`;
     case FeedType.BSTAGE:
       return `https://csr.bstage.in/story/feed/${feed.sourceId}`;
+    case FeedType.DAUM:
+      return `https://cafe.daum.net/csr.official/${feed.sourceId}`;
     default:
       return '#';
   }
@@ -44,6 +50,8 @@ export function getHomepageUrl(feed: Feed): string {
       return 'https://www.tiktok.com/@csr.offcl';
     case FeedType.BSTAGE:
       return 'https://csr.bstage.in';
+    case FeedType.DAUM:
+      return 'https://cafe.daum.net/csr.official';
     default:
       return '#';
   }

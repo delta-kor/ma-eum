@@ -129,6 +129,7 @@ enum FeedType {
   TWITTER
   TIKTOK
   BSTAGE
+  DAUM
 }
 
 model Feed {

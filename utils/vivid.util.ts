@@ -1,4 +1,4 @@
-export type VividFeedType = 'bstage' | 'tiktok' | 'twitter';
+export type VividFeedType = 'bstage' | 'daum' | 'tiktok' | 'twitter';
 
 export interface VividFeed {
   date: Date;

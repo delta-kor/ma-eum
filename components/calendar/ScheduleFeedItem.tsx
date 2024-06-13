@@ -1,5 +1,5 @@
 import Translate from '@/components/core/Translate';
-import { getRelativeTime } from '@/utils/time.util';
+import { getFutureRelativeTime } from '@/utils/time.util';
 import { Schedule } from '@prisma/client';
 
 interface Props {
@@ -17,7 +17,7 @@ export default function ScheduleFeedItem({ schedule, today }: Props) {
         </div>
       </div>
       <div className="shrink-0 text-16 font-500 text-primary-500">
-        {getRelativeTime(schedule.date, today, schedule.isAllDay)}
+        {getFutureRelativeTime(schedule.date, today, schedule.isAllDay)}
       </div>
     </div>
   );
