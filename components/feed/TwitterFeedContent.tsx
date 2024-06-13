@@ -1,5 +1,7 @@
 import Icon from '@/components/core/Icon';
+import TextHighlighter from '@/components/feed/TextHighlighter';
 import useImageLoaded from '@/hooks/image-loaded';
+import { getFeedUrl } from '@/utils/feed.util';
 import { VividMedia } from '@/utils/vivid.util';
 import { Feed } from '@prisma/client';
 import { PanInfo, motion } from 'framer-motion';
@@ -22,6 +24,9 @@ export default function TwitterFeedContent({ feed }: Props) {
   const [imageRef, isLoaded, handleImageLoad] = useImageLoaded(selectedMediaThumbnail);
 
   const isMultipleMedia = media.length > 1;
+  const isVideoMedia = selectedMedia.type === 'video';
+  const sanitizedTitle =
+    feed.title.split('https://').slice(0, -1).join('https://').trim() || feed.title;
 
   function updateMediaIndex(direction: number) {
     setMediaIndex((mediaIndex + direction + media.length) % media.length);
@@ -37,7 +42,8 @@ export default function TwitterFeedContent({ feed }: Props) {
 
   function handleImageClick(e: MouseEvent<HTMLDivElement>) {
     e.preventDefault();
-    setIsHighlighted(true);
+    if (!isVideoMedia) setIsHighlighted(true);
+    else window.open(getFeedUrl(feed), '_blank');
   }
 
   function handleCloseClick(e: MouseEvent<HTMLDivElement>) {
@@ -58,10 +64,16 @@ export default function TwitterFeedContent({ feed }: Props) {
             ref={imageRef}
             alt={feed.sourceId}
             data-loaded={isLoaded}
+            data-video={isVideoMedia}
             loading="lazy"
             onLoad={handleImageLoad}
-            className="size-full object-cover opacity-0 transition-opacity duration-200 data-[loaded=true]:opacity-100"
+            className="size-full object-cover opacity-0 transition-opacity duration-200 data-[video=true]:cursor-pointer data-[loaded=true]:opacity-100"
           />
+          {isVideoMedia && (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white p-16">
+              <Icon type="play" className="w-16 text-black" />
+            </div>
+          )}
           {isMultipleMedia && (
             <div className="lg:opacity-0 lg:transition-opacity lg:duration-200 lg:group-hover:opacity-100">
               <div
@@ -101,7 +113,9 @@ export default function TwitterFeedContent({ feed }: Props) {
           </div>
         )}
       </div>
-      <div className="whitespace-pre-line text-16 font-400 text-black">{feed.title}</div>
+      <TextHighlighter className="whitespace-pre-line text-16 font-400 text-black">
+        {sanitizedTitle}
+      </TextHighlighter>
       {isHighlighted && (
         <div className="fixed inset-0 z-50 flex h-dvh w-full items-center justify-center bg-black-real/90">
           <img

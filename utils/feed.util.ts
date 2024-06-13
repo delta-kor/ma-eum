@@ -22,3 +22,21 @@ export function getFeedType(feed: Feed): string {
       return 'Bstage';
   }
 }
+
+export function getFeedUrl(feed: Feed): string {
+  switch (feed.type) {
+    case FeedType.TWITTER:
+      return `https://x.com/CSR_offcl/status/${feed.sourceId}`;
+    default:
+      return '#';
+  }
+}
+
+export function getHomepageUrl(feed: Feed): string {
+  switch (feed.type) {
+    case FeedType.TWITTER:
+      return 'https://x.com/CSR_offcl/';
+    default:
+      return '#';
+  }
+}
