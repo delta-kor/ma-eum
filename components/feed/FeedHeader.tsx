@@ -1,4 +1,5 @@
 import Icon, { IconType } from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import { getFeedHeader, getFeedType, getFeedUrl, getHomepageUrl } from '@/utils/feed.util';
 import { Feed, FeedType } from '@prisma/client';
 
@@ -26,10 +27,15 @@ export default function FeedHeader({ feed }: Props) {
   return (
     <div className="flex items-center justify-between">
       <a href={getHomepageUrl(feed)} target="_blank" className="flex items-center gap-12">
-        <div className="flex size-40 items-center justify-center rounded-full bg-black">
+        <div
+          data-feed-type={feed.type}
+          className="flex size-40 items-center justify-center rounded-full bg-black data-[feed-type=BSTAGE]:bg-gradient-orange data-[feed-type=TIKTOK]:bg-gradient-red data-[feed-type=TWITTER]:bg-gradient-gray"
+        >
           <Icon type={icon} className="w-20 text-white" />
         </div>
-        <div className="text-16 font-700 text-black">{header}</div>
+        <div className="text-16 font-700 text-black">
+          <Translate>{header}</Translate>
+        </div>
       </a>
       <a
         href={getFeedUrl(feed)}

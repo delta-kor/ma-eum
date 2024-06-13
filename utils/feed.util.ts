@@ -62,9 +62,15 @@ export function getSanitizedFeedContent(feed: Feed): string {
       .filter(chip => chip.length > 0);
 
     const lastTextChipIndex = chips.findLastIndex(chip => !chip.startsWith('#'));
-    const texts = chips.slice(0, lastTextChipIndex + 1).join(' ');
-    const tags = chips.slice(lastTextChipIndex + 1).join(' ');
-    return texts + '\n\n' + tags;
+    const texts = chips
+      .slice(0, lastTextChipIndex + 1)
+      .join(' ')
+      .trim();
+    const tags = chips
+      .slice(lastTextChipIndex + 1)
+      .join(' ')
+      .trim();
+    return texts ? texts + '\n\n' + tags : tags;
   }
 
   return content;

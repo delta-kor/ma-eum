@@ -3,7 +3,7 @@ import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
-import type { Feed } from '@prisma/client';
+import { Feed } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
@@ -59,6 +59,9 @@ export class FeedService {
       },
       skip: pagination.cursor ? 1 : 0,
       take: pagination.limit,
+      where: {
+        // type: FeedType.TIKTOK,
+      },
     });
 
     const result: PaginationResult<Feed> = {
