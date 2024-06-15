@@ -2,8 +2,8 @@ import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
 import LyricsChatChip from '@/components/play/LyricsChatChip';
 import { Line } from '@/utils/lily.util';
+import { Member, getMemberName } from '@/utils/member.util';
 import { ImageUrl } from '@/utils/url.util';
-import { Member, getMemberName } from '@/utils/video.util';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Fragment } from 'react';
 

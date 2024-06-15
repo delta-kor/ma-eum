@@ -5,14 +5,8 @@ import MixerSelectorTextButton from '@/components/mixer/player/MixerSelectorText
 import useMixerControl from '@/hooks/mixer-control';
 import useQuery from '@/hooks/query';
 import { ExtendedSession } from '@/services/session.service';
-import {
-  Member,
-  Members,
-  MembersVideoMeta,
-  StageVideoMeta,
-  getMemberName,
-  getMetaFromVideo,
-} from '@/utils/video.util';
+import { Member, Members, getMemberName } from '@/utils/member.util';
+import { MembersVideoMeta, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 
 interface Props {

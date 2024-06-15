@@ -4,9 +4,10 @@ import NoItems from '@/components/core/NoItems';
 import Translate from '@/components/core/Translate';
 import MemberMenu from '@/components/menu/MemberMenu';
 import SessionVideoList, { SessionVideoListPlaceholder } from '@/components/video/SessionVideoList';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
-import { Member } from '@/utils/video.util';
+import { Member, sanitizeMember } from '@/utils/member.util';
 import { useContext, useState } from 'react';
 
 interface Props {
@@ -14,7 +15,9 @@ interface Props {
 }
 
 export default function StageVideoList({ attached }: Props) {
-  const [member, setMember] = useState<Member | null>(null);
+  const query = useQuery();
+  const initialMember = sanitizeMember(query.get('member'));
+  const [member, setMember] = useState<Member | null>(initialMember);
 
   const selectedMusic = useContext(PerformanceMusicContext);
   const selectedMusicId = selectedMusic?.id;

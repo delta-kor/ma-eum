@@ -1,6 +1,6 @@
 import LyricsChatBubble from '@/components/play/LyricsChatBubble';
 import { Line } from '@/utils/lily.util';
-import { Member } from '@/utils/video.util';
+import { Member } from '@/utils/member.util';
 import { Music } from '@prisma/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMemo } from 'react';

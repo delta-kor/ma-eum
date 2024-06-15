@@ -1,4 +1,4 @@
-import { Member, getMemberName } from '@/utils/video.util';
+import { Member, getMemberName } from '@/utils/member.util';
 import { Feed, FeedType } from '@prisma/client';
 
 export function getFeedHeader(feed: Feed): string[] {

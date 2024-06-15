@@ -1,3 +1,4 @@
+import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
 import { ImageUrl } from '@/utils/url.util';
 import { Album } from '@prisma/client';
@@ -18,10 +19,10 @@ export default function AlbumCard({ album, menu }: Props) {
       className="flex flex-col gap-12 rounded-16 p-12"
     >
       <div className="flex items-center gap-12">
-        <img
+        <LazyImage
           alt={album.title}
           src={ImageUrl.album(album.id)}
-          className="size-64 rounded-8 border-3 border-white/40"
+          className="size-64 rounded-8 border-3 border-white/40 bg-white/40"
         />
         <div className="flex flex-col gap-4">
           <div className="text-20 font-700 text-white">{album.title}</div>

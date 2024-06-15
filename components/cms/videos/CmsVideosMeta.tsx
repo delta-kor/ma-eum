@@ -1,4 +1,5 @@
 import CmsMetaInput from '@/components/cms/videos/CmsMetaInput';
+import { Members } from '@/utils/member.util';
 import {
   CoverVideoMeta,
   EpisodeVideoMeta,
@@ -6,7 +7,6 @@ import {
   InboundChallengeVideoMeta,
   LinkVideoMeta,
   LiveVideoMeta,
-  Members,
   MembersVideoMeta,
   MusicVideoMeta,
   OfficialVideoMeta,

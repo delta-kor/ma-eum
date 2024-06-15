@@ -3,13 +3,13 @@ import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
+import { getMemberName } from '@/utils/member.util';
 import { ImageUrl } from '@/utils/url.util';
 import {
   InboundChallengeVideoMeta,
   MembersVideoMeta,
   MusicVideoMeta,
   OutboundChallengeVideoMeta,
-  getMemberName,
   getMetaFromVideo,
 } from '@/utils/video.util';
 import { Video, VideoSource } from '@prisma/client';

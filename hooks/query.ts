@@ -15,14 +15,21 @@ export default function useQuery() {
   const pathname = usePathname();
   const router = useRouter();
 
-  function getQueryUpdatedUrl(query: Record<string, string>): UrlObject {
+  function getQueryUpdatedUrl(query: Record<string, null | string>): UrlObject {
+    const queryObject = { ...searchParamsToObject(searchParams), ...query };
+    for (const key in queryObject) {
+      if (queryObject[key] === null) {
+        delete queryObject[key];
+      }
+    }
+
     return {
       pathname,
-      query: { ...searchParamsToObject(searchParams), ...query },
+      query: queryObject,
     };
   }
 
-  function getQueryUpdatedHref(query: Record<string, string>): string {
+  function getQueryUpdatedHref(query: Record<string, null | string>): string {
     const urlObject = getQueryUpdatedUrl(query);
     const urlQuery = urlObject.query as Record<string, string>;
 
@@ -31,7 +38,7 @@ export default function useQuery() {
     return queryString ? `${pathname}?${queryString}` : pathname;
   }
 
-  function set(query: Record<string, string>, options?: NavigateOptions) {
+  function set(query: Record<string, null | string>, options?: NavigateOptions) {
     router.replace(getQueryUpdatedHref(query), options);
   }
 

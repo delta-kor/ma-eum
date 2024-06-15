@@ -5,8 +5,9 @@ import MemberMenu from '@/components/menu/MemberMenu';
 import CategoryVideoItem, {
   CategoryVideoItemPlaceholder,
 } from '@/components/video/CategoryVideoItem';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import { Member } from '@/utils/video.util';
+import { Member, sanitizeMember } from '@/utils/member.util';
 import { Category, CategoryOptions, Video } from '@prisma/client';
 import { useState } from 'react';
 
@@ -16,7 +17,9 @@ interface Props {
 }
 
 export default function CategoryVideoList({ category, preloadedVideos }: Props) {
-  const [member, setMember] = useState<Member | null>(null);
+  const query = useQuery();
+  const initialMember = sanitizeMember(query.get('member'));
+  const [member, setMember] = useState<Member | null>(initialMember);
 
   const videos = trpc.video.getCategoryVideos.useQuery(
     { categoryId: category.id, member },

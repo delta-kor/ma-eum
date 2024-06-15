@@ -6,9 +6,10 @@ import MemberMenu from '@/components/menu/MemberMenu';
 import ChallengeVideoItem, {
   ChallengeVideoItemPlaceholder,
 } from '@/components/video/ChallengeVideoItem';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { Member, sanitizeMember } from '@/utils/member.util';
 import { PaginationResult } from '@/utils/pagination.util';
-import { Member } from '@/utils/video.util';
 import { Video } from '@prisma/client';
 import { Suspense, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -21,7 +22,10 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
   const { inView, ref } = useInView({
     threshold: 0,
   });
-  const [member, setMember] = useState<Member | null>(null);
+  const query = useQuery();
+
+  const initialMember = sanitizeMember(query.get('member'));
+  const [member, setMember] = useState<Member | null>(initialMember);
   const [index, setIndex] = useState<number>(0);
 
   const videos = trpc.video.getChallengeVideos.useInfiniteQuery(

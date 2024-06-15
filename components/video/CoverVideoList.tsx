@@ -3,8 +3,9 @@
 import NoItems from '@/components/core/NoItems';
 import MemberMenu from '@/components/menu/MemberMenu';
 import CoverVideoItem, { CoverVideoItemPlaceholder } from '@/components/video/CoverVideoItem';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import { Member } from '@/utils/video.util';
+import { Member, sanitizeMember } from '@/utils/member.util';
 import { Video } from '@prisma/client';
 import { useState } from 'react';
 
@@ -13,7 +14,9 @@ interface Props {
 }
 
 export default function CoverVideoList({ preloadedVideos }: Props) {
-  const [member, setMember] = useState<Member | null>(null);
+  const query = useQuery();
+  const initialMember = sanitizeMember(query.get('member'));
+  const [member, setMember] = useState<Member | null>(initialMember);
 
   const videos = trpc.video.getCoverVideos.useQuery(
     { member },

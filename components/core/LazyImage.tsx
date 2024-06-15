@@ -3,9 +3,11 @@
 import { LazyLoadImage, LazyLoadImageProps } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 
-interface Props extends LazyLoadImageProps {}
+interface Props extends LazyLoadImageProps {
+  contain?: boolean;
+}
 
-export default function LazyImage({ className, ...props }: Props) {
+export default function LazyImage({ contain, className, ...props }: Props) {
   return (
     <div style={{ overflow: 'hidden', position: 'relative' }} className={className}>
       <LazyLoadImage
@@ -13,7 +15,7 @@ export default function LazyImage({ className, ...props }: Props) {
         style={{
           height: '100%',
           left: '0',
-          objectFit: 'cover',
+          objectFit: contain ? 'contain' : 'cover',
           position: 'absolute',
           top: '0',
           width: '100%',
