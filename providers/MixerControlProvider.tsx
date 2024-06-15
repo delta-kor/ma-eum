@@ -1,12 +1,12 @@
 'use client';
 
+import useQuery from '@/hooks/query';
 import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
 import { Line, OffsetDelay } from '@/utils/lily.util';
 import { getVideoRelativeTime } from '@/utils/session.util';
 import { Member, Members, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
@@ -32,8 +32,8 @@ interface Props {
 }
 
 export default function MixerControlProvider({ music, sessions, children }: Props) {
-  const searchParams = useSearchParams();
-  const urlVideoId = searchParams.get('videoId');
+  const query = useQuery();
+  const urlVideoId = query.get('videoId');
   const videos = sessions.map(session => session.videos).flat();
   const initialVideo = videos.find(video => video.id === urlVideoId) || sessions[0].videos[0];
 

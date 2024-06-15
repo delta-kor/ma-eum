@@ -4,6 +4,8 @@ import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import MixerEnterButton from '@/components/mixer/MixerEnterButton';
 import StageVideoList from '@/components/video/StageVideoList';
+import useQuery from '@/hooks/query';
+import PerformanceMusicProvider from '@/providers/PerformanceMusicProvider';
 import { getTime } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Music } from '@prisma/client';
@@ -14,12 +16,17 @@ interface Props {
 }
 
 export default function MixerMusicSelector({ musics }: Props) {
-  const [selectedMusic, setSelectedMusic] = useState<Music>(musics[0]);
+  const query = useQuery();
+  const initialMusic = musics.find(music => music.id === query.get('music')) || musics[0];
+  const [selectedMusic, setSelectedMusic] = useState<Music>(initialMusic);
 
   function handleMove(direction: number) {
     const currentIndex = musics.findIndex(music => music.id === selectedMusic.id);
     const nextIndex = (currentIndex + direction + musics.length) % musics.length;
-    setSelectedMusic(musics[nextIndex]);
+    const nextMusic = musics[nextIndex];
+
+    setSelectedMusic(nextMusic);
+    query.set({ music: nextMusic.id });
   }
 
   return (
@@ -49,7 +56,9 @@ export default function MixerMusicSelector({ musics }: Props) {
       <div className="w-[320px] self-center">
         <MixerEnterButton music={selectedMusic} />
       </div>
-      <StageVideoList music={selectedMusic} />
+      <PerformanceMusicProvider musics={musics}>
+        <StageVideoList attached />
+      </PerformanceMusicProvider>
     </div>
   );
 }

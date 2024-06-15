@@ -7,18 +7,16 @@ import SessionVideoList, { SessionVideoListPlaceholder } from '@/components/vide
 import { trpc } from '@/hooks/trpc';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
 import { Member } from '@/utils/video.util';
-import { Music } from '@prisma/client';
 import { useContext, useState } from 'react';
 
 interface Props {
-  music?: Music;
+  attached?: boolean;
 }
 
-export default function StageVideoList({ music }: Props) {
+export default function StageVideoList({ attached }: Props) {
   const [member, setMember] = useState<Member | null>(null);
 
-  const selectedMusicContext = useContext(PerformanceMusicContext);
-  const selectedMusic = music || selectedMusicContext;
+  const selectedMusic = useContext(PerformanceMusicContext);
   const selectedMusicId = selectedMusic?.id;
 
   const sessions = trpc.session.getSessionsByMusicId.useQuery(
@@ -43,7 +41,7 @@ export default function StageVideoList({ music }: Props) {
 
   return (
     <div className="flex flex-col gap-12">
-      {!music && (
+      {!attached && (
         <div className="text-20 font-700 text-black">
           <Translate>$stages</Translate>
         </div>

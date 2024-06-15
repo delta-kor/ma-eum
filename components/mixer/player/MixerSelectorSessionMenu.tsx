@@ -3,6 +3,7 @@ import Translate from '@/components/core/Translate';
 import MixerSelectorIconButton from '@/components/mixer/player/MixerSelectorIconButton';
 import MixerSelectorTextButton from '@/components/mixer/player/MixerSelectorTextButton';
 import useMixerControl from '@/hooks/mixer-control';
+import useQuery from '@/hooks/query';
 import { ExtendedSession } from '@/services/session.service';
 import {
   Member,
@@ -20,6 +21,7 @@ interface Props {
 
 export default function MixerSelectorSessionMenu({ session }: Props) {
   const mixerControl = useMixerControl();
+  const query = useQuery();
 
   const activeVideo = mixerControl.video;
   const videos = session.videos;
@@ -45,6 +47,7 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
 
   function handleVideoClick(video: Video) {
     mixerControl.selectVideo(video);
+    query.set({ videoId: video.id });
   }
 
   return (

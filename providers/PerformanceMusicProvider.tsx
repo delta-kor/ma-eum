@@ -1,7 +1,7 @@
 'use client';
 
+import useQuery from '@/hooks/query';
 import { Music } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 import { ReactNode, createContext } from 'react';
 
 export const PerformanceMusicContext = createContext<Music | null>(null);
@@ -12,9 +12,9 @@ interface Props {
 }
 
 export default function PerformanceMusicProvider({ musics, children }: Props) {
-  const searchParams = useSearchParams();
+  const query = useQuery();
+  const musicQueryValue = query.get('music');
 
-  const musicQueryValue = searchParams.get('music');
   const selectedMusic =
     musics.find(music => music.id === musicQueryValue) ||
     musics.find(music => music.isTitle) ||
