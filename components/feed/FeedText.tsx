@@ -29,7 +29,7 @@ export default function FeedText({ children }: Props) {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-4">
       <TextHighlighter
         data-expanded={isExpanded}
         innerRef={textRef}
@@ -40,7 +40,7 @@ export default function FeedText({ children }: Props) {
       {isOverflowing && !isExpanded && (
         <div
           onClick={() => setIsExpanded(!isExpanded)}
-          className="cursor-pointer text-14 font-600 text-gray-500"
+          className="cursor-pointer select-none text-14 font-500 text-gray-500"
         >
           <Translate>$view_all</Translate>
         </div>

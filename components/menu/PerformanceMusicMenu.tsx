@@ -1,10 +1,9 @@
 'use client';
 
+import useQuery from '@/hooks/query';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
-import { searchParamsToObject } from '@/utils/url.util';
 import { Music } from '@prisma/client';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
 import { useContext } from 'react';
 
 interface Props {
@@ -12,8 +11,7 @@ interface Props {
 }
 
 export default function PerformanceMusicMenu({ musics }: Props) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const query = useQuery();
 
   const selectedMusic = useContext(PerformanceMusicContext);
   const selectedMusicId = selectedMusic?.id;
@@ -24,10 +22,7 @@ export default function PerformanceMusicMenu({ musics }: Props) {
         <Link
           key={music.id}
           data-active={music.id === selectedMusicId}
-          href={{
-            pathname,
-            query: { ...searchParamsToObject(searchParams), music: music.id },
-          }}
+          href={query.getQueryUpdatedUrl({ music: music.id })}
           replace
           className="group relative -m-8 p-8"
         >

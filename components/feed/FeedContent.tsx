@@ -113,7 +113,7 @@ export default function FeedContent({ feed }: Props) {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-12">
         <FeedText>{content}</FeedText>
         <div
           suppressHydrationWarning
