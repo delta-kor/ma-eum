@@ -117,6 +117,7 @@ const config: Config = {
       48: '48px',
       64: '64px',
       72: '72px',
+      'artistic-header-expanded-width-lg': 'calc(100% - 48px)',
       'artistic-header-height-lg': '68px',
       'artistic-header-height-md': '76px',
       'details-header-height': '56px',
