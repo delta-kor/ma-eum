@@ -7,11 +7,11 @@ import { MusicVideoMeta } from '@/utils/video.util';
 import Link from 'next/link';
 
 interface Props {
-  meta: MusicVideoMeta;
+  musicMeta: MusicVideoMeta;
 }
 
-export default async function MusicMetaCard({ meta }: Props) {
-  const musicId = meta.musicId;
+export default async function MusicMetaCard({ musicMeta }: Props) {
+  const musicId = musicMeta.musicId;
   const musicData = MusicService.getOne(musicId);
   const albumData = AlbumService.getOneByMusicId(musicId);
 
