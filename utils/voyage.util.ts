@@ -1,4 +1,5 @@
-import { Member, StageVideoTag } from '@/utils/video.util';
+import { Member } from '@/utils/member.util';
+import { StageVideoTag } from '@/utils/video.util';
 
 export interface VoyageSession {
   date: string;

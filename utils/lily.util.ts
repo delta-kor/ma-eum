@@ -1,4 +1,4 @@
-import { Member } from '@/utils/video.util';
+import { Member } from '@/utils/member.util';
 
 export interface Line {
   chips: Chip[];
