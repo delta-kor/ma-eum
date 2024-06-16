@@ -4,6 +4,7 @@ import { ImageUrl } from '@/utils/url.util';
 import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   video: Video;
@@ -13,7 +14,7 @@ export default function PromotionItem({ video }: Props) {
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
 
   return (
-    <div className="flex gap-16">
+    <Link href={`/video/${video.id}`} className="flex gap-16">
       <div className="flex flex-col items-center">
         <div className="rounded-8 bg-primary-200 p-8">
           <GradientIcon type="live" className="h-16" />
@@ -33,6 +34,6 @@ export default function PromotionItem({ video }: Props) {
           />
         )}
       </div>
-    </div>
+    </Link>
   );
 }
