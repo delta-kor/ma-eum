@@ -10,8 +10,10 @@ export default async function SchedulesPage() {
 
   return (
     <DetailsContent>
-      <div className="px-24 pb-24">
-        <CalendarSection dateInfo={dateInfo} today={today} />
+      <div className="px-24">
+        <div className="pb-24 lg:mx-auto lg:max-w-screen-lg lg:pt-24">
+          <CalendarSection dateInfo={dateInfo} today={today} />
+        </div>
       </div>
     </DetailsContent>
   );

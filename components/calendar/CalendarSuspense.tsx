@@ -5,5 +5,5 @@ export default async function CalendarSuspense() {
   const dateInfo = await ScheduleService.getCalendarDateInfo();
   const today = new Date();
 
-  return <CalendarSection dateInfo={dateInfo} today={today} />;
+  return <CalendarSection dateInfo={dateInfo} today={today} attached />;
 }
