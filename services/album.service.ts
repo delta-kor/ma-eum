@@ -51,4 +51,17 @@ export class AlbumService {
   public static async getOne(id: string): Promise<Album | null> {
     return prisma.album.findUnique({ where: { id } });
   }
+
+  @ControlledCache('album.getOneByMusicId', StaticDataTtl)
+  public static async getOneByMusicId(musicId: string): Promise<Album | null> {
+    return prisma.album.findFirst({
+      where: {
+        musics: {
+          some: {
+            id: musicId,
+          },
+        },
+      },
+    });
+  }
 }
