@@ -110,3 +110,9 @@ export function getSanitizedFeedContent(feed: Feed): string {
 
   return content;
 }
+
+export function getSanitizedFeedType(feedType: null | string): FeedType[] {
+  if (!feedType) return FeedTypes;
+  if (FeedTypes.includes(feedType as FeedType)) return [feedType as FeedType];
+  return FeedTypes;
+}

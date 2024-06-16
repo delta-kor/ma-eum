@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import useQuery from '@/hooks/query';
 import { FeedFilter, FeedTypes, getFeedHeaderName, getFeedIconName } from '@/utils/feed.util';
 import { FeedType } from '@prisma/client';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -10,7 +11,10 @@ interface Props {
 }
 
 export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
+  const query = useQuery();
+
   function handleFeedTypeClick(type: FeedType) {
+    query.set({ feed: type });
     onFilterSet({
       ...filter,
       types: [type],
@@ -18,6 +22,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
   }
 
   function handleFeedTypeReset() {
+    query.set({ feed: null });
     onFilterSet({
       ...filter,
       types: FeedTypes,
@@ -27,7 +32,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
   const isAllTypes = filter.types.length === FeedTypes.length;
 
   return (
-    <div className="flex justify-between">
+    <div className="scrollbar-hide -mx-24 flex justify-between overflow-x-scroll px-24">
       <div className="flex gap-8">
         <AnimatePresence>
           {!isAllTypes && (
@@ -38,7 +43,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
               initial={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={handleFeedTypeReset}
-              className="flex cursor-pointer items-center gap-8 rounded-full bg-gray-100 px-16 py-12"
+              className="flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12"
             >
               <Icon
                 type="left"
@@ -55,7 +60,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
               data-active={!isAllTypes && filter.types.includes(type)}
               layout="position"
               onClick={() => handleFeedTypeClick(type)}
-              className="group flex cursor-pointer items-center gap-8 rounded-full bg-gray-100 px-16 py-12 data-[active=true]:bg-gradient-primary"
+              className="group flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12 data-[active=true]:bg-gradient-primary"
             >
               <Icon
                 type={getFeedIconName(type)}

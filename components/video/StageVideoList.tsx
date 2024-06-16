@@ -7,7 +7,7 @@ import SessionVideoList, { SessionVideoListPlaceholder } from '@/components/vide
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
-import { Member, sanitizeMember } from '@/utils/member.util';
+import { Member, getSanitizedMember } from '@/utils/member.util';
 import { useContext, useState } from 'react';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 
 export default function StageVideoList({ attached }: Props) {
   const query = useQuery();
-  const initialMember = sanitizeMember(query.get('member'));
+  const initialMember = getSanitizedMember(query.get('member'));
   const [member, setMember] = useState<Member | null>(initialMember);
 
   const selectedMusic = useContext(PerformanceMusicContext);

@@ -8,7 +8,7 @@ import ChallengeVideoItem, {
 } from '@/components/video/ChallengeVideoItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import { Member, sanitizeMember } from '@/utils/member.util';
+import { Member, getSanitizedMember } from '@/utils/member.util';
 import { PaginationResult } from '@/utils/pagination.util';
 import { Video } from '@prisma/client';
 import { Suspense, useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
   });
   const query = useQuery();
 
-  const initialMember = sanitizeMember(query.get('member'));
+  const initialMember = getSanitizedMember(query.get('member'));
   const [member, setMember] = useState<Member | null>(initialMember);
   const [index, setIndex] = useState<number>(0);
 

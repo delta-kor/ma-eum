@@ -23,7 +23,7 @@ export function getMemberName(member: Member | null): string {
   }
 }
 
-export function sanitizeMember(member: null | string): Member | null {
+export function getSanitizedMember(member: null | string): Member | null {
   if (Members.includes(member as Member)) {
     return member as Member;
   }

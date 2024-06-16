@@ -2,9 +2,10 @@
 
 import EndItems from '@/components/core/EndItems';
 import FeedFilterMenu from '@/components/feed/FeedFilterMenu';
-import FeedItem from '@/components/feed/FeedItem';
+import FeedItem, { FeedItemPlaceholder } from '@/components/feed/FeedItem';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import { FeedFilter, FeedTypes } from '@/utils/feed.util';
+import { FeedFilter, FeedTypes, getSanitizedFeedType } from '@/utils/feed.util';
 import { PaginationResult } from '@/utils/pagination.util';
 import { Feed } from '@prisma/client';
 import { useEffect, useState } from 'react';
@@ -19,10 +20,12 @@ export default function FeedList({ preloadedFeeds }: Props) {
     threshold: 0,
   });
 
+  const query = useQuery();
+  const feedTypes = getSanitizedFeedType(query.get('feed'));
   const [filter, setFilter] = useState<FeedFilter>({
     date: null,
     direction: 'desc',
-    types: FeedTypes,
+    types: feedTypes,
   });
 
   const feeds = trpc.feed.getFeeds.useInfiniteQuery(
@@ -32,7 +35,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedFeeds] },
-      refetchOnMount: false,
+      refetchOnMount: feedTypes.length !== FeedTypes.length,
       refetchOnReconnect: true,
       refetchOnWindowFocus: false,
     }
@@ -55,10 +58,25 @@ export default function FeedList({ preloadedFeeds }: Props) {
       .filter(item => item.media.length > 0) || [];
   const isLoading = feeds.isFetching && !feeds.isFetchingNextPage;
 
-  const placeholder = <></>;
+  const placeholder = (
+    <>
+      <div className="flex flex-col justify-between gap-24">
+        <FeedItemPlaceholder />
+        <div className="-mx-24 h-2 bg-gray-100" />
+      </div>
+      <div className="flex flex-col justify-between gap-24">
+        <FeedItemPlaceholder />
+        <div className="-mx-24 h-2 bg-gray-100" />
+      </div>
+      <div className="flex flex-col justify-between gap-24">
+        <FeedItemPlaceholder />
+        <div className="-mx-24 h-2 bg-gray-100" />
+      </div>
+    </>
+  );
 
   return (
-    <div className="flex flex-col gap-24">
+    <div className="flex flex-col gap-16 lg:gap-24">
       <FeedFilterMenu filter={filter} onFilterSet={handleFilterSet} />
       <div className="h-2 bg-gray-100" />
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16 lg:gap-24">
