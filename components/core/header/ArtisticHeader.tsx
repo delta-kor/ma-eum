@@ -28,14 +28,16 @@ export default function ArtisticHeader() {
   }
 
   const isDisplayedOnMobile = ['/', '/discover', '/mixer'].includes(pathname);
+  const isExpanded = pathname.startsWith('/video/');
 
   return (
     <div
+      data-expanded={isExpanded}
       data-floating={isFloating}
       data-mobile={isDisplayedOnMobile}
-      className="group fixed left-1/2 top-0 z-50 w-full max-w-screen-lgx -translate-x-1/2 p-24 text-white transition-all data-[mobile=false]:hidden data-[floating=true]:bg-gray-50/80 data-[floating=true]:py-20 data-[floating=true]:text-black data-[floating=true]:backdrop-blur-lg lgx:rounded-full data-[floating=true]:lgx:top-8 data-[mobile=false]:lgx:block data-[floating=true]:lgx:w-[1072px] data-[floating=true]:lgx:px-28 data-[floating=true]:lgx:py-16"
+      className="group fixed left-1/2 top-0 z-50 w-full max-w-screen-lgx -translate-x-1/2 p-24 text-white transition-all data-[mobile=false]:hidden data-[expanded=true]:max-w-screen-xlgx data-[floating=true]:bg-gray-50/80 data-[floating=true]:py-20 data-[floating=true]:text-black data-[floating=true]:backdrop-blur-lg data-[expanded=true]:lg:block lgx:rounded-full data-[expanded=true]:lgx:inset-x-16 data-[expanded=true]:lgx:!top-16 data-[floating=true]:lgx:top-8 data-[mobile=false]:lgx:block data-[expanded=true]:lgx:w-auto data-[expanded=true]:lgx:translate-x-0 data-[floating=true]:lgx:px-28 data-[floating=true]:lgx:py-16 data-[expanded=true]:xlgx:inset-x-auto data-[expanded=true]:xlgx:left-1/2 data-[expanded=true]:xlgx:w-full data-[expanded=true]:xlgx:-translate-x-1/2"
     >
-      <div className="flex items-center justify-between lg:mx-auto lg:max-w-screen-lg">
+      <div className="flex items-center justify-between lg:mx-auto lg:max-w-screen-lg group-data-[expanded=true]:lg:max-w-screen-xl">
         <div className="flex items-center gap-48">
           <ArtisticText
             type="maeum"

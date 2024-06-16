@@ -30,10 +30,10 @@ export default async function VideoPage({ params: { videoId } }: Props) {
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
 
   return (
-    <div className="px-24 pb-24 lg:pt-24">
+    <div className="px-24 pb-24 lg:mt-artistic-header-height-lg lg:pt-16">
       <div className="flex flex-col gap-16 lg:mx-auto lg:grid lg:max-w-screen-xl lg:grid-cols-[1fr_360px]">
         <div className="self-stretch">
-          <div className="flex flex-col gap-16 lg:sticky lg:left-0 lg:top-24">
+          <div className="flex flex-col gap-16 lg:sticky lg:left-0 lg:top-[84px]">
             <VideoPlayerPlaceholder />
             <VideoPlayer source={video.source} sourceId={video.sourceId} />
             <VideoHeader video={video} />

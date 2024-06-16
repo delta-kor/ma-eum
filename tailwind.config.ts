@@ -73,6 +73,7 @@ const config: Config = {
       },
       screens: {
         lgx: '1072px',
+        xlgx: '1328px',
       },
     },
     fontSize: {
