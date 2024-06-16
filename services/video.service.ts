@@ -1,10 +1,10 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { Member } from '@/utils/member.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { paginate } from '@/utils/pagination.util';
 import { sortVideoByMeta } from '@/utils/sort.util';
-import { Member } from '@/utils/video.util';
 import type { Video } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
@@ -123,6 +123,11 @@ export class VideoService {
         video.meta.some(meta => meta.type === 'music' && meta.musicId === musicId)
     );
     return sortVideoByMeta(officialVideos, 'official');
+  }
+
+  @ControlledCache('video.getOne', StaticDataTtl)
+  public static async getOne(videoId: string): Promise<Video | null> {
+    return prisma.video.findUnique({ where: { id: videoId } });
   }
 
   @ControlledCache('video.getPromotionVideos', StaticDataTtl)

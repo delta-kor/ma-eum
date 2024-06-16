@@ -3,6 +3,7 @@ import { ImageUrl } from '@/utils/url.util';
 import { EpisodeVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   video: Video;
@@ -16,7 +17,7 @@ export default function CategoryVideoItem({ video }: Props) {
   const episode = episodeMeta?.episode || null;
 
   return (
-    <div className="flex gap-16">
+    <Link href={`/video/${video.id}`} className="flex gap-16">
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
         className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100"
@@ -32,7 +33,7 @@ export default function CategoryVideoItem({ video }: Props) {
         )}
         <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
       </div>
-    </div>
+    </Link>
   );
 }
 

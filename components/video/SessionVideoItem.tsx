@@ -19,7 +19,7 @@ export default function SessionVideoItem({ video }: Props) {
   if (stageMeta)
     return (
       <Link
-        href={`/mixer/${musicId}?videoId=${video.id}`}
+        href={`/mixer/${musicId}?video=${video.id}`}
         className="relative overflow-hidden rounded-8"
       >
         <LazyImage

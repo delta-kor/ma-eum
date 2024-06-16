@@ -25,6 +25,12 @@ export const Pages: PageInfo[] = [
     base: true,
     path: '/mixer',
   },
+
+  {
+    back: '/',
+    path: '/video/:id',
+  },
+
   {
     back: '/',
     path: '/schedules',

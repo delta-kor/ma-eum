@@ -34,7 +34,7 @@ interface Props {
 
 export default function MixerControlProvider({ music, sessions, children }: Props) {
   const query = useQuery();
-  const urlVideoId = query.get('videoId');
+  const urlVideoId = query.get('video');
   const videos = sessions.map(session => session.videos).flat();
   const initialVideo = videos.find(video => video.id === urlVideoId) || sessions[0].videos[0];
 
