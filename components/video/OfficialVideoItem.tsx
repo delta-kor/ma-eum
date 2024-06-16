@@ -1,3 +1,4 @@
+import GradientIcon from '@/components/core/GradientIcon';
 import LazyImage from '@/components/core/LazyImage';
 import { ImageUrl } from '@/utils/url.util';
 import { OfficialVideoMeta, getMetaFromVideo } from '@/utils/video.util';
@@ -6,23 +7,34 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
+  active?: boolean;
+  attached?: boolean;
   video: Video;
 }
 
-export default function OfficialVideoItem({ video }: Props) {
+export default function OfficialVideoItem({ active, attached, video }: Props) {
   if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
 
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
   const title = officialMeta?.title || video.title;
 
   return (
-    <Link href={`/video/${video.id}`} className="flex items-center gap-16">
+    <Link
+      data-attached={!!attached}
+      href={`/video/${video.id}`}
+      className="group flex items-center gap-16"
+    >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
         className="aspect-video h-64 shrink-0 rounded-8 bg-gray-100"
       />
       <div className="flex min-w-0 flex-col gap-4">
-        <div className="line-clamp-2 text-18 font-600 text-black">{title}</div>
+        <div className="flex items-center gap-8">
+          {active && <GradientIcon type="live" className="w-18" />}
+          <div className="line-clamp-2 text-18 font-600 text-black group-data-[attached=true]:text-16">
+            {title}
+          </div>
+        </div>
         <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
       </div>
     </Link>

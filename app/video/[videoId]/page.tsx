@@ -38,9 +38,7 @@ export default async function VideoPage({ params: { videoId } }: Props) {
         <div className="flex flex-col gap-16 pb-24">
           {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
           {promotionMeta && <PromotionMetaCard promotionMeta={promotionMeta} video={video} />}
-          {musicMeta && officialMeta && (
-            <OfficialMetaCard musicMeta={musicMeta} officialMeta={officialMeta} video={video} />
-          )}
+          {musicMeta && officialMeta && <OfficialMetaCard musicMeta={musicMeta} video={video} />}
         </div>
       </div>
     </div>
