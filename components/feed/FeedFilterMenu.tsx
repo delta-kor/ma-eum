@@ -29,11 +29,19 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
     });
   }
 
+  function handleDirectionClick(direction: 'asc' | 'desc') {
+    query.set({ direction });
+    onFilterSet({
+      ...filter,
+      direction,
+    });
+  }
+
   const isAllTypes = filter.types.length === FeedTypes.length;
 
   return (
-    <div className="scrollbar-hide -mx-24 flex justify-between overflow-x-scroll px-24">
-      <div className="flex gap-8">
+    <div className="scrollbar-hide -mx-24 flex justify-between gap-24 overflow-x-scroll px-24">
+      <div className="flex shrink-0 items-center gap-8">
         <AnimatePresence>
           {!isAllTypes && (
             <motion.div
@@ -72,6 +80,27 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
             </motion.div>
           ))}
         </AnimatePresence>
+      </div>
+      <div className="flex shrink-0 items-stretch gap-16 self-stretch">
+        <div className="mr-8 w-2 shrink-0 self-stretch bg-gray-100 lg:hidden" />
+        <div
+          data-active={filter.direction === 'desc'}
+          onClick={() => handleDirectionClick('desc')}
+          className="group flex cursor-pointer items-center"
+        >
+          <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+            <Translate>$sort_newest</Translate>
+          </div>
+        </div>
+        <div
+          data-active={filter.direction === 'asc'}
+          onClick={() => handleDirectionClick('asc')}
+          className="group flex cursor-pointer items-center"
+        >
+          <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+            <Translate>$sort_oldest</Translate>
+          </div>
+        </div>
       </div>
     </div>
   );

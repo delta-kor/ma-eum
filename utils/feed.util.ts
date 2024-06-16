@@ -116,3 +116,7 @@ export function getSanitizedFeedType(feedType: null | string): FeedType[] {
   if (FeedTypes.includes(feedType as FeedType)) return [feedType as FeedType];
   return FeedTypes;
 }
+
+export function getSanitizedFeedDirection(direction: null | string): 'asc' | 'desc' {
+  return direction === 'asc' ? 'asc' : 'desc';
+}

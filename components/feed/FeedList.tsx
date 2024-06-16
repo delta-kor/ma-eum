@@ -5,7 +5,12 @@ import FeedFilterMenu from '@/components/feed/FeedFilterMenu';
 import FeedItem, { FeedItemPlaceholder } from '@/components/feed/FeedItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import { FeedFilter, FeedTypes, getSanitizedFeedType } from '@/utils/feed.util';
+import {
+  FeedFilter,
+  FeedTypes,
+  getSanitizedFeedDirection,
+  getSanitizedFeedType,
+} from '@/utils/feed.util';
 import { PaginationResult } from '@/utils/pagination.util';
 import { Feed } from '@prisma/client';
 import { useEffect, useState } from 'react';
@@ -22,12 +27,14 @@ export default function FeedList({ preloadedFeeds }: Props) {
 
   const query = useQuery();
   const feedTypes = getSanitizedFeedType(query.get('feed'));
+  const direction = getSanitizedFeedDirection(query.get('direction'));
   const [filter, setFilter] = useState<FeedFilter>({
     date: null,
-    direction: 'desc',
+    direction: direction,
     types: feedTypes,
   });
 
+  const isDefaultFilter = filter.types.length === FeedTypes.length && filter.direction === 'desc';
   const feeds = trpc.feed.getFeeds.useInfiniteQuery(
     {
       filter,
@@ -35,7 +42,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedFeeds] },
-      refetchOnMount: feedTypes.length !== FeedTypes.length,
+      refetchOnMount: !isDefaultFilter,
       refetchOnReconnect: true,
       refetchOnWindowFocus: false,
     }
@@ -62,15 +69,15 @@ export default function FeedList({ preloadedFeeds }: Props) {
     <>
       <div className="flex flex-col justify-between gap-24">
         <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100" />
+        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
       </div>
       <div className="flex flex-col justify-between gap-24">
         <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100" />
+        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
       </div>
       <div className="flex flex-col justify-between gap-24">
         <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100" />
+        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
       </div>
     </>
   );
@@ -78,7 +85,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
   return (
     <div className="flex flex-col gap-16 lg:gap-24">
       <FeedFilterMenu filter={filter} onFilterSet={handleFilterSet} />
-      <div className="h-2 bg-gray-100" />
+      <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
       <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16 lg:gap-24">
         {isLoading ? (
           placeholder
@@ -87,7 +94,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
             {items.map(item => (
               <div key={item.id} className="flex flex-col justify-between gap-24">
                 <FeedItem feed={item} />
-                <div className="-mx-24 h-2 bg-gray-100" />
+                <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
               </div>
             ))}
             {feeds.isFetchingNextPage && placeholder}
