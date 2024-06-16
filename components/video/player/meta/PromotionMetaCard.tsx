@@ -26,10 +26,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
   if (currentVideoIndex === promotionVideos.length - 1)
     currentVideoIndex = promotionVideos.length - 2;
 
-  const selectedPromotionVideos = promotionVideos.slice(
-    currentVideoIndex - 1,
-    currentVideoIndex + 2
-  );
+  const selectedVideos = promotionVideos.slice(currentVideoIndex - 1, currentVideoIndex + 2);
 
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-100 px-24 py-16">
@@ -41,7 +38,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
       </div>
       <div className="relative flex flex-col gap-16 py-12">
         <div className="absolute left-16 top-0 h-full w-3 -translate-x-1/2 bg-gray-200" />
-        {selectedPromotionVideos.map(item => (
+        {selectedVideos.map(item => (
           <Link
             key={item.id}
             href={`/video/${item.id}`}
