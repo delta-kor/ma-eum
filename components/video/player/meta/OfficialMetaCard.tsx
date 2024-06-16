@@ -28,7 +28,7 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
   const selectedVideos = officialVideos.slice(currentVideoIndex - 1, currentVideoIndex + 2);
 
   return (
-    <div className="flex flex-col gap-16 rounded-16 bg-gray-100 px-24 py-16">
+    <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
       <div className="flex items-center justify-between">
         <div className="shrink-0 text-20 font-700 text-black">
           <Translate>$performance</Translate>

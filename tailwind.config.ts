@@ -13,6 +13,7 @@ const config: Config = {
       shorts: '8.95/16',
       square: '1/1',
       video: '16/8.95',
+      'video-full': '16/9',
     },
     borderRadius: {
       0: '0px',

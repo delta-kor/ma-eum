@@ -16,7 +16,7 @@ interface Props {
 export default function MixerPlayerFrame({ music, sessions }: Props) {
   return (
     <div className="flex min-h-dvh flex-col lg:grid lg:grid-cols-[1fr_360px]">
-      <div className="sticky left-0 top-0 z-10 aspect-video max-h-[50vh] self-stretch lg:static lg:aspect-auto lg:max-h-none">
+      <div className="sticky left-0 top-0 z-10 aspect-video-full max-h-[50vh] self-stretch lg:static lg:aspect-auto lg:max-h-none">
         <MixerVideo />
       </div>
       <div className="flex flex-col gap-12 p-12">
