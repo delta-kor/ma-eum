@@ -1,11 +1,13 @@
 'use client';
 
 import EndItems from '@/components/core/EndItems';
+import FeedFilterMenu from '@/components/feed/FeedFilterMenu';
 import FeedItem from '@/components/feed/FeedItem';
 import { trpc } from '@/hooks/trpc';
+import { FeedFilter, FeedTypes } from '@/utils/feed.util';
 import { PaginationResult } from '@/utils/pagination.util';
 import { Feed } from '@prisma/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
@@ -17,8 +19,16 @@ export default function FeedList({ preloadedFeeds }: Props) {
     threshold: 0,
   });
 
+  const [filter, setFilter] = useState<FeedFilter>({
+    date: null,
+    direction: 'desc',
+    types: FeedTypes,
+  });
+
   const feeds = trpc.feed.getFeeds.useInfiniteQuery(
-    {},
+    {
+      filter,
+    },
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedFeeds] },
@@ -34,6 +44,10 @@ export default function FeedList({ preloadedFeeds }: Props) {
     }
   }, [inView]);
 
+  function handleFilterSet(filter: FeedFilter) {
+    setFilter(filter);
+  }
+
   const items =
     feeds.data?.pages
       .map(page => page.items)
@@ -44,29 +58,33 @@ export default function FeedList({ preloadedFeeds }: Props) {
   const placeholder = <></>;
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16 lg:gap-24">
-      {isLoading ? (
-        placeholder
-      ) : items.length > 0 ? (
-        <>
-          {items.map(item => (
-            <div key={item.id} className="flex flex-col justify-between gap-24">
-              <FeedItem feed={item} />
-              <div className="-mx-24 h-2 bg-gray-100" />
-            </div>
-          ))}
-          {feeds.isFetchingNextPage && placeholder}
-          {feeds.hasNextPage ? (
-            <div ref={ref} className="col-span-full h-8" />
-          ) : (
-            <div className="col-span-full py-24">
-              <EndItems />
-            </div>
-          )}
-        </>
-      ) : (
-        <></>
-      )}
+    <div className="flex flex-col gap-24">
+      <FeedFilterMenu filter={filter} onFilterSet={handleFilterSet} />
+      <div className="h-2 bg-gray-100" />
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-16 lg:gap-24">
+        {isLoading ? (
+          placeholder
+        ) : items.length > 0 ? (
+          <>
+            {items.map(item => (
+              <div key={item.id} className="flex flex-col justify-between gap-24">
+                <FeedItem feed={item} />
+                <div className="-mx-24 h-2 bg-gray-100" />
+              </div>
+            ))}
+            {feeds.isFetchingNextPage && placeholder}
+            {feeds.hasNextPage ? (
+              <div ref={ref} className="col-span-full h-8" />
+            ) : (
+              <div className="col-span-full py-24">
+                <EndItems />
+              </div>
+            )}
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

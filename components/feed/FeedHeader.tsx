@@ -1,7 +1,13 @@
-import Icon, { IconType } from '@/components/core/Icon';
+import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
-import { getFeedHeader, getFeedType, getFeedUrl, getHomepageUrl } from '@/utils/feed.util';
-import { Feed, FeedType } from '@prisma/client';
+import {
+  getFeedHeader,
+  getFeedHeaderName,
+  getFeedIconName,
+  getFeedUrl,
+  getHomepageUrl,
+} from '@/utils/feed.util';
+import { Feed } from '@prisma/client';
 
 interface Props {
   feed: Feed;
@@ -9,23 +15,8 @@ interface Props {
 
 export default function FeedHeader({ feed }: Props) {
   const header = getFeedHeader(feed)[0];
-  const type = getFeedType(feed);
-
-  let icon: IconType;
-  switch (feed.type) {
-    case FeedType.TWITTER:
-      icon = 'twitter';
-      break;
-    case FeedType.TIKTOK:
-      icon = 'tiktok';
-      break;
-    case FeedType.BSTAGE:
-      icon = 'bstage';
-      break;
-    case FeedType.DAUM:
-      icon = 'daum';
-      break;
-  }
+  const name = getFeedHeaderName(feed.type);
+  const icon = getFeedIconName(feed.type);
 
   return (
     <div className="flex items-center justify-between">
@@ -45,7 +36,7 @@ export default function FeedHeader({ feed }: Props) {
         target="_blank"
         className="flex grow items-center justify-end gap-8 self-stretch"
       >
-        <div className="text-16 font-600 text-gray-500">{type}</div>
+        <div className="text-16 font-600 text-gray-500">{name}</div>
         <Icon type="share" className="w-14 text-gray-500" />
       </a>
     </div>

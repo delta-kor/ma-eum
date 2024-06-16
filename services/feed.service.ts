@@ -1,6 +1,7 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
 import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import type { FeedFilter } from '@/utils/feed.util';
 import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { Feed } from '@prisma/client';
@@ -27,12 +28,26 @@ const FeedRouter = router({
     });
   }),
 
-  getFeeds: publicProcedure.input(z.object({ cursor: z.string().nullish() })).query(async opts => {
-    return FeedService.getFeeds({
-      cursor: opts.input.cursor || null,
-      limit: 15,
-    });
-  }),
+  getFeeds: publicProcedure
+    .input(
+      z.object({
+        cursor: z.string().nullish(),
+        filter: z.object({
+          date: z.date().nullable(),
+          direction: z.enum(['asc', 'desc']),
+          types: z.array(z.enum(['TWITTER', 'TIKTOK', 'BSTAGE', 'DAUM'])),
+        }),
+      })
+    )
+    .query(async opts => {
+      return FeedService.getFeeds(
+        {
+          cursor: opts.input.cursor || null,
+          limit: 15,
+        },
+        opts.input.filter
+      );
+    }),
 
   update: cmsProcedure.input(z.object({ id: z.string() }).passthrough()).mutation(async opts => {
     const { id } = opts.input;
@@ -51,16 +66,20 @@ export class FeedService {
   public static router = FeedRouter;
 
   @ControlledCache('feed.getFeeds', StaticDataTtl)
-  public static async getFeeds(pagination: PaginationOptions): Promise<PaginationResult<Feed>> {
+  public static async getFeeds(
+    pagination: PaginationOptions,
+    filter: FeedFilter
+  ): Promise<PaginationResult<Feed>> {
     const feeds = await prisma.feed.findMany({
       cursor: pagination.cursor ? { id: pagination.cursor } : undefined,
-      orderBy: {
-        date: 'desc',
-      },
+      orderBy: [{ date: filter.direction }, { id: filter.direction }],
       skip: pagination.cursor ? 1 : 0,
       take: pagination.limit,
       where: {
-        // type: FeedType.TIKTOK,
+        date: filter.date ? { gte: filter.date } : undefined,
+        type: {
+          in: filter.types,
+        },
       },
     });
 

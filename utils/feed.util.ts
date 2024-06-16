@@ -1,5 +1,19 @@
+import { IconType } from '@/components/core/Icon';
 import { Member, getMemberName } from '@/utils/member.util';
 import { Feed, FeedType } from '@prisma/client';
+
+export interface FeedFilter {
+  date: Date | null;
+  direction: 'asc' | 'desc';
+  types: FeedType[];
+}
+
+export const FeedTypes: FeedType[] = [
+  FeedType.TWITTER,
+  FeedType.TIKTOK,
+  FeedType.BSTAGE,
+  FeedType.DAUM,
+];
 
 export function getFeedHeader(feed: Feed): string[] {
   switch (feed.type) {
@@ -14,8 +28,8 @@ export function getFeedHeader(feed: Feed): string[] {
   }
 }
 
-export function getFeedType(feed: Feed): string {
-  switch (feed.type) {
+export function getFeedHeaderName(feedType: FeedType): string {
+  switch (feedType) {
     case FeedType.TWITTER:
       return 'Twitter';
     case FeedType.TIKTOK:
@@ -24,6 +38,19 @@ export function getFeedType(feed: Feed): string {
       return 'Bstage';
     case FeedType.DAUM:
       return 'Daum';
+  }
+}
+
+export function getFeedIconName(feedType: FeedType): IconType {
+  switch (feedType) {
+    case FeedType.TWITTER:
+      return 'twitter';
+    case FeedType.TIKTOK:
+      return 'tiktok';
+    case FeedType.BSTAGE:
+      return 'bstage';
+    case FeedType.DAUM:
+      return 'daum';
   }
 }
 
