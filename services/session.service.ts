@@ -2,6 +2,7 @@ import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { Member } from '@/utils/member.util';
+import { PrismaUtil } from '@/utils/prisma.util';
 import { sortVideoByTag } from '@/utils/sort.util';
 import { Session, Video } from '@prisma/client';
 import 'server-only';
@@ -27,32 +28,25 @@ export class SessionService {
     musicId: string,
     member?: Member | null
   ): Promise<ExtendedSession[]> {
-    if (typeof member === 'undefined') {
-      const sessions = await prisma.session.findMany({
-        include: {
-          videos: true,
+    const sessions = await prisma.session.findMany({
+      include: {
+        videos: {
+          include: { ...PrismaUtil.extendVideo('stage', 'members') },
+          where: {
+            ...PrismaUtil.filterMemberExclusive(member),
+          },
         },
-        orderBy: {
-          date: 'asc',
-        },
-        where: {
-          musicId,
-        },
-      });
-      for (const session of sessions) sortVideoByTag(session.videos);
-      return sessions;
-    }
-
-    const sessions = await SessionService.getSessionsByMusicId(musicId);
-    for (const session of sessions) {
-      session.videos = session.videos.filter(video =>
-        member === null
-          ? video.meta.every(meta => meta.type !== 'members')
-          : video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
-      );
-    }
+      },
+      orderBy: {
+        date: 'asc',
+      },
+      where: {
+        musicId,
+      },
+    });
 
     const filteredSessions = sessions.filter(session => session.videos.length > 0);
+    for (const session of filteredSessions) sortVideoByTag(session.videos);
     return filteredSessions;
   }
 }

@@ -146,7 +146,7 @@ export class VideoService {
   @DataCache('video.getCoverVideos', StaticDataTtl)
   public static async getCoverVideos(member: Member | null): Promise<ExtendedVideo[]> {
     const videos = await prisma.video.findMany({
-      include: { ...PrismaUtil.extendVideo('cover', 'members') },
+      include: { ...PrismaUtil.extendVideo('cover') },
       orderBy: PrismaUtil.sortVideo(),
       where: {
         metaInfo: {
@@ -181,7 +181,7 @@ export class VideoService {
   @DataCache('video.getOfficialVideos', StaticDataTtl)
   public static async getOfficialVideos(musicId: string): Promise<ExtendedVideo[]> {
     const video = await prisma.video.findMany({
-      include: { ...PrismaUtil.extendVideo('music', 'official') },
+      include: { ...PrismaUtil.extendVideo('official') },
       orderBy: [{ metaInfo: { official: { order: 'asc' } } }, ...PrismaUtil.sortVideo()],
       where: {
         metaInfo: {

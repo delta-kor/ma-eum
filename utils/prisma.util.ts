@@ -11,6 +11,8 @@ export class PrismaUtil {
   }
 
   public static extendVideo(...keys: VideoMetaType[]) {
+    if (keys.length === 0) return {};
+
     const select: Record<string, true> = {};
     for (const key of keys) {
       select[key] = true;
@@ -36,6 +38,26 @@ export class PrismaUtil {
             },
           }
         : undefined,
+    };
+  }
+
+  public static filterMemberExclusive(member: Member | null | undefined) {
+    if (typeof member === 'undefined') return {};
+    if (member === null)
+      return {
+        metaInfo: {
+          members: null,
+        },
+      };
+
+    return {
+      metaInfo: {
+        members: {
+          members: {
+            has: member,
+          },
+        },
+      },
     };
   }
 
