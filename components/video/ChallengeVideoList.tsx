@@ -8,14 +8,14 @@ import ChallengeVideoItem, {
 } from '@/components/video/ChallengeVideoItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { ExtendedVideo } from '@/services/video.service';
 import { Member, getSanitizedMember } from '@/utils/member.util';
 import { PaginationResult } from '@/utils/pagination.util';
-import { Video } from '@prisma/client';
 import { Suspense, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
-  preloadedVideos: PaginationResult<Video>;
+  preloadedVideos: PaginationResult<ExtendedVideo>;
 }
 
 export default function ChallengeVideoList({ preloadedVideos }: Props) {

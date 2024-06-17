@@ -3,11 +3,45 @@ import { publicProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { Member } from '@/utils/member.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
-import { paginate } from '@/utils/pagination.util';
-import { sortVideoByMeta } from '@/utils/sort.util';
+import { PrismaUtil } from '@/utils/prisma.util';
+import {
+  CoverVideoMeta,
+  EpisodeVideoMeta,
+  FancamVideoMeta,
+  InboundChallengeVideoMeta,
+  LinkVideoMeta,
+  LiveVideoMeta,
+  MembersVideoMeta,
+  MusicVideoMeta,
+  OfficialVideoMeta,
+  OutboundChallengeVideoMeta,
+  PromotionVideoMeta,
+  ShortsVideoMeta,
+  StageVideoMeta,
+} from '@/utils/video.util';
 import type { Video } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
+
+export interface ExtendedMetaInfo {
+  cover: CoverVideoMeta | null;
+  episode: EpisodeVideoMeta | null;
+  fancam: FancamVideoMeta | null;
+  inboundChallenge: InboundChallengeVideoMeta | null;
+  link: LinkVideoMeta | null;
+  live: LiveVideoMeta | null;
+  members: MembersVideoMeta | null;
+  music: MusicVideoMeta | null;
+  official: OfficialVideoMeta | null;
+  outboundChallenge: OutboundChallengeVideoMeta | null;
+  promotion: PromotionVideoMeta | null;
+  shorts: ShortsVideoMeta | null;
+  stage: StageVideoMeta | null;
+}
+
+export interface ExtendedVideo extends Video {
+  metaInfo: ExtendedMetaInfo | null;
+}
 
 const VideoRouter = router({
   getCategoryVideos: publicProcedure
@@ -49,102 +83,165 @@ const VideoRouter = router({
 export class VideoService {
   public static router = VideoRouter;
 
-  @DataCache('video.getAll', StaticDataTtl)
-  public static async getAll(): Promise<Video[]> {
-    return prisma.video.findMany({ orderBy: [{ date: 'desc' }, { id: 'asc' }] });
-  }
+  // @DataCache('video.getAll', StaticDataTtl)
+  // public static async getAll(): Promise<ExtendedVideo[]> {
+  //   return prisma.video.findMany({
+  //     include: {
+  //       ...PrismaUtil.extendVideo(),
+  //     },
+  //     orderBy: PrismaUtil.sortVideo(),
+  //   })
+  // }
 
   @DataCache('video.getCategoryVideos', StaticDataTtl)
   public static async getCategoryVideos(
     categoryId: string,
     member: Member | null
-  ): Promise<Video[]> {
-    if (member === null)
-      return prisma.video.findMany({
-        orderBy: { date: 'desc' },
-        where: {
-          categories: {
-            some: {
-              id: categoryId,
-            },
-          },
+  ): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      include: { ...PrismaUtil.extendVideo() },
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        categories: { some: { id: categoryId } },
+        metaInfo: {
+          ...PrismaUtil.filterMember(member),
         },
-      });
+      },
+    });
 
-    const videos = await VideoService.getCategoryVideos(categoryId, null);
-    return videos.filter(video =>
-      video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
-    );
+    return videos as ExtendedVideo[];
   }
 
   @DataCache('video.getChallengeVideos', StaticDataTtl)
   public static async getChallengeVideos(
     member: Member | null,
     pagination: PaginationOptions
-  ): Promise<PaginationResult<Video>> {
-    const videos = await VideoService.getAll();
-    const challengeVideos = videos.filter(video =>
-      video.meta.some(
-        meta => meta.type === 'inbound_challenge' || meta.type === 'outbound_challenge'
-      )
-    );
-    const memberVideos = challengeVideos.filter(
-      video =>
-        member === null ||
-        video.meta.some(meta => meta.type === 'members' && meta.members.includes(member))
-    );
+  ): Promise<PaginationResult<ExtendedVideo>> {
+    const videos = await prisma.video.findMany({
+      ...PrismaUtil.paginate(pagination),
+      include: { ...PrismaUtil.extendVideo('inboundChallenge', 'outboundChallenge', 'music') },
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        metaInfo: {
+          OR: [
+            {
+              inboundChallenge: {
+                isNot: null,
+              },
+            },
+            {
+              outboundChallenge: {
+                isNot: null,
+              },
+            },
+          ],
+          ...PrismaUtil.filterMember(member),
+        },
+      },
+    });
 
-    return paginate(memberVideos, pagination);
+    return PrismaUtil.buildPagination(videos as ExtendedVideo[]);
   }
 
   @DataCache('video.getCoverVideos', StaticDataTtl)
-  public static async getCoverVideos(member: Member | null): Promise<Video[]> {
-    const videos = await VideoService.getAll();
-    return videos.filter(
-      video =>
-        video.meta.some(meta => meta.type === 'cover') &&
-        (member === null ||
-          video.meta.some(meta => meta.type === 'members' && meta.members.includes(member)))
-    );
+  public static async getCoverVideos(member: Member | null): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      include: { ...PrismaUtil.extendVideo('cover', 'members') },
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        metaInfo: {
+          cover: {
+            isNot: null,
+          },
+          ...PrismaUtil.filterMember(member),
+        },
+      },
+    });
+
+    return videos as ExtendedVideo[];
   }
 
   @DataCache('video.getLiveVideos', StaticDataTtl)
-  public static async getLiveVideos(): Promise<Video[]> {
-    const videos = await VideoService.getAll();
-    return videos.filter(video => video.meta.some(meta => meta.type === 'live' && !meta.disable));
+  public static async getLiveVideos(): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      include: { ...PrismaUtil.extendVideo('live') },
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        metaInfo: {
+          live: {
+            isNot: null,
+          },
+        },
+      },
+    });
+
+    return videos as ExtendedVideo[];
   }
 
   @DataCache('video.getOfficialVideos', StaticDataTtl)
-  public static async getOfficialVideos(musicId: string): Promise<Video[]> {
-    const videos = await VideoService.getAll();
-    const officialVideos = videos.filter(
-      video =>
-        video.meta.some(meta => meta.type === 'official') &&
-        video.meta.some(meta => meta.type === 'music' && meta.musicId === musicId)
-    );
-    return sortVideoByMeta(officialVideos, 'official');
+  public static async getOfficialVideos(musicId: string): Promise<ExtendedVideo[]> {
+    const video = await prisma.video.findMany({
+      include: { ...PrismaUtil.extendVideo('music', 'official') },
+      orderBy: [{ metaInfo: { official: { order: 'asc' } } }, ...PrismaUtil.sortVideo()],
+      where: {
+        metaInfo: {
+          music: {
+            musicId,
+          },
+          official: {
+            isNot: null,
+          },
+        },
+      },
+    });
+
+    return video as ExtendedVideo[];
   }
 
   @DataCache('video.getOne', StaticDataTtl)
-  public static async getOne(videoId: string): Promise<Video | null> {
-    return prisma.video.findUnique({ where: { id: videoId } });
+  public static async getOne(videoId: string): Promise<ExtendedVideo | null> {
+    const videos = await prisma.video.findUnique({
+      include: { ...PrismaUtil.extendVideoAll() },
+      where: { id: videoId },
+    });
+
+    return (videos as ExtendedVideo) || null;
   }
 
   @DataCache('video.getPromotionVideos', StaticDataTtl)
-  public static async getPromotionVideos(albumId: string): Promise<Video[]> {
-    const videos = await VideoService.getAll();
-    const promotionVideos = videos.filter(video =>
-      video.meta.some(meta => meta.type === 'promotion' && meta.albumId === albumId)
-    );
-    return sortVideoByMeta(promotionVideos, 'promotion');
+  public static async getPromotionVideos(albumId: string): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      include: { ...PrismaUtil.extendVideo('promotion') },
+      orderBy: [{ metaInfo: { promotion: { order: 'asc' } } }, ...PrismaUtil.sortVideo()],
+      where: {
+        metaInfo: {
+          promotion: {
+            albumId,
+          },
+        },
+      },
+    });
+
+    return videos as ExtendedVideo[];
   }
 
   @DataCache('video.getShortsVideos', StaticDataTtl)
   public static async getShortsVideos(
     pagination: PaginationOptions
-  ): Promise<PaginationResult<Video>> {
-    const videos = await VideoService.getAll();
-    const shortsVideos = videos.filter(video => video.meta.some(meta => meta.type === 'shorts'));
-    return paginate(shortsVideos, pagination);
+  ): Promise<PaginationResult<ExtendedVideo>> {
+    const videos = await prisma.video.findMany({
+      ...PrismaUtil.paginate(pagination),
+      include: { ...PrismaUtil.extendVideo('shorts') },
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        metaInfo: {
+          shorts: {
+            isNot: null,
+          },
+        },
+      },
+    });
+
+    return PrismaUtil.buildPagination(videos as ExtendedVideo[]);
   }
 }

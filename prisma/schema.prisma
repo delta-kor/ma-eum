@@ -48,21 +48,6 @@ enum VideoSource {
   YOUTUBE
 }
 
-model Video {
-  id         String      @id
-  title      String
-  source     VideoSource
-  sourceId   String
-  date       DateTime
-  categories Category[]
-
-  /// [VideoMeta]
-  meta Json[]
-
-  session   Session? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
-  sessionId String?
-}
-
 model Music {
   id         String         @id
   title      String
@@ -141,4 +126,126 @@ model Feed {
   date     DateTime
   members  String[]
   media    Json[]
+}
+
+model Video {
+  id         String      @id
+  title      String
+  source     VideoSource
+  sourceId   String
+  date       DateTime
+  categories Category[]
+
+  /// [VideoMeta]
+  meta Json[]
+
+  metaInfo MetaInfo?
+
+  session   Session? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  sessionId String?
+}
+
+model MetaInfo {
+  video             Video                  @relation(fields: [videoId], references: [id])
+  videoId           String                 @id @unique
+  shorts            ShortsMeta?
+  link              LinkMeta?
+  members           MembersMeta?
+  episode           EpisodeMeta?
+  cover             CoverMeta?
+  stage             StageMeta?
+  fancam            FancamMeta?
+  music             MusicMeta?
+  official          OfficialMeta?
+  promotion         PromotionMeta?
+  inboundChallenge  InboundChallengeMeta?
+  outboundChallenge OutboundChallengeMeta?
+  live              LiveMeta?
+}
+
+model ShortsMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+}
+
+model LinkMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  videoId    String
+}
+
+model MembersMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  members    String[]
+}
+
+model EpisodeMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  episode    String?
+  title      String
+}
+
+model CoverMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  kind       String
+  title      String
+}
+
+model StageMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  sessionId  String
+  tag        String
+  time       Float
+}
+
+model FancamMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  sessionId  String
+  ownerId    String
+  embed      Boolean
+}
+
+model MusicMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  musicId    String
+}
+
+model OfficialMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  order      Int
+  title      String
+}
+
+model PromotionMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  albumId    String
+  order      Int
+  title      String
+}
+
+model InboundChallengeMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  from       String?
+}
+
+model OutboundChallengeMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  music      String
+  to         String?
+}
+
+model LiveMeta {
+  metaInfo   MetaInfo @relation(fields: [metaInfoId], references: [videoId], onDelete: Cascade)
+  metaInfoId String   @id
+  disable    Boolean
 }

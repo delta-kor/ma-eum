@@ -1,6 +1,5 @@
 import { unstable_cache } from 'next/cache';
 import NodeCache from 'node-cache';
-import { cache } from 'react';
 import 'server-only';
 import superjson from 'superjson';
 
@@ -26,6 +25,8 @@ export function ControlledCache(name: string, ttl: number) {
 }
 
 export function DataCache(name: string, ttl: number) {
+  if (process.env.VERCEL !== '1') return ControlledCache(name, 0);
+
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
@@ -44,13 +45,5 @@ export function DataCache(name: string, ttl: number) {
     };
 
     descriptor.value = method;
-  };
-}
-
-export function ReactCache() {
-  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    const method = descriptor.value;
-
-    descriptor.value = cache(method);
   };
 }

@@ -6,7 +6,7 @@ import {
 } from '@/actions/cms/videos.action';
 import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
-import CmsVideosInfo, { ExtendedVideo } from '@/components/cms/videos/CmsVideosInfo';
+import CmsVideosInfo, { ExtendedCmsVideo } from '@/components/cms/videos/CmsVideosInfo';
 import { VideoMeta } from '@/utils/video.util';
 import { Category } from '@prisma/client';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 interface Props {
   categories: Category[];
-  videos: ExtendedVideo[];
+  videos: ExtendedCmsVideo[];
 }
 
 export default function CmsVideosPanel({ categories, videos }: Props) {
@@ -52,7 +52,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
     }
   }
 
-  async function handleVideoClick(video: ExtendedVideo) {
+  async function handleVideoClick(video: ExtendedCmsVideo) {
     setSelectedVideoId(video.id);
   }
 

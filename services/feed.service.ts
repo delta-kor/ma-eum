@@ -4,6 +4,7 @@ import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import type { FeedFilter } from '@/utils/feed.util';
 import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
+import { PrismaUtil } from '@/utils/prisma.util';
 import { Feed } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
@@ -71,10 +72,8 @@ export class FeedService {
     filter: FeedFilter
   ): Promise<PaginationResult<Feed>> {
     const feeds = await prisma.feed.findMany({
-      cursor: pagination.cursor ? { id: pagination.cursor } : undefined,
+      ...PrismaUtil.paginate(pagination),
       orderBy: [{ date: filter.direction }, { id: filter.direction }],
-      skip: pagination.cursor ? 1 : 0,
-      take: pagination.limit,
       where: {
         date: filter.date ? { gte: filter.date } : undefined,
         type: {
@@ -83,11 +82,6 @@ export class FeedService {
       },
     });
 
-    const result: PaginationResult<Feed> = {
-      items: feeds,
-      nextCursor: feeds[feeds.length - 1]?.id || null,
-    };
-
-    return result;
+    return PrismaUtil.buildPagination(feeds);
   }
 }

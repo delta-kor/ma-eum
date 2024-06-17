@@ -3,6 +3,7 @@ import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
+import { ExtendedVideo } from '@/services/video.service';
 import { getMemberName } from '@/utils/member.util';
 import { ImageUrl } from '@/utils/url.util';
 import {
@@ -12,11 +13,11 @@ import {
   OutboundChallengeVideoMeta,
   getMetaFromVideo,
 } from '@/utils/video.util';
-import { Video, VideoSource } from '@prisma/client';
+import { VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 
 interface Props {
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default function ChallengeVideoItem({ video }: Props) {
@@ -24,11 +25,11 @@ export default function ChallengeVideoItem({ video }: Props) {
 
   const inboundChallengeMeta = getMetaFromVideo<InboundChallengeVideoMeta>(
     video,
-    'inbound_challenge'
+    'inboundChallenge'
   );
   const outboundChallengeMeta = getMetaFromVideo<OutboundChallengeVideoMeta>(
     video,
-    'outbound_challenge'
+    'outboundChallenge'
   );
   const membersMeta = getMetaFromVideo<MembersVideoMeta>(video, 'members');
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
