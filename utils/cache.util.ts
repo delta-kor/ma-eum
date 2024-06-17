@@ -1,6 +1,8 @@
+import { unstable_cache } from 'next/cache';
 import NodeCache from 'node-cache';
 import { cache } from 'react';
 import 'server-only';
+import superjson from 'superjson';
 
 export const ServerCacheMap: Map<string, NodeCache> = new Map();
 export const StaticDataTtl = 60 * 5;
@@ -20,6 +22,28 @@ export function ControlledCache(name: string, ttl: number) {
       functionCache.set(key, result);
       return result;
     };
+  };
+}
+
+export function DataCache(name: string, ttl: number) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    const cachedMethod = async function (serializedArgs: any) {
+      const args = superjson.parse(serializedArgs) as any;
+      const result = await originalMethod(...args);
+      return superjson.stringify(result);
+    };
+
+    const method = async function (...args: any[]) {
+      const argsKey = superjson.stringify(args);
+      const serializedResult = await unstable_cache(cachedMethod, [name], {
+        tags: ['prisma', name, argsKey],
+      })(argsKey);
+      return superjson.parse(serializedResult);
+    };
+
+    descriptor.value = method;
   };
 }
 

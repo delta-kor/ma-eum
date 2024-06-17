@@ -1,4 +1,6 @@
 import Transistor from '@/components/core/Transitor';
+import HistoryProvider from '@/providers/HistoryProvider';
+import TitleProvider from '@/providers/TitleProvider';
 import { ReactNode } from 'react';
 
 interface Props {
@@ -6,5 +8,11 @@ interface Props {
 }
 
 export default function MainLayout({ children }: Props) {
-  return <Transistor>{children}</Transistor>;
+  return (
+    <TitleProvider>
+      <HistoryProvider>
+        <Transistor>{children}</Transistor>
+      </HistoryProvider>
+    </TitleProvider>
+  );
 }

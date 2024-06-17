@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { Member } from '@/utils/member.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { paginate } from '@/utils/pagination.util';
@@ -49,12 +49,12 @@ const VideoRouter = router({
 export class VideoService {
   public static router = VideoRouter;
 
-  @ControlledCache('video.getAll', StaticDataTtl)
+  @DataCache('video.getAll', StaticDataTtl)
   public static async getAll(): Promise<Video[]> {
     return prisma.video.findMany({ orderBy: [{ date: 'desc' }, { id: 'asc' }] });
   }
 
-  @ControlledCache('video.getCategoryVideos', StaticDataTtl)
+  @DataCache('video.getCategoryVideos', StaticDataTtl)
   public static async getCategoryVideos(
     categoryId: string,
     member: Member | null
@@ -77,7 +77,7 @@ export class VideoService {
     );
   }
 
-  @ControlledCache('video.getChallengeVideos', StaticDataTtl)
+  @DataCache('video.getChallengeVideos', StaticDataTtl)
   public static async getChallengeVideos(
     member: Member | null,
     pagination: PaginationOptions
@@ -97,7 +97,7 @@ export class VideoService {
     return paginate(memberVideos, pagination);
   }
 
-  @ControlledCache('video.getCoverVideos', StaticDataTtl)
+  @DataCache('video.getCoverVideos', StaticDataTtl)
   public static async getCoverVideos(member: Member | null): Promise<Video[]> {
     const videos = await VideoService.getAll();
     return videos.filter(
@@ -108,13 +108,13 @@ export class VideoService {
     );
   }
 
-  @ControlledCache('video.getLiveVideos', StaticDataTtl)
+  @DataCache('video.getLiveVideos', StaticDataTtl)
   public static async getLiveVideos(): Promise<Video[]> {
     const videos = await VideoService.getAll();
     return videos.filter(video => video.meta.some(meta => meta.type === 'live' && !meta.disable));
   }
 
-  @ControlledCache('video.getOfficialVideos', StaticDataTtl)
+  @DataCache('video.getOfficialVideos', StaticDataTtl)
   public static async getOfficialVideos(musicId: string): Promise<Video[]> {
     const videos = await VideoService.getAll();
     const officialVideos = videos.filter(
@@ -125,12 +125,12 @@ export class VideoService {
     return sortVideoByMeta(officialVideos, 'official');
   }
 
-  @ControlledCache('video.getOne', StaticDataTtl)
+  @DataCache('video.getOne', StaticDataTtl)
   public static async getOne(videoId: string): Promise<Video | null> {
     return prisma.video.findUnique({ where: { id: videoId } });
   }
 
-  @ControlledCache('video.getPromotionVideos', StaticDataTtl)
+  @DataCache('video.getPromotionVideos', StaticDataTtl)
   public static async getPromotionVideos(albumId: string): Promise<Video[]> {
     const videos = await VideoService.getAll();
     const promotionVideos = videos.filter(video =>
@@ -139,7 +139,7 @@ export class VideoService {
     return sortVideoByMeta(promotionVideos, 'promotion');
   }
 
-  @ControlledCache('video.getShortsVideos', StaticDataTtl)
+  @DataCache('video.getShortsVideos', StaticDataTtl)
   public static async getShortsVideos(
     pagination: PaginationOptions
   ): Promise<PaginationResult<Video>> {

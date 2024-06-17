@@ -2,7 +2,14 @@ import { PrismaClient } from '@prisma/client';
 import 'server-only';
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  return new PrismaClient().$extends({
+    query: {
+      $allOperations: ({ args, model, operation, query }) => {
+        console.log(`Query: ${model}.${operation}`, args);
+        return query(args);
+      },
+    },
+  });
 };
 
 declare global {

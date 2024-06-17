@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import { Schedule, ScheduleType } from '@prisma/client';
 import { format } from 'date-fns';
@@ -49,7 +49,7 @@ const ScheduleRouter = router({
 export class ScheduleService {
   public static router = ScheduleRouter;
 
-  @ControlledCache('schedule.getCalendarDateInfo', StaticDataTtl)
+  @DataCache('schedule.getCalendarDateInfo', StaticDataTtl)
   public static async getCalendarDateInfo(): Promise<CalendarDateInfo> {
     const schedules = await prisma.schedule.findMany({
       orderBy: { date: 'asc' },
@@ -66,7 +66,7 @@ export class ScheduleService {
     return result;
   }
 
-  @ControlledCache('schedule.getScheduleFeeds', StaticDataTtl)
+  @DataCache('schedule.getScheduleFeeds', StaticDataTtl)
   public static async getScheduleFeeds(date: Date): Promise<Schedule[]> {
     return prisma.schedule.findMany({
       orderBy: { date: 'asc' },
@@ -79,7 +79,7 @@ export class ScheduleService {
     });
   }
 
-  @ControlledCache('schedule.getSchedules', StaticDataTtl)
+  @DataCache('schedule.getSchedules', StaticDataTtl)
   public static async getSchedules(date: Date): Promise<Schedule[]> {
     return prisma.schedule.findMany({
       orderBy: { date: 'asc' },

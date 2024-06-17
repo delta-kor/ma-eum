@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import type { FeedFilter } from '@/utils/feed.util';
 import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
@@ -65,7 +65,7 @@ const FeedRouter = router({
 export class FeedService {
   public static router = FeedRouter;
 
-  @ControlledCache('feed.getFeeds', StaticDataTtl)
+  @DataCache('feed.getFeeds', StaticDataTtl)
   public static async getFeeds(
     pagination: PaginationOptions,
     filter: FeedFilter

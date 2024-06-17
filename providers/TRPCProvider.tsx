@@ -11,13 +11,19 @@ interface Props {
 }
 
 export default function TRPCProvider({ children }: Props) {
+  const url = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/api/trpc`
+    : process.env.NEXT_PUBLIC_VERCEL_URL
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+      : process.env.NEXT_PUBLIC_TRPC_URL!;
+
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
           transformer: superjson,
-          url: process.env.NEXT_PUBLIC_TRPC_URL as string,
+          url,
         }),
       ],
     })

@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { Member } from '@/utils/member.util';
 import { sortVideoByTag } from '@/utils/sort.util';
 import { Session, Video } from '@prisma/client';
@@ -22,7 +22,7 @@ const SessionRouter = router({
 export class SessionService {
   public static router = SessionRouter;
 
-  @ControlledCache('session.getSessionsByMusicId', StaticDataTtl)
+  @DataCache('session.getSessionsByMusicId', StaticDataTtl)
   public static async getSessionsByMusicId(
     musicId: string,
     member?: Member | null

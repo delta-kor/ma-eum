@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
-import { ControlledCache, StaticDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import { Category } from '@prisma/client';
 import 'server-only';
@@ -42,14 +42,14 @@ const CategoryRouter = router({
 export class CategoryService {
   public static router = CategoryRouter;
 
-  @ControlledCache('category.getAll', StaticDataTtl)
+  @DataCache('category.getAll', StaticDataTtl)
   public static async getAll(): Promise<Category[]> {
     return prisma.category.findMany({
       orderBy: [{ type: 'asc' }, { order: 'asc' }],
     });
   }
 
-  @ControlledCache('category.getOne', StaticDataTtl)
+  @DataCache('category.getOne', StaticDataTtl)
   public static async getOne(id: string): Promise<Category | null> {
     return prisma.category.findUnique({
       where: {
