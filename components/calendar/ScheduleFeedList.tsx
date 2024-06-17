@@ -1,9 +1,10 @@
 import ScheduleCalendarLink from '@/components/calendar/ScheduleCalendarLink';
 import ScheduleFeedItem from '@/components/calendar/ScheduleFeedItem';
 import { ScheduleService } from '@/services/schedule.service';
+import { getKSTNow } from '@/utils/time.util';
 
 export default async function ScheduleFeedList() {
-  const today = new Date();
+  const today = getKSTNow();
   const feeds = await ScheduleService.getScheduleFeeds(today);
 
   return (

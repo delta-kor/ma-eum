@@ -1,6 +1,7 @@
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
+import { getKSTMonth } from '@/utils/time.util';
 import {
   addDays,
   differenceInCalendarDays,
@@ -24,7 +25,7 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
   const [year, setYear] = useState<number>(selectedDate.getFullYear());
   const [month, setMonth] = useState<number>(selectedDate.getMonth());
 
-  const currentDate = new Date(year, month);
+  const currentDate = getKSTMonth(year, month);
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);

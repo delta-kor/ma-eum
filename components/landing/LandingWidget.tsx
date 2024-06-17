@@ -1,9 +1,10 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
+import { getKSTNow } from '@/utils/time.util';
 
 export default function LandingWidget() {
-  const today = new Date();
+  const today = getKSTNow();
   const debut = new Date(2022, 6, 27);
   const diff = today.getTime() - debut.getTime();
   const day = Math.floor(diff / (1000 * 60 * 60 * 24));

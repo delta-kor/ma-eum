@@ -1,12 +1,29 @@
+export function getKSTNow(): Date {
+  const current = new Date();
+  const utc = current.getTime() + current.getTimezoneOffset() * 60 * 1000;
+  return new Date(utc + 9 * 60 * 60 * 1000);
+}
+
+export function getKSTMonth(year: number, month: number): Date {
+  const date = new Date(Date.UTC(year, month));
+  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
+  return new Date(utc + 9 * 60 * 60 * 1000);
+}
+
+export function toKST(date: Date): Date {
+  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
+  return new Date(utc + 9 * 60 * 60 * 1000);
+}
+
 export function removeTime(date: Date): Date {
   return new Date(date.toDateString());
 }
 
 export function getFutureRelativeTime(date: Date, today: Date, isAllDay: boolean): string {
   const diff = date.getTime() - today.getTime();
-  const diffMinutes = Math.floor(diff / 1000 / 60);
-  const diffHours = Math.floor(diffMinutes / 60);
-  const diffDays = Math.floor(diffHours / 24);
+  const diffMinutes = Math.round(diff / 1000 / 60);
+  const diffHours = Math.round(diffMinutes / 60);
+  const diffDays = Math.round(diffHours / 24);
 
   if (diffDays > 0 || isAllDay) {
     const diff = date.getTime() - removeTime(today).getTime();
@@ -22,12 +39,12 @@ export function getFutureRelativeTime(date: Date, today: Date, isAllDay: boolean
 
 export function getPastRelativeTime(date: Date, today: Date): string {
   const diff = today.getTime() - date.getTime();
-  const diffMinutes = Math.floor(diff / 1000 / 60);
-  const diffHours = Math.floor(diffMinutes / 60);
-  const diffDays = Math.floor(diffHours / 24);
-  const diffWeeks = Math.floor(diffDays / 7);
-  const diffMonths = Math.floor(diffDays / 30);
-  const diffYears = Math.floor(diffMonths / 12);
+  const diffMinutes = Math.round(diff / 1000 / 60);
+  const diffHours = Math.round(diffMinutes / 60);
+  const diffDays = Math.round(diffHours / 24);
+  const diffWeeks = Math.round(diffDays / 7);
+  const diffMonths = Math.round(diffDays / 30);
+  const diffYears = Math.round(diffMonths / 12);
 
   if (diffYears === 1) return 'Last year';
   if (diffYears > 0) return `${diffYears} year${diffYears > 1 ? 's' : ''} ago`;
