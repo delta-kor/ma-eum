@@ -2,10 +2,10 @@
 
 import NoItems from '@/components/core/NoItems';
 import CategoryVideoItem from '@/components/video/CategoryVideoItem';
-import { Video } from '@prisma/client';
+import { ExtendedVideo } from '@/services/video.service';
 
 interface Props {
-  videos: Video[];
+  videos: ExtendedVideo[];
 }
 
 export default function LiveVideoList({ videos }: Props) {

@@ -7,13 +7,14 @@ import CategoryVideoItem, {
 } from '@/components/video/CategoryVideoItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { ExtendedVideo } from '@/services/video.service';
 import { Member, getSanitizedMember } from '@/utils/member.util';
-import { Category, CategoryOptions, Video } from '@prisma/client';
+import { Category, CategoryOptions } from '@prisma/client';
 import { useState } from 'react';
 
 interface Props {
   category: Category;
-  preloadedVideos: Video[];
+  preloadedVideos: ExtendedVideo[];
 }
 
 export default function CategoryVideoList({ category, preloadedVideos }: Props) {

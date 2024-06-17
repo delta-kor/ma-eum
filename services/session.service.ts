@@ -1,15 +1,16 @@
 import prisma from '@/prisma/prisma';
+import { ExtendedVideo } from '@/services/video.service';
 import { publicProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { Member } from '@/utils/member.util';
 import { PrismaUtil } from '@/utils/prisma.util';
 import { sortVideoByTag } from '@/utils/sort.util';
-import { Session, Video } from '@prisma/client';
+import { Session } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
 export interface ExtendedSession extends Session {
-  videos: Video[];
+  videos: ExtendedVideo[];
 }
 
 const SessionRouter = router({
@@ -31,7 +32,7 @@ export class SessionService {
     const sessions = await prisma.session.findMany({
       include: {
         videos: {
-          include: { ...PrismaUtil.extendVideo('stage', 'members') },
+          include: { ...PrismaUtil.extendVideo('stage', 'members', 'music') },
           where: {
             ...PrismaUtil.filterMemberExclusive(member),
           },
@@ -45,8 +46,10 @@ export class SessionService {
       },
     });
 
-    const filteredSessions = sessions.filter(session => session.videos.length > 0);
-    for (const session of filteredSessions) sortVideoByTag(session.videos);
+    const filteredSessions = sessions.filter(
+      session => session.videos.length > 0
+    ) as ExtendedSession[];
+    for (const session of filteredSessions) sortVideoByTag(session.videos as ExtendedVideo[]);
     return filteredSessions;
   }
 }

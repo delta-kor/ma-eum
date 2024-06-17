@@ -1,5 +1,6 @@
+import { ExtendedVideo } from '@/services/video.service';
 import { StageVideoMeta, StageVideoTag, getMetaFromVideo } from '@/utils/video.util';
-import { Music, Session, Video } from '@prisma/client';
+import { Music, Session } from '@prisma/client';
 
 export const TagOrder: StageVideoTag[] = [
   'main',
@@ -91,13 +92,21 @@ export function getShortTagName(tag: StageVideoTag): string {
   }
 }
 
-export function getVideoRelativeTime(music: Music, video: Video, absoluteTime: number): number {
+export function getVideoRelativeTime(
+  music: Music,
+  video: ExtendedVideo,
+  absoluteTime: number
+): number {
   const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
   const musicAnchor = music.anchor || 0;
   return absoluteTime - (videoAnchor - musicAnchor);
 }
 
-export function getVideoAbsoluteTime(music: Music, video: Video, relativeTime: number): number {
+export function getVideoAbsoluteTime(
+  music: Music,
+  video: ExtendedVideo,
+  relativeTime: number
+): number {
   const videoAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;
   const musicAnchor = music.anchor || 0;
   return relativeTime + (videoAnchor - musicAnchor);

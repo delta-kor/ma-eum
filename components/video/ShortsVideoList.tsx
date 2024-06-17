@@ -4,13 +4,13 @@ import EndItems from '@/components/core/EndItems';
 import NoItems from '@/components/core/NoItems';
 import ShortsVideoItem, { ShortsVideoItemPlaceholder } from '@/components/video/ShortsVideoItem';
 import { trpc } from '@/hooks/trpc';
+import { ExtendedVideo } from '@/services/video.service';
 import { PaginationResult } from '@/utils/pagination.util';
-import { Video } from '@prisma/client';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
-  preloadedVideos: PaginationResult<Video>;
+  preloadedVideos: PaginationResult<ExtendedVideo>;
 }
 
 export default function ShortsVideoList({ preloadedVideos }: Props) {

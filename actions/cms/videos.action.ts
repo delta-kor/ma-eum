@@ -4,9 +4,9 @@ import prisma from '@/prisma/prisma';
 import { MusicService } from '@/services/music.service';
 import createId from '@/utils/id.util';
 import { parseVoyageDate } from '@/utils/time.util';
-import { AvailableMetaTypes, VideoMeta } from '@/utils/video.util';
+import { VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { VoyageSession, getCSRMemberByVoyageMember } from '@/utils/voyage.util';
-import { SessionType, Video, VideoSource } from '@prisma/client';
+import { SessionType, VideoSource } from '@prisma/client';
 
 interface YoutubeVideoJson {
   date: string;
@@ -27,6 +27,9 @@ export async function importYoutubeVideosFromJson(data: YoutubeVideoJson[]) {
       data: {
         date: new Date(item.date),
         id: createId(6),
+        metaInfo: {
+          create: {},
+        },
         source: VideoSource.YOUTUBE,
         sourceId: item.id,
         title: item.title,
@@ -65,10 +68,11 @@ export async function importVoyageVideosFromJson(data: VoyageSession[], musicId:
               date,
               id: createId(6),
               meta,
+              metaInfo: { create: {} },
               source: VideoSource.YOUTUBE,
               sourceId: video.youtubeId,
               title: video.title,
-            } as Video;
+            };
           }),
         },
       },
@@ -102,30 +106,29 @@ export async function removeCategoryFromVideo(videoId: string, categoryId: strin
   });
 }
 
-export async function addMetaToVideo(videoId: string, meta: VideoMeta) {
+export async function addMetaToVideo(videoId: string, meta: VideoMeta, type: VideoMetaType) {
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 
-  const metas = video.meta;
-  const existingMeta = metas.find(item => item.type === meta.type);
-  if (existingMeta) metas[metas.indexOf(existingMeta)] = meta;
-  else metas.push(meta);
-
-  metas.sort((a, b) => AvailableMetaTypes.indexOf(a.type) - AvailableMetaTypes.indexOf(b.type));
-
-  await prisma.video.update({
-    data: { meta: metas },
-    where: { id: videoId },
+  await prisma.metaInfo.update({
+    data: {
+      [type]: {
+        upsert: {
+          create: meta,
+          update: meta,
+        },
+      },
+    },
+    where: { videoId },
   });
 }
 
-export async function removeMetaFromVideo(videoId: string, type: VideoMeta['type']) {
+export async function removeMetaFromVideo(videoId: string, type: VideoMetaType) {
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 
-  const metas = video.meta;
-  await prisma.video.update({
-    data: { meta: metas.filter(item => item.type !== type) },
-    where: { id: videoId },
+  await prisma.metaInfo.update({
+    data: { [type]: { delete: true } },
+    where: { videoId },
   });
 }

@@ -1,13 +1,14 @@
 import GradientIcon from '@/components/core/GradientIcon';
 import LazyImage from '@/components/core/LazyImage';
+import { ExtendedVideo } from '@/services/video.service';
 import { ImageUrl } from '@/utils/url.util';
 import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video, VideoSource } from '@prisma/client';
+import { VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default function PromotionItem({ video }: Props) {

@@ -9,12 +9,13 @@ import {
 import { revalidate } from '@/actions/revalidate.action';
 import CmsModal from '@/components/cms/CmsModal';
 import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
+import { ExtendedVideo } from '@/services/video.service';
 import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video.util';
-import { Category, Session, Video, VideoSource } from '@prisma/client';
+import { Category, Session, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-export type ExtendedCmsVideo = { categories: Category[]; session: Session | null } & Video;
+export type ExtendedCmsVideo = { categories: Category[]; session: Session | null } & ExtendedVideo;
 
 interface Props {
   categories: Category[];
@@ -43,7 +44,7 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
     if (key === 'm') handleMetaSketchAdd('music');
     if (key === 'b') handleMetaSketchAdd('members');
     if (key === 'e') handleMetaSketchAdd('episode');
-    if (key === 'i') handleMetaSketchAdd('inbound_challenge');
+    if (key === 'i') handleMetaSketchAdd('inboundChallenge');
   }
 
   async function handleCategoryAdd(category: Category) {
@@ -71,16 +72,16 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
     }
   }
 
-  function getMeta<T extends VideoMeta>(type: T['type']): T | undefined {
-    if (selectedVideo === null) return;
-    return (selectedVideo.meta.find(meta => meta.type === type) as T) || undefined;
+  function getMeta(type: VideoMetaType): VideoMeta | undefined {
+    if (!selectedVideo?.metaInfo) return;
+    return selectedVideo.metaInfo[type] as VideoMeta;
   }
 
-  async function handleMetaSet(data: VideoMeta) {
+  async function handleMetaSet(data: VideoMeta, type: VideoMetaType) {
     if (selectedVideo === null) return;
 
     try {
-      await addMetaToVideo(selectedVideo!.id, data);
+      await addMetaToVideo(selectedVideo!.id, data, type);
       await revalidate('/cms/videos');
     } catch (e) {
       console.error(e);
@@ -109,8 +110,14 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
     setMetaModalActive(false);
   }
 
-  const currentMetaTypes = selectedVideo?.meta.map(meta => meta.type) || [];
-  const activeMetaTypes = Array.from(new Set([...sketchMetaTypes, ...currentMetaTypes]));
+  const currentMetaTypes = selectedVideo?.metaInfo
+    ? Object.entries(selectedVideo?.metaInfo)
+        .filter(([type, meta]) => meta !== null)
+        .map(([type]) => type)
+    : [];
+  const activeMetaTypes = Array.from(
+    new Set([...sketchMetaTypes, ...currentMetaTypes])
+  ) as VideoMetaType[];
 
   if (selectedVideo === null)
     return <div className="grow text-center text-20 text-gray-500">Select video</div>;

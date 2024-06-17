@@ -11,6 +11,9 @@ interface Props {
 
 export default function SessionVideoList({ session }: Props) {
   const videos = session.videos;
+  const musicId = session.musicId;
+
+  if (!musicId) return null;
 
   return (
     <div className="flex flex-col gap-12 rounded-16 bg-primary-100 p-16">
@@ -25,7 +28,7 @@ export default function SessionVideoList({ session }: Props) {
       </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-2">
         {videos.map(video => (
-          <SessionVideoItem key={video.id} video={video} />
+          <SessionVideoItem key={video.id} musicId={musicId} video={video} />
         ))}
       </div>
     </div>

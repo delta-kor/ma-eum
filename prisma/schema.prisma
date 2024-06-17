@@ -136,9 +136,6 @@ model Video {
   date       DateTime
   categories Category[]
 
-  /// [VideoMeta]
-  meta Json[]
-
   metaInfo MetaInfo?
 
   session   Session? @relation(fields: [sessionId], references: [id], onDelete: SetNull)

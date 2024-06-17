@@ -1,11 +1,12 @@
 import LazyImage from '@/components/core/LazyImage';
+import { ExtendedVideo } from '@/services/video.service';
 import { ImageUrl } from '@/utils/url.util';
 import { CoverVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video, VideoSource } from '@prisma/client';
+import { VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
 
 interface Props {
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default function CoverVideoItem({ video }: Props) {

@@ -3,11 +3,11 @@
 import useQuery from '@/hooks/query';
 import { ExtendedMusic } from '@/services/music.service';
 import { ExtendedSession } from '@/services/session.service';
+import { ExtendedVideo } from '@/services/video.service';
 import { Line, OffsetDelay } from '@/utils/lily.util';
 import { Member, Members } from '@/utils/member.util';
 import { getVideoRelativeTime } from '@/utils/session.util';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
 import { ReactNode, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
@@ -18,9 +18,9 @@ interface Context {
   isPlaying: boolean;
   play: () => void;
   seekTo: (time: number) => void;
-  selectVideo: (video: Video) => void;
+  selectVideo: (video: ExtendedVideo) => void;
   setPlayer: (player: YouTubePlayer) => void;
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export const MixerControlContext = createContext<Context>({} as Context);
@@ -38,7 +38,7 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
   const videos = sessions.map(session => session.videos).flat();
   const initialVideo = videos.find(video => video.id === urlVideoId) || sessions[0].videos[0];
 
-  const [selectedVideo, setSelectedVideo] = useState<Video>(initialVideo);
+  const [selectedVideo, setSelectedVideo] = useState<ExtendedVideo>(initialVideo);
   const [player, setPlayer] = useState<YouTubePlayer | null>(null);
 
   const [currentTime, setCurrentTime] = useState(0);
@@ -114,7 +114,7 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
   );
 
   const handleSelectVideo = useCallback(
-    (video: Video) => {
+    (video: ExtendedVideo) => {
       if (!player) return;
 
       const currentAnchor = getMetaFromVideo<StageVideoMeta>(video, 'stage')?.time || 0;

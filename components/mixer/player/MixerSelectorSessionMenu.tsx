@@ -5,9 +5,9 @@ import MixerSelectorTextButton from '@/components/mixer/player/MixerSelectorText
 import useMixerControl from '@/hooks/mixer-control';
 import useQuery from '@/hooks/query';
 import { ExtendedSession } from '@/services/session.service';
+import { ExtendedVideo } from '@/services/video.service';
 import { Member, Members, getMemberName } from '@/utils/member.util';
 import { MembersVideoMeta, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
 
 interface Props {
   session: ExtendedSession;
@@ -39,7 +39,7 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
     );
   }
 
-  function handleVideoClick(video: Video) {
+  function handleVideoClick(video: ExtendedVideo) {
     mixerControl.selectVideo(video);
     query.set({ video: video.id });
   }

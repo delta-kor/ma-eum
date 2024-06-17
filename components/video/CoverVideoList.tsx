@@ -5,12 +5,12 @@ import MemberMenu from '@/components/menu/MemberMenu';
 import CoverVideoItem, { CoverVideoItemPlaceholder } from '@/components/video/CoverVideoItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { ExtendedVideo } from '@/services/video.service';
 import { Member, getSanitizedMember } from '@/utils/member.util';
-import { Video } from '@prisma/client';
 import { useState } from 'react';
 
 interface Props {
-  preloadedVideos: Video[];
+  preloadedVideos: ExtendedVideo[];
 }
 
 export default function CoverVideoList({ preloadedVideos }: Props) {

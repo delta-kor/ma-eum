@@ -1,20 +1,20 @@
 import LazyImage from '@/components/core/LazyImage';
+import { ExtendedVideo } from '@/services/video.service';
 import { getTagName } from '@/utils/session.util';
 import { ImageUrl } from '@/utils/url.util';
-import { MusicVideoMeta, StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video, VideoSource } from '@prisma/client';
+import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
+import { VideoSource } from '@prisma/client';
 import Link from 'next/link';
 
 interface Props {
-  video: Video;
+  musicId: string;
+  video: ExtendedVideo;
 }
 
-export default function SessionVideoItem({ video }: Props) {
+export default function SessionVideoItem({ musicId, video }: Props) {
   if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
 
   const stageMeta = getMetaFromVideo<StageVideoMeta>(video, 'stage');
-  const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
-  const musicId = musicMeta?.musicId || '';
 
   if (stageMeta)
     return (

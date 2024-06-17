@@ -14,14 +14,15 @@ import {
   PromotionVideoMeta,
   StageVideoMeta,
   VideoMeta,
+  VideoMetaType,
 } from '@/utils/video.util';
 import { DetailedHTMLProps, FormHTMLAttributes } from 'react';
 
 interface Props<T extends VideoMeta> {
   data?: T;
-  type: T['type'];
-  onRemove: (type: T['type']) => void;
-  onSet: (data: T) => void;
+  type: VideoMetaType;
+  onRemove: (type: VideoMetaType) => void;
+  onSet: (data: T, type: VideoMetaType) => void;
 }
 
 function CmsVideosMetaBase<T extends VideoMeta>({
@@ -66,12 +67,14 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            albumId: formData.get('albumId'),
-            order: parseInt(formData.get('order') as string),
-            title: formData.get('title'),
-            type: 'promotion',
-          } as T)
+          onSet(
+            {
+              albumId: formData.get('albumId'),
+              order: parseInt(formData.get('order') as string),
+              title: formData.get('title'),
+            } as T,
+            'promotion'
+          )
         }
         data={data}
         type={type}
@@ -103,10 +106,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            musicId: formData.get('musicId'),
-            type: 'music',
-          } as T)
+          onSet(
+            {
+              musicId: formData.get('musicId'),
+            } as T,
+            'music'
+          )
         }
         data={data}
         type={type}
@@ -126,11 +131,13 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            order: parseInt(formData.get('order') as string),
-            title: formData.get('title'),
-            type: 'official',
-          } as T)
+          onSet(
+            {
+              order: parseInt(formData.get('order') as string),
+              title: formData.get('title'),
+            } as T,
+            'official'
+          )
         }
         data={data}
         type={type}
@@ -156,12 +163,14 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            sessionId: formData.get('sessionId'),
-            tag: formData.get('tag'),
-            time: parseFloat(formData.get('order') as string),
-            type: 'stage',
-          } as T)
+          onSet(
+            {
+              sessionId: formData.get('sessionId'),
+              tag: formData.get('tag'),
+              time: parseFloat(formData.get('order') as string),
+            } as T,
+            'stage'
+          )
         }
         data={data}
         type={type}
@@ -193,11 +202,14 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            embed: formData.get('embed') === 'on',
-            ownerId: formData.get('ownerId'),
-            type: 'fancam',
-          } as T)
+          onSet(
+            {
+              embed: formData.get('embed') === 'on',
+              ownerId: formData.get('ownerId'),
+              sessionId: formData.get('sessionId'),
+            } as T,
+            'fancam'
+          )
         }
         data={data}
         type={type}
@@ -207,6 +219,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
           defaultValue={(data as FancamVideoMeta)?.ownerId}
           id="ownerId"
           label="Owner Id"
+          type="text"
+        />
+        <CmsMetaInput
+          defaultValue={(data as FancamVideoMeta)?.sessionId}
+          id="sessionId"
+          label="Session Id"
           type="text"
         />
         <CmsMetaInput
@@ -223,10 +241,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            members: Members.filter(member => formData.get(member) === 'on'),
-            type: 'members',
-          } as T)
+          onSet(
+            {
+              members: Members.filter(member => formData.get(member) === 'on'),
+            } as T,
+            'members'
+          )
         }
         data={data}
         type={type}
@@ -246,11 +266,13 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            kind: formData.get('kind'),
-            title: formData.get('title'),
-            type: 'cover',
-          } as T)
+          onSet(
+            {
+              kind: formData.get('kind'),
+              title: formData.get('title'),
+            } as T,
+            'cover'
+          )
         }
         data={data}
         type={type}
@@ -275,7 +297,7 @@ export default function CmsVideosMeta<T extends VideoMeta>({
   if (type === 'shorts') {
     return (
       <CmsVideosMetaBase
-        action={() => onSet({ type: 'shorts' } as T)}
+        action={() => onSet({} as T, 'shorts')}
         data={data}
         type={type}
         onRemove={onRemove}
@@ -287,11 +309,13 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            episode: formData.get('episode') || null,
-            title: formData.get('title'),
-            type: 'episode',
-          } as T)
+          onSet(
+            {
+              episode: formData.get('episode') || null,
+              title: formData.get('title'),
+            } as T,
+            'episode'
+          )
         }
         data={data}
         type={type}
@@ -318,10 +342,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            type: 'link',
-            videoId: formData.get('videoId'),
-          } as T)
+          onSet(
+            {
+              videoId: formData.get('videoId'),
+            } as T,
+            'link'
+          )
         }
         data={data}
         type={type}
@@ -337,14 +363,16 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     );
   }
 
-  if (type === 'inbound_challenge') {
+  if (type === 'inboundChallenge') {
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            from: formData.get('from') || null,
-            type: 'inbound_challenge',
-          } as T)
+          onSet(
+            {
+              from: formData.get('from') || null,
+            } as T,
+            'inboundChallenge'
+          )
         }
         data={data}
         type={type}
@@ -361,15 +389,17 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     );
   }
 
-  if (type === 'outbound_challenge') {
+  if (type === 'outboundChallenge') {
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            music: formData.get('music'),
-            to: formData.get('to') || null,
-            type: 'outbound_challenge',
-          } as T)
+          onSet(
+            {
+              music: formData.get('music'),
+              to: formData.get('to') || null,
+            } as T,
+            'outboundChallenge'
+          )
         }
         data={data}
         type={type}
@@ -396,10 +426,12 @@ export default function CmsVideosMeta<T extends VideoMeta>({
     return (
       <CmsVideosMetaBase
         action={formData =>
-          onSet({
-            disable: formData.get('disable') === 'on',
-            type: 'live',
-          } as T)
+          onSet(
+            {
+              disable: formData.get('disable') === 'on',
+            } as T,
+            'live'
+          )
         }
         data={data}
         type={type}

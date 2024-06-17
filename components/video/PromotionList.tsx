@@ -1,8 +1,8 @@
 import PromotionItem from '@/components/video/PromotionItem';
-import { Video } from '@prisma/client';
+import { ExtendedVideo } from '@/services/video.service';
 
 interface Props {
-  videos: Video[];
+  videos: ExtendedVideo[];
 }
 
 export default function PromotionList({ videos }: Props) {

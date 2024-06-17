@@ -1,11 +1,11 @@
 import Icon from '@/components/core/Icon';
+import { ExtendedVideo } from '@/services/video.service';
 import { StageVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
 import { HTMLAttributes } from 'react';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   active: boolean;
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default function MixerSelectorIconButton({ active, video, ...props }: Props) {

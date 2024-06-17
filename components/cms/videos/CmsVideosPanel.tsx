@@ -7,7 +7,7 @@ import {
 import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsVideosInfo, { ExtendedCmsVideo } from '@/components/cms/videos/CmsVideosInfo';
-import { VideoMeta } from '@/utils/video.util';
+import { VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { Category } from '@prisma/client';
 import { format } from 'date-fns';
 import { useState } from 'react';
@@ -60,13 +60,15 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
     await revalidate('/cms/videos');
   }
 
-  function getMetaSummary(meta: VideoMeta) {
-    if (meta.type === 'official') return `${meta.type}(${meta.order})`;
-    if (meta.type === 'promotion') return `${meta.type}(${meta.order})`;
-    if (meta.type === 'inbound_challenge') return `inbound`;
-    if (meta.type === 'outbound_challenge') return `outbound`;
+  function getMetaSummary(meta: VideoMeta, type: VideoMetaType) {
+    // @ts-ignore
+    if (type === 'official') return `${type}(${meta.order})`;
+    // @ts-ignore
+    if (type === 'promotion') return `${type}(${meta.order})`;
+    if (type === 'inboundChallenge') return `inbound`;
+    if (type === 'outboundChallenge') return `outbound`;
 
-    return meta.type;
+    return type;
   }
 
   return (
@@ -112,9 +114,14 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
                 </div>
               )}
               <div className="grow text-14 text-black">{video.title}</div>
-              <div className="code text-14 text-gray-500">
-                {video.meta.map(item => getMetaSummary(item)).join(', ')}
-              </div>
+              {video.metaInfo && (
+                <div className="code text-14 text-gray-500">
+                  {Object.entries(video.metaInfo)
+                    .filter(([type, meta]) => meta !== null)
+                    .map(([type, meta]) => getMetaSummary(meta, type as VideoMetaType))
+                    .join(', ')}
+                </div>
+              )}
               <div className="code text-14 text-gray-500">{video.source}</div>
             </div>
           ))}
