@@ -24,7 +24,7 @@ export class ImageUrl {
   }
 
   private static toCdnUrl(url: string): string {
-    if (process.env.NEXT_PUBLIC_VERCEL !== '1') return url;
+    if (process.env.NEXT_ENV_BYPASS_CDN === '1') return url;
     return '//wsrv.nl/?url=' + encodeURIComponent(url);
   }
 }

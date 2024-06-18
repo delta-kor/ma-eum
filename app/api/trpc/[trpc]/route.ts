@@ -7,8 +7,10 @@ const handler = (req: Request) =>
     endpoint: '/api/trpc',
     req,
     router: AppService.router,
-    onError: ({ error }) => {
-      throw error;
+    onError: ({ error, path }) => {
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`tRPC failed on ${path || '<no path>'}: ${error.message}`);
+      }
     },
   });
 
