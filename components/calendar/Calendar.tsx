@@ -1,52 +1,44 @@
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
-import { getKSTMonth } from '@/utils/time.util';
-import {
-  addDays,
-  differenceInCalendarDays,
-  endOfMonth,
-  endOfWeek,
-  format,
-  startOfMonth,
-  startOfWeek,
-} from 'date-fns';
+import { DateTime } from 'luxon';
 import { useMemo, useState } from 'react';
 
 interface Props {
   dateInfo: CalendarDateInfo;
-  selectedDate: Date;
-  onDateSelect: (date: Date) => void;
+  selectedDate: DateTime;
+  onDateSelect: (date: DateTime) => void;
 }
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props) {
-  const [year, setYear] = useState<number>(selectedDate.getFullYear());
-  const [month, setMonth] = useState<number>(selectedDate.getMonth());
+  const [year, setYear] = useState<number>(selectedDate.year);
+  const [month, setMonth] = useState<number>(selectedDate.month);
 
-  const currentMonth = getKSTMonth(year, month);
+  const currentMonth = DateTime.local(year, month, { zone: 'Asia/Seoul' }).setLocale('ko-KR');
 
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
-  const startDate = startOfWeek(monthStart);
-  const endDate = endOfWeek(monthEnd);
+  const monthStart = currentMonth.startOf('month', { useLocaleWeeks: true });
+  const monthEnd = currentMonth.endOf('month', { useLocaleWeeks: true });
+  const startDate = monthStart.startOf('week', { useLocaleWeeks: true });
+  const endDate = monthEnd.endOf('week', { useLocaleWeeks: true });
 
   const dates = useMemo(() => {
     const monthArray = [];
     let day = startDate;
-    while (differenceInCalendarDays(endDate, day) >= 0) {
+    while (endDate.diff(day, 'days').days > 0) {
       monthArray.push(day);
-      day = addDays(day, 1);
+      day = day.plus({ days: 1 });
     }
     return monthArray;
   }, [startDate, endDate]);
 
-  const handleDateSelect = (date: Date) => {
-    if (dateInfo[format(date, 'yyyy-MM-dd')] === undefined) return false;
+  const handleDateSelect = (date: DateTime) => {
+    if (dateInfo[date.toFormat('yyyy-MM-dd')] === undefined) return false;
 
-    setYear(date.getFullYear());
-    setMonth(date.getMonth());
+    setYear(date.year);
+    setMonth(date.month);
+
     onDateSelect(date);
   };
 
@@ -78,7 +70,7 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
           <Icon type="left" className="w-16 text-gray-200" />
         </div>
         <div className="w-[110px] text-center text-24 font-700 text-primary-500">
-          {year}. {month + 1}.
+          {year}. {month}.
         </div>
         <div
           onClick={() => handleMonthChange('next')}
@@ -101,23 +93,23 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
         <div className="grid grid-cols-[repeat(7,40px)] justify-between gap-y-12">
           {dates.map(date => (
             <div
-              key={date.getTime()}
-              data-selected={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
+              key={date.toISO()}
+              data-selected={date.toFormat('yyyy-MM-dd') === selectedDate.toFormat('yyyy-MM-dd')}
               onClick={() => handleDateSelect(date)}
               className="group relative flex cursor-pointer flex-col gap-4 px-2 py-8"
             >
               <div className="absolute inset-0 hidden rounded-4 bg-gradient-primary group-data-[selected=true]:block"></div>
               <div
-                data-inactive={date.getMonth() !== month}
+                data-inactive={date.month !== month}
                 className="relative text-center text-16 font-600 text-black data-[inactive=true]:text-gray-200"
               >
-                <div className="group-data-[selected=true]:text-white">{date.getDate()}</div>
+                <div className="group-data-[selected=true]:text-white">{date.day}</div>
               </div>
               <div className="relative flex h-6 items-center justify-center gap-2">
-                {dateInfo[format(date, 'yyyy-MM-dd')]?.map((item, index) => (
+                {dateInfo[date.toFormat('yyyy-MM-dd')]?.map((item, index) => (
                   <ScheduleTypeChip
                     key={index}
-                    active={format(date, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')}
+                    active={date.toFormat('yyyy-MM-dd') === selectedDate.toFormat('yyyy-MM-dd')}
                     kind="dot"
                     type={item}
                   />

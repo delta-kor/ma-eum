@@ -1,13 +1,12 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
-import { getKSTNow } from '@/utils/time.util';
+import { DateTime } from 'luxon';
 
 export default function LandingWidget() {
-  const today = getKSTNow();
-  const debut = new Date(2022, 6, 27);
-  const diff = today.getTime() - debut.getTime();
-  const day = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const today = DateTime.local({ zone: 'Asia/Seoul' });
+  const debut = DateTime.local(2022, 7, 27, { zone: 'Asia/Seoul' });
+  const day = Math.floor(today.diff(debut, 'days').days);
 
   return (
     <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-12 rounded-16 bg-gradient-primary px-16 py-8 shadow-primary lg:static lg:translate-x-0 lg:translate-y-0">

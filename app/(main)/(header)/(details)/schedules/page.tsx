@@ -1,13 +1,13 @@
 import CalendarSection from '@/components/calendar/CalendarSection';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import { ScheduleService } from '@/services/schedule.service';
-import { getKSTNow } from '@/utils/time.util';
+import { DateTime } from 'luxon';
 
 export const revalidate = 0;
 
 export default async function SchedulesPage() {
   const dateInfo = await ScheduleService.getCalendarDateInfo();
-  const today = getKSTNow();
+  const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
 
   return (
     <DetailsContent>

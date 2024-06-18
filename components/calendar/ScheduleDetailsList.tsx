@@ -4,18 +4,21 @@ import ScheduleDetailsItem, {
 import NoItems from '@/components/core/NoItems';
 import { trpc } from '@/hooks/trpc';
 import { format } from 'date-fns';
+import { DateTime } from 'luxon';
 
 interface Props {
-  selectedDate: Date;
+  selectedDate: DateTime;
 }
 
 export default function ScheduleDetailsList({ selectedDate }: Props) {
+  const utcDate = selectedDate.toJSDate();
+
   const schedules = trpc.schedule.getSchedules.useQuery(
     {
-      date: selectedDate,
+      date: utcDate,
     },
     {
-      queryHash: format(selectedDate, 'yyyy-MM-dd'),
+      queryHash: format(utcDate, 'yyyy-MM-dd'),
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,

@@ -1,10 +1,10 @@
 'use client';
 
-import Calendar from '@/components/calendar/Calendar';
 import ScheduleDetailsList from '@/components/calendar/ScheduleDetailsList';
 import type { CalendarDateInfo } from '@/services/schedule.service';
-import { removeTime } from '@/utils/time.util';
-import { useEffect, useState } from 'react';
+import { DateTime } from 'luxon';
+import { useState } from 'react';
+import Calendar from './Calendar';
 
 interface Props {
   attached?: boolean;
@@ -13,14 +13,10 @@ interface Props {
 }
 
 export default function CalendarSection({ attached, dateInfo, today }: Props) {
-  const [date, setDate] = useState<Date>(today);
+  const todayDateTime = DateTime.fromJSDate(today, { zone: 'Asia/Seoul' });
+  const [date, setDate] = useState<DateTime>(todayDateTime);
 
-  useEffect(() => {
-    const today = removeTime(new Date());
-    setDate(today);
-  }, []);
-
-  function handleDateSelect(date: Date) {
+  function handleDateSelect(date: DateTime) {
     setDate(date);
   }
 

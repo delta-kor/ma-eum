@@ -1,20 +1,5 @@
-export function toKST(date: Date): Date {
-  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
-  return new Date(utc + 9 * 60 * 60 * 1000);
-}
-
-export function getKSTNow(): Date {
-  const date = new Date();
-  return toKST(date);
-}
-
-export function getKSTMonth(year: number, month: number): Date {
-  const date = new Date(Date.UTC(year, month));
-  return toKST(date);
-}
-
 export function removeTime(date: Date): Date {
-  return new Date(date.toDateString());
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
 }
 
 export function getFutureRelativeTime(date: Date, today: Date, isAllDay: boolean): string {

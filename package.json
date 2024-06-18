@@ -18,6 +18,7 @@
     "@trpc/server": "11.0.0-rc.374",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.2.10",
+    "luxon": "^3.4.4",
     "next": "14.2.3",
     "node-cache": "^5.1.2",
     "path-to-regexp": "^6.2.2",
@@ -31,6 +32,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,10 +1,10 @@
 import ScheduleCalendarLink from '@/components/calendar/ScheduleCalendarLink';
 import ScheduleFeedItem from '@/components/calendar/ScheduleFeedItem';
 import { ScheduleService } from '@/services/schedule.service';
-import { getKSTNow } from '@/utils/time.util';
+import { DateTime } from 'luxon';
 
 export default async function ScheduleFeedList() {
-  const today = getKSTNow();
+  const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
   const feeds = await ScheduleService.getScheduleFeeds(today);
 
   return (

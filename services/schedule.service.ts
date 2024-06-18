@@ -2,9 +2,8 @@ import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
-import { toKST } from '@/utils/time.util';
 import { Schedule, ScheduleType } from '@prisma/client';
-import { format } from 'date-fns';
+import { DateTime } from 'luxon';
 import 'server-only';
 import { z } from 'zod';
 
@@ -59,9 +58,8 @@ export class ScheduleService {
 
     const result: CalendarDateInfo = {};
     for (const schedule of schedules) {
-      const utcDate = schedule.date;
-      const kstDate = toKST(utcDate);
-      const dateKey = format(kstDate, 'yyyy-MM-dd');
+      const dateTime = DateTime.fromJSDate(schedule.date, { zone: 'Asia/Seoul' });
+      const dateKey = dateTime.toFormat('yyyy-MM-dd');
       if (!result[dateKey]) result[dateKey] = [];
       result[dateKey].push(schedule.type);
     }
@@ -84,12 +82,15 @@ export class ScheduleService {
 
   @DataCache('schedule.getSchedules', StaticDataTtl)
   public static async getSchedules(date: Date): Promise<Schedule[]> {
+    const dateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
+    dateTime.startOf('day').toJSDate();
+
     return prisma.schedule.findMany({
       orderBy: { date: 'asc' },
       where: {
         date: {
-          gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
-          lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
+          gte: dateTime.startOf('day').toJSDate(),
+          lt: dateTime.endOf('day').toJSDate(),
         },
       },
     });
