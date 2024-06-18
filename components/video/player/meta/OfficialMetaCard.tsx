@@ -1,14 +1,13 @@
 import Translate from '@/components/core/Translate';
-import OfficialVideoItem from '@/components/video/OfficialVideoItem';
+import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
 import { MusicService } from '@/services/music.service';
-import { VideoService } from '@/services/video.service';
-import { MusicVideoMeta } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import { ExtendedVideo, VideoService } from '@/services/video.service';
+import { MusicVideoMeta, sliceVideosAround } from '@/utils/video.util';
 import Link from 'next/link';
 
 interface Props {
   musicMeta: MusicVideoMeta;
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default async function OfficialMetaCard({ musicMeta, video }: Props) {
@@ -19,13 +18,7 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
   const [music, officialVideos] = await Promise.all([musicData, officialVideosData]);
   if (!music || officialVideos.length === 0) return null;
 
-  let currentVideoIndex = officialVideos.findIndex(item => item.id === video.id);
-  if (currentVideoIndex === -1) return null;
-  if (currentVideoIndex === 0) currentVideoIndex = 1;
-  if (currentVideoIndex === officialVideos.length - 1)
-    currentVideoIndex = officialVideos.length - 2;
-
-  const selectedVideos = officialVideos.slice(currentVideoIndex - 1, currentVideoIndex + 2);
+  const selectedVideos = sliceVideosAround(officialVideos, video, 1);
 
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
@@ -37,7 +30,12 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
       </div>
       <div className="flex flex-col gap-12">
         {selectedVideos.map(item => (
-          <OfficialVideoItem key={item.id} active={item.id === video.id} video={item} attached />
+          <MetaVideoItem
+            key={item.id}
+            active={item.id === video.id}
+            metaType="official"
+            video={item}
+          />
         ))}
       </div>
       <Link

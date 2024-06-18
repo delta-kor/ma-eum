@@ -138,3 +138,17 @@ export function getMetaFromVideo<T>(video: ExtendedVideo, metaType: VideoMetaTyp
 
   return meta as T;
 }
+
+export function sliceVideosAround(
+  videos: ExtendedVideo[],
+  video: ExtendedVideo,
+  count: number
+): ExtendedVideo[] {
+  const currentIndex = videos.findIndex(item => item.id === video.id);
+  if (currentIndex === -1) return [];
+
+  const start = Math.max(0, currentIndex - count);
+  const end = Math.min(videos.length, currentIndex + count + 1);
+
+  return videos.slice(start, end);
+}

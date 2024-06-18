@@ -1,6 +1,7 @@
 import VideoHeader from '@/components/video/player/VideoHeader';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
+import CategoryMetaCard from '@/components/video/player/meta/CategoryMetaCard';
 import MusicMetaCard from '@/components/video/player/meta/MusicMetaCard';
 import OfficialMetaCard from '@/components/video/player/meta/OfficialMetaCard';
 import PromotionMetaCard from '@/components/video/player/meta/PromotionMetaCard';
@@ -22,8 +23,10 @@ interface Props {
 }
 
 export default async function VideoPage({ params: { videoId } }: Props) {
-  const video = await VideoService.getOne(videoId);
+  const video = await VideoService.getOneWithCategory(videoId);
   if (!video) return notFound();
+
+  const categories = video.categories;
 
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
@@ -41,6 +44,9 @@ export default async function VideoPage({ params: { videoId } }: Props) {
           </div>
         </div>
         <div className="flex flex-col gap-16">
+          {categories.map(category => (
+            <CategoryMetaCard key={category.id} category={category} video={video} />
+          ))}
           {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
           {promotionMeta && <PromotionMetaCard promotionMeta={promotionMeta} video={video} />}
           {musicMeta && officialMeta && <OfficialMetaCard musicMeta={musicMeta} video={video} />}

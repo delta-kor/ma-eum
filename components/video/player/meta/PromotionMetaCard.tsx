@@ -1,15 +1,14 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import { AlbumService } from '@/services/album.service';
-import { VideoService } from '@/services/video.service';
-import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video.util';
-import { Video } from '@prisma/client';
+import { ExtendedVideo, VideoService } from '@/services/video.service';
+import { PromotionVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
 import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
   promotionMeta: PromotionVideoMeta;
-  video: Video;
+  video: ExtendedVideo;
 }
 
 export default async function PromotionMetaCard({ promotionMeta, video }: Props) {
@@ -20,13 +19,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
   const [album, promotionVideos] = await Promise.all([albumData, promotionVideosData]);
   if (!album || promotionVideos.length === 0) return null;
 
-  let currentVideoIndex = promotionVideos.findIndex(item => item.id === video.id);
-  if (currentVideoIndex === -1) return null;
-  if (currentVideoIndex === 0) currentVideoIndex = 1;
-  if (currentVideoIndex === promotionVideos.length - 1)
-    currentVideoIndex = promotionVideos.length - 2;
-
-  const selectedVideos = promotionVideos.slice(currentVideoIndex - 1, currentVideoIndex + 2);
+  const selectedVideos = sliceVideosAround(promotionVideos, video, 1);
 
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">

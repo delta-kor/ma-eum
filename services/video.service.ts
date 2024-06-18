@@ -19,7 +19,7 @@ import {
   ShortsVideoMeta,
   StageVideoMeta,
 } from '@/utils/video.util';
-import type { Video } from '@prisma/client';
+import { Category, Video } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
@@ -41,6 +41,10 @@ export interface ExtendedMetaInfo {
 
 export interface ExtendedVideo extends Video {
   metaInfo: ExtendedMetaInfo | null;
+}
+
+export interface ExtendedVideoWithCategory extends ExtendedVideo {
+  categories: Category[];
 }
 
 const VideoRouter = router({
@@ -99,8 +103,8 @@ export class VideoService {
     member: Member | null
   ): Promise<ExtendedVideo[]> {
     const videos = await prisma.video.findMany({
-      include: { ...PrismaUtil.extendVideo() },
-      orderBy: PrismaUtil.sortVideo(),
+      include: { ...PrismaUtil.extendVideo('episode') },
+      orderBy: [{ metaInfo: { episode: { episode: 'asc' } } }, ...PrismaUtil.sortVideo()],
       where: {
         categories: { some: { id: categoryId } },
         metaInfo: {
@@ -198,14 +202,16 @@ export class VideoService {
     return video as ExtendedVideo[];
   }
 
-  @DataCache('video.getOne', StaticDataTtl)
-  public static async getOne(videoId: string): Promise<ExtendedVideo | null> {
+  @DataCache('video.getOneWithCategory', StaticDataTtl)
+  public static async getOneWithCategory(
+    videoId: string
+  ): Promise<ExtendedVideoWithCategory | null> {
     const videos = await prisma.video.findUnique({
-      include: { ...PrismaUtil.extendVideoAll() },
+      include: { ...PrismaUtil.extendVideoAll(), categories: true },
       where: { id: videoId },
     });
 
-    return (videos as ExtendedVideo) || null;
+    return (videos as ExtendedVideoWithCategory) || null;
   }
 
   @DataCache('video.getPromotionVideos', StaticDataTtl)
