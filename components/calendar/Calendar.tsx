@@ -25,10 +25,10 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
   const [year, setYear] = useState<number>(selectedDate.getFullYear());
   const [month, setMonth] = useState<number>(selectedDate.getMonth());
 
-  const currentDate = getKSTMonth(year, month);
+  const currentMonth = getKSTMonth(year, month);
 
-  const monthStart = startOfMonth(currentDate);
-  const monthEnd = endOfMonth(currentDate);
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
   const startDate = startOfWeek(monthStart);
   const endDate = endOfWeek(monthEnd);
 

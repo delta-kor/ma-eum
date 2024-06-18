@@ -1,18 +1,16 @@
-export function getKSTNow(): Date {
-  const current = new Date();
-  const utc = current.getTime() + current.getTimezoneOffset() * 60 * 1000;
+export function toKST(date: Date): Date {
+  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
   return new Date(utc + 9 * 60 * 60 * 1000);
+}
+
+export function getKSTNow(): Date {
+  const date = new Date();
+  return toKST(date);
 }
 
 export function getKSTMonth(year: number, month: number): Date {
   const date = new Date(Date.UTC(year, month));
-  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
-  return new Date(utc + 9 * 60 * 60 * 1000);
-}
-
-export function toKST(date: Date): Date {
-  const utc = date.getTime() + date.getTimezoneOffset() * 60 * 1000;
-  return new Date(utc + 9 * 60 * 60 * 1000);
+  return toKST(date);
 }
 
 export function removeTime(date: Date): Date {

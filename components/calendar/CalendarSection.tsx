@@ -3,7 +3,7 @@
 import Calendar from '@/components/calendar/Calendar';
 import ScheduleDetailsList from '@/components/calendar/ScheduleDetailsList';
 import type { CalendarDateInfo } from '@/services/schedule.service';
-import { removeTime, toKST } from '@/utils/time.util';
+import { removeTime } from '@/utils/time.util';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function CalendarSection({ attached, dateInfo, today }: Props) {
-  const [date, setDate] = useState<Date>(toKST(today));
+  const [date, setDate] = useState<Date>(today);
 
   useEffect(() => {
     const today = removeTime(new Date());

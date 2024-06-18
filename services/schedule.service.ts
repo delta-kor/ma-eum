@@ -2,6 +2,7 @@ import prisma from '@/prisma/prisma';
 import { cmsProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
+import { toKST } from '@/utils/time.util';
 import { Schedule, ScheduleType } from '@prisma/client';
 import { format } from 'date-fns';
 import 'server-only';
@@ -58,9 +59,11 @@ export class ScheduleService {
 
     const result: CalendarDateInfo = {};
     for (const schedule of schedules) {
-      const date = format(schedule.date, 'yyyy-MM-dd');
-      if (!result[date]) result[date] = [];
-      result[date].push(schedule.type);
+      const utcDate = schedule.date;
+      const kstDate = toKST(utcDate);
+      const dateKey = format(kstDate, 'yyyy-MM-dd');
+      if (!result[dateKey]) result[dateKey] = [];
+      result[dateKey].push(schedule.type);
     }
 
     return result;
@@ -73,7 +76,7 @@ export class ScheduleService {
       take: 2,
       where: {
         date: {
-          gte: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+          gte: date,
         },
       },
     });
