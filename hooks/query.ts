@@ -1,4 +1,3 @@
-import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { UrlObject } from 'node:url';
 
@@ -38,8 +37,8 @@ export default function useQuery() {
     return queryString ? `${pathname}?${queryString}` : pathname;
   }
 
-  function set(query: Record<string, null | string>, options?: NavigateOptions) {
-    router.replace(getQueryUpdatedHref(query), options);
+  function set(query: Record<string, null | string>, scrollToTop: boolean = false) {
+    router.replace(getQueryUpdatedHref(query), { scroll: scrollToTop });
   }
 
   function get(key: string): null | string {
