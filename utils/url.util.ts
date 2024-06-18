@@ -4,15 +4,15 @@ export class ImageUrl {
   private static base = 'http://x.izflix.net/maeum';
 
   public static album(id: string): string {
-    return `${ImageUrl.base}/album/${id}.png`;
+    return ImageUrl.toCdnUrl(`${ImageUrl.base}/album/${id}.png`);
   }
 
   public static category(id: string): string {
-    return `${ImageUrl.base}/category/${id}.png`;
+    return ImageUrl.toCdnUrl(`${ImageUrl.base}/category/${id}.png`);
   }
 
   public static member(id: Member | null): string {
-    return `${ImageUrl.base}/member/${id || 'csr'}.jpg`;
+    return ImageUrl.toCdnUrl(`${ImageUrl.base}/member/${id || 'csr'}.jpg`);
   }
 
   public static youtubeShortsThumbnail(id: string): string {
@@ -21,6 +21,11 @@ export class ImageUrl {
 
   public static youtubeThumbnail(id: string): string {
     return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+  }
+
+  private static toCdnUrl(url: string): string {
+    if (process.env.VERCEL !== '1') return url;
+    return '//wsrv.nl/?url=' + encodeURIComponent(url);
   }
 }
 
