@@ -23,11 +23,11 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
 
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-16">
         <div className="shrink-0 text-20 font-700 text-black">
           <Translate>$promotion</Translate>
         </div>
-        <div className="text-16 font-500 text-gray-500">{album.title}</div>
+        <div className="truncate text-16 font-500 text-gray-500">{album.title}</div>
       </div>
       <div className="relative flex flex-col gap-16 py-12">
         <div className="absolute left-16 top-0 h-full w-3 -translate-x-1/2 bg-gray-200" />
@@ -58,7 +58,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
         href={`/videos/albums/${album.id}/promotion`}
         className="-my-16 py-16 text-center text-16 font-600 text-gray-500"
       >
-        View All
+        <Translate>$view_all</Translate>
       </Link>
     </div>
   );

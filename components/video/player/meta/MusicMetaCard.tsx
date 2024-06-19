@@ -32,7 +32,7 @@ export default async function MusicMetaCard({ musicMeta }: Props) {
         className="size-64 shrink-0 rounded-8 border-3 border-white/40 bg-white/40"
       />
       <div className="flex min-w-0 grow flex-col gap-4">
-        <div className="text-20 font-700 text-white">{music.shortTitle}</div>
+        <div className="line-clamp-2 text-20 font-700 text-white">{music.shortTitle}</div>
         <div className="text-16 font-500 text-white opacity-70">{album.title}</div>
       </div>
       <Icon type="music" className="w-20 shrink-0 text-white/30" />

@@ -22,11 +22,11 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
 
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-16">
         <div className="shrink-0 text-20 font-700 text-black">
           <Translate>$performance</Translate>
         </div>
-        <div className="text-16 font-500 text-gray-500">{music.shortTitle}</div>
+        <div className="truncate text-16 font-500 text-gray-500">{music.shortTitle}</div>
       </div>
       <div className="flex flex-col gap-12">
         {selectedVideos.map(item => (
@@ -42,7 +42,7 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
         href={`/videos/albums/${music.albumId}/performance?music=${music.id}`}
         className="-my-16 py-16 text-center text-16 font-600 text-gray-500"
       >
-        View All
+        <Translate>$view_all</Translate>
       </Link>
     </div>
   );

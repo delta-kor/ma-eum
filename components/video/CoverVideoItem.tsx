@@ -27,9 +27,8 @@ export default function CoverVideoItem({ video }: Props) {
         <div className="flex flex-col gap-4">
           {kind && (
             <div
-              className={`self-start rounded-8 px-8 py-4 text-14 font-700 text-white ${
-                kind === 'dance' ? 'bg-gradient-red' : 'bg-gradient-primary'
-              }`}
+              data-kind={kind}
+              className="self-start rounded-8 bg-gradient-primary px-8 py-4 text-14 font-700 text-white data-[kind=dance]:bg-gradient-red"
             >
               {kind.toUpperCase()}
             </div>

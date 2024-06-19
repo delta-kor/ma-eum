@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
 import { sliceVideosAround } from '@/utils/video.util';
@@ -25,7 +26,7 @@ export default async function CategoryMetaCard({ category, video }: Props) {
   return (
     <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
       <div className="flex items-center justify-between">
-        <div className="shrink-0 text-20 font-700 text-black">{category.title}</div>
+        <div className="truncate text-20 font-700 text-black">{category.title}</div>
       </div>
       {displayEpisode && (
         <div className="flex items-center justify-between">
@@ -63,7 +64,7 @@ export default async function CategoryMetaCard({ category, video }: Props) {
         href={`/videos/categories/${category.id}`}
         className="-my-16 py-16 text-center text-16 font-600 text-gray-500"
       >
-        View All
+        <Translate>$view_all</Translate>
       </Link>
     </div>
   );

@@ -2,11 +2,13 @@ import VideoHeader from '@/components/video/player/VideoHeader';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
 import CategoryMetaCard from '@/components/video/player/meta/CategoryMetaCard';
+import CoverMetaCard from '@/components/video/player/meta/CoverMetaCard';
 import MusicMetaCard from '@/components/video/player/meta/MusicMetaCard';
 import OfficialMetaCard from '@/components/video/player/meta/OfficialMetaCard';
 import PromotionMetaCard from '@/components/video/player/meta/PromotionMetaCard';
 import { VideoService } from '@/services/video.service';
 import {
+  CoverVideoMeta,
   MusicVideoMeta,
   OfficialVideoMeta,
   PromotionVideoMeta,
@@ -29,6 +31,7 @@ export default async function VideoPage({ params: { videoId } }: Props) {
   const categories = video.categories;
 
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
+  const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
 
@@ -44,10 +47,11 @@ export default async function VideoPage({ params: { videoId } }: Props) {
           </div>
         </div>
         <div className="flex flex-col gap-16">
+          {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
+          {coverMeta && <CoverMetaCard coverMeta={coverMeta} />}
           {categories.map(category => (
             <CategoryMetaCard key={category.id} category={category} video={video} />
           ))}
-          {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
           {promotionMeta && <PromotionMetaCard promotionMeta={promotionMeta} video={video} />}
           {musicMeta && officialMeta && <OfficialMetaCard musicMeta={musicMeta} video={video} />}
         </div>
