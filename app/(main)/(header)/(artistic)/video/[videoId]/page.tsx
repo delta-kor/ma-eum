@@ -39,6 +39,13 @@ export default async function VideoPage({ params: { videoId } }: Props) {
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
 
+  const videoMeta = (
+    <>
+      <VideoHeader video={video} />
+      <VideoShare source={video.source} sourceId={video.sourceId} title={video.title} />
+    </>
+  );
+
   return (
     <div className="px-24 pb-24 lg:mt-artistic-header-height-lg lg:pt-16">
       <div
@@ -51,11 +58,11 @@ export default async function VideoPage({ params: { videoId } }: Props) {
               <VideoPlayerPlaceholder shorts={isShorts} />
             </div>
             <VideoPlayer shorts={isShorts} source={video.source} sourceId={video.sourceId} />
-            <VideoHeader video={video} />
-            <VideoShare source={video.source} sourceId={video.sourceId} title={video.title} />
+            {!isShorts && videoMeta}
           </div>
         </div>
         <div className="flex flex-col gap-16">
+          {isShorts && videoMeta}
           {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
           {coverMeta && <CoverMetaCard coverMeta={coverMeta} />}
           {categories.map(category => (
