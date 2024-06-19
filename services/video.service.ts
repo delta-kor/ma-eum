@@ -123,7 +123,9 @@ export class VideoService {
   ): Promise<PaginationResult<ExtendedVideo>> {
     const videos = await prisma.video.findMany({
       ...PrismaUtil.paginate(pagination),
-      include: { ...PrismaUtil.extendVideo('inboundChallenge', 'outboundChallenge', 'music') },
+      include: {
+        ...PrismaUtil.extendVideo('inboundChallenge', 'outboundChallenge', 'music', 'members'),
+      },
       orderBy: PrismaUtil.sortVideo(),
       where: {
         metaInfo: {

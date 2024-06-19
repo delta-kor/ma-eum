@@ -15,6 +15,7 @@ import {
 } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   video: ExtendedVideo;
@@ -45,17 +46,25 @@ export default function ChallengeVideoItem({ video }: Props) {
   );
   const title = music?.shortTitle || outboundChallengeMeta?.music;
 
-  const left = inboundChallengeMeta ? inboundChallengeMeta.from || '' : 'CSR';
-  const right = outboundChallengeMeta ? outboundChallengeMeta.to || '' : 'CSR';
+  const isInboundChallenge = !!inboundChallengeMeta;
 
-  const members = !membersMeta || membersMeta.members.length >= 4 ? [null] : membersMeta.members;
+  const participant = isInboundChallenge ? inboundChallengeMeta?.from : outboundChallengeMeta?.to;
+  const members = !membersMeta || membersMeta.members.length >= 4 ? [] : membersMeta.members;
 
   return (
-    <div className="flex flex-col gap-10">
+    <Link href={`/video/${video.id}`} className="flex flex-col gap-10">
       <div className="flex items-center gap-4">
-        {left && <div className="text-16 font-600 text-gray-500">{left}</div>}
-        {left && right && <Icon type="right" className="w-12 text-primary-500" />}
-        {right && <div className="text-16 font-600 text-gray-500">{right}</div>}
+        <div className="text-16 font-600 text-gray-500">{participant || 'CSR'}</div>
+        {isInboundChallenge && (
+          <Icon
+            type={participant ? 'rightArrow' : 'returnArrow'}
+            className="w-12 shrink-0 text-c-blue"
+          />
+        )}
+        {!isInboundChallenge && <Icon type="rightArrow" className="w-12 shrink-0 text-c-red" />}
+        {isInboundChallenge && participant && (
+          <div className="text-16 font-600 text-gray-500">CSR</div>
+        )}
       </div>
       <div className="flex gap-16">
         <LazyImage
@@ -88,7 +97,7 @@ export default function ChallengeVideoItem({ video }: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

@@ -2,7 +2,7 @@ import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
-import { sliceVideosAround } from '@/utils/video.util';
+import { EpisodeVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
 import { Category, CategoryOptions } from '@prisma/client';
 import Link from 'next/link';
 
@@ -34,7 +34,8 @@ export default async function CategoryMetaCard({ category, video }: Props) {
             <Link href={`/video/${previousVideo.id}`} className="flex items-center gap-12">
               <Icon type="left" className="w-14 text-primary-500" />
               <div className="text-16 font-700 text-primary-500">
-                {previousVideo.metaInfo?.episode?.episode || 'Previous'}
+                {getMetaFromVideo<EpisodeVideoMeta>(previousVideo, 'episode')?.episode ||
+                  'Previous'}
               </div>
             </Link>
           ) : (
@@ -43,7 +44,7 @@ export default async function CategoryMetaCard({ category, video }: Props) {
           {nextVideo && (
             <Link href={`/video/${nextVideo.id}`} className="flex items-center gap-12">
               <div className="text-16 font-700 text-primary-500">
-                {nextVideo.metaInfo?.episode?.episode || 'Next'}
+                {getMetaFromVideo<EpisodeVideoMeta>(nextVideo, 'episode')?.episode || 'Next'}
               </div>
               <Icon type="right" className="w-14 text-primary-500" />
             </Link>
