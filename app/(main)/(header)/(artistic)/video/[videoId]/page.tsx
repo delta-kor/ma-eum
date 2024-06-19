@@ -12,6 +12,7 @@ import {
   MusicVideoMeta,
   OfficialVideoMeta,
   PromotionVideoMeta,
+  ShortsVideoMeta,
   getMetaFromVideo,
 } from '@/utils/video.util';
 import { notFound } from 'next/navigation';
@@ -30,6 +31,9 @@ export default async function VideoPage({ params: { videoId } }: Props) {
 
   const categories = video.categories;
 
+  const shortsMeta = getMetaFromVideo<ShortsVideoMeta>(video, 'shorts');
+  const isShorts = !!shortsMeta;
+
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
   const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
@@ -37,11 +41,16 @@ export default async function VideoPage({ params: { videoId } }: Props) {
 
   return (
     <div className="px-24 pb-24 lg:mt-artistic-header-height-lg lg:pt-16">
-      <div className="flex flex-col gap-16 lg:mx-auto lg:grid lg:max-w-screen-xl lg:grid-cols-[1fr_360px]">
+      <div
+        data-shorts={isShorts}
+        className="flex flex-col gap-16 lg:mx-auto lg:grid lg:max-w-screen-xl lg:grid-cols-[1fr_360px] lg:justify-center data-[shorts=true]:lg:max-w-screen-lg data-[shorts=true]:lg:grid-cols-[430px_1fr]"
+      >
         <div className="self-stretch">
           <div className="flex flex-col gap-16 lg:sticky lg:left-0 lg:top-[84px]">
-            <VideoPlayerPlaceholder />
-            <VideoPlayer source={video.source} sourceId={video.sourceId} />
+            <div className="-mx-24 lg:mx-0 lg:hidden">
+              <VideoPlayerPlaceholder shorts={isShorts} />
+            </div>
+            <VideoPlayer shorts={isShorts} source={video.source} sourceId={video.sourceId} />
             <VideoHeader video={video} />
             <VideoShare source={video.source} sourceId={video.sourceId} title={video.title} />
           </div>
