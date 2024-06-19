@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import MotionWrapper from '@/components/video/player/MotionWrapper';
 import { AlbumService } from '@/services/album.service';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
 import { PromotionVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
@@ -22,7 +23,10 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
   const selectedVideos = sliceVideosAround(promotionVideos, video, 1);
 
   return (
-    <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
+    <MotionWrapper
+      layoutId="promotion-meta-card"
+      className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16"
+    >
       <div className="flex items-center justify-between gap-16">
         <div className="shrink-0 text-20 font-700 text-black">
           <Translate>$promotion</Translate>
@@ -60,6 +64,6 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
       >
         <Translate>$view_all</Translate>
       </Link>
-    </div>
+    </MotionWrapper>
   );
 }

@@ -1,3 +1,4 @@
+import MotionWrapper from '@/components/video/player/MotionWrapper';
 import VideoHeader from '@/components/video/player/VideoHeader';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
@@ -40,10 +41,10 @@ export default async function VideoPage({ params: { videoId } }: Props) {
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
 
   const videoMeta = (
-    <>
+    <MotionWrapper layoutId="video-meta" className="flex flex-col gap-16">
       <VideoHeader video={video} />
       <VideoShare source={video.source} sourceId={video.sourceId} title={video.title} />
-    </>
+    </MotionWrapper>
   );
 
   return (

@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import MotionWrapper from '@/components/video/player/MotionWrapper';
 import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
 import { EpisodeVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
@@ -24,7 +25,10 @@ export default async function CategoryMetaCard({ category, video }: Props) {
   const nextVideo = selectedVideos[selectedVideos.findIndex(item => item.id === video.id) + 1];
 
   return (
-    <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
+    <MotionWrapper
+      layoutId="category-meta-card"
+      className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16"
+    >
       <div className="flex items-center justify-between">
         <div className="truncate text-20 font-700 text-black">{category.title}</div>
       </div>
@@ -67,6 +71,6 @@ export default async function CategoryMetaCard({ category, video }: Props) {
       >
         <Translate>$view_all</Translate>
       </Link>
-    </div>
+    </MotionWrapper>
   );
 }

@@ -1,4 +1,5 @@
 import Translate from '@/components/core/Translate';
+import MotionWrapper from '@/components/video/player/MotionWrapper';
 import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
 import { MusicService } from '@/services/music.service';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
@@ -21,7 +22,10 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
   const selectedVideos = sliceVideosAround(officialVideos, video, 1);
 
   return (
-    <div className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16">
+    <MotionWrapper
+      layoutId="official-meta-card"
+      className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16"
+    >
       <div className="flex items-center justify-between gap-16">
         <div className="shrink-0 text-20 font-700 text-black">
           <Translate>$performance</Translate>
@@ -44,6 +48,6 @@ export default async function OfficialMetaCard({ musicMeta, video }: Props) {
       >
         <Translate>$view_all</Translate>
       </Link>
-    </div>
+    </MotionWrapper>
   );
 }
