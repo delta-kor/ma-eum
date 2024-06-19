@@ -83,7 +83,6 @@ export class ScheduleService {
   @DataCache('schedule.getSchedules', StaticDataTtl)
   public static async getSchedules(date: Date): Promise<Schedule[]> {
     const dateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
-    dateTime.startOf('day').toJSDate();
 
     return prisma.schedule.findMany({
       orderBy: { date: 'asc' },

@@ -4,6 +4,7 @@ import { ImageUrl } from '@/utils/url.util';
 import { CoverVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   video: ExtendedVideo;
@@ -17,7 +18,7 @@ export default function CoverVideoItem({ video }: Props) {
   const kind = coverMeta?.kind;
 
   return (
-    <div className="flex gap-16">
+    <Link href={`/video/${video.id}`} className="flex gap-16">
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
         className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100"
@@ -37,7 +38,7 @@ export default function CoverVideoItem({ video }: Props) {
         </div>
         <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
       </div>
-    </div>
+    </Link>
   );
 }
 
