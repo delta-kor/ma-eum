@@ -45,6 +45,7 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
         pathname: `/video/${video.id}`,
         query: { top: metaType },
       }}
+      prefetch
       className="flex items-center gap-16"
     >
       <div className="relative">

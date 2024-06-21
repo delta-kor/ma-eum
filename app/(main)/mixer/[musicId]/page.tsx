@@ -34,6 +34,6 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
 }
 
 export async function generateStaticParams() {
-  const musics = await MusicService.getAll();
+  const musics = await MusicService.getMixableMusics();
   return musics.map(music => ({ musicId: music.id }));
 }

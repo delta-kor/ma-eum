@@ -42,6 +42,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
               pathname: `/video/${item.id}`,
               query: { top: 'promotion' },
             }}
+            prefetch
             className="relative flex items-center gap-16"
           >
             <div
