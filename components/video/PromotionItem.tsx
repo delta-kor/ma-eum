@@ -15,7 +15,10 @@ export default function PromotionItem({ video }: Props) {
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
 
   return (
-    <Link href={`/video/${video.id}`} className="flex gap-16">
+    <Link
+      href={{ pathname: `/video/${video.id}`, query: { top: 'promotion' } }}
+      className="flex gap-16"
+    >
       <div className="flex flex-col items-center">
         <div className="rounded-8 bg-primary-200 p-8">
           <GradientIcon type="live" className="h-16" />

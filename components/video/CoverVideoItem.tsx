@@ -18,7 +18,10 @@ export default function CoverVideoItem({ video }: Props) {
   const kind = coverMeta?.kind;
 
   return (
-    <Link href={`/video/${video.id}`} className="flex gap-16">
+    <Link
+      href={{ pathname: `/video/${video.id}`, query: { top: 'cover' } }}
+      className="flex gap-16"
+    >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
         className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100"

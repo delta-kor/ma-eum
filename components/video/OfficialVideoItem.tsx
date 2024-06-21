@@ -17,7 +17,10 @@ export default function OfficialVideoItem({ video }: Props) {
   const title = officialMeta?.title || video.title;
 
   return (
-    <Link href={`/video/${video.id}`} className="flex items-center gap-16">
+    <Link
+      href={{ pathname: `/video/${video.id}`, query: { top: 'official' } }}
+      className="flex items-center gap-16"
+    >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
         className="aspect-video h-64 shrink-0 rounded-8 bg-gray-100"

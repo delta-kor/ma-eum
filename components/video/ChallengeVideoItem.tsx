@@ -52,7 +52,10 @@ export default function ChallengeVideoItem({ video }: Props) {
   const members = !membersMeta || membersMeta.members.length >= 4 ? [] : membersMeta.members;
 
   return (
-    <Link href={`/video/${video.id}`} className="flex flex-col gap-10">
+    <Link
+      href={{ pathname: `/video/${video.id}`, query: { top: 'challenge' } }}
+      className="flex flex-col gap-10"
+    >
       <div className="flex items-center gap-4">
         <div className="text-16 font-600 text-gray-500">{participant || 'CSR'}</div>
         {isInboundChallenge && (

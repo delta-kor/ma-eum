@@ -3,6 +3,7 @@ import VideoHeader from '@/components/video/player/VideoHeader';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
 import CategoryMetaCard from '@/components/video/player/meta/CategoryMetaCard';
+import ChallengeMetaCard from '@/components/video/player/meta/ChallengeMetaCard';
 import CoverMetaCard from '@/components/video/player/meta/CoverMetaCard';
 import MusicMetaCard from '@/components/video/player/meta/MusicMetaCard';
 import OfficialMetaCard from '@/components/video/player/meta/OfficialMetaCard';
@@ -10,8 +11,10 @@ import PromotionMetaCard from '@/components/video/player/meta/PromotionMetaCard'
 import { ExtendedVideoWithCategory } from '@/services/video.service';
 import {
   CoverVideoMeta,
+  InboundChallengeVideoMeta,
   MusicVideoMeta,
   OfficialVideoMeta,
+  OutboundChallengeVideoMeta,
   PromotionVideoMeta,
   ShortsVideoMeta,
   getMetaFromVideo,
@@ -31,6 +34,14 @@ export default function VideoPlayerFrame({ video }: Props) {
   const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
+  const inboundChallengeMeta = getMetaFromVideo<InboundChallengeVideoMeta>(
+    video,
+    'inboundChallenge'
+  );
+  const outboundChallengeMeta = getMetaFromVideo<OutboundChallengeVideoMeta>(
+    video,
+    'outboundChallenge'
+  );
 
   const videoMeta = (
     <MotionWrapper layoutId="video-meta" className="flex flex-col gap-16">
@@ -62,6 +73,13 @@ export default function VideoPlayerFrame({ video }: Props) {
         ))}
         {promotionMeta && <PromotionMetaCard promotionMeta={promotionMeta} video={video} />}
         {musicMeta && officialMeta && <OfficialMetaCard musicMeta={musicMeta} video={video} />}
+        {(inboundChallengeMeta || outboundChallengeMeta) && (
+          <ChallengeMetaCard
+            inboundChallengeMeta={inboundChallengeMeta}
+            musicMeta={musicMeta}
+            outboundChallengeMeta={outboundChallengeMeta}
+          />
+        )}
       </div>
     </div>
   );

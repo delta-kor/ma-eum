@@ -16,7 +16,7 @@ export default function CoverMetaCard({ coverMeta }: Props) {
     <MetaWrapper topFor="cover">
       <Link
         data-kind={kind}
-        href={{ pathname: `/videos/cover`, query: { top: 'cover' } }}
+        href={`/videos/cover`}
         className="flex items-center gap-16 rounded-16 bg-gradient-primary px-24 py-16 data-[kind=dance]:bg-gradient-red"
       >
         <div className="flex min-w-0 grow flex-col gap-4">
