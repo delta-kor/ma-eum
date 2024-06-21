@@ -4,9 +4,9 @@ export function removeTime(date: Date): Date {
 
 export function getFutureRelativeTime(date: Date, today: Date, isAllDay: boolean): string {
   const diff = date.getTime() - today.getTime();
-  const diffMinutes = Math.round(diff / 1000 / 60);
-  const diffHours = Math.round(diffMinutes / 60);
-  const diffDays = Math.round(diffHours / 24);
+  const diffMinutes = Math.floor(diff / 1000 / 60);
+  const diffHours = Math.floor(diffMinutes / 60);
+  const diffDays = Math.floor(diffHours / 24);
 
   if (diffDays > 0 || isAllDay) {
     const diff = date.getTime() - removeTime(today).getTime();
