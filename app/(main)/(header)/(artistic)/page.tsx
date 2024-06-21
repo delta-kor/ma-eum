@@ -7,7 +7,7 @@ import LandingWidget from '@/components/landing/LandingWidget';
 import StrongMenu from '@/components/menu/StrongMenu';
 import { Suspense } from 'react';
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 export default function MainPage() {
   return (

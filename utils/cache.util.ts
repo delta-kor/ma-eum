@@ -1,5 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import NodeCache from 'node-cache';
+import { cache } from 'react';
 import 'server-only';
 import superjson from 'superjson';
 
@@ -25,12 +26,12 @@ export function ControlledCache(name: string, ttl: number) {
 }
 
 export function DataCache(name: string, ttl: number) {
-  if (process.env.VERCEL !== '1') return ControlledCache(name, 0);
+  if (process.env.NEXT_ENV_BYPASS_CACHE === '1') return ControlledCache(name, 0);
 
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
 
-    const cachedMethod = async function (serializedArgs: any) {
+    const cachedMethod = async (serializedArgs: string) => {
       const args = superjson.parse(serializedArgs) as any;
       const result = await originalMethod(...args);
       return superjson.stringify(result);
@@ -44,6 +45,6 @@ export function DataCache(name: string, ttl: number) {
       return superjson.parse(serializedResult);
     };
 
-    descriptor.value = method;
+    descriptor.value = cache(method);
   };
 }

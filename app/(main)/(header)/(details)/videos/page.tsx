@@ -5,7 +5,7 @@ import ProgramCardList from '@/components/card/ProgramCardList';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import IconMenu from '@/components/menu/IconMenu';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export default function VideosPage() {
   return (

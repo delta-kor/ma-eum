@@ -5,7 +5,7 @@ import { CategoryService } from '@/services/category.service';
 import { VideoService } from '@/services/video.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {
@@ -26,4 +26,9 @@ export default async function CategoryPage({ params: { categoryId } }: Props) {
       <CategoryVideoList category={category} preloadedVideos={videos} />
     </DetailsContent>
   );
+}
+
+export async function generateStaticParams() {
+  const categories = await CategoryService.getAll();
+  return categories.map(category => ({ categoryId: category.id }));
 }

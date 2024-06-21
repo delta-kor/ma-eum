@@ -9,7 +9,7 @@ import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {

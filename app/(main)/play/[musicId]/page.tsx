@@ -3,7 +3,7 @@ import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {
@@ -19,4 +19,9 @@ export default async function PlayPage({ params: { musicId } }: Props) {
   if (!album) return notFound();
 
   return <PlayFrame album={album} music={music} />;
+}
+
+export async function generateStaticParams() {
+  const musics = await MusicService.getAll();
+  return musics.map(music => ({ musicId: music.id }));
 }

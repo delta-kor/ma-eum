@@ -1,7 +1,7 @@
 import MixerMusicSelector from '@/components/mixer/MixerMusicSelector';
 import { MusicService } from '@/services/music.service';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export default async function MixerMainPage() {
   const musicsData = MusicService.getMixableMusics();

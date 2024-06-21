@@ -6,7 +6,7 @@ import { AlbumService } from '@/services/album.service';
 import { VideoService } from '@/services/video.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {

@@ -2,7 +2,7 @@ import VideoPlayerFrame from '@/components/video/player/VideoPlayerFrame';
 import { VideoService } from '@/services/video.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {

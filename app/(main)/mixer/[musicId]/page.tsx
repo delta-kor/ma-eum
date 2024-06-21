@@ -4,7 +4,7 @@ import { MusicService } from '@/services/music.service';
 import { SessionService } from '@/services/session.service';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 interface Props {
   params: {
@@ -31,4 +31,9 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
       <MixerPlayerFrame music={music} sessions={sessions} />
     </MixerControlProvider>
   );
+}
+
+export async function generateStaticParams() {
+  const musics = await MusicService.getAll();
+  return musics.map(music => ({ musicId: music.id }));
 }
