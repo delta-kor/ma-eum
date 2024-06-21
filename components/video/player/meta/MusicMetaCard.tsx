@@ -22,7 +22,7 @@ export default async function MusicMetaCard({ musicMeta }: Props) {
   const [gradientFrom, gradientTo] = album.colors;
 
   return (
-    <MetaWrapper topFor="music" alwaysTop>
+    <MetaWrapper topFor="music" alwaysTop size>
       <Link
         href={`/play/${music.id}`}
         style={{

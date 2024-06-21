@@ -11,7 +11,10 @@ export default function VideoBack() {
   }
 
   return (
-    <div onClick={handleClick} className="-mx-12 flex items-center self-stretch px-12 lg:hidden">
+    <div
+      onClick={handleClick}
+      className="-mx-12 flex cursor-pointer items-center self-stretch px-12 lg:hidden"
+    >
       <Icon type="left" className="w-16 text-gray-200" />
     </div>
   );

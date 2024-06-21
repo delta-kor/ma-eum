@@ -20,6 +20,12 @@ export default function VideoPlayer({ shorts, source, sourceId }: Props) {
       >
         <YouTube
           iframeClassName="size-full"
+          opts={{
+            playerVars: {
+              autoplay: 1,
+              iv_load_policy: 3,
+            },
+          }}
           videoId={sourceId}
           className="size-full group-data-[shorts=true]:max-h-[40vh] lg:!max-h-none"
         />

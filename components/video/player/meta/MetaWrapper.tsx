@@ -9,11 +9,12 @@ import { HTMLAttributes, ReactNode } from 'react';
 type PropsBase = HTMLAttributes<HTMLDivElement> & MotionProps;
 interface Props extends PropsBase {
   alwaysTop?: boolean;
+  size?: boolean;
   topFor: VideoMetaType;
   children: ReactNode;
 }
 
-export default function MetaWrapper({ alwaysTop, topFor, children, ...props }: Props) {
+export default function MetaWrapper({ alwaysTop, size, topFor, children, ...props }: Props) {
   const query = useQuery();
 
   const top = query.get('top');
@@ -22,7 +23,7 @@ export default function MetaWrapper({ alwaysTop, topFor, children, ...props }: P
   const layoutId = `meta-${topFor}-card`;
 
   return (
-    <MotionWrapper layoutId={layoutId} style={{ order }} {...props}>
+    <MotionWrapper layoutId={layoutId} size={size} style={{ order }} {...props}>
       {children}
     </MotionWrapper>
   );

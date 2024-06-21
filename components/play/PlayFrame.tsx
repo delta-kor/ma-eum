@@ -8,6 +8,7 @@ import PlayController from '@/components/play/PlayController';
 import useHistory from '@/hooks/history';
 import { ExtendedMusic } from '@/services/music.service';
 import { Album } from '@prisma/client';
+import { motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubeEvent, YouTubePlayer } from 'react-youtube';
 
@@ -74,8 +75,10 @@ export default function PlayFrame({ album, music }: Props) {
   }, [history]);
 
   return (
-    <div
+    <motion.div
+      layoutId="meta-music-card"
       style={{ background: `linear-gradient(180deg, ${gradientFrom} 0%, ${gradientTo} 140%)` }}
+      layout
       className="relative lg:px-24"
     >
       <Pc>
@@ -115,6 +118,6 @@ export default function PlayFrame({ album, music }: Props) {
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
