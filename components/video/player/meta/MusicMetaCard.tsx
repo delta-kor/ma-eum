@@ -1,6 +1,6 @@
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
-import MotionWrapper from '@/components/video/player/MotionWrapper';
+import MetaWrapper from '@/components/video/player/meta/MetaWrapper';
 import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
 import { ImageUrl } from '@/utils/url.util';
@@ -22,7 +22,7 @@ export default async function MusicMetaCard({ musicMeta }: Props) {
   const [gradientFrom, gradientTo] = album.colors;
 
   return (
-    <MotionWrapper layoutId="music-meta-card">
+    <MetaWrapper topFor="music" alwaysTop>
       <Link
         href={`/play/${music.id}`}
         style={{
@@ -41,6 +41,6 @@ export default async function MusicMetaCard({ musicMeta }: Props) {
         </div>
         <Icon type="music" className="w-20 shrink-0 text-white/30" />
       </Link>
-    </MotionWrapper>
+    </MetaWrapper>
   );
 }

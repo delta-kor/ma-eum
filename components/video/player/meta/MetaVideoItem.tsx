@@ -14,7 +14,7 @@ import Link from 'next/link';
 
 interface Props {
   active?: boolean;
-  metaType?: VideoMetaType;
+  metaType: VideoMetaType;
   video: ExtendedVideo;
 }
 
@@ -40,7 +40,13 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
   }
 
   return (
-    <Link href={`/video/${video.id}`} className="flex items-center gap-16">
+    <Link
+      href={{
+        pathname: `/video/${video.id}`,
+        query: { top: metaType },
+      }}
+      className="flex items-center gap-16"
+    >
       <div className="relative">
         <LazyImage
           src={ImageUrl.youtubeThumbnail(video.sourceId)}

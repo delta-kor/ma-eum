@@ -1,7 +1,7 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
-import MotionWrapper from '@/components/video/player/MotionWrapper';
 import MetaVideoItem from '@/components/video/player/meta/MetaVideoItem';
+import MetaWrapper from '@/components/video/player/meta/MetaWrapper';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
 import { EpisodeVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
 import { Category, CategoryOptions } from '@prisma/client';
@@ -25,8 +25,8 @@ export default async function CategoryMetaCard({ category, video }: Props) {
   const nextVideo = selectedVideos[selectedVideos.findIndex(item => item.id === video.id) + 1];
 
   return (
-    <MotionWrapper
-      layoutId="category-meta-card"
+    <MetaWrapper
+      topFor="episode"
       className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16"
     >
       <div className="flex items-center justify-between">
@@ -71,6 +71,6 @@ export default async function CategoryMetaCard({ category, video }: Props) {
       >
         <Translate>$view_all</Translate>
       </Link>
-    </MotionWrapper>
+    </MetaWrapper>
   );
 }

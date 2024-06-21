@@ -1,5 +1,5 @@
 import Icon from '@/components/core/Icon';
-import MotionWrapper from '@/components/video/player/MotionWrapper';
+import MetaWrapper from '@/components/video/player/meta/MetaWrapper';
 import { CoverVideoMeta } from '@/utils/video.util';
 import Link from 'next/link';
 
@@ -13,10 +13,10 @@ export default function CoverMetaCard({ coverMeta }: Props) {
   const kindText = kind === 'dance' ? 'Dance Cover' : 'Vocal Cover';
 
   return (
-    <MotionWrapper layoutId="cover-meta-card">
+    <MetaWrapper topFor="cover">
       <Link
         data-kind={kind}
-        href={`/videos/cover`}
+        href={{ pathname: `/videos/cover`, query: { top: 'cover' } }}
         className="flex items-center gap-16 rounded-16 bg-gradient-primary px-24 py-16 data-[kind=dance]:bg-gradient-red"
       >
         <div className="flex min-w-0 grow flex-col gap-4">
@@ -25,6 +25,6 @@ export default function CoverMetaCard({ coverMeta }: Props) {
         </div>
         <Icon type="music" className="w-20 shrink-0 text-white/30" />
       </Link>
-    </MotionWrapper>
+    </MetaWrapper>
   );
 }

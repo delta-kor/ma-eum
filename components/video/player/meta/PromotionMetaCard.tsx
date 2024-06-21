@@ -1,6 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
-import MotionWrapper from '@/components/video/player/MotionWrapper';
+import MetaWrapper from '@/components/video/player/meta/MetaWrapper';
 import { AlbumService } from '@/services/album.service';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
 import { PromotionVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
@@ -23,8 +23,8 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
   const selectedVideos = sliceVideosAround(promotionVideos, video, 1);
 
   return (
-    <MotionWrapper
-      layoutId="promotion-meta-card"
+    <MetaWrapper
+      topFor="promotion"
       className="flex flex-col gap-16 rounded-16 bg-gray-50 px-24 py-16"
     >
       <div className="flex items-center justify-between gap-16">
@@ -38,7 +38,10 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
         {selectedVideos.map(item => (
           <Link
             key={item.id}
-            href={`/video/${item.id}`}
+            href={{
+              pathname: `/video/${item.id}`,
+              query: { top: 'promotion' },
+            }}
             className="relative flex items-center gap-16"
           >
             <div
@@ -64,6 +67,6 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
       >
         <Translate>$view_all</Translate>
       </Link>
-    </MotionWrapper>
+    </MetaWrapper>
   );
 }
