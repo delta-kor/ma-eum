@@ -5,7 +5,6 @@ import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
 import StrongMenu from '@/components/menu/StrongMenu';
-import { Suspense } from 'react';
 
 export const revalidate = 60;
 
@@ -19,9 +18,7 @@ export default function MainPage() {
             <ScheduleFeedList />
           </Mobile>
           <Pc>
-            <Suspense fallback={<div />}>
-              <CalendarSuspense />
-            </Suspense>
+            <CalendarSuspense />
           </Pc>
           <div className="flex flex-col gap-16">
             <Pc className="self-start">
