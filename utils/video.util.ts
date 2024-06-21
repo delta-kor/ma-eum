@@ -147,8 +147,16 @@ export function sliceVideosAround(
   const currentIndex = videos.findIndex(item => item.id === video.id);
   if (currentIndex === -1) return [];
 
-  const start = Math.max(0, currentIndex - count);
-  const end = Math.min(videos.length, currentIndex + count + 1);
+  let start = Math.max(0, currentIndex - count);
+  let end = Math.min(videos.length, currentIndex + count + 1);
+
+  if (end - start < count * 2 + 1) {
+    if (start === 0) {
+      end = Math.min(videos.length, start + count * 2 + 1);
+    } else {
+      start = Math.max(0, end - count * 2 - 1);
+    }
+  }
 
   return videos.slice(start, end);
 }
