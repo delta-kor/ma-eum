@@ -1,6 +1,6 @@
 'use client';
 
-import MotionWrapper from '@/components/video/player/MotionWrapper';
+import MotionWrapper from '@/components/core/MotionWrapper';
 import useQuery from '@/hooks/query';
 import { VideoMetaType } from '@/utils/video.util';
 import { MotionProps } from 'framer-motion';

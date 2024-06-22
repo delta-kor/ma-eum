@@ -21,7 +21,7 @@ export default function MixerLyricsLine({ active, hide, lyric }: Props) {
       animate={{ opacity: hide ? 0 : opacity }}
       data-active={active}
       initial={{ opacity: hide ? 0 : opacity }}
-      layoutId={`${index}`}
+      layoutId={`mixer-lyrics-line-${index}`}
       className="truncate text-center text-18 font-500"
     >
       {content}

@@ -30,7 +30,11 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
       transition={transition}
       className="flex min-w-0 items-start gap-12"
     >
-      <motion.div layout="position" layoutId={`image_${index}`} transition={transition}>
+      <motion.div
+        layout="position"
+        layoutId={`lyrics-chat-bubble-${index}`}
+        transition={transition}
+      >
         <LazyImage
           src={ImageUrl.member(profileMember)}
           className="size-[42px] shrink-0 rounded-full border-3 border-white bg-gray-100"
@@ -39,7 +43,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
       <div className="flex min-w-0 flex-col items-start justify-end gap-6">
         <motion.div
           layout="position"
-          layoutId={`member_${index}`}
+          layoutId={`lyrics-member-${index}`}
           transition={transition}
           className="text-16 font-600 text-white"
         >
@@ -51,7 +55,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
           ))}
         </motion.div>
         <motion.div
-          layoutId={`bubble_${index}`}
+          layoutId={`lyrics-bubble-${index}`}
           transition={transition}
           layout
           className="flex flex-col items-start justify-end gap-10 rounded-8 bg-white p-16"
@@ -62,7 +66,7 @@ export default function LyricsChatBubble({ color, currentTime, index, lines, mem
                 key={lineIndex}
                 animate={{ scale: 1 }}
                 initial={{ scale: 0 }}
-                layoutId={`text_${index}_${lineIndex}`}
+                layoutId={`lyrics-text-${index}-${lineIndex}`}
                 transition={transition}
                 className="flex flex-wrap"
               >

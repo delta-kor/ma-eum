@@ -8,7 +8,7 @@ export default function Navigator() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 left-0 flex w-full items-center justify-center justify-evenly border-t-1 border-gray-100 bg-white px-24 py-2">
+    <div className="fixed bottom-0 left-0 flex w-full items-center justify-evenly border-t-1 border-gray-100 bg-white px-24 py-2">
       <Link
         data-active={pathname === '/'}
         href={'/'}

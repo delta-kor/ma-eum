@@ -26,19 +26,13 @@ export default function AlbumCard({ album, menu }: Props) {
         />
         <div className="flex flex-col gap-4">
           <div className="text-20 font-700 text-white">{album.title}</div>
-          <div className="text-16 font-500 text-white opacity-70">
+          <div className="text-16 font-500 text-white/70">
             {format(album.release, 'yy. MM. dd.')}
           </div>
         </div>
       </div>
       {menu && (
         <div className="relative -mx-8 flex h-32 items-stretch">
-          <Link
-            href={`/videos/albums/${album.id}/promotion`}
-            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white"
-          >
-            <Translate>$promotion</Translate>
-          </Link>
           {!album.isMini && (
             <>
               <Link
@@ -50,6 +44,12 @@ export default function AlbumCard({ album, menu }: Props) {
               <div className="absolute left-1/2 h-full w-2 -translate-x-1/2 bg-white opacity-30" />
             </>
           )}
+          <Link
+            href={`/videos/albums/${album.id}/promotion`}
+            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white"
+          >
+            <Translate>$promotion</Translate>
+          </Link>
         </div>
       )}
     </div>

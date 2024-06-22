@@ -1,4 +1,4 @@
-import MotionWrapper from '@/components/video/player/MotionWrapper';
+import MotionWrapper from '@/components/core/MotionWrapper';
 import VideoHeader from '@/components/video/player/VideoHeader';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
