@@ -3,7 +3,8 @@ import { cache } from 'react';
 import 'server-only';
 import superjson from 'superjson';
 
-export const StaticDataTtl = 60 * 5;
+export const StaticDataTtl = 60 * 60;
+export const DynamicDataTtl = 60;
 
 export function DataCache(name: string, ttl: number) {
   if (process.env.BYPASS_CACHE === '1') return () => {};

@@ -1,13 +1,25 @@
 'use client';
 
 export default function CmsCacheController() {
+  async function purgePath(path: string, type: 'layout' | 'page') {
+    const response = await fetch(`/api/cache/purge/path?path=${path}&type=${type}`);
+    if (!response.ok) console.error('Purge path failed', response.statusText);
+    return response.ok;
+  }
+
+  async function purgeTag(tag: string) {
+    const response = await fetch(`/api/cache/purge/tag?tag=${tag}`);
+    if (!response.ok) console.error('Purge tag failed', response.statusText);
+    return response.ok;
+  }
+
   async function handlePathPurge(formData: FormData) {
     const path = formData.get('path') as string;
     const type = (formData.get('type') as string) === 'on' ? 'layout' : 'page';
     if (!path) return false;
 
-    const response = await fetch(`/api/cache/purge/path?path=${path}&type=${type}`);
-    if (response.ok) alert('Purge success');
+    const success = await purgePath(path, type);
+    if (success) alert('Purge success');
     else alert('Purge failed');
   }
 
@@ -15,9 +27,31 @@ export default function CmsCacheController() {
     const tag = formData.get('tag') as string;
     if (!tag) return false;
 
-    const response = await fetch(`/api/cache/purge/tag?tag=${tag}`);
-    if (response.ok) alert('Purge success');
+    const success = await purgeTag(tag);
+    if (success) alert('Purge success');
     else alert('Purge failed');
+  }
+
+  async function handlePurgeFeeds() {
+    await purgeTag('feed');
+    await purgePath('/discover', 'page');
+    alert('Purge success');
+  }
+
+  async function handlePurgeVideos() {
+    await purgeTag('video');
+    await purgeTag('category');
+    await purgeTag('album');
+    await purgeTag('music');
+    await purgePath('/(main)/(header)/(details)/videos', 'layout');
+    alert('Purge success');
+  }
+
+  async function handlePurgeSchedule() {
+    await purgeTag('schedule');
+    await purgePath('/', 'page');
+    await purgePath('/schedules', 'page');
+    alert('Purge success');
   }
 
   return (
@@ -48,6 +82,26 @@ export default function CmsCacheController() {
           Purge
         </button>
       </form>
+      <div className="flex items-center gap-16 self-start">
+        <div
+          onClick={handlePurgeFeeds}
+          className="rounded-4 bg-gray-100 px-12 py-8 text-14 text-black"
+        >
+          Purge feeds
+        </div>
+        <div
+          onClick={handlePurgeVideos}
+          className="rounded-4 bg-gray-100 px-12 py-8 text-14 text-black"
+        >
+          Purge videos
+        </div>
+        <div
+          onClick={handlePurgeSchedule}
+          className="rounded-4 bg-gray-100 px-12 py-8 text-14 text-black"
+        >
+          Purge schedule
+        </div>
+      </div>
     </div>
   );
 }
