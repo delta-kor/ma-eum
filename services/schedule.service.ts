@@ -1,5 +1,5 @@
 import prisma from '@/prisma/prisma';
-import { cmsProcedure, router } from '@/trpc/router';
+import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import { Schedule, ScheduleType } from '@prisma/client';
@@ -29,7 +29,7 @@ const ScheduleRouter = router({
     });
   }),
 
-  getSchedules: cmsProcedure.input(z.object({ date: z.date() })).query(async opts => {
+  getSchedules: publicProcedure.input(z.object({ date: z.date() })).query(async opts => {
     return ScheduleService.getSchedules(opts.input.date);
   }),
 

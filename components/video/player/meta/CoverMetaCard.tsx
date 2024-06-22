@@ -13,7 +13,7 @@ export default function CoverMetaCard({ coverMeta }: Props) {
   const kindText = kind === 'dance' ? 'Dance Cover' : 'Vocal Cover';
 
   return (
-    <MetaWrapper topFor="cover">
+    <MetaWrapper topFor="cover" alwaysTop>
       <Link
         data-kind={kind}
         href={`/videos/cover`}

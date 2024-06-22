@@ -1,3 +1,4 @@
+import { setSecureKey } from '@/actions/secure.action';
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
@@ -34,6 +35,18 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
   }, [startDate, endDate]);
 
   const handleDateSelect = (date: DateTime) => {
+    if (date.toFormat('yyyy-MM-dd') === '2024-01-01') {
+      const key = prompt('Enter the key');
+      if (key) {
+        try {
+          setSecureKey(key).then(result => alert(result ? 'Success' : 'Failed'));
+        } catch (e) {
+          console.error(e);
+          alert(e);
+        }
+      }
+    }
+
     if (dateInfo[date.toFormat('yyyy-MM-dd')] === undefined) return false;
 
     setYear(date.year);
@@ -44,16 +57,16 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
 
   const handleMonthChange = (direction: 'next' | 'prev') => {
     if (direction === 'prev') {
-      if (month === 0) {
+      if (month <= 1) {
         setYear(year - 1);
-        setMonth(11);
+        setMonth(12);
       } else {
         setMonth(month - 1);
       }
     } else {
-      if (month === 11) {
+      if (month >= 12) {
         setYear(year + 1);
-        setMonth(0);
+        setMonth(1);
       } else {
         setMonth(month + 1);
       }
@@ -69,7 +82,7 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
         >
           <Icon type="left" className="w-16 text-gray-200" />
         </div>
-        <div className="w-[110px] text-center text-24 font-700 text-primary-500">
+        <div className="w-[110px] select-none text-center text-24 font-700 text-primary-500">
           {year}. {month}.
         </div>
         <div

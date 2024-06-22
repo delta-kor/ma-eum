@@ -2,11 +2,13 @@
 
 import prisma from '@/prisma/prisma';
 import createId from '@/utils/id.util';
+import Secure from '@/utils/secure.util';
 import { VividFeed } from '@/utils/vivid.util';
 import { FeedType } from '@prisma/client';
 import 'server-only';
 
 export async function importVividFeedsFromJson(data: VividFeed[]) {
+  Secure.authorize();
   if (!Array.isArray(data)) throw new Error('Invalid json data');
 
   for (const item of data) {

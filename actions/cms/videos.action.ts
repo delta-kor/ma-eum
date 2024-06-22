@@ -3,10 +3,12 @@
 import prisma from '@/prisma/prisma';
 import { MusicService } from '@/services/music.service';
 import createId from '@/utils/id.util';
+import Secure from '@/utils/secure.util';
 import { parseVoyageDate } from '@/utils/time.util';
 import { VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { VoyageSession, getCSRMemberByVoyageMember } from '@/utils/voyage.util';
 import { SessionType, VideoSource } from '@prisma/client';
+import 'server-only';
 
 interface YoutubeVideoJson {
   date: string;
@@ -15,6 +17,7 @@ interface YoutubeVideoJson {
 }
 
 export async function importYoutubeVideosFromJson(data: YoutubeVideoJson[]) {
+  Secure.authorize();
   if (!Array.isArray(data)) throw new Error('Invalid json data');
 
   for (const item of data) {
@@ -39,6 +42,7 @@ export async function importYoutubeVideosFromJson(data: YoutubeVideoJson[]) {
 }
 
 export async function importVoyageVideosFromJson(data: VoyageSession[], musicId: string) {
+  Secure.authorize();
   if (!Array.isArray(data)) throw new Error('Invalid json data');
 
   const music = await MusicService.getOne(musicId);
@@ -81,6 +85,8 @@ export async function importVoyageVideosFromJson(data: VoyageSession[], musicId:
 }
 
 export async function addCategoryToVideo(videoId: string, categoryId: string) {
+  Secure.authorize();
+
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 
@@ -94,6 +100,8 @@ export async function addCategoryToVideo(videoId: string, categoryId: string) {
 }
 
 export async function removeCategoryFromVideo(videoId: string, categoryId: string) {
+  Secure.authorize();
+
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 
@@ -107,6 +115,8 @@ export async function removeCategoryFromVideo(videoId: string, categoryId: strin
 }
 
 export async function addMetaToVideo(videoId: string, meta: VideoMeta, type: VideoMetaType) {
+  Secure.authorize();
+
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 
@@ -124,6 +134,8 @@ export async function addMetaToVideo(videoId: string, meta: VideoMeta, type: Vid
 }
 
 export async function removeMetaFromVideo(videoId: string, type: VideoMetaType) {
+  Secure.authorize();
+
   const video = await prisma.video.findFirst({ where: { id: videoId } });
   if (!video) throw new Error('Video not found');
 

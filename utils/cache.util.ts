@@ -26,7 +26,7 @@ export function ControlledCache(name: string, ttl: number) {
 }
 
 export function DataCache(name: string, ttl: number) {
-  if (process.env.NEXT_PUBLIC_BYPASS_CACHE === '1') return ControlledCache(name, 0);
+  if (process.env.BYPASS_CACHE === '1') return ControlledCache(name, 0);
 
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;

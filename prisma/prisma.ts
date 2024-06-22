@@ -5,8 +5,7 @@ const prismaClientSingleton = () => {
   return new PrismaClient().$extends({
     query: {
       $allOperations: ({ args, model, operation, query }) => {
-        if (process.env.NEXT_PUBLIC_LOG_PRISMA === '1')
-          console.log(`Query: ${model}.${operation}`, args);
+        if (process.env.LOG_PRISMA === '1') console.log(`Query: ${model}.${operation}`, args);
         return query(args);
       },
     },
