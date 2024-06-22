@@ -16,13 +16,13 @@ export default function AlbumCardLarge({ album, horizontal }: Props) {
   return (
     <MotionWrapper
       data-horizontal={!!horizontal}
-      layoutId="album-card-wrapper"
+      layoutId={`album-card-wrapper-${album.id}`}
       style={{ background: `linear-gradient(101deg, ${gradientFrom} 7.15%, ${gradientTo} 96.7%)` }}
       size
       className="group flex flex-col gap-16 rounded-16 p-16 data-[horizontal=false]:lg:sticky data-[horizontal=false]:lg:top-artistic-header-height-lg"
     >
       <div className="flex flex-col items-center gap-12 group-data-[horizontal=true]:flex-row">
-        <MotionWrapper layoutId="album-card-image" size>
+        <MotionWrapper layoutId={`album-card-image-${album.id}`} size>
           <LazyImage
             alt={album.title}
             src={ImageUrl.album(album.id)}
@@ -31,13 +31,13 @@ export default function AlbumCardLarge({ album, horizontal }: Props) {
         </MotionWrapper>
         <div className="flex flex-col items-center gap-6 group-data-[horizontal=true]:items-stretch">
           <MotionWrapper
-            layoutId="album-card-title"
+            layoutId={`album-card-title-${album.id}`}
             className="text-24 font-700 text-white group-data-[horizontal=true]:text-20"
           >
             {album.title}
           </MotionWrapper>
           <MotionWrapper
-            layoutId="album-card-description"
+            layoutId={`album-card-description-${album.id}`}
             className="text-20 font-500 text-white/70 group-data-[horizontal=true]:text-16"
           >
             {album.description}
@@ -45,7 +45,7 @@ export default function AlbumCardLarge({ album, horizontal }: Props) {
         </div>
       </div>
       <MotionWrapper
-        layoutId="album-card-menu"
+        layoutId={`album-card-menu-${album.id}`}
         size
         className="relative -mx-8 flex h-32 items-stretch"
       >
