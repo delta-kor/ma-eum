@@ -15,7 +15,7 @@ export default async function CmsFeedsPage() {
         fields: [
           { key: 'type', label: 'Type', style: 'text-16 code', type: 'string' },
           { key: 'title', label: 'Title', style: 'text-16 line-clamp-3 w-[300px]', type: 'string' },
-          { key: 'date', label: 'Date', style: 'text-16 code text-primary-500', type: 'date' },
+          { key: 'date', label: 'Date', style: 'text-16 code text-primary-500', type: 'datetime' },
           { key: 'members', label: 'Members', style: 'text-16 code italic', type: 'strings' },
         ],
         items: feeds,

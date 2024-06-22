@@ -23,6 +23,7 @@ export function DataCache(name: string, ttl: number) {
     const method = async function (...args: any[]) {
       const argsKey = superjson.stringify(args);
       const serializedResult = await unstable_cache(cachedMethod, [name], {
+        revalidate: ttl,
         tags,
       })(argsKey);
       return superjson.parse(serializedResult);

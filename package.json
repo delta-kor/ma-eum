@@ -20,7 +20,6 @@
     "framer-motion": "^11.2.10",
     "luxon": "^3.4.4",
     "next": "14.2.3",
-    "node-cache": "^5.1.2",
     "path-to-regexp": "^6.2.2",
     "react": "^18",
     "react-dom": "^18",
