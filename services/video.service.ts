@@ -170,12 +170,12 @@ export class VideoService {
   @DataCache('video.getLiveVideos', StaticDataTtl)
   public static async getLiveVideos(): Promise<ExtendedVideo[]> {
     const videos = await prisma.video.findMany({
-      include: { ...PrismaUtil.extendVideo('live') },
+      include: { ...PrismaUtil.extendVideo('live', 'episode') },
       orderBy: PrismaUtil.sortVideo(),
       where: {
         metaInfo: {
           live: {
-            isNot: null,
+            disable: false,
           },
         },
       },
