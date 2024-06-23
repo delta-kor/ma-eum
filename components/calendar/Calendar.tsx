@@ -3,6 +3,7 @@ import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
 import { DateTime } from 'luxon';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props) {
+  const router = useRouter();
+
   const [year, setYear] = useState<number>(selectedDate.year);
   const [month, setMonth] = useState<number>(selectedDate.month);
 
@@ -37,14 +40,21 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
   const handleDateSelect = (date: DateTime) => {
     if (date.toFormat('yyyy-MM-dd') === '2024-01-01') {
       const key = prompt('Enter the key');
-      if (key) {
-        try {
-          setSecureKey(key).then(result => alert(result ? 'Success' : 'Failed'));
-        } catch (e) {
-          console.error(e);
-          alert(e);
-        }
+      if (!key) return false;
+
+      try {
+        setSecureKey(key).then(result => alert(result ? 'Success' : 'Failed'));
+      } catch (e) {
+        console.error(e);
+        alert(e);
       }
+
+      return true;
+    }
+
+    if (date.toFormat('yyyy-MM-dd') === '2024-01-02') {
+      router.push('/cms');
+      return true;
     }
 
     if (dateInfo[date.toFormat('yyyy-MM-dd')] === undefined) return false;

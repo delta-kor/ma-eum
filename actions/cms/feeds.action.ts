@@ -30,20 +30,8 @@ export async function importVividFeedsFromJson(data: VividFeed[]) {
         throw new Error('Invalid feed type');
     }
 
-    const existingFeed = await prisma.feed.findFirst({
-      where: { sourceId: item.id, type: feedType },
-    });
-    if (existingFeed) {
-      await prisma.feed.update({
-        data: { media: item.media, members: item.members, title: item.title },
-        where: { id: existingFeed.id },
-      });
-
-      continue;
-    }
-
-    await prisma.feed.create({
-      data: {
+    await prisma.feed.upsert({
+      create: {
         date: item.date,
         id: createId(6),
         media: item.media,
@@ -51,6 +39,17 @@ export async function importVividFeedsFromJson(data: VividFeed[]) {
         sourceId: item.id,
         title: item.title,
         type: feedType,
+      },
+      update: {
+        media: item.media,
+        members: item.members,
+        title: item.title,
+      },
+      where: {
+        uniqueFeedId: {
+          sourceId: item.id,
+          type: feedType,
+        },
       },
     });
   }

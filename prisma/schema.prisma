@@ -126,6 +126,8 @@ model Feed {
   date     DateTime
   members  String[]
   media    Json[]
+
+  @@unique([sourceId, type], name: "uniqueFeedId")
 }
 
 model Video {
