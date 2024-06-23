@@ -44,6 +44,7 @@ export default function CmsCacheController() {
     await purgeTag('album');
     await purgeTag('music');
     await purgePath('/(main)/(header)/(details)/videos', 'layout');
+    await purgePath('/video/[videoId]', 'page');
     alert('Purge success');
   }
 
