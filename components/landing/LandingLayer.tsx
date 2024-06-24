@@ -17,7 +17,7 @@ export default function LandingLayer() {
     <div className="relative">
       <div
         style={{ marginTop: `min(calc(-100vw * (327 / 1536) + 64px), 0px)` }}
-        className="relative aspect-[1536/1279] w-full overflow-hidden sm:!mt-0 sm:aspect-auto sm:h-[320px] md:h-[430px] lg:h-[500px] xl:h-[540px]"
+        className="relative aspect-[1536/1279] w-full overflow-hidden bg-gradient-to-b from-[#20A1EC_30%] sm:!mt-0 sm:aspect-auto sm:h-[320px] md:h-[430px] lg:h-[500px] xl:h-[540px]"
       >
         <picture>
           <source media="(min-width: 1024px)" srcSet={pc} /> {/* lg */}
