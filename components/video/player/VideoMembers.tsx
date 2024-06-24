@@ -12,14 +12,17 @@ export default function VideoMembers({ membersMeta }: Props) {
   const members = membersMeta.members;
 
   return (
-    <div className="flex items-center gap-8">
+    <div className="flex flex-wrap items-center gap-8">
       {members.map(member => (
         <div
           key={member}
           className="flex items-center gap-8 rounded-full bg-gray-100 py-6 pl-6 pr-14"
         >
-          <LazyImage src={ImageUrl.member(member)} className="size-28 rounded-full bg-gray-200" />
-          <div className="text-14 font-700 text-black">
+          <LazyImage
+            src={ImageUrl.member(member)}
+            className="size-28 shrink-0 rounded-full bg-gray-200"
+          />
+          <div className="shrink-0 text-14 font-700 text-black">
             <Translate>{getMemberName(member)}</Translate>
           </div>
         </div>
