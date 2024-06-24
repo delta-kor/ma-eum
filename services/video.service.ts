@@ -104,7 +104,7 @@ export class VideoService {
   ): Promise<ExtendedVideo[]> {
     const videos = await prisma.video.findMany({
       include: { ...PrismaUtil.extendVideo('episode') },
-      orderBy: [{ metaInfo: { episode: { episode: 'asc' } } }, ...PrismaUtil.sortVideo()],
+      orderBy: [{ date: 'asc' }, { id: 'asc' }],
       where: {
         categories: { some: { id: categoryId } },
         metaInfo: {
@@ -202,6 +202,16 @@ export class VideoService {
     });
 
     return video as ExtendedVideo[];
+  }
+
+  @DataCache('video.getOne', StaticDataTtl)
+  public static async getOne(videoId: string): Promise<ExtendedVideo | null> {
+    const video = await prisma.video.findUnique({
+      include: { ...PrismaUtil.extendVideoAll() },
+      where: { id: videoId },
+    });
+
+    return (video as ExtendedVideo) || null;
   }
 
   @DataCache('video.getOneWithCategory', StaticDataTtl)

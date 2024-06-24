@@ -6,6 +6,7 @@ import VideoShare from '@/components/video/player/VideoShare';
 import CategoryMetaCard from '@/components/video/player/meta/CategoryMetaCard';
 import ChallengeMetaCard from '@/components/video/player/meta/ChallengeMetaCard';
 import CoverMetaCard from '@/components/video/player/meta/CoverMetaCard';
+import LinkMetaCard from '@/components/video/player/meta/LinkMetaCard';
 import MusicMetaCard from '@/components/video/player/meta/MusicMetaCard';
 import OfficialMetaCard from '@/components/video/player/meta/OfficialMetaCard';
 import PromotionMetaCard from '@/components/video/player/meta/PromotionMetaCard';
@@ -13,6 +14,7 @@ import { ExtendedVideoWithCategory } from '@/services/video.service';
 import {
   CoverVideoMeta,
   InboundChallengeVideoMeta,
+  LinkVideoMeta,
   MembersVideoMeta,
   MusicVideoMeta,
   OfficialVideoMeta,
@@ -36,6 +38,7 @@ export default function VideoPlayerFrame({ video }: Props) {
 
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
   const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
+  const linkMeta = getMetaFromVideo<LinkVideoMeta>(video, 'link');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
   const officialMeta = getMetaFromVideo<OfficialVideoMeta>(video, 'official');
   const inboundChallengeMeta = getMetaFromVideo<InboundChallengeVideoMeta>(
@@ -73,6 +76,7 @@ export default function VideoPlayerFrame({ video }: Props) {
         {isShorts && videoMeta}
         {musicMeta && <MusicMetaCard musicMeta={musicMeta} />}
         {coverMeta && <CoverMetaCard coverMeta={coverMeta} />}
+        {linkMeta && <LinkMetaCard linkMeta={linkMeta} />}
         {categories.map(category => (
           <CategoryMetaCard key={category.id} category={category} video={video} />
         ))}

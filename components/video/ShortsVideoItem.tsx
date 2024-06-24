@@ -3,6 +3,7 @@ import Pc from '@/components/core/responsive/Pc';
 import { ImageUrl } from '@/utils/url.util';
 import { Video, VideoSource } from '@prisma/client';
 import { format } from 'date-fns';
+import Link from 'next/link';
 
 interface Props {
   video: Video;
@@ -12,7 +13,7 @@ export default function ShortsVideoItem({ video }: Props) {
   if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
 
   return (
-    <div className="relative lg:flex lg:flex-col lg:gap-8">
+    <Link href={`/video/${video.id}`} className="relative lg:flex lg:flex-col lg:gap-8">
       <LazyImage
         src={ImageUrl.youtubeShortsThumbnail(video.sourceId)}
         className="aspect-shorts bg-gray-100 lg:rounded-16"
@@ -26,7 +27,7 @@ export default function ShortsVideoItem({ video }: Props) {
           <div className="text-14 font-400 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
         </Pc>
       </div>
-    </div>
+    </Link>
   );
 }
 

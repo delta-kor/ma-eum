@@ -18,7 +18,7 @@ export default function MetaWrapper({ alwaysTop, size, topFor, children, ...prop
   const query = useQuery();
 
   const top = query.get('top');
-  const order = alwaysTop ? -1 : top === topFor ? 0 : 1;
+  const order = alwaysTop ? 1 : top === topFor ? 2 : 3;
 
   const layoutId = `meta-${topFor}-card`;
 
