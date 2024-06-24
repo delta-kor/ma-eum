@@ -17,13 +17,7 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
   const sessionsData = SessionService.getSessionsByMusicId(musicId);
   const [music, sessions] = await Promise.all([musicData, sessionsData]);
 
-  if (
-    !music ||
-    !music.albumId ||
-    !music.playData?.lyrics ||
-    !music.isMixable ||
-    sessions.length === 0
-  )
+  if (!music || !music.albumId || !music.playData?.lyrics || sessions.length === 0)
     return notFound();
 
   return (

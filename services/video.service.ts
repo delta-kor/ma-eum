@@ -102,18 +102,21 @@ export class VideoService {
     categoryId: string,
     member: Member | null
   ): Promise<ExtendedVideo[]> {
-    const videos = await prisma.video.findMany({
+    const videos = (await prisma.video.findMany({
       include: { ...PrismaUtil.extendVideo('episode') },
-      orderBy: [{ date: 'asc' }, { id: 'asc' }],
+      orderBy: PrismaUtil.sortVideo(),
       where: {
         categories: { some: { id: categoryId } },
         metaInfo: {
           ...PrismaUtil.filterMember(member),
         },
       },
-    });
+    })) as ExtendedVideo[];
 
-    return videos as ExtendedVideo[];
+    if (videos.every(video => video.metaInfo?.episode?.episode !== null))
+      videos.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    return videos;
   }
 
   @DataCache('video.getChallengeVideos', StaticDataTtl)
