@@ -1,5 +1,6 @@
 import MotionWrapper from '@/components/core/MotionWrapper';
 import VideoHeader from '@/components/video/player/VideoHeader';
+import VideoMembers from '@/components/video/player/VideoMembers';
 import VideoPlayer, { VideoPlayerPlaceholder } from '@/components/video/player/VideoPlayer';
 import VideoShare from '@/components/video/player/VideoShare';
 import CategoryMetaCard from '@/components/video/player/meta/CategoryMetaCard';
@@ -12,6 +13,7 @@ import { ExtendedVideoWithCategory } from '@/services/video.service';
 import {
   CoverVideoMeta,
   InboundChallengeVideoMeta,
+  MembersVideoMeta,
   MusicVideoMeta,
   OfficialVideoMeta,
   OutboundChallengeVideoMeta,
@@ -30,6 +32,8 @@ export default function VideoPlayerFrame({ video }: Props) {
   const shortsMeta = getMetaFromVideo<ShortsVideoMeta>(video, 'shorts');
   const isShorts = !!shortsMeta;
 
+  const membersMeta = getMetaFromVideo<MembersVideoMeta>(video, 'members');
+
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
   const coverMeta = getMetaFromVideo<CoverVideoMeta>(video, 'cover');
   const promotionMeta = getMetaFromVideo<PromotionVideoMeta>(video, 'promotion');
@@ -46,6 +50,7 @@ export default function VideoPlayerFrame({ video }: Props) {
   const videoMeta = (
     <MotionWrapper layoutId="video-meta" className="flex flex-col gap-16">
       <VideoHeader video={video} />
+      {membersMeta && <VideoMembers membersMeta={membersMeta} />}
       <VideoShare source={video.source} sourceId={video.sourceId} title={video.title} />
     </MotionWrapper>
   );
