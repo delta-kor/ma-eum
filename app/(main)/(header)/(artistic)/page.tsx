@@ -4,7 +4,6 @@ import Mobile from '@/components/core/responsive/Mobile';
 import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
-import IconMenu from '@/components/menu/IconMenu';
 import StrongMenu from '@/components/menu/StrongMenu';
 
 export const revalidate = 60;
@@ -26,7 +25,6 @@ export default function MainPage() {
               <LandingWidget />
             </Pc>
             <StrongMenu />
-            <IconMenu />
           </div>
         </div>
       </div>
