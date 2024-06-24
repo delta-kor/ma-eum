@@ -63,16 +63,16 @@ export async function importVoyageVideosFromJson(data: VoyageSession[], musicId:
           create: session.videos.map(video => {
             const member = getCSRMemberByVoyageMember(video.member);
 
-            const meta: VideoMeta[] = [];
-            if (member) meta.push({ members: [member], type: 'members' });
-            meta.push({ sessionId, tag: video.tag, time: video.time, type: 'stage' });
-            meta.push({ musicId, type: 'music' });
-
             return {
               date,
               id: createId(6),
-              meta,
-              metaInfo: { create: {} },
+              metaInfo: {
+                create: {
+                  members: member ? { create: { members: [member] } } : {},
+                  music: { create: { musicId } },
+                  stage: { create: { sessionId, tag: video.tag, time: video.time } },
+                },
+              },
               source: VideoSource.YOUTUBE,
               sourceId: video.youtubeId,
               title: video.title,

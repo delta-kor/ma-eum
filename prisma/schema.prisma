@@ -132,6 +132,7 @@ model Feed {
 
 model Video {
   id         String      @id
+  index      Int         @default(autoincrement())
   title      String
   source     VideoSource
   sourceId   String
@@ -145,7 +146,7 @@ model Video {
 }
 
 model MetaInfo {
-  video             Video                  @relation(fields: [videoId], references: [id])
+  video             Video                  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId           String                 @id @unique
   shorts            ShortsMeta?
   link              LinkMeta?

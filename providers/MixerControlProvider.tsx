@@ -95,9 +95,9 @@ export default function MixerControlProvider({ music, sessions, children }: Prop
       const activeLines = lines.filter(
         line =>
           // @ts-ignore
-          line.chips.find(chip => chip.start < relativeTime - OffsetDelay) &&
+          line.chips.find(chip => chip.start < relativeTime + OffsetDelay) &&
           // @ts-ignore
-          line.chips.findLast(chip => chip.end > relativeTime - OffsetDelay)
+          line.chips.findLast(chip => chip.end > relativeTime + OffsetDelay)
       );
 
       const activeMembersSet = new Set<Member>();

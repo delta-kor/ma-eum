@@ -4,6 +4,7 @@ import Mobile from '@/components/core/responsive/Mobile';
 import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
+import IconMenu from '@/components/menu/IconMenu';
 import StrongMenu from '@/components/menu/StrongMenu';
 
 export const revalidate = 60;
@@ -20,11 +21,12 @@ export default function MainPage() {
           <Pc>
             <CalendarSuspense />
           </Pc>
-          <div className="flex flex-col gap-16">
-            <Pc className="self-start">
+          <div className="flex flex-col gap-28">
+            <Pc className="-mb-12 self-start">
               <LandingWidget />
             </Pc>
             <StrongMenu />
+            <IconMenu />
           </div>
         </div>
       </div>
