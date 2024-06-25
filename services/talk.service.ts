@@ -2,12 +2,22 @@ import prisma from '@/prisma/prisma';
 import { publicProcedure, router, talkProcedure } from '@/trpc/router';
 import Auth from '@/utils/auth.util';
 import createId from '@/utils/id.util';
+import { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
+import { PrismaUtil } from '@/utils/prisma.util';
 import { TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
 export interface TalkArticlePayload {
   content: string;
+  title: string;
+}
+
+export interface TalkArticleMetadata {
+  content: string;
+  date: Date;
+  id: string;
+  nickname: string;
   title: string;
 }
 
@@ -40,6 +50,15 @@ const TalkRouter = router({
 
     return true;
   }),
+
+  getArticlesMetadata: publicProcedure
+    .input(z.object({ cursor: z.string().nullish() }))
+    .query(opts => {
+      return TalkService.getArticlesMetadata({
+        cursor: opts.input.cursor || null,
+        limit: 10,
+      });
+    }),
 });
 
 export class TalkService {
@@ -71,5 +90,35 @@ export class TalkService {
     });
 
     return user;
+  }
+
+  public static async getArticlesMetadata(
+    pagination: PaginationOptions
+  ): Promise<PaginationResult<TalkArticleMetadata>> {
+    const articles = await prisma.talkArticle.findMany({
+      ...PrismaUtil.paginate(pagination),
+      orderBy: [{ date: 'desc' }],
+      select: {
+        content: true,
+        date: true,
+        id: true,
+        title: true,
+        user: {
+          select: {
+            nickname: true,
+          },
+        },
+      },
+    });
+
+    const metadata = articles.map(article => ({
+      content: article.content,
+      date: article.date,
+      id: article.id,
+      nickname: article.user.nickname,
+      title: article.title,
+    }));
+
+    return PrismaUtil.buildPagination(metadata);
   }
 }
