@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import 'server-only';
 
 export default class Auth {
-  private static cookieName = 'maeum_secure';
+  private static cookieName = 'maeum_auth';
   private static readonly key = process.env.AUTH_SECURE_KEY as string;
 
   public static createToken(user: TalkUser): string {
@@ -28,15 +28,19 @@ export default class Auth {
   }
 
   public static async verifyToken(token: string): Promise<TalkUser | null> {
-    const decoded = jwt.verify(token, Auth.key) as { userId?: string };
-    const userId = decoded.userId;
-    if (!userId) return null;
-
-    const user = await prisma.talkUser.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-    return user || null;
+    try {
+      const decoded = jwt.verify(token, Auth.key) as { userId?: string };
+      const userId = decoded.userId;
+      if (!userId) return null;
+      const user = await prisma.talkUser.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      return user || null;
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
   }
 }

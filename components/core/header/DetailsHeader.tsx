@@ -40,6 +40,9 @@ export default function DetailsHeader() {
     case '/schedules':
       title = 'Calendar';
       break;
+    case '/talk/write':
+      title = 'Write';
+      break;
     default:
       title = content || '';
   }
