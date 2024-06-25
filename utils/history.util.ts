@@ -25,6 +25,11 @@ export const Pages: PageInfo[] = [
     base: true,
     path: '/mixer',
   },
+  {
+    back: '/',
+    base: true,
+    path: '/talk',
+  },
 
   {
     back: '/',
@@ -86,6 +91,11 @@ export const Pages: PageInfo[] = [
   {
     back: '/mixer',
     path: '/mixer/:id',
+  },
+
+  {
+    back: '/talk',
+    path: '/talk/:id',
   },
 ];
 

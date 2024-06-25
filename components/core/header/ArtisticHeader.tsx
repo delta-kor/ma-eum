@@ -27,7 +27,7 @@ export default function ArtisticHeader() {
     router.push(path);
   }
 
-  const isDisplayedOnMobile = ['/', '/discover', '/mixer'].includes(pathname);
+  const isDisplayedOnMobile = ['/', '/discover', '/mixer', '/talk'].includes(pathname);
   const isExpanded = pathname.startsWith('/video/');
 
   return (
@@ -59,6 +59,13 @@ export default function ArtisticHeader() {
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
                 Discover
+              </div>
+              <div
+                data-active={pathname === '/talk'}
+                onClick={() => handlePush('/talk')}
+                className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
+              >
+                Talk
               </div>
               <div
                 data-active={pathname === '/mixer'}

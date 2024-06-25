@@ -26,6 +26,14 @@ export default function Navigator() {
         <div className="text-12 font-600">Discover</div>
       </Link>
       <Link
+        data-active={pathname === '/talk'}
+        href={'/talk'}
+        className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
+      >
+        <Icon type="talk" className="h-20" />
+        <div className="text-12 font-600">Talk</div>
+      </Link>
+      <Link
         data-active={pathname === '/mixer'}
         href={'/mixer'}
         className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
