@@ -249,3 +249,27 @@ model LiveMeta {
   metaInfoId String   @id
   disable    Boolean
 }
+
+enum TalkUserRole {
+  ADMIN
+  USER
+}
+
+model TalkUser {
+  id        String       @id
+  nickname  String
+  role      TalkUserRole
+  createdAt DateTime     @default(now())
+
+  articles TalkArticle[]
+}
+
+model TalkArticle {
+  id      String   @id
+  title   String
+  content String
+  date    DateTime @default(now())
+
+  user   TalkUser @relation(fields: [userId], references: [id])
+  userId String
+}
