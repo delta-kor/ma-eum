@@ -23,6 +23,7 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
   const history = useHistory();
 
   async function handleSubmit(formData: FormData) {
+    if (isLoading) return;
     setError(null);
 
     const nickname = formData.get('nickname');
@@ -59,6 +60,8 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
     }
   }
 
+  const isLoading = createUser.isPending || createUser.isSuccess;
+
   return (
     <form action={handleSubmit} className="flex flex-col gap-24">
       <div className="flex flex-col gap-24">
@@ -92,10 +95,10 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
         >
           취소
         </button>
-        {createUser.isPending || createUser.isSuccess ? (
+        {isLoading ? (
           <div className="flex items-center gap-8 self-start text-16 font-500 text-gray-500">
-            <Icon type="spinner" className="w-16 animate-spin" />
-            <span>잠시만 기다려 주세요...</span>
+            <Icon type="spinner" className="w-16 shrink-0 animate-spin" />
+            <span>확인</span>
           </div>
         ) : (
           <button type="submit" className="-m-16 self-start p-16 text-16 font-700 text-primary-500">

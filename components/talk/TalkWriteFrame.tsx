@@ -1,8 +1,10 @@
 'use client';
 
+import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
 interface Props {
@@ -10,8 +12,11 @@ interface Props {
 }
 
 export default function TalkWriteFrame({ nickname }: Props) {
+  const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const createArticle = trpc.talk.createArticle.useMutation();
+
+  const router = useRouter();
 
   function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
     const element = e.target;
@@ -20,6 +25,7 @@ export default function TalkWriteFrame({ nickname }: Props) {
   }
 
   function handleSubmit(formData: FormData) {
+    if (isLoading) return;
     setError(null);
 
     const title = formData.get('title');
@@ -36,13 +42,25 @@ export default function TalkWriteFrame({ nickname }: Props) {
         onError: error => {
           setError(error.message);
         },
-        onSuccess: articleId => {},
+        onSuccess: articleId => {
+          router.replace(`/talk/${articleId}`);
+        },
       }
     );
   }
 
+  function handleChange(e: ChangeEvent<HTMLFormElement>) {
+    const formData = new FormData(e.currentTarget);
+    const title = formData.get('title') as string;
+    const content = formData.get('content') as string;
+
+    setIsActive(!!title && !!content);
+  }
+
+  const isLoading = createArticle.isPending || createArticle.isSuccess;
+
   return (
-    <form action={handleSubmit} className="flex flex-col gap-16">
+    <form action={handleSubmit} onChange={handleChange} className="flex flex-col gap-16">
       <div className="flex items-center gap-16">
         <div className="flex min-w-0 grow flex-col gap-8">
           <input
@@ -59,12 +77,16 @@ export default function TalkWriteFrame({ nickname }: Props) {
           <div className="text-18 font-600 text-gray-200">{nickname}</div>
         </div>
         <button
+          data-active={isActive}
           type="submit"
-          className="flex cursor-pointer items-center gap-8 rounded-8 bg-gradient-primary px-16 py-8"
+          className="group flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary"
         >
-          <div className="text-16 font-600 text-white">
+          <div className="text-16 font-600 text-gray-200 group-data-[active=true]:text-white">
             <Translate>$article_post</Translate>
           </div>
+          {isLoading && (
+            <Icon type="spinner" className="size-16 shrink-0 animate-spin text-white" />
+          )}
         </button>
       </div>
       {error && (
