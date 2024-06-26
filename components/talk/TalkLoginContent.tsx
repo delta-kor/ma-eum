@@ -1,18 +1,26 @@
 import { revalidate } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import useHistory from '@/hooks/history';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { ModalResolver } from '@/providers/ModalProvider';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function TalkLoginContent() {
+interface Props {
+  type: 'modal' | 'page';
+  onResolve?: ModalResolver;
+}
+
+export default function TalkLoginContent({ type, onResolve }: Props) {
   const [error, setError] = useState<null | string>(null);
   const createUser = trpc.talk.createUser.useMutation();
 
   const query = useQuery();
   const router = useRouter();
+  const history = useHistory();
 
   async function handleSubmit(formData: FormData) {
     setError(null);
@@ -30,12 +38,25 @@ export default function TalkLoginContent() {
           setError(error.message);
         },
         onSuccess: async () => {
-          const next = query.get('next') || '/talk';
-          await revalidate('/talk/write');
-          router.replace(next);
+          if (type === 'page') {
+            const next = query.get('next') || '/talk';
+            await revalidate('/talk/write');
+            router.replace(next);
+          } else {
+            await revalidate('/talk/write');
+            onResolve?.({ type: 'confirm' });
+          }
         },
       }
     );
+  }
+
+  function handleCancel() {
+    if (type === 'page') {
+      history.back();
+    } else {
+      onResolve?.({ type: 'cancel' });
+    }
   }
 
   return (
@@ -63,16 +84,28 @@ export default function TalkLoginContent() {
             <Translate>{error}</Translate>
           </div>
         )}
-        {createUser.isPending || createUser.isSuccess ? (
-          <div className="flex items-center gap-8 self-start text-16 font-700 text-gray-500">
-            <Icon type="spinner" className="w-16 animate-spin" />
-            <span>잠시만 기다려 주세요...</span>
-          </div>
-        ) : (
-          <button type="submit" className="-m-16 self-start p-16 text-16 font-700 text-primary-500">
-            확인
+        <div className="flex items-center justify-end gap-32">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="-m-16 self-start p-16 text-16 font-500 text-gray-500"
+          >
+            취소
           </button>
-        )}
+          {createUser.isPending || createUser.isSuccess ? (
+            <div className="flex items-center gap-8 self-start text-16 font-700 text-gray-500">
+              <Icon type="spinner" className="w-16 animate-spin" />
+              <span>잠시만 기다려 주세요...</span>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="-m-16 self-start p-16 text-16 font-700 text-primary-500"
+            >
+              확인
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

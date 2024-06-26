@@ -1,27 +1,36 @@
 'use client';
 
-import { ReactNode, createContext, useState } from 'react';
+import { ReactNode, createContext, useRef, useState } from 'react';
 
-export type Modal = AlertModal;
+export type Modal = AlertModal | TalkLoginModal;
 
 export interface AlertModal {
   content: string;
   type: 'alert';
 }
 
-export type ModalResult = ModalConfirmResult;
+export interface TalkLoginModal {
+  type: 'talkLogin';
+}
+
+export type ModalResult = ModalCancelResult | ModalConfirmResult;
 
 export interface ModalConfirmResult {
   type: 'confirm';
 }
 
+export interface ModalCancelResult {
+  type: 'cancel';
+}
+
 interface Context {
-  alert: (content: string) => void;
+  alert: (content: string, callback: ModalResolver) => void;
+  login: (callback: ModalResolver) => void;
   modal: Modal | null;
   resolve: (result: ModalResult) => void;
 }
 
-type ModalResolver = (result: ModalResult) => void;
+export type ModalResolver = (result: ModalResult) => void;
 
 export const ModalContext = createContext<Context>({} as Context);
 
@@ -31,20 +40,31 @@ interface Props {
 
 export default function ModalProvider({ children }: Props) {
   const [modal, setModal] = useState<Modal | null>(null);
+  const resolverRef = useRef<ModalResolver | null>(null);
 
-  function handleAlert(content: string) {
+  function handleAlert(content: string, callback: ModalResolver) {
     setModal({
       content,
       type: 'alert',
     });
+    resolverRef.current = callback;
+  }
+
+  function handleLogin(callback: ModalResolver) {
+    setModal({
+      type: 'talkLogin',
+    });
+    resolverRef.current = callback;
   }
 
   function handleResolve(result: ModalResult) {
     setModal(null);
+    resolverRef.current?.(result);
   }
 
   const value: Context = {
     alert: handleAlert,
+    login: handleLogin,
     modal,
     resolve: handleResolve,
   };

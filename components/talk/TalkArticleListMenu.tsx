@@ -1,9 +1,14 @@
 import TalkWriteButton from '@/components/talk/TalkWriteButton';
+import { TalkUser } from '@prisma/client';
 
-export default function TalkArticleListMenu() {
+interface Props {
+  user: TalkUser | null;
+}
+
+export default function TalkArticleListMenu({ user }: Props) {
   return (
     <div className="flex items-center justify-between">
-      <TalkWriteButton />
+      <TalkWriteButton login={!!user} />
     </div>
   );
 }
