@@ -17,7 +17,7 @@ export default function MixerSelector({ sessions }: Props) {
   const [activeSession, setActiveSession] = useState<ExtendedSession>(initialSession);
 
   function handlePageChange(direction: number) {
-    const index = sessions.indexOf(activeSession);
+    const index = sessions.findIndex(session => session.id === activeSession.id);
     const nextIndex = (index + direction + sessions.length) % sessions.length;
     setActiveSession(sessions[nextIndex]);
   }
