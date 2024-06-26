@@ -6,7 +6,7 @@ import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import TalkUtil from '@/utils/talk.util';
-import { ChangeEvent, useContext, useRef } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 interface Props {
   articleId: string;
@@ -18,6 +18,7 @@ interface Props {
 export default function TalkCommentInput({ articleId, commentId, login, onSubmit }: Props) {
   const modal = useModal();
   const talkComment = useContext(TalkCommentContext);
+  const [isActive, setIsActive] = useState(false);
 
   const addComment = trpc.talk.addCommentToArticle.useMutation();
 
@@ -27,6 +28,8 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
     const element = e.target;
     element.style.height = '80px';
     element.style.height = element.scrollHeight + 'px';
+
+    setIsActive(!!element.value);
   }
 
   function handleSubmit(formData: FormData) {
@@ -82,9 +85,10 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
       />
       <button type="submit" className="flex items-center px-20">
         <Icon
+          data-active={isActive}
           data-loading={isLoading}
           type={isLoading ? 'spinner' : 'send'}
-          className="w-16 shrink-0 text-gray-500 data-[loading=true]:animate-spin"
+          className="w-16 shrink-0 text-gray-200 transition-colors data-[loading=true]:animate-spin data-[active=true]:text-primary-500"
         />
       </button>
     </form>

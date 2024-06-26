@@ -10,26 +10,40 @@ interface Props {
 
 export default function TalkArticleReact({ article, user }: Props) {
   return (
-    <div className="flex items-center gap-24">
-      <TalkArticleHeart
-        articleId={article.id}
-        login={!!user}
-        className="flex cursor-pointer items-center gap-8"
-      >
-        <Icon
-          data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
-          type="heart"
-          className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
-        />
-        <div className="text-18 font-500 text-gray-500">{article.likedUsers.length}</div>
-      </TalkArticleHeart>
-      <div className="flex items-center gap-8">
-        <Icon
-          data-active={user && article.comments.some(comment => comment.userId === user.id)}
-          type="comment"
-          className="w-18 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
-        />
-        <div className="text-18 font-500 text-gray-500">{article.comments.length}</div>
+    <div className="flex flex-col gap-16">
+      {article.userId === user?.id && (
+        <div className="flex items-center gap-24 self-end">
+          <div className="-m-8 flex cursor-pointer items-center gap-8 p-8">
+            <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
+            <div className="text-16 font-500 text-gray-500">수정</div>
+          </div>
+          <div className="-m-8 flex cursor-pointer items-center gap-8 p-8">
+            <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
+            <div className="text-16 font-500 text-gray-500">삭제</div>
+          </div>
+        </div>
+      )}
+      <div className="flex items-center gap-24">
+        <TalkArticleHeart
+          articleId={article.id}
+          login={!!user}
+          className="-m-12 flex cursor-pointer items-center gap-8 p-12"
+        >
+          <Icon
+            data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
+            type="heart"
+            className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
+          />
+          <div className="text-18 font-500 text-gray-500">{article.likedUsers.length}</div>
+        </TalkArticleHeart>
+        <div className="flex items-center gap-8">
+          <Icon
+            data-active={user && article.comments.some(comment => comment.userId === user.id)}
+            type="comment"
+            className="w-18 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
+          />
+          <div className="text-18 font-500 text-gray-500">{article.comments.length}</div>
+        </div>
       </div>
     </div>
   );
