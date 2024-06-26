@@ -1,8 +1,9 @@
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router, talkProcedure } from '@/trpc/router';
 import Auth from '@/utils/auth.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
-import { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
+import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
 import TalkUtil from '@/utils/talk.util';
 import { TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
@@ -21,6 +22,10 @@ export interface TalkArticleMetadata {
   id: string;
   nickname: string;
   title: string;
+}
+
+export interface ExtendedTalkArticle extends TalkArticle {
+  user: TalkUser;
 }
 
 const TalkRouter = router({
@@ -133,6 +138,19 @@ export class TalkService {
     return user;
   }
 
+  @DataCache('talk.getArticle', StaticDataTtl)
+  public static async getArticle(articleId: string): Promise<ExtendedTalkArticle | null> {
+    const article = await prisma.talkArticle.findUnique({
+      include: { user: true },
+      where: {
+        id: articleId,
+      },
+    });
+
+    return article || null;
+  }
+
+  @DataCache('talk.getArticlesMetadata', StaticDataTtl)
   public static async getArticlesMetadata(
     pagination: PaginationOptions
   ): Promise<PaginationResult<TalkArticleMetadata>> {

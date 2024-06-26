@@ -1,5 +1,6 @@
 'use client';
 
+import { revalidate } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
@@ -42,7 +43,8 @@ export default function TalkWriteFrame({ nickname }: Props) {
         onError: error => {
           setError(error.message);
         },
-        onSuccess: articleId => {
+        onSuccess: async articleId => {
+          await revalidate('/talk');
           router.replace(`/talk/${articleId}`);
         },
       }

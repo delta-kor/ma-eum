@@ -41,7 +41,7 @@ export function getPastRelativeTime(date: Date, today: Date): string {
   if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
   if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
   if (diffMinutes > 0) return `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
-  return 'Today';
+  return 'Now';
 }
 
 export function getShortPastRelativeTime(date: Date, today: Date): string {
@@ -53,7 +53,7 @@ export function getShortPastRelativeTime(date: Date, today: Date): string {
   if (diffDays > 0) return format(date, 'yy. MM. dd.');
   if (diffHours > 0) return `${diffHours}h`;
   if (diffMinutes > 0) return `${diffMinutes}m`;
-  return 'Today';
+  return 'Now';
 }
 
 export function getTime(seconds: number): string {

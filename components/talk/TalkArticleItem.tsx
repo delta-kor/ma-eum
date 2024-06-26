@@ -1,6 +1,7 @@
 import Icon from '@/components/core/Icon';
 import { TalkArticleMetadata } from '@/services/talk.service';
 import { getShortPastRelativeTime } from '@/utils/time.util';
+import Link from 'next/link';
 
 interface Props {
   articleMetadata: TalkArticleMetadata;
@@ -9,12 +10,14 @@ interface Props {
 
 export default function TalkArticleItem({ articleMetadata, today }: Props) {
   return (
-    <div className="flex flex-col gap-12">
+    <Link href={`/talk/${articleMetadata.id}`} className="flex flex-col gap-12">
       <div className="flex flex-col gap-4">
         <div className="text-14 font-500 text-gray-500">{articleMetadata.nickname}</div>
         <div className="flex flex-col gap-8">
           <div className="text-20 font-700 text-black">{articleMetadata.title}</div>
-          <div className="text-16 font-500 text-gray-500">{articleMetadata.title}</div>
+          <div className="line-clamp-2 whitespace-pre-line text-16 font-500 text-gray-500">
+            {articleMetadata.content}
+          </div>
         </div>
       </div>
       <div className="flex items-center gap-16">
@@ -31,6 +34,6 @@ export default function TalkArticleItem({ articleMetadata, today }: Props) {
           {getShortPastRelativeTime(articleMetadata.date, today)}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
