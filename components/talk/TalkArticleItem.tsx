@@ -10,7 +10,7 @@ interface Props {
 
 export default function TalkArticleItem({ articleMetadata, today }: Props) {
   return (
-    <Link href={`/talk/${articleMetadata.id}`} className="flex flex-col gap-12">
+    <Link href={`/talk/article/${articleMetadata.id}`} className="flex flex-col gap-12">
       <div className="flex flex-col gap-4">
         <div className="text-14 font-500 text-gray-500">{articleMetadata.nickname}</div>
         <div className="flex flex-col gap-8">

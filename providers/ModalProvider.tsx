@@ -24,7 +24,7 @@ export interface ModalCancelResult {
 }
 
 interface Context {
-  alert: (content: string, callback: ModalResolver) => void;
+  alert: (content: string, callback?: ModalResolver) => void;
   login: (callback: ModalResolver) => void;
   modal: Modal | null;
   resolve: (result: ModalResult) => void;
@@ -43,12 +43,12 @@ export default function ModalProvider({ children }: Props) {
   const [modal, setModal] = useState<Modal | null>(null);
   const resolverRef = useRef<ModalResolver | null>(null);
 
-  function handleAlert(content: string, callback: ModalResolver) {
+  function handleAlert(content: string, callback?: ModalResolver) {
     setModal({
       content,
       type: 'alert',
     });
-    resolverRef.current = callback;
+    resolverRef.current = callback || null;
   }
 
   function handleLogin(callback: ModalResolver) {

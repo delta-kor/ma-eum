@@ -25,6 +25,9 @@ export interface TalkArticleMetadata {
 }
 
 export interface ExtendedTalkArticle extends TalkArticle {
+  _count: {
+    likedUsers: number;
+  };
   user: TalkUser;
 }
 
@@ -66,6 +69,14 @@ const TalkRouter = router({
         limit: 10,
       });
     }),
+
+  likeArticle: talkProcedure.input(z.object({ articleId: z.string() })).mutation(async opts => {
+    const user = opts.ctx.user;
+    const articleId = opts.input.articleId;
+
+    const likesCount = await TalkService.likeArticle(user, articleId);
+    return likesCount;
+  }),
 });
 
 export class TalkService {
@@ -141,7 +152,7 @@ export class TalkService {
   @DataCache('talk.getArticle', StaticDataTtl)
   public static async getArticle(articleId: string): Promise<ExtendedTalkArticle | null> {
     const article = await prisma.talkArticle.findUnique({
-      include: { user: true },
+      include: { _count: { select: { likedUsers: true } }, user: true },
       where: {
         id: articleId,
       },
@@ -179,5 +190,30 @@ export class TalkService {
     }));
 
     return PrismaUtil.buildPagination(metadata);
+  }
+
+  public static async likeArticle(user: TalkUser, articleId: string): Promise<null | number> {
+    const updateResult = await prisma.talkArticle.update({
+      data: {
+        likedUsers: {
+          connect: {
+            id: user.id,
+          },
+        },
+      },
+      select: {
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+      },
+      where: {
+        id: articleId,
+      },
+    });
+
+    const likesCount = updateResult._count.likedUsers;
+    return likesCount;
   }
 }

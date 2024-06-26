@@ -261,7 +261,9 @@ model TalkUser {
   role      TalkUserRole
   createdAt DateTime     @default(now())
 
-  articles TalkArticle[]
+  articles TalkArticle[] @relation("articles")
+
+  likedArticles TalkArticle[]
 }
 
 model TalkArticle {
@@ -270,6 +272,8 @@ model TalkArticle {
   content String
   date    DateTime @default(now())
 
-  user   TalkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   TalkUser @relation("articles", fields: [userId], references: [id], onDelete: Cascade)
   userId String
+
+  likedUsers TalkUser[]
 }

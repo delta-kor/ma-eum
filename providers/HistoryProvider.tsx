@@ -64,6 +64,8 @@ export default function HistoryProvider({ children }: Props) {
       const page = getMatchingPage(pathname);
 
       if (page.path === currentPage.path) continue;
+      if (page.invisible) continue;
+
       histories.splice(i);
 
       const url = joinPathSearch(pathname, search);

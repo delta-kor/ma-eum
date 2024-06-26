@@ -28,19 +28,21 @@ export default class Auth {
   }
 
   public static async verifyToken(token: string): Promise<TalkUser | null> {
+    let decoded: { userId?: string };
     try {
-      const decoded = jwt.verify(token, Auth.key) as { userId?: string };
-      const userId = decoded.userId;
-      if (!userId) return null;
-      const user = await prisma.talkUser.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-      return user || null;
+      decoded = jwt.verify(token, Auth.key) as { userId?: string };
     } catch (e) {
-      console.error(e);
       return null;
     }
+
+    const userId = decoded.userId;
+    if (!userId) return null;
+
+    const user = await prisma.talkUser.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    return user || null;
   }
 }

@@ -45,7 +45,7 @@ export default function TalkWriteFrame({ nickname }: Props) {
         },
         onSuccess: async articleId => {
           await revalidate('/talk');
-          router.replace(`/talk/${articleId}`);
+          router.replace(`/talk/article/${articleId}`);
         },
       }
     );

@@ -5,6 +5,7 @@ export type History = [string, string];
 export interface PageInfo {
   back: string;
   base?: boolean;
+  invisible?: boolean;
   path: string;
   query?: boolean;
 }
@@ -95,7 +96,16 @@ export const Pages: PageInfo[] = [
 
   {
     back: '/talk',
-    path: '/talk/:id',
+    path: '/talk/login',
+  },
+  {
+    back: '/talk',
+    invisible: true,
+    path: '/talk/write',
+  },
+  {
+    back: '/talk',
+    path: '/talk/article/:id',
   },
 ];
 
