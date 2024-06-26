@@ -4,9 +4,9 @@ import { revalidateTalkComment } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
+import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import TalkUtil from '@/utils/talk.util';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext, useRef } from 'react';
 
 interface Props {
   articleId: string;
@@ -15,8 +15,11 @@ interface Props {
 
 export default function TalkCommentInput({ articleId, login }: Props) {
   const modal = useModal();
-  const router = useRouter();
+  const talkComment = useContext(TalkCommentContext);
+
   const addComment = trpc.talk.addCommentToArticle.useMutation();
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
     const element = e.target;
@@ -38,6 +41,10 @@ export default function TalkCommentInput({ articleId, login }: Props) {
     });
   }
 
+  function resetForm() {
+    formRef.current?.reset();
+  }
+
   function handleAction(content: string) {
     addComment.mutate(
       { articleId, content },
@@ -46,7 +53,9 @@ export default function TalkCommentInput({ articleId, login }: Props) {
           modal.alert(error.message);
         },
         onSuccess: async () => {
+          resetForm();
           await revalidateTalkComment(articleId);
+          talkComment.refresh();
         },
       }
     );
@@ -55,7 +64,7 @@ export default function TalkCommentInput({ articleId, login }: Props) {
   const isLoading = addComment.isPending;
 
   return (
-    <form action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
+    <form ref={formRef} action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
       <textarea
         autoCapitalize="off"
         autoComplete="off"
