@@ -7,6 +7,7 @@
   "challenge": "챌린지",
   "cover": "커버",
   "end_of_page": "마지막 페이지",
+  "error_already_logged_in": "이미 가입되어 있습니다. 페이지를 새로고침 해주세요.",
   "error_enter_nickname": "닉네임을 입력해주세요.",
   "error_internal_server": "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
   "error_invalid_character_nickname": "닉네임은 한글, 영어, 숫자만 사용 가능해요.",

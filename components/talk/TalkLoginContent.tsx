@@ -32,7 +32,6 @@ export default function TalkLoginContent() {
         onSuccess: async () => {
           const next = query.get('next') || '/talk';
           await revalidate('/talk/write');
-          router.refresh();
           router.replace(next);
         },
       }

@@ -83,6 +83,16 @@ export class TalkService {
   }
 
   public static async createUser(nickname: string): Promise<TalkUser> {
+    const token = Auth.getTokenCookie();
+    if (token !== null) {
+      const user = await Auth.verifyToken(token);
+      if (user)
+        throw new TRPCError({
+          code: 'UNPROCESSABLE_CONTENT',
+          message: '$error_already_logged_in',
+        });
+    }
+
     const validateResult = TalkUtil.validateNickname(nickname);
     if (validateResult.error)
       throw new TRPCError({
