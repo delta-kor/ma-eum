@@ -2,6 +2,7 @@ import TalkArticleContent from '@/components/talk/TalkArticleContent';
 import TalkArticleHeader from '@/components/talk/TalkArticleHeader';
 import TalkArticleReact from '@/components/talk/TalkArticleReact';
 import TalkCommentInput from '@/components/talk/TalkCommentInput';
+import TalkCommentList from '@/components/talk/TalkCommentList';
 import { ExtendedTalkArticle } from '@/services/talk.service';
 import { TalkUser } from '@prisma/client';
 
@@ -18,6 +19,7 @@ export default function TalkArticleViewer({ article, user }: Props) {
       <TalkArticleContent article={article} />
       <TalkArticleReact article={article} user={user} />
       <TalkCommentInput articleId={article.id} login={!!user} />
+      <TalkCommentList key={article.comments.length} articleId={article.id} />
     </div>
   );
 }

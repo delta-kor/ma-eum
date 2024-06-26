@@ -5,6 +5,7 @@ import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent } from 'react';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 
 export default function TalkCommentInput({ articleId, login }: Props) {
   const modal = useModal();
+  const router = useRouter();
   const addComment = trpc.talk.addCommentToArticle.useMutation();
 
   function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {

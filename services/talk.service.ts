@@ -26,7 +26,15 @@ export interface TalkArticleMetadata {
   title: string;
 }
 
+export interface TalkCommentMetadata {
+  content: string;
+  date: Date;
+  id: string;
+  nickname: string;
+}
+
 export interface ExtendedTalkArticle extends TalkArticle {
+  comments: { userId: string }[];
   likedUsers: { id: string }[];
   user: TalkUser;
 }
@@ -72,6 +80,14 @@ const TalkRouter = router({
     return true;
   }),
 
+  getArticleComments: publicProcedure
+    .input(z.object({ articleId: z.string() }))
+    .query(async opts => {
+      const articleId = opts.input.articleId;
+      const comments = await TalkService.getArticleComments(articleId);
+      return comments;
+    }),
+
   getArticlesMetadata: publicProcedure
     .input(z.object({ cursor: z.string().nullish() }))
     .query(opts => {
@@ -98,10 +114,18 @@ export class TalkService {
     articleId: string,
     content: string
   ): Promise<void> {
-    const comment = await prisma.talkComment.create({
+    const validateResult = TalkUtil.validateComment(content);
+    if (validateResult.error)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: validateResult.message!,
+      });
+    const sanitizedContent = validateResult.content!;
+
+    await prisma.talkComment.create({
       data: {
         articleId,
-        content,
+        content: sanitizedContent,
         id: createId(8),
         userId: user.id,
       },
@@ -179,6 +203,7 @@ export class TalkService {
   public static async getArticle(articleId: string): Promise<ExtendedTalkArticle | null> {
     const article = await prisma.talkArticle.findUnique({
       include: {
+        comments: { select: { userId: true } },
         likedUsers: { select: { id: true } },
         user: true,
       },
@@ -188,6 +213,30 @@ export class TalkService {
     });
 
     return article || null;
+  }
+
+  @DataCache('talk.getArticleComments', StaticDataTtl)
+  public static async getArticleComments(articleId: string): Promise<TalkCommentMetadata[]> {
+    const comments = await prisma.talkComment.findMany({
+      include: {
+        user: {
+          select: {
+            nickname: true,
+          },
+        },
+      },
+      orderBy: [{ date: 'desc' }],
+      where: {
+        articleId,
+      },
+    });
+
+    return comments.map(comment => ({
+      content: comment.content,
+      date: comment.date,
+      id: comment.id,
+      nickname: comment.user.nickname,
+    }));
   }
 
   @DataCache('talk.getArticlesMetadata', StaticDataTtl)
