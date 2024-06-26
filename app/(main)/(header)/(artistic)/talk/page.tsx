@@ -1,3 +1,4 @@
+import TalkArticleList from '@/components/talk/TalkArticleList';
 import TalkArticleListMenu from '@/components/talk/TalkArticleListMenu';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
@@ -15,7 +16,10 @@ export default async function TalkPage() {
   return (
     <div className="px-24 pb-24">
       <div className="mx-auto mt-artistic-header-height-md w-full max-w-screen-lg lg:mt-artistic-header-height-lg lg:pt-32">
-        <TalkArticleListMenu user={user} />
+        <div className="flex flex-col gap-16">
+          <TalkArticleListMenu user={user} />
+          <TalkArticleList preloadedArticlesMetadata={articlesMetadata} />
+        </div>
       </div>
     </div>
   );

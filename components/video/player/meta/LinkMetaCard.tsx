@@ -28,7 +28,7 @@ export default async function LinkMetaCard({ linkMeta }: Props) {
         />
         <div className="flex min-w-0 grow flex-col gap-4">
           <div className="line-clamp-2 text-16 font-600 text-black">{video.title}</div>
-          <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
+          <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
         </div>
         <Icon type="right" className="w-16 shrink-0 text-gray-200" />
       </Link>

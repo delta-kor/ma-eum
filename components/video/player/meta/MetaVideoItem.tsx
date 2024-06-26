@@ -65,7 +65,7 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
           <div className="line-clamp-2 text-16 font-600 text-black">{title}</div>
         </div>
         {displayDate && (
-          <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
+          <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
         )}
       </div>
     </Link>

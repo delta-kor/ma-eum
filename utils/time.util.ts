@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export function removeTime(date: Date): Date {
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
 }
@@ -39,6 +41,18 @@ export function getPastRelativeTime(date: Date, today: Date): string {
   if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
   if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
   if (diffMinutes > 0) return `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
+  return 'Today';
+}
+
+export function getShortPastRelativeTime(date: Date, today: Date): string {
+  const diff = today.getTime() - date.getTime();
+  const diffMinutes = Math.round(diff / 1000 / 60);
+  const diffHours = Math.round(diffMinutes / 60);
+  const diffDays = Math.round(diffHours / 24);
+
+  if (diffDays > 0) return format(date, 'yy. MM. dd.');
+  if (diffHours > 0) return `${diffHours}h`;
+  if (diffMinutes > 0) return `${diffMinutes}m`;
   return 'Today';
 }
 

@@ -15,7 +15,7 @@ export default function VideoHeader({ video }: Props) {
         <div className="text-18 font-600 leading-6 text-black lg:text-20">{video.title}</div>
         <div className="flex items-center gap-8">
           <Icon type="calendar" className="w-18 shrink-0 text-gray-500" />
-          <div className="text-16 font-600 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
+          <div className="text-16 font-600 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
         </div>
       </div>
     </div>

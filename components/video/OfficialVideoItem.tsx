@@ -29,7 +29,7 @@ export default function OfficialVideoItem({ video }: Props) {
         <div className="flex items-center gap-8">
           <div className="line-clamp-2 text-18 font-600 text-black">{title}</div>
         </div>
-        <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd')}</div>
+        <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
       </div>
     </Link>
   );
