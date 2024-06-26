@@ -10,6 +10,19 @@ export interface TRPCContext {
 }
 
 const t = initTRPC.create({
+  errorFormatter: opts => {
+    const { error, shape } = opts;
+
+    if (error.code === 'INTERNAL_SERVER_ERROR') {
+      console.error(error);
+      return {
+        ...shape,
+        message: '$error_internal_server',
+      };
+    }
+
+    return error;
+  },
   transformer: superjson,
 });
 export const router = t.router;

@@ -1,4 +1,6 @@
-import { ReactNode, createContext, useRef, useState } from 'react';
+'use client';
+
+import { ReactNode, createContext, useState } from 'react';
 
 export type Modal = AlertModal;
 
@@ -14,7 +16,7 @@ export interface ModalConfirmResult {
 }
 
 interface Context {
-  alert: (content: string) => Promise<ModalResult>;
+  alert: (content: string) => void;
   modal: Modal | null;
   resolve: (result: ModalResult) => void;
 }
@@ -30,20 +32,14 @@ interface Props {
 export default function ModalProvider({ children }: Props) {
   const [modal, setModal] = useState<Modal | null>(null);
 
-  const resolverRef = useRef<ModalResolver | null>(null);
-
   function handleAlert(content: string) {
-    return new Promise<ModalResult>(resolve => {
-      resolverRef.current = resolve;
-      setModal({
-        content,
-        type: 'alert',
-      });
+    setModal({
+      content,
+      type: 'alert',
     });
   }
 
   function handleResolve(result: ModalResult) {
-    resolverRef.current?.(result);
     setModal(null);
   }
 

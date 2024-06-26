@@ -7,6 +7,7 @@
   "challenge": "챌린지",
   "cover": "커버",
   "end_of_page": "마지막 페이지",
+  "error_internal_server": "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
   "live": "라이브",
   "member_duna": "두나",
   "member_geumhee": "금희",

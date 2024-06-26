@@ -43,6 +43,9 @@ export default function DetailsHeader() {
     case '/talk/write':
       title = 'Write';
       break;
+    case '/talk/login':
+      title = 'Login';
+      break;
     default:
       title = content || '';
   }
