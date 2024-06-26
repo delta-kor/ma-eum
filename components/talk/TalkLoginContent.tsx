@@ -1,4 +1,4 @@
-import { revalidate } from '@/actions/revalidate.action';
+import { revalidateTalkLogin } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
@@ -41,10 +41,10 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
         onSuccess: async () => {
           if (type === 'page') {
             const next = query.get('next') || '/talk';
-            await revalidate('/talk/write');
+            await revalidateTalkLogin();
             router.replace(next);
           } else {
-            await revalidate('/talk/write');
+            await revalidateTalkLogin();
             onResolve?.({ type: 'confirm' });
           }
         },

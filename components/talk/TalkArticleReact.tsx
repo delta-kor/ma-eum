@@ -16,8 +16,12 @@ export default function TalkArticleReact({ article, user }: Props) {
         login={!!user}
         className="flex cursor-pointer items-center gap-8"
       >
-        <Icon type="heart" className="w-18 shrink-0 text-gray-200" />
-        <div className="text-18 font-500 text-gray-500">{article._count.likedUsers}</div>
+        <Icon
+          data-active={user && article.likedUsers.some(user => user.id === user.id)}
+          type="heart"
+          className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
+        />
+        <div className="text-18 font-500 text-gray-500">{article.likedUsers.length}</div>
       </TalkArticleHeart>
       <div className="flex items-center gap-8">
         <Icon type="comment" className="w-18 shrink-0 text-gray-200" />

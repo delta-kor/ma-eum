@@ -6,7 +6,7 @@ import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
 import TalkUtil from '@/utils/talk.util';
-import { TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
+import { Prisma, TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import 'server-only';
 import { z } from 'zod';
@@ -20,14 +20,13 @@ export interface TalkArticleMetadata {
   content: string;
   date: Date;
   id: string;
+  likedUsersId: string[];
   nickname: string;
   title: string;
 }
 
 export interface ExtendedTalkArticle extends TalkArticle {
-  _count: {
-    likedUsers: number;
-  };
+  likedUsers: { id: string }[];
   user: TalkUser;
 }
 
@@ -152,7 +151,10 @@ export class TalkService {
   @DataCache('talk.getArticle', StaticDataTtl)
   public static async getArticle(articleId: string): Promise<ExtendedTalkArticle | null> {
     const article = await prisma.talkArticle.findUnique({
-      include: { _count: { select: { likedUsers: true } }, user: true },
+      include: {
+        likedUsers: { select: { id: true } },
+        user: true,
+      },
       where: {
         id: articleId,
       },
@@ -172,6 +174,11 @@ export class TalkService {
         content: true,
         date: true,
         id: true,
+        likedUsers: {
+          select: {
+            id: true,
+          },
+        },
         title: true,
         user: {
           select: {
@@ -181,10 +188,11 @@ export class TalkService {
       },
     });
 
-    const metadata = articles.map(article => ({
+    const metadata: TalkArticleMetadata[] = articles.map(article => ({
       content: article.content,
       date: article.date,
       id: article.id,
+      likedUsersId: article.likedUsers.map(user => user.id),
       nickname: article.user.nickname,
       title: article.title,
     }));
@@ -192,28 +200,47 @@ export class TalkService {
     return PrismaUtil.buildPagination(metadata);
   }
 
-  public static async likeArticle(user: TalkUser, articleId: string): Promise<null | number> {
-    const updateResult = await prisma.talkArticle.update({
-      data: {
-        likedUsers: {
-          connect: {
-            id: user.id,
-          },
-        },
-      },
-      select: {
-        _count: {
-          select: {
-            likedUsers: true,
-          },
-        },
-      },
+  public static async likeArticle(user: TalkUser, articleId: string): Promise<void> {
+    const isLiked = await prisma.talkArticle.findFirst({
       where: {
-        id: articleId,
+        AND: [
+          {
+            id: articleId,
+          },
+          {
+            likedUsers: {
+              some: {
+                id: user.id,
+              },
+            },
+          },
+        ],
       },
     });
 
-    const likesCount = updateResult._count.likedUsers;
-    return likesCount;
+    try {
+      await prisma.talkArticle.update({
+        data: {
+          likedUsers: isLiked
+            ? { disconnect: { id: user.id } }
+            : {
+                connect: {
+                  id: user.id,
+                },
+              },
+        },
+        select: {
+          id: true,
+        },
+        where: {
+          id: articleId,
+        },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') throw new TRPCError({ code: 'NOT_FOUND' });
+        else throw e;
+      }
+    }
   }
 }
