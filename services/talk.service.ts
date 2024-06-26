@@ -17,6 +17,7 @@ export interface TalkArticlePayload {
 }
 
 export interface TalkArticleMetadata {
+  commentUsersId: string[];
   content: string;
   date: Date;
   id: string;
@@ -197,6 +198,11 @@ export class TalkService {
       ...PrismaUtil.paginate(pagination),
       orderBy: [{ date: 'desc' }],
       select: {
+        comments: {
+          select: {
+            userId: true,
+          },
+        },
         content: true,
         date: true,
         id: true,
@@ -215,6 +221,7 @@ export class TalkService {
     });
 
     const metadata: TalkArticleMetadata[] = articles.map(article => ({
+      commentUsersId: article.comments.map(comment => comment.userId),
       content: article.content,
       date: article.date,
       id: article.id,

@@ -6,7 +6,7 @@ interface Props {
 
 export default function TalkArticleContent({ article }: Props) {
   return (
-    <div className="whitespace-pre-line text-16 font-500 leading-6 text-black">
+    <div className="min-h-[240px] whitespace-pre-line text-16 font-500 leading-6 text-black">
       {article.content}
     </div>
   );

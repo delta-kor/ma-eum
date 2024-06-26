@@ -13,6 +13,12 @@ interface ValidateArticleResult {
   title?: string;
 }
 
+interface ValidateCommentResult {
+  content?: string;
+  error: boolean;
+  message?: string;
+}
+
 interface CheckLoginConfig {
   action: () => void;
   login: boolean;
@@ -54,6 +60,19 @@ export default class TalkUtil {
     }
 
     return { content: sanitizedContent, error: false, title: sanitizedTitle };
+  }
+
+  public static validateComment(content: any): ValidateCommentResult {
+    if (!content || typeof content !== 'string') {
+      return { error: true, message: '$error_enter_comment' };
+    }
+
+    const sanitizedContent = content.trim();
+    if (!sanitizedContent || sanitizedContent.length > 500) {
+      return { error: true, message: '$error_invalid_length_comment' };
+    }
+
+    return { content: sanitizedContent, error: false };
   }
 
   public static validateNickname(nickname: any): ValidateNicknameResult {

@@ -34,8 +34,14 @@ export default function TalkArticleItem({ articleMetadata, today, user }: Props)
           </div>
         </div>
         <div className="flex items-center gap-8">
-          <Icon type="comment" className="w-16 shrink-0 text-gray-200" />
-          <div className="text-16 font-500 text-gray-500">2</div>
+          <Icon
+            data-active={user && articleMetadata.commentUsersId.includes(user.id)}
+            type="comment"
+            className="w-16 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
+          />
+          <div className="text-16 font-500 text-gray-500">
+            {articleMetadata.commentUsersId.length}
+          </div>
         </div>
         <div className="-mx-4 size-4 rounded-full bg-gray-200" />
         <div className="text-16 font-500 text-gray-500">

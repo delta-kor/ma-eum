@@ -12,6 +12,7 @@ export async function revalidateTalkLogin(): Promise<void> {
 }
 
 export async function revalidateTalkWrite(): Promise<void> {
+  revalidateTag('talk');
   revalidatePath('/talk', 'page');
 }
 
@@ -19,4 +20,9 @@ export async function revalidateTalkHeart(articleId: string): Promise<void> {
   revalidateTag('talk');
   revalidatePath(`/talk/article/${articleId}`, 'page');
   revalidatePath('/talk', 'page');
+}
+
+export async function revalidateTalkComment(articleId: string): Promise<void> {
+  revalidateTag('talk');
+  revalidatePath(`/talk/article/${articleId}`, 'page');
 }
