@@ -21,6 +21,13 @@ const t = initTRPC.create({
       };
     }
 
+    if (error.code === 'UNAUTHORIZED') {
+      return {
+        ...shape,
+        message: '$error_unauthorized',
+      };
+    }
+
     return shape;
   },
   transformer: superjson,

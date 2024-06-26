@@ -70,11 +70,20 @@ export class TalkService {
     user: TalkUser,
     payload: TalkArticlePayload
   ): Promise<TalkArticle> {
+    const validateResult = TalkUtil.validateArticle(payload.title, payload.content);
+    if (validateResult.error)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: validateResult.message!,
+      });
+    const sanitizedTitle = validateResult.title!;
+    const sanitizedContent = validateResult.content!;
+
     const article = await prisma.talkArticle.create({
       data: {
-        content: payload.content,
+        content: sanitizedContent,
         id: createId(8),
-        title: payload.title,
+        title: sanitizedTitle,
         userId: user.id,
       },
     });

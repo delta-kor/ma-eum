@@ -270,6 +270,6 @@ model TalkArticle {
   content String
   date    DateTime @default(now())
 
-  user   TalkUser @relation(fields: [userId], references: [id])
+  user   TalkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
