@@ -31,6 +31,7 @@ interface Context {
 }
 
 export type ModalResolver = (result: ModalResult) => void;
+export type ModalContext = Context;
 
 export const ModalContext = createContext<Context>({} as Context);
 

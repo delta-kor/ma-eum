@@ -24,6 +24,7 @@ export default function TalkWriteFrame({ nickname }: Props) {
           placeholder="제목"
           spellCheck="false"
           type="text"
+          autoFocus
           className="text-24 font-700 text-black outline-none placeholder:text-gray-200"
         />
         <div className="text-18 font-600 text-gray-200">{nickname}</div>

@@ -3,7 +3,7 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useModal from '@/hooks/modal';
-import { ModalResult } from '@/providers/ModalProvider';
+import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
 
 interface Props {
@@ -15,18 +15,15 @@ export default function TalkWriteButton({ login }: Props) {
   const router = useRouter();
 
   function handleClick() {
-    if (login) {
-      router.push('/talk/write');
-      return;
-    }
-
-    modal.login(handleModalResolve);
+    TalkUtil.checkLogin({
+      action: handleAction,
+      login,
+      modal,
+    });
   }
 
-  function handleModalResolve(result: ModalResult) {
-    if (result.type === 'confirm') {
-      router.push('/talk/write');
-    }
+  function handleAction() {
+    router.push('/talk/write');
   }
 
   return (

@@ -75,6 +75,7 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
           placeholder="닉네임"
           spellCheck="false"
           type="text"
+          autoFocus
           className="rounded-0 border-b-2 border-b-gray-100 pb-8 text-24 font-700 text-black outline-none transition-colors placeholder:text-gray-200 focus:border-b-gray-500"
         />
       </div>
@@ -93,7 +94,7 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
             취소
           </button>
           {createUser.isPending || createUser.isSuccess ? (
-            <div className="flex items-center gap-8 self-start text-16 font-700 text-gray-500">
+            <div className="flex items-center gap-8 self-start text-16 font-500 text-gray-500">
               <Icon type="spinner" className="w-16 animate-spin" />
               <span>잠시만 기다려 주세요...</span>
             </div>

@@ -1,10 +1,32 @@
+import { ModalContext, ModalResult } from '@/providers/ModalProvider';
+
 interface ValidateNicknameResult {
   error: boolean;
   message?: string;
   nickname?: string;
 }
 
+interface CheckLoginConfig {
+  action: () => void;
+  login: boolean;
+  modal: ModalContext;
+}
+
 export default class TalkUtil {
+  public static checkLogin(config: CheckLoginConfig) {
+    const login = config.login;
+    if (login) {
+      config.action();
+      return;
+    }
+
+    config.modal.login((result: ModalResult) => {
+      if (result.type === 'confirm') {
+        config.action();
+      }
+    });
+  }
+
   public static validateNickname(nickname: any): ValidateNicknameResult {
     if (!nickname || typeof nickname !== 'string') {
       return { error: true, message: '$error_enter_nickname' };
