@@ -295,7 +295,12 @@ export class TalkService {
 
     const metadata: TalkArticleMetadata[] = articles.map(article => ({
       commentUsersId: article.comments.map(comment => comment.userId),
-      content: article.content,
+      content: article.content
+        .split('\n')
+        .filter(item => item.trim())
+        .slice(0, 2)
+        .join('\n')
+        .slice(0, 100),
       date: article.date,
       id: article.id,
       likedUsersId: article.likedUsers.map(user => user.id),

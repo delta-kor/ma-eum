@@ -278,6 +278,8 @@ model TalkArticle {
 
   likedUsers TalkUser[]
   comments   TalkComment[]
+
+  isDeleted Boolean @default(false)
 }
 
 model TalkComment {
@@ -294,4 +296,6 @@ model TalkComment {
   replyTo       TalkComment?  @relation("reply", fields: [replyToId], references: [id], onDelete: SetNull)
   replyToId     String?
   replyComments TalkComment[] @relation("reply")
+
+  isDeleted Boolean @default(false)
 }

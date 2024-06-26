@@ -32,7 +32,7 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-8">
-          <div className="text-16 font-600 text-primary-500">{comment.nickname}</div>
+          <div className="text-14 font-600 text-primary-500">{comment.nickname}</div>
           <div className="size-4 rounded-full bg-gray-200" />
           <div className="text-14 text-gray-500">
             {getShortPastRelativeTime(comment.date, new Date())}

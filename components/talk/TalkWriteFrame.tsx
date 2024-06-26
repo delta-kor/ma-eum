@@ -101,7 +101,7 @@ export default function TalkWriteFrame({ nickname }: Props) {
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
-        maxLength={500}
+        maxLength={1000}
         name="content"
         placeholder="내용을 입력해주세요."
         rows={5}

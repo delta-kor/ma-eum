@@ -72,7 +72,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
-        maxLength={500}
+        maxLength={300}
         name="content"
         placeholder="댓글을 입력하세요"
         rows={2}

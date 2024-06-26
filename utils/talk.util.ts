@@ -49,13 +49,13 @@ export default class TalkUtil {
       return { error: true, message: '$error_enter_content' };
     }
 
-    const sanitizedTitle = title.trim();
+    const sanitizedTitle = title.trim().replace(/\n/g, '');
     if (!sanitizedTitle || sanitizedTitle.length > 50) {
       return { error: true, message: '$error_invalid_length_title' };
     }
 
-    const sanitizedContent = content.trim();
-    if (!sanitizedContent || sanitizedContent.length > 500) {
+    const sanitizedContent = content.trim().replace(/\n\s*\n\s*\n/g, '\n\n');
+    if (!sanitizedContent || sanitizedContent.length > 1000) {
       return { error: true, message: '$error_invalid_length_content' };
     }
 
@@ -67,8 +67,8 @@ export default class TalkUtil {
       return { error: true, message: '$error_enter_comment' };
     }
 
-    const sanitizedContent = content.trim();
-    if (!sanitizedContent || sanitizedContent.length > 500) {
+    const sanitizedContent = content.trim().replace(/\n\s*\n\s*\n/g, '\n\n');
+    if (!sanitizedContent || sanitizedContent.length > 300) {
       return { error: true, message: '$error_invalid_length_comment' };
     }
 
