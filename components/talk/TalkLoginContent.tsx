@@ -1,13 +1,22 @@
+import { revalidate } from '@/actions/revalidate.action';
+import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function TalkLoginContent() {
   const [error, setError] = useState<null | string>(null);
   const createUser = trpc.talk.createUser.useMutation();
 
+  const query = useQuery();
+  const router = useRouter();
+
   async function handleSubmit(formData: FormData) {
+    setError(null);
+
     const nickname = formData.get('nickname');
     const validateResult = TalkUtil.validateNickname(nickname);
 
@@ -19,6 +28,12 @@ export default function TalkLoginContent() {
       {
         onError: error => {
           setError(error.message);
+        },
+        onSuccess: async () => {
+          const next = query.get('next') || '/talk';
+          await revalidate('/talk/write');
+          router.refresh();
+          router.replace(next);
         },
       }
     );
@@ -49,13 +64,16 @@ export default function TalkLoginContent() {
             <Translate>{error}</Translate>
           </div>
         )}
-        <button
-          data-active={!createUser.isPending}
-          type="submit"
-          className="-m-16 self-start p-16 text-16 font-700 text-primary-500"
-        >
-          확인
-        </button>
+        {createUser.isPending || createUser.isSuccess ? (
+          <div className="flex items-center gap-8 self-start text-16 font-700 text-gray-500">
+            <Icon type="spinner" className="w-16 animate-spin" />
+            <span>잠시만 기다려 주세요...</span>
+          </div>
+        ) : (
+          <button type="submit" className="-m-16 self-start p-16 text-16 font-700 text-primary-500">
+            확인
+          </button>
+        )}
       </div>
     </form>
   );

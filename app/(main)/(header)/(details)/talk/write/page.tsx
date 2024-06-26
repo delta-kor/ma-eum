@@ -12,11 +12,13 @@ export default async function TalkWritePage() {
   const user = await Auth.verifyToken(token);
   if (!user) return redirect('/talk/login?next=/talk/write', RedirectType.replace);
 
+  const nickname = user.nickname;
+
   return (
     <DetailsContent>
       <div className="px-24">
         <div className="pb-24 pt-16 lg:mx-auto lg:max-w-screen-lg lg:pt-24">
-          <TalkWriteFrame />
+          <TalkWriteFrame nickname={nickname} />
         </div>
       </div>
     </DetailsContent>

@@ -21,7 +21,7 @@ const t = initTRPC.create({
       };
     }
 
-    return error;
+    return shape;
   },
   transformer: superjson,
 });

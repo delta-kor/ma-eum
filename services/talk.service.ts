@@ -4,7 +4,9 @@ import Auth from '@/utils/auth.util';
 import createId from '@/utils/id.util';
 import { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
+import TalkUtil from '@/utils/talk.util';
 import { TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
 import 'server-only';
 import { z } from 'zod';
 
@@ -81,10 +83,30 @@ export class TalkService {
   }
 
   public static async createUser(nickname: string): Promise<TalkUser> {
+    const validateResult = TalkUtil.validateNickname(nickname);
+    if (validateResult.error)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: validateResult.message!,
+      });
+    const sanitizedNickname = validateResult.nickname!;
+
+    const existingUser = await prisma.talkUser.findFirst({
+      where: {
+        nickname: sanitizedNickname,
+      },
+    });
+
+    if (existingUser)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: '$error_nickname_in_use',
+      });
+
     const user = await prisma.talkUser.create({
       data: {
         id: createId(8),
-        nickname,
+        nickname: sanitizedNickname,
         role: TalkUserRole.USER,
       },
     });

@@ -2,7 +2,11 @@
 
 import { ChangeEvent } from 'react';
 
-export default function TalkWriteFrame() {
+interface Props {
+  nickname: string;
+}
+
+export default function TalkWriteFrame({ nickname }: Props) {
   function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
     const element = e.target;
     element.style.height = '120px';
@@ -22,7 +26,7 @@ export default function TalkWriteFrame() {
           type="text"
           className="text-24 font-700 text-black outline-none placeholder:text-gray-200"
         />
-        <div className="text-18 font-600 text-gray-200">CSRForever</div>
+        <div className="text-18 font-600 text-gray-200">{nickname}</div>
       </div>
       <div className="h-2 bg-gray-100" />
       <textarea
