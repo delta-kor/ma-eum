@@ -31,6 +31,7 @@ export interface TalkCommentMetadata {
   date: Date;
   id: string;
   nickname: string;
+  replies: TalkCommentMetadata[];
 }
 
 export interface ExtendedTalkArticle extends TalkArticle {
@@ -41,13 +42,16 @@ export interface ExtendedTalkArticle extends TalkArticle {
 
 const TalkRouter = router({
   addCommentToArticle: talkProcedure
-    .input(z.object({ articleId: z.string(), content: z.string() }))
+    .input(
+      z.object({ articleId: z.string(), commentId: z.string().optional(), content: z.string() })
+    )
     .mutation(async opts => {
       const user = opts.ctx.user;
       const articleId = opts.input.articleId;
+      const commentId = opts.input.commentId || null;
       const content = opts.input.content;
 
-      await TalkService.addCommentToArticle(user, articleId, content);
+      await TalkService.addCommentToArticle(user, articleId, commentId, content);
       return true;
     }),
 
@@ -112,6 +116,7 @@ export class TalkService {
   public static async addCommentToArticle(
     user: TalkUser,
     articleId: string,
+    commentId: null | string,
     content: string
   ): Promise<void> {
     const validateResult = TalkUtil.validateComment(content);
@@ -127,6 +132,7 @@ export class TalkService {
         articleId,
         content: sanitizedContent,
         id: createId(8),
+        replyToId: commentId,
         userId: user.id,
       },
     });
@@ -219,6 +225,16 @@ export class TalkService {
   public static async getArticleComments(articleId: string): Promise<TalkCommentMetadata[]> {
     const comments = await prisma.talkComment.findMany({
       include: {
+        replyComments: {
+          include: {
+            user: {
+              select: {
+                nickname: true,
+              },
+            },
+          },
+          orderBy: [{ date: 'asc' }],
+        },
         user: {
           select: {
             nickname: true,
@@ -228,6 +244,7 @@ export class TalkService {
       orderBy: [{ date: 'desc' }],
       where: {
         articleId,
+        replyToId: null,
       },
     });
 
@@ -236,6 +253,13 @@ export class TalkService {
       date: comment.date,
       id: comment.id,
       nickname: comment.user.nickname,
+      replies: comment.replyComments.map(reply => ({
+        content: reply.content,
+        date: reply.date,
+        id: reply.id,
+        nickname: reply.user.nickname,
+        replies: [],
+      })),
     }));
   }
 

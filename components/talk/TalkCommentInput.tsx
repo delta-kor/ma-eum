@@ -10,10 +10,12 @@ import { ChangeEvent, useContext, useRef } from 'react';
 
 interface Props {
   articleId: string;
+  commentId?: string;
   login: boolean;
+  onSubmit?: () => void;
 }
 
-export default function TalkCommentInput({ articleId, login }: Props) {
+export default function TalkCommentInput({ articleId, commentId, login, onSubmit }: Props) {
   const modal = useModal();
   const talkComment = useContext(TalkCommentContext);
 
@@ -47,7 +49,7 @@ export default function TalkCommentInput({ articleId, login }: Props) {
 
   function handleAction(content: string) {
     addComment.mutate(
-      { articleId, content },
+      { articleId, commentId, content },
       {
         onError: error => {
           modal.alert(error.message);
@@ -56,6 +58,7 @@ export default function TalkCommentInput({ articleId, login }: Props) {
           resetForm();
           await revalidateTalkComment(articleId);
           talkComment.refresh();
+          onSubmit?.();
         },
       }
     );
