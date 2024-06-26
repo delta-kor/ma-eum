@@ -31,6 +31,17 @@ export interface ExtendedTalkArticle extends TalkArticle {
 }
 
 const TalkRouter = router({
+  addCommentToArticle: talkProcedure
+    .input(z.object({ articleId: z.string(), content: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const articleId = opts.input.articleId;
+      const content = opts.input.content;
+
+      await TalkService.addCommentToArticle(user, articleId, content);
+      return true;
+    }),
+
   createArticle: talkProcedure
     .input(
       z.object({
@@ -80,6 +91,21 @@ const TalkRouter = router({
 
 export class TalkService {
   public static router = TalkRouter;
+
+  public static async addCommentToArticle(
+    user: TalkUser,
+    articleId: string,
+    content: string
+  ): Promise<void> {
+    const comment = await prisma.talkComment.create({
+      data: {
+        articleId,
+        content,
+        id: createId(8),
+        userId: user.id,
+      },
+    });
+  }
 
   public static async createArticle(
     user: TalkUser,

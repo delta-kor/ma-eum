@@ -18,6 +18,7 @@
   "error_invalid_length_nickname": "Please enter a nickname between 2 and 15 characters.",
   "error_invalid_length_title": "Please enter a title within 50 characters.",
   "error_nickname_in_use": "This nickname is already in use.",
+  "error_not_found": "The content you are looking for is not available.",
   "error_unauthorized": "User information not found. Please refresh the page.",
   "live": "Live",
   "member_duna": "Duna",

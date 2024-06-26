@@ -17,7 +17,7 @@ export default function TalkArticleReact({ article, user }: Props) {
         className="flex cursor-pointer items-center gap-8"
       >
         <Icon
-          data-active={user && article.likedUsers.some(user => user.id === user.id)}
+          data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
           type="heart"
           className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
         />

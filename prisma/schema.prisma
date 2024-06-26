@@ -262,6 +262,7 @@ model TalkUser {
   createdAt DateTime     @default(now())
 
   articles TalkArticle[] @relation("articles")
+  comments TalkComment[]
 
   likedArticles TalkArticle[]
 }
@@ -276,4 +277,21 @@ model TalkArticle {
   userId String
 
   likedUsers TalkUser[]
+  comments   TalkComment[]
+}
+
+model TalkComment {
+  id      String   @id
+  content String
+  date    DateTime @default(now())
+
+  user   TalkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  article   TalkArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+
+  replyTo       TalkComment?  @relation("reply", fields: [replyToId], references: [id], onDelete: SetNull)
+  replyToId     String?
+  replyComments TalkComment[] @relation("reply")
 }

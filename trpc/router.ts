@@ -28,6 +28,13 @@ const t = initTRPC.create({
       };
     }
 
+    if (error.code === 'NOT_FOUND') {
+      return {
+        ...shape,
+        message: '$error_not_found',
+      };
+    }
+
     return shape;
   },
   transformer: superjson,
