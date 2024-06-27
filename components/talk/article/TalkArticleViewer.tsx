@@ -21,7 +21,7 @@ export default function TalkArticleViewer({ article, user }: Props) {
         <TalkArticleContent article={article} />
         <TalkArticleReact article={article} user={user} />
         <TalkCommentInput articleId={article.id} login={!!user} />
-        <TalkCommentList articleId={article.id} login={!!user} />
+        <TalkCommentList articleId={article.id} userId={user?.id || null} />
       </div>
     </TalkCommentProvider>
   );

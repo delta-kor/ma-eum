@@ -92,7 +92,11 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
   }
 
   const isEditMode = !!edit;
-  const isLoading = createArticle.isPending || createArticle.isSuccess;
+  const isLoading =
+    createArticle.isPending ||
+    createArticle.isSuccess ||
+    editArticle.isPending ||
+    editArticle.isSuccess;
 
   return (
     <form action={handleSubmit} onChange={handleChange} className="flex flex-col gap-16">

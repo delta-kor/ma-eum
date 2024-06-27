@@ -8,11 +8,11 @@ import { useState } from 'react';
 interface Props {
   articleId: string;
   comment: TalkCommentMetadata;
-  login: boolean;
   reply?: boolean;
+  userId: null | string;
 }
 
-export default function TalkCommentItem({ articleId, comment, login, reply }: Props) {
+export default function TalkCommentItem({ articleId, comment, reply, userId }: Props) {
   const [isReplying, setIsReplying] = useState(false);
 
   function handleReplyOpen() {
@@ -28,20 +28,35 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
   }
 
   const hasReplies = comment.replies.length > 0;
+  const isMyComment = userId === comment.userId;
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-8">
-          <div className="text-14 font-600 text-primary-500">{comment.nickname}</div>
-          <div className="size-4 rounded-full bg-gray-200" />
-          <div className="text-14 text-gray-500">
-            {getShortPastRelativeTime(comment.date, new Date())}
+      <div className="flex items-start gap-16">
+        <div className="flex min-w-0 grow flex-col gap-4">
+          <div className="flex items-center gap-8 self-stretch">
+            <div className="truncate text-14 font-600 text-primary-500">{comment.nickname}</div>
+            <div className="size-4 shrink-0 rounded-full bg-gray-200" />
+            <div className="shrink-0 text-14 text-gray-500">
+              {getShortPastRelativeTime(comment.date, new Date())}
+            </div>
+          </div>
+          <div className="whitespace-pre-line text-16 font-400 leading-6 text-black">
+            {comment.content}
           </div>
         </div>
-        <div className="whitespace-pre-line text-16 font-400 leading-6 text-black">
-          {comment.content}
-        </div>
+        {isMyComment && (
+          <div className="flex items-center gap-8">
+            <div className="flex items-center self-end">
+              <div className="cursor-pointer p-8">
+                <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
+              </div>
+              <div className="cursor-pointer p-8">
+                <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       {!reply &&
         (isReplying ? (
@@ -68,12 +83,12 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
       {(hasReplies || isReplying) && (
         <div className="mt-8 flex gap-16 pl-16">
           <div className="w-2 bg-gray-100" />
-          <div className="flex grow flex-col gap-16">
+          <div className="flex min-w-0 grow flex-col gap-16">
             {isReplying && (
               <TalkCommentInput
                 articleId={articleId}
                 commentId={comment.id}
-                login={login}
+                login={!!userId}
                 onSubmit={handleReplySubmit}
               />
             )}
@@ -82,7 +97,7 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
                 key={reply.id}
                 articleId={articleId}
                 comment={reply}
-                login={login}
+                userId={userId}
                 reply
               />
             ))}

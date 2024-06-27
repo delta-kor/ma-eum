@@ -7,10 +7,10 @@ import { useContext, useEffect } from 'react';
 
 interface Props {
   articleId: string;
-  login: boolean;
+  userId: null | string;
 }
 
-export default function TalkCommentList({ articleId, login }: Props) {
+export default function TalkCommentList({ articleId, userId }: Props) {
   const talkCommentContext = useContext(TalkCommentContext);
   const comments = trpc.talk.getArticleComments.useQuery(
     {
@@ -32,7 +32,7 @@ export default function TalkCommentList({ articleId, login }: Props) {
   return (
     <div className="flex flex-col gap-32">
       {items.map(comment => (
-        <TalkCommentItem key={comment.id} articleId={articleId} comment={comment} login={login} />
+        <TalkCommentItem key={comment.id} articleId={articleId} comment={comment} userId={userId} />
       ))}
     </div>
   );

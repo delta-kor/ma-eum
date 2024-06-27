@@ -32,6 +32,7 @@ export interface TalkCommentMetadata {
   id: string;
   nickname: string;
   replies: TalkCommentMetadata[];
+  userId: string;
 }
 
 export interface ExtendedTalkArticle extends TalkArticle {
@@ -318,6 +319,7 @@ export class TalkService {
         },
         user: {
           select: {
+            id: true,
             nickname: true,
           },
         },
@@ -340,7 +342,9 @@ export class TalkService {
         id: reply.id,
         nickname: reply.user.nickname,
         replies: [],
+        userId: reply.userId,
       })),
+      userId: comment.user.id,
     }));
   }
 
