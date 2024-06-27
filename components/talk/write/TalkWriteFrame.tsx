@@ -1,26 +1,43 @@
 'use client';
 
-import { revalidateTalkWrite } from '@/actions/revalidate.action';
+import { revalidateTalkEdit, revalidateTalkWrite } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+
+export interface TalkEditData {
+  articleId: string;
+  content: string;
+  title: string;
+}
 
 interface Props {
+  edit?: TalkEditData;
   nickname: string;
 }
 
-export default function TalkWriteFrame({ nickname }: Props) {
+export default function TalkWriteFrame({ edit, nickname }: Props) {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState<null | string>(null);
   const createArticle = trpc.talk.createArticle.useMutation();
+  const editArticle = trpc.talk.editArticle.useMutation();
 
   const router = useRouter();
 
-  function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    const element = e.target;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (edit) setIsActive(true);
+    handleTextareaChange();
+  }, []);
+
+  function handleTextareaChange() {
+    const element = textareaRef.current;
+    if (!element) return false;
+
     element.style.height = '120px';
     element.style.height = element.scrollHeight + 'px';
   }
@@ -37,18 +54,33 @@ export default function TalkWriteFrame({ nickname }: Props) {
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
 
-    createArticle.mutate(
-      { content: sanitizedContent, title: sanitizedTitle },
-      {
-        onError: error => {
-          setError(error.message);
-        },
-        onSuccess: async articleId => {
-          await revalidateTalkWrite();
-          router.replace(`/talk/article/${articleId}`);
-        },
-      }
-    );
+    if (isEditMode) {
+      editArticle.mutate(
+        { articleId: edit.articleId, content: sanitizedContent, title: sanitizedTitle },
+        {
+          onError: error => {
+            setError(error.message);
+          },
+          onSuccess: async () => {
+            await revalidateTalkEdit(edit!.articleId);
+            router.replace(`/talk/article/${edit!.articleId}`);
+          },
+        }
+      );
+    } else {
+      createArticle.mutate(
+        { content: sanitizedContent, title: sanitizedTitle },
+        {
+          onError: error => {
+            setError(error.message);
+          },
+          onSuccess: async articleId => {
+            await revalidateTalkWrite();
+            router.replace(`/talk/article/${articleId}`);
+          },
+        }
+      );
+    }
   }
 
   function handleChange(e: ChangeEvent<HTMLFormElement>) {
@@ -59,6 +91,7 @@ export default function TalkWriteFrame({ nickname }: Props) {
     setIsActive(!!title && !!content);
   }
 
+  const isEditMode = !!edit;
   const isLoading = createArticle.isPending || createArticle.isSuccess;
 
   return (
@@ -69,11 +102,12 @@ export default function TalkWriteFrame({ nickname }: Props) {
             autoCapitalize="off"
             autoComplete="off"
             autoCorrect="off"
+            autoFocus={!isEditMode}
+            defaultValue={edit?.title}
             name="title"
             placeholder="제목"
             spellCheck="false"
             type="text"
-            autoFocus
             className="text-24 font-700 text-black outline-none placeholder:text-gray-200"
           />
           <div className="text-18 font-600 text-gray-200">{nickname}</div>
@@ -98,9 +132,12 @@ export default function TalkWriteFrame({ nickname }: Props) {
       )}
       <div className="h-2 bg-gray-100" />
       <textarea
+        ref={textareaRef}
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
+        autoFocus={isEditMode}
+        defaultValue={edit?.content}
         maxLength={1000}
         name="content"
         placeholder="내용을 입력해주세요."

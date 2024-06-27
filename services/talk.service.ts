@@ -80,9 +80,22 @@ const TalkRouter = router({
     const user = await TalkService.createUser(nickname);
     const token = Auth.createToken(user);
     Auth.setTokenCookie(token);
-
-    return true;
   }),
+
+  editArticle: talkProcedure
+    .input(z.object({ articleId: z.string(), content: z.string(), title: z.string() }))
+    .mutation(async opts => {
+      const input = opts.input;
+      const user = opts.ctx.user;
+      const articleId = input.articleId;
+
+      const payload: TalkArticlePayload = {
+        content: input.content,
+        title: input.title,
+      };
+
+      await TalkService.editArticle(user, articleId, payload);
+    }),
 
   getArticleComments: publicProcedure
     .input(z.object({ articleId: z.string() }))
@@ -235,6 +248,41 @@ export class TalkService {
     });
 
     return user;
+  }
+
+  public static async editArticle(
+    user: TalkUser,
+    articleId: string,
+    payload: TalkArticlePayload
+  ): Promise<void> {
+    const article = await prisma.talkArticle.findUnique({
+      where: {
+        id: articleId,
+        isDeleted: false,
+      },
+    });
+
+    if (!article) throw new TRPCError({ code: 'NOT_FOUND' });
+    if (article.userId !== user.id) throw new TRPCError({ code: 'FORBIDDEN' });
+
+    const validateResult = TalkUtil.validateArticle(payload.title, payload.content);
+    if (validateResult.error)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: validateResult.message!,
+      });
+    const sanitizedTitle = validateResult.title!;
+    const sanitizedContent = validateResult.content!;
+
+    await prisma.talkArticle.update({
+      data: {
+        content: sanitizedContent,
+        title: sanitizedTitle,
+      },
+      where: {
+        id: articleId,
+      },
+    });
   }
 
   @DataCache('talk.getArticle', StaticDataTtl)
