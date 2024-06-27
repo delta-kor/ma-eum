@@ -26,3 +26,9 @@ export async function revalidateTalkComment(articleId: string): Promise<void> {
   revalidateTag('talk');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
+
+export async function revalidateTalkDelete(articleId: string): Promise<void> {
+  revalidateTag('talk');
+  revalidatePath('/talk', 'page');
+  revalidatePath(`/talk/article/${articleId}`, 'page');
+}

@@ -137,15 +137,37 @@ export class TalkService {
       });
     const sanitizedContent = validateResult.content!;
 
-    await prisma.talkComment.create({
-      data: {
-        articleId,
-        content: sanitizedContent,
-        id: createId(8),
-        replyToId: commentId,
-        userId: user.id,
-      },
-    });
+    try {
+      await prisma.talkComment.create({
+        data: {
+          article: {
+            connect: {
+              id: articleId,
+              isDeleted: false,
+            },
+          },
+          content: sanitizedContent,
+          id: createId(8),
+          replyTo: commentId
+            ? {
+                connect: {
+                  id: commentId,
+                },
+              }
+            : undefined,
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2003' || e.code === 'P2025') throw new TRPCError({ code: 'NOT_FOUND' });
+        else throw e;
+      }
+    }
   }
 
   public static async createArticle(
@@ -225,6 +247,7 @@ export class TalkService {
       },
       where: {
         id: articleId,
+        isDeleted: false,
       },
     });
 
@@ -301,6 +324,9 @@ export class TalkService {
           },
         },
       },
+      where: {
+        isDeleted: false,
+      },
     });
 
     const metadata: TalkArticleMetadata[] = articles.map(article => ({
@@ -355,11 +381,12 @@ export class TalkService {
         },
         where: {
           id: articleId,
+          isDeleted: false,
         },
       });
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
-        if (e.code === 'P2025') throw new TRPCError({ code: 'NOT_FOUND' });
+        if (e.code === 'P2025' || e.code === 'P2016') throw new TRPCError({ code: 'NOT_FOUND' });
         else throw e;
       }
     }
@@ -369,6 +396,7 @@ export class TalkService {
     const article = await prisma.talkArticle.findUnique({
       where: {
         id: articleId,
+        isDeleted: false,
       },
     });
 

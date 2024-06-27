@@ -2,11 +2,16 @@
 
 import { ReactNode, createContext, useRef, useState } from 'react';
 
-export type Modal = AlertModal | TalkLoginModal;
+export type Modal = AlertModal | ConfirmModal | TalkLoginModal;
 
 export interface AlertModal {
   content: string;
   type: 'alert';
+}
+
+export interface ConfirmModal {
+  content: string;
+  type: 'confirm';
 }
 
 export interface TalkLoginModal {
@@ -25,6 +30,7 @@ export interface ModalCancelResult {
 
 interface Context {
   alert: (content: string, callback?: ModalResolver) => void;
+  confirm: (content: string, callback?: ModalResolver) => void;
   login: (callback: ModalResolver) => void;
   modal: Modal | null;
   resolve: (result: ModalResult) => void;
@@ -51,6 +57,14 @@ export default function ModalProvider({ children }: Props) {
     resolverRef.current = callback || null;
   }
 
+  function handleConfirm(content: string, callback?: ModalResolver) {
+    setModal({
+      content,
+      type: 'confirm',
+    });
+    resolverRef.current = callback || null;
+  }
+
   function handleLogin(callback: ModalResolver) {
     setModal({
       type: 'talkLogin',
@@ -65,6 +79,7 @@ export default function ModalProvider({ children }: Props) {
 
   const value: Context = {
     alert: handleAlert,
+    confirm: handleConfirm,
     login: handleLogin,
     modal,
     resolve: handleResolve,

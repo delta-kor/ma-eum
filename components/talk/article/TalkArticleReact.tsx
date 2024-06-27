@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import TalkArticleDelete from '@/components/talk/article/TalkArticleDelete';
 import TalkArticleHeart from '@/components/talk/article/TalkArticleHeart';
 import { ExtendedTalkArticle } from '@/services/talk.service';
 import { TalkUser } from '@prisma/client';
@@ -17,10 +18,14 @@ export default function TalkArticleReact({ article, user }: Props) {
             <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
             <div className="text-16 font-500 text-gray-500">수정</div>
           </div>
-          <div className="-m-8 flex cursor-pointer items-center gap-8 p-8">
+          <TalkArticleDelete
+            articleId={article.id}
+            login={!!user}
+            className="-m-8 flex cursor-pointer items-center gap-8 p-8"
+          >
             <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
             <div className="text-16 font-500 text-gray-500">삭제</div>
-          </div>
+          </TalkArticleDelete>
         </div>
       )}
       <div className="flex items-center gap-24">

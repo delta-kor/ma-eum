@@ -1,6 +1,7 @@
 'use client';
 
 import AlertModal from '@/components/core/modal/AlertModal';
+import ConfirmModal from '@/components/core/modal/ConfirmModal';
 import TalkLoginModal from '@/components/core/modal/TalkLoginModal';
 import useModal from '@/hooks/modal';
 import { ModalResult } from '@/providers/ModalProvider';
@@ -18,6 +19,8 @@ export default function ModalFrame() {
   let content;
   if (currentModal.type === 'alert')
     content = <AlertModal modal={currentModal} onResolve={handleResolve} />;
+  if (currentModal.type === 'confirm')
+    content = <ConfirmModal modal={currentModal} onResolve={handleResolve} />;
   if (currentModal.type === 'talkLogin')
     content = <TalkLoginModal modal={currentModal} onResolve={handleResolve} />;
 
