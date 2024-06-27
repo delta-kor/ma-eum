@@ -1,5 +1,5 @@
-import TalkArticleList from '@/components/talk/TalkArticleList';
-import TalkArticleListMenu from '@/components/talk/TalkArticleListMenu';
+import TalkArticleList from '@/components/talk/article/TalkArticleList';
+import TalkArticleListMenu from '@/components/talk/article/TalkArticleListMenu';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
 

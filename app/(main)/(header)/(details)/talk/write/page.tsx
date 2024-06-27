@@ -1,5 +1,5 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
-import TalkWriteFrame from '@/components/talk/TalkWriteFrame';
+import TalkWriteFrame from '@/components/talk/write/TalkWriteFrame';
 import Auth from '@/utils/auth.util';
 import { RedirectType, redirect } from 'next/navigation';
 

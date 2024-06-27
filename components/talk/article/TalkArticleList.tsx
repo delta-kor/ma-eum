@@ -1,4 +1,4 @@
-import TalkArticleItem from '@/components/talk/TalkArticleItem';
+import TalkArticleItem from '@/components/talk/article/TalkArticleItem';
 import { TalkArticleMetadata } from '@/services/talk.service';
 import { PaginationResult } from '@/utils/pagination.util';
 import { TalkUser } from '@prisma/client';

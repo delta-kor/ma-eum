@@ -1,4 +1,4 @@
-import TalkLoginContent from '@/components/talk/TalkLoginContent';
+import TalkLoginContent from '@/components/talk/login/TalkLoginContent';
 import {
   ModalResolver,
   TalkLoginModal as TalkLoginModalInterface,

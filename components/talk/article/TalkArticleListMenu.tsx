@@ -1,4 +1,4 @@
-import TalkWriteButton from '@/components/talk/TalkWriteButton';
+import TalkWriteButton from '@/components/talk/write/TalkWriteButton';
 import { TalkUser } from '@prisma/client';
 
 interface Props {

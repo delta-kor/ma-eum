@@ -1,5 +1,5 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
-import TalkLoginPageFrame from '@/components/talk/TalkLoginPageFrame';
+import TalkLoginPageFrame from '@/components/talk/login/TalkLoginPageFrame';
 import Auth from '@/utils/auth.util';
 import { RedirectType, redirect } from 'next/navigation';
 

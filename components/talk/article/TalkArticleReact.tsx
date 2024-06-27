@@ -1,5 +1,5 @@
 import Icon from '@/components/core/Icon';
-import TalkArticleHeart from '@/components/talk/TalkArticleHeart';
+import TalkArticleHeart from '@/components/talk/article/TalkArticleHeart';
 import { ExtendedTalkArticle } from '@/services/talk.service';
 import { TalkUser } from '@prisma/client';
 

@@ -1,6 +1,6 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
-import TalkArticleViewer from '@/components/talk/TalkArticleViewer';
+import TalkArticleViewer from '@/components/talk/article/TalkArticleViewer';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
 import { notFound } from 'next/navigation';

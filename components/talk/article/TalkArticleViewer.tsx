@@ -1,8 +1,8 @@
-import TalkArticleContent from '@/components/talk/TalkArticleContent';
-import TalkArticleHeader from '@/components/talk/TalkArticleHeader';
-import TalkArticleReact from '@/components/talk/TalkArticleReact';
-import TalkCommentInput from '@/components/talk/TalkCommentInput';
-import TalkCommentList from '@/components/talk/TalkCommentList';
+import TalkArticleContent from '@/components/talk/article/TalkArticleContent';
+import TalkArticleHeader from '@/components/talk/article/TalkArticleHeader';
+import TalkArticleReact from '@/components/talk/article/TalkArticleReact';
+import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
+import TalkCommentList from '@/components/talk/comment/TalkCommentList';
 import TalkCommentProvider from '@/providers/TalkCommentProvider';
 import { ExtendedTalkArticle } from '@/services/talk.service';
 import { TalkUser } from '@prisma/client';

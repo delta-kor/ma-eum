@@ -108,6 +108,16 @@ const TalkRouter = router({
     const likesCount = await TalkService.likeArticle(user, articleId);
     return likesCount;
   }),
+
+  softDeleteArticle: talkProcedure
+    .input(z.object({ articleId: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const articleId = opts.input.articleId;
+
+      await TalkService.softDeleteArticle(user, articleId);
+      return true;
+    }),
 });
 
 export class TalkService {
@@ -353,5 +363,25 @@ export class TalkService {
         else throw e;
       }
     }
+  }
+
+  public static async softDeleteArticle(user: TalkUser, articleId: string): Promise<void> {
+    const article = await prisma.talkArticle.findUnique({
+      where: {
+        id: articleId,
+      },
+    });
+
+    if (!article) throw new TRPCError({ code: 'NOT_FOUND' });
+    if (article.userId !== user.id) throw new TRPCError({ code: 'FORBIDDEN' });
+
+    await prisma.talkArticle.update({
+      data: {
+        isDeleted: true,
+      },
+      where: {
+        id: articleId,
+      },
+    });
   }
 }

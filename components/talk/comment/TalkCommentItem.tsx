@@ -1,5 +1,5 @@
 import Icon from '@/components/core/Icon';
-import TalkCommentInput from '@/components/talk/TalkCommentInput';
+import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
 import { TalkCommentMetadata } from '@/services/talk.service';
 import { getShortPastRelativeTime } from '@/utils/time.util';
 import { useState } from 'react';

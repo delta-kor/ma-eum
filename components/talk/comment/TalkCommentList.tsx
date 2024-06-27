@@ -1,6 +1,6 @@
 'use client';
 
-import TalkCommentItem from '@/components/talk/TalkCommentItem';
+import TalkCommentItem from '@/components/talk/comment/TalkCommentItem';
 import { trpc } from '@/hooks/trpc';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { useContext, useEffect } from 'react';
