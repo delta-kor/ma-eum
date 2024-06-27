@@ -17,7 +17,7 @@ export default function TalkArticleItem({ articleMetadata, today, user }: Props)
       className="flex flex-col gap-12 lg:flex-row lg:items-center"
     >
       <div className="flex flex-col gap-4 lg:grow">
-        <div className="text-14 font-500 text-gray-500">{articleMetadata.nickname}</div>
+        <div className="truncate text-14 font-500 text-gray-500">{articleMetadata.nickname}</div>
         <div className="flex flex-col gap-4">
           <div className="truncate text-20 font-700 text-black">{articleMetadata.title}</div>
           <div className="line-clamp-2 whitespace-pre-line text-16 font-400 text-gray-500">

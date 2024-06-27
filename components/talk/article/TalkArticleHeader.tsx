@@ -12,8 +12,10 @@ export default function TalkArticleHeader({ article }: Props) {
     <div className="flex flex-col gap-8">
       <div className="text-24 font-700 text-black">{article.title}</div>
       <div className="flex items-center gap-16">
-        <div className="text-16 font-500 text-gray-500">{article.user.nickname}</div>
-        <div className="text-14 font-500 text-gray-200">{date.toFormat('yy. MM. dd. HH:mm')}</div>
+        <div className="truncate text-16 font-500 text-gray-500">{article.user.nickname}</div>
+        <div className="shrink-0 text-14 font-500 text-gray-200">
+          {date.toFormat('yy. MM. dd. HH:mm')}
+        </div>
       </div>
     </div>
   );
