@@ -14,14 +14,12 @@ export default function TalkArticleList({ preloadedArticlesMetadata, user }: Pro
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
 
   return (
-    <div className="flex flex-col gap-24">
+    <div className="flex flex-col gap-20">
       {items.map(articleMetadata => (
-        <TalkArticleItem
-          key={articleMetadata.id}
-          articleMetadata={articleMetadata}
-          today={today}
-          user={user}
-        />
+        <div key={articleMetadata.id} className="flex flex-col gap-20">
+          <TalkArticleItem articleMetadata={articleMetadata} today={today} user={user} />
+          <div className="h-2 bg-gray-50" />
+        </div>
       ))}
     </div>
   );
