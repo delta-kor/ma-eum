@@ -1,4 +1,5 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
+import Title from '@/components/core/header/Title';
 import TalkWriteFrame from '@/components/talk/write/TalkWriteFrame';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
@@ -26,6 +27,7 @@ export default async function TalkEditPage({ params: { articleId } }: Props) {
 
   return (
     <DetailsContent>
+      <Title>Edit</Title>
       <div className="px-24">
         <div className="pb-24 pt-16 lg:mx-auto lg:max-w-screen-lg lg:pt-24">
           <TalkWriteFrame

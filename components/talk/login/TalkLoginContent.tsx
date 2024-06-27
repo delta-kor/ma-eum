@@ -66,8 +66,12 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
     <form action={handleSubmit} className="flex flex-col gap-24">
       <div className="flex flex-col gap-24">
         <div className="flex flex-col gap-8">
-          <div className="text-20 font-600 text-black">사용하실 닉네임을 입력해주세요</div>
-          <div className="text-16 font-500 text-gray-500">닉네임은 나중에 바꿀 수 있어요.</div>
+          <div className="text-20 font-600 text-black">
+            <Translate>$talk_login_enter_nickname</Translate>
+          </div>
+          <div className="text-16 font-500 text-gray-500">
+            <Translate>$talk_login_nickname_can_be_changed</Translate>
+          </div>
         </div>
         <input
           autoCapitalize="off"
@@ -91,18 +95,20 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
         <button
           type="button"
           onClick={handleCancel}
-          className="-m-16 self-start p-16 text-16 font-500 text-gray-500"
+          className="-m-16 self-start p-16 text-16 font-400 text-gray-500"
         >
-          취소
+          <Translate>$modal_cancel</Translate>
         </button>
         {isLoading ? (
-          <div className="flex items-center gap-8 self-start text-16 font-500 text-gray-500">
+          <div className="flex items-center gap-8 self-start text-16 font-400 text-gray-500">
             <Icon type="spinner" className="w-16 shrink-0 animate-spin" />
-            <span>확인</span>
+            <span>
+              <Translate>$modal_confirm</Translate>
+            </span>
           </div>
         ) : (
           <button type="submit" className="-m-16 self-start p-16 text-16 font-700 text-primary-500">
-            확인
+            <Translate>$modal_confirm</Translate>
           </button>
         )}
       </div>

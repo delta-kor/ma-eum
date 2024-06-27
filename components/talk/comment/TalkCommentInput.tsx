@@ -81,7 +81,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
         rows={2}
         spellCheck="false"
         onChange={handleTextareaChange}
-        className="grow resize-none bg-transparent py-16 pl-20 text-16 font-500 leading-6 text-black outline-none placeholder:text-gray-500"
+        className="grow resize-none bg-transparent py-16 pl-20 text-16 font-400 leading-6 text-black outline-none placeholder:text-gray-500"
       />
       <button type="submit" className="flex items-center px-20">
         <Icon

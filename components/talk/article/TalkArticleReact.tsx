@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import TalkArticleDelete from '@/components/talk/article/TalkArticleDelete';
 import TalkArticleHeart from '@/components/talk/article/TalkArticleHeart';
 import { ExtendedTalkArticle } from '@/services/talk.service';
@@ -17,11 +18,12 @@ export default function TalkArticleReact({ article, user }: Props) {
         <div className="flex items-center gap-24 self-end">
           <Link
             href={`/talk/article/${article.id}/edit`}
-            replace
             className="-m-8 flex cursor-pointer items-center gap-8 p-8"
           >
             <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
-            <div className="text-16 font-500 text-gray-500">수정</div>
+            <div className="text-16 font-500 text-gray-500">
+              <Translate>$article_edit</Translate>
+            </div>
           </Link>
           <TalkArticleDelete
             articleId={article.id}
@@ -29,7 +31,9 @@ export default function TalkArticleReact({ article, user }: Props) {
             className="-m-8 flex cursor-pointer items-center gap-8 p-8"
           >
             <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
-            <div className="text-16 font-500 text-gray-500">삭제</div>
+            <div className="text-16 font-500 text-gray-500">
+              <Translate>$article_delete</Translate>
+            </div>
           </TalkArticleDelete>
         </div>
       )}

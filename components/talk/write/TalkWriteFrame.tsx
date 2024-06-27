@@ -63,7 +63,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
           },
           onSuccess: async () => {
             await revalidateTalkEdit(edit!.articleId);
-            router.replace(`/talk/article/${edit!.articleId}`);
+            router.push(`/talk/article/${edit!.articleId}`);
           },
         }
       );
@@ -118,7 +118,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
           className="group flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary"
         >
           <div className="text-16 font-600 text-gray-200 group-data-[active=true]:text-white">
-            <Translate>$article_post</Translate>
+            <Translate>{isEditMode ? '$article_edit' : '$article_post'}</Translate>
           </div>
           {isLoading && (
             <Icon type="spinner" className="size-16 shrink-0 animate-spin text-white" />

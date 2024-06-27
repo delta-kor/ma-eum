@@ -18,7 +18,7 @@ export default function TalkArticleDelete({ articleId, login, children, ...props
   const deleteArticle = trpc.talk.softDeleteArticle.useMutation();
 
   function handleClick() {
-    modal.confirm('정말 삭제하시겠습니까?', handleModalResolve);
+    modal.confirm('$talk_article_delete_confirm', handleModalResolve);
   }
 
   function handleModalResolve(result: ModalResult) {

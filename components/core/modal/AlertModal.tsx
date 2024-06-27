@@ -16,7 +16,7 @@ export default function AlertModal({ modal, onResolve }: Props) {
         onClick={() => onResolve({ type: 'confirm' })}
         className="-m-16 cursor-pointer p-16 text-center text-16 font-600 text-primary-500"
       >
-        확인
+        <Translate>$modal_ok</Translate>
       </div>
     </div>
   );

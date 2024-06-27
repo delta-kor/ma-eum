@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
 import { TalkCommentMetadata } from '@/services/talk.service';
 import { getShortPastRelativeTime } from '@/utils/time.util';
@@ -49,7 +50,9 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
             className="flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8"
           >
             <Icon type="close" className="w-10 shrink-0 text-gray-500" />
-            <div className="select-none text-14 font-500 text-gray-500">취소</div>
+            <div className="select-none text-14 font-500 text-gray-500">
+              <Translate>$talk_comment_reply_cancel</Translate>
+            </div>
           </div>
         ) : (
           <div
@@ -57,7 +60,9 @@ export default function TalkCommentItem({ articleId, comment, login, reply }: Pr
             className="flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8"
           >
             <Icon type="comment" className="w-14 shrink-0 text-gray-500" />
-            <div className="select-none text-14 font-500 text-gray-500">답글 달기</div>
+            <div className="select-none text-14 font-500 text-gray-500">
+              <Translate>$talk_comment_reply</Translate>
+            </div>
           </div>
         ))}
       {(hasReplies || isReplying) && (
