@@ -1,4 +1,4 @@
-import prisma from '@/prisma/prisma';
+import { TalkService } from '@/services/talk.service';
 import { TalkUser } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
@@ -38,11 +38,7 @@ export default class Auth {
     const userId = decoded.userId;
     if (!userId) return null;
 
-    const user = await prisma.talkUser.findUnique({
-      where: {
-        id: userId,
-      },
-    });
+    const user = await TalkService.getUser(userId);
     return user || null;
   }
 }

@@ -440,6 +440,15 @@ export class TalkService {
     return PrismaUtil.buildPagination(metadata);
   }
 
+  @DataCache('talk.getUser', StaticDataTtl)
+  public static async getUser(userId: string): Promise<TalkUser | null> {
+    return prisma.talkUser.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+
   public static async likeArticle(user: TalkUser, articleId: string): Promise<void> {
     const isLiked = await prisma.talkArticle.findFirst({
       where: {
