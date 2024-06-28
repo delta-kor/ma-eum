@@ -22,6 +22,7 @@ interface Props {
 
 export default function FeedList({ preloadedFeeds }: Props) {
   const { inView, ref } = useInView({
+    rootMargin: '200px',
     threshold: 0,
   });
 

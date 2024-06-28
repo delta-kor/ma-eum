@@ -1,7 +1,9 @@
 'use client';
 
 import EndItems from '@/components/core/EndItems';
-import TalkArticleItem from '@/components/talk/article/TalkArticleItem';
+import TalkArticleItem, {
+  TalkArticleItemPlaceholder,
+} from '@/components/talk/article/TalkArticleItem';
 import { trpc } from '@/hooks/trpc';
 import { TalkArticleMetadata } from '@/services/talk.service';
 import { PaginationResult } from '@/utils/pagination.util';
@@ -16,6 +18,7 @@ interface Props {
 
 export default function TalkArticleList({ preloadedArticlesMetadata, userId }: Props) {
   const { inView, ref } = useInView({
+    rootMargin: '200px',
     threshold: 0,
   });
 
@@ -37,22 +40,56 @@ export default function TalkArticleList({ preloadedArticlesMetadata, userId }: P
   }, [inView]);
 
   const items = articles.data?.pages.map(page => page.items).flat() || [];
+  const isLoading = articles.isFetching && !articles.isFetchingNextPage;
+
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
+
+  const placeholder = (
+    <>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+    </>
+  );
 
   return (
     <div className="flex flex-col gap-20">
-      {items.map(articleMetadata => (
-        <div key={articleMetadata.id} className="flex flex-col gap-20">
-          <TalkArticleItem articleMetadata={articleMetadata} today={today} userId={userId} />
-          <div className="h-2 bg-gray-50" />
-        </div>
-      ))}
-      {articles.hasNextPage ? (
-        <div ref={ref} className="col-span-full h-8" />
+      {isLoading ? (
+        placeholder
       ) : (
-        <div className="col-span-full">
-          <EndItems />
-        </div>
+        <>
+          {items.map(articleMetadata => (
+            <div key={articleMetadata.id} className="flex flex-col gap-20">
+              <TalkArticleItem articleMetadata={articleMetadata} today={today} userId={userId} />
+              <div className="h-2 bg-gray-50" />
+            </div>
+          ))}
+          {articles.isFetchingNextPage && placeholder}
+          {articles.hasNextPage ? (
+            <div ref={ref} className="col-span-full h-8" />
+          ) : (
+            <div className="col-span-full">
+              <EndItems />
+            </div>
+          )}
+        </>
       )}
     </div>
   );

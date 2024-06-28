@@ -65,10 +65,10 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
           modal.alert(error.message);
         },
         onSuccess: async () => {
-          resetForm();
           await revalidateTalkComment(articleId);
           talkComment.refresh();
           onSubmit?.();
+          resetForm();
         },
       }
     );

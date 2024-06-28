@@ -55,3 +55,34 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
     </Link>
   );
 }
+
+export function TalkArticleItemPlaceholder() {
+  return (
+    <div className="flex flex-col gap-12 lg:flex-row lg:items-center">
+      <div className="flex flex-col gap-4 lg:grow">
+        <div className="h-[17px] w-[128px] rounded-4 bg-gray-100" />
+        <div className="flex flex-col gap-4">
+          <div className="h-24 w-4/5 rounded-4 bg-gray-100" />
+          <div className="flex flex-col gap-2">
+            <div className="h-[19px] w-3/5 rounded-4 bg-gray-50" />
+            <div className="h-[19px] w-2/5 rounded-4 bg-gray-50" />
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center gap-16 lg:flex-col lg:items-end lg:gap-8">
+        <div className="flex items-center gap-16">
+          <div className="flex items-center gap-8">
+            <Icon type="heart" className="w-16 shrink-0 text-gray-200" />
+            <div className="h-[19px] w-32 rounded-4 bg-gray-100" />
+          </div>
+          <div className="flex items-center gap-8">
+            <Icon type="comment" className="w-16 shrink-0 text-gray-200" />
+            <div className="h-[19px] w-32 rounded-4 bg-gray-100" />
+          </div>
+        </div>
+        <div className="-mx-4 size-4 rounded-full bg-gray-200 lg:hidden" />
+        <div className="h-[19px] w-64 rounded-4 bg-gray-100" />
+      </div>
+    </div>
+  );
+}

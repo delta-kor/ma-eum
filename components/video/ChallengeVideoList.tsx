@@ -20,6 +20,7 @@ interface Props {
 
 export default function ChallengeVideoList({ preloadedVideos }: Props) {
   const { inView, ref } = useInView({
+    rootMargin: '200px',
     threshold: 0,
   });
   const query = useQuery();

@@ -15,6 +15,7 @@ interface Props {
 
 export default function ShortsVideoList({ preloadedVideos }: Props) {
   const { inView, ref } = useInView({
+    rootMargin: '200px',
     threshold: 0,
   });
 
