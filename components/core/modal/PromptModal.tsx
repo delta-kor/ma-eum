@@ -34,6 +34,7 @@ export default function PromptModal({ modal, onResolve }: Props) {
           placeholder={placeholder}
           spellCheck="false"
           type="text"
+          autoFocus
           className="w-full rounded-8 bg-gray-100 p-16 text-16 outline-none"
         />
       </div>

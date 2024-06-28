@@ -1,10 +1,9 @@
 import ScheduleCalendarLink from '@/components/calendar/ScheduleCalendarLink';
 import ScheduleFeedItem from '@/components/calendar/ScheduleFeedItem';
 import { ScheduleService } from '@/services/schedule.service';
-import { DateTime } from 'luxon';
 
 export default async function ScheduleFeedList() {
-  const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
+  const today = new Date();
   const feeds = await ScheduleService.getScheduleFeeds(today);
 
   return (
@@ -13,7 +12,7 @@ export default async function ScheduleFeedList() {
       <div className="flex flex-col items-center gap-20">
         <div className="flex flex-col gap-10 self-stretch">
           {feeds.map(feed => (
-            <ScheduleFeedItem key={feed.id} schedule={feed} today={today} />
+            <ScheduleFeedItem key={feed.id} schedule={feed} />
           ))}
         </div>
         <ScheduleCalendarLink />
