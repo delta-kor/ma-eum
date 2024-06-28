@@ -299,3 +299,12 @@ model TalkComment {
 
   isDeleted Boolean @default(false)
 }
+
+model TalkReport {
+  id         String   @id
+  reason     String
+  date       DateTime @default(now())
+  userId     String
+  targetType String
+  targetId   String
+}

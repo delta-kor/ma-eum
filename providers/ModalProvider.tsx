@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useRef, useState } from 'react';
 
-export type Modal = AlertModal | ConfirmModal | TalkLoginModal;
+export type Modal = AlertModal | ConfirmModal | PromptModal | TalkLoginModal;
 
 export interface AlertModal {
   content: string;
@@ -14,14 +14,25 @@ export interface ConfirmModal {
   type: 'confirm';
 }
 
+export interface PromptModal {
+  content: string;
+  placeholder: string;
+  type: 'prompt';
+}
+
 export interface TalkLoginModal {
   type: 'talkLogin';
 }
 
-export type ModalResult = ModalCancelResult | ModalConfirmResult;
+export type ModalResult = ModalCancelResult | ModalConfirmResult | ModalPromptResult;
 
 export interface ModalConfirmResult {
   type: 'confirm';
+}
+
+export interface ModalPromptResult {
+  type: 'prompt';
+  value: string;
 }
 
 export interface ModalCancelResult {
@@ -33,6 +44,7 @@ interface Context {
   confirm: (content: string, callback?: ModalResolver) => void;
   login: (callback: ModalResolver) => void;
   modal: Modal | null;
+  prompt: (content: string, placeholder: string, callback?: ModalResolver) => void;
   resolve: (result: ModalResult) => void;
 }
 
@@ -65,6 +77,15 @@ export default function ModalProvider({ children }: Props) {
     resolverRef.current = callback || null;
   }
 
+  function handlePrompt(content: string, placeholder: string, callback?: ModalResolver) {
+    setModal({
+      content,
+      placeholder,
+      type: 'prompt',
+    });
+    resolverRef.current = callback || null;
+  }
+
   function handleLogin(callback: ModalResolver) {
     setModal({
       type: 'talkLogin',
@@ -82,6 +103,7 @@ export default function ModalProvider({ children }: Props) {
     confirm: handleConfirm,
     login: handleLogin,
     modal,
+    prompt: handlePrompt,
     resolve: handleResolve,
   };
 
