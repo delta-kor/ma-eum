@@ -7,6 +7,7 @@ import { trpc } from '@/hooks/trpc';
 import { ModalResult } from '@/providers/ModalProvider';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { TalkCommentMetadata } from '@/services/talk.service';
+import TalkUtil from '@/utils/talk.util';
 import { getShortPastRelativeTime } from '@/utils/time.util';
 import { useContext, useState } from 'react';
 
@@ -21,6 +22,7 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
   const modal = useModal();
   const talkComment = useContext(TalkCommentContext);
   const deleteComment = trpc.talk.softDeleteComment.useMutation();
+  const reportComment = trpc.talk.reportComment.useMutation();
 
   const [isReplying, setIsReplying] = useState(false);
 
@@ -38,6 +40,18 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
 
   function handleDeleteClick() {
     modal.confirm('$talk_comment_delete_confirm', handleDeleteModalResolve);
+  }
+
+  function handleReportClick() {
+    TalkUtil.checkLogin({
+      action: handleReportAction,
+      login: !!userId,
+      modal,
+    });
+  }
+
+  function handleReportAction() {
+    modal.prompt('$talk_report_enter_reason', '$talk_report_reason', handleReportModalResolve);
   }
 
   function handleDeleteModalResolve(result: ModalResult) {
@@ -59,6 +73,25 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
     );
   }
 
+  function handleReportModalResolve(result: ModalResult) {
+    if (result.type !== 'prompt') return;
+
+    reportComment.mutate(
+      {
+        commentId: comment.id,
+        reason: result.value,
+      },
+      {
+        onError: error => {
+          modal.alert(error.message);
+        },
+        onSuccess: async () => {
+          modal.alert('$talk_report_submitted');
+        },
+      }
+    );
+  }
+
   const hasReplies = comment.replies.length > 0;
   const isMyComment = userId === comment.userId;
 
@@ -72,9 +105,13 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
             <div className="shrink-0 grow text-14 text-gray-500">
               {getShortPastRelativeTime(comment.date, new Date())}
             </div>
-            {isMyComment && (
+            {isMyComment ? (
               <div onClick={handleDeleteClick} className="-m-8 cursor-pointer p-8">
                 <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
+              </div>
+            ) : (
+              <div onClick={handleReportClick} className="-m-8 cursor-pointer p-8">
+                <Icon type="flag" className="w-16 shrink-0 text-gray-200" />
               </div>
             )}
           </div>

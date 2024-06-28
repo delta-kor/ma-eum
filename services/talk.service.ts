@@ -132,6 +132,16 @@ const TalkRouter = router({
       await TalkService.reportArticle(user, articleId, reason);
     }),
 
+  reportComment: talkProcedure
+    .input(z.object({ commentId: z.string(), reason: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const commentId = opts.input.commentId;
+      const reason = opts.input.reason;
+
+      await TalkService.reportComment(user, commentId, reason);
+    }),
+
   softDeleteArticle: talkProcedure
     .input(z.object({ articleId: z.string() }))
     .mutation(async opts => {
@@ -495,6 +505,31 @@ export class TalkService {
         reason,
         targetId: articleId,
         targetType: 'article',
+        userId: user.id,
+      },
+    });
+  }
+
+  public static async reportComment(
+    user: TalkUser,
+    commentId: string,
+    reason: string
+  ): Promise<void> {
+    const comment = await prisma.talkComment.findUnique({
+      where: {
+        id: commentId,
+        isDeleted: false,
+      },
+    });
+
+    if (!comment) throw new TRPCError({ code: 'NOT_FOUND' });
+
+    await prisma.talkReport.create({
+      data: {
+        id: createId(8),
+        reason,
+        targetId: commentId,
+        targetType: 'comment',
         userId: user.id,
       },
     });

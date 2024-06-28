@@ -24,11 +24,7 @@ export default function TalkArticleReport({ articleId, login, children, ...props
   }
 
   function handleAction() {
-    modal.prompt(
-      '$talk_article_report_enter_reason',
-      '$talk_article_report_reason',
-      handleModalResolve
-    );
+    modal.prompt('$talk_report_enter_reason', '$talk_report_reason', handleModalResolve);
   }
 
   function handleModalResolve(result: ModalResult) {
