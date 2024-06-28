@@ -63,8 +63,8 @@ export default function HistoryProvider({ children }: Props) {
       histories.splice(index);
     }
 
-    histories.push([pathname, search, 0]);
-    setScrollPosition(0);
+    histories.push([pathname, search, -1]);
+    setScrollPosition(-1);
 
     if (lastPathname === null || lastSearch === null) return;
     if (page.base) histories.splice(0, histories.length - 1);
@@ -93,7 +93,7 @@ export default function HistoryProvider({ children }: Props) {
     histories.splice(0);
 
     const url = currentPage.back;
-    setScrollPosition(0);
+    setScrollPosition(-1);
     router.replace(url);
   }
 
