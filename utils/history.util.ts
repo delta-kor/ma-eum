@@ -1,6 +1,6 @@
 import { pathToRegexp } from 'path-to-regexp';
 
-export type History = [string, string];
+export type History = [string, string, number];
 
 export interface PageInfo {
   back: string;

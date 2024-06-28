@@ -1,5 +1,6 @@
 'use client';
 
+import useHistory from '@/hooks/history';
 import { usePathname } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
 
@@ -9,9 +10,10 @@ interface Props {
 
 export default function DetailsContent({ children }: Props) {
   const pathname = usePathname();
+  const history = useHistory();
 
   useEffect(() => {
-    window.scrollTo(0, -1);
+    console.log('scroll to', history.scroll);
   }, [pathname]);
 
   return (
