@@ -6,7 +6,7 @@ import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import TalkUtil from '@/utils/talk.util';
-import { ChangeEvent, useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 interface Props {
   articleId: string;
@@ -22,10 +22,12 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
 
   const addComment = trpc.talk.addCommentToArticle.useMutation();
 
-  const formRef = useRef<HTMLFormElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  function handleTextareaChange(e: ChangeEvent<HTMLTextAreaElement>) {
-    const element = e.target;
+  function handleTextareaChange() {
+    const element = textareaRef.current;
+    if (!element) return;
+
     element.style.height = '80px';
     element.style.height = element.scrollHeight + 'px';
 
@@ -47,7 +49,8 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
   }
 
   function resetForm() {
-    formRef.current?.reset();
+    textareaRef.current!.value = '';
+    handleTextareaChange();
   }
 
   function handleAction(content: string) {
@@ -70,8 +73,9 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
   const isLoading = addComment.isPending;
 
   return (
-    <form ref={formRef} action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
+    <form action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
       <textarea
+        ref={textareaRef}
         autoCapitalize="off"
         autoComplete="off"
         autoCorrect="off"
