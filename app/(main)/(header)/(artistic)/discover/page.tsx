@@ -2,7 +2,7 @@ import FeedList from '@/components/feed/FeedList';
 import { FeedService } from '@/services/feed.service';
 import { FeedTypes } from '@/utils/feed.util';
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export default async function DiscoverPage() {
   const feeds = await FeedService.getFeeds(

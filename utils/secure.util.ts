@@ -3,7 +3,7 @@ import 'server-only';
 
 export default class Secure {
   private static cookieName = 'maeum_secure';
-  private static key = process.env.SECURE_KEY;
+  private static key = process.env.CMS_SECURE_KEY;
 
   public static authorize(): never | void {
     const isAuthorized = Secure.isAuthorized();
