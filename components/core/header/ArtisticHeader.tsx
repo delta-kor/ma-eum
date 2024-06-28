@@ -3,6 +3,7 @@
 import ArtisticText from '@/components/core/ArtisticText';
 import Icon from '@/components/core/Icon';
 import Pc from '@/components/core/responsive/Pc';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -39,34 +40,36 @@ export default function ArtisticHeader() {
     >
       <div className="flex items-center justify-between lg:mx-auto lg:max-w-screen-lg group-data-[expanded=true]:lg:max-w-screen-xl">
         <div className="flex items-center gap-48">
-          <ArtisticText
-            type="maeum"
-            onClick={() => handlePush('/')}
-            className="h-24 cursor-pointer transition-all group-data-[floating=true]:h-20 group-data-[floating=true]:text-primary-500"
-          />
+          <Link href={`/`}>
+            <ArtisticText
+              type="maeum"
+              onClick={() => handlePush('/')}
+              className="h-24 cursor-pointer transition-all group-data-[floating=true]:h-20 group-data-[floating=true]:text-primary-500"
+            />
+          </Link>
           <Pc>
             <div className="flex items-center gap-24">
-              <div
+              <Link
                 data-active={pathname === '/'}
-                onClick={() => handlePush('/')}
+                href={`/`}
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
                 Home
-              </div>
-              <div
+              </Link>
+              <Link
                 data-active={pathname === '/discover'}
-                onClick={() => handlePush('/discover')}
+                href={`/discover`}
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
                 Discover
-              </div>
-              <div
+              </Link>
+              <Link
                 data-active={pathname === '/talk'}
-                onClick={() => handlePush('/talk')}
+                href={`/talk`}
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
                 Talk
-              </div>
+              </Link>
               <div
                 data-active={pathname === '/mixer'}
                 onClick={() => handlePush('/mixer')}

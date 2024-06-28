@@ -23,7 +23,7 @@ export default class Auth {
     cookies().set(Auth.cookieName, token, {
       httpOnly: true,
       maxAge: 315360000,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.SECURE_COOKIE === '1',
     });
   }
 

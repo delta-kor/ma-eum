@@ -5,18 +5,15 @@ import TalkArticleItem, {
   TalkArticleItemPlaceholder,
 } from '@/components/talk/article/TalkArticleItem';
 import { trpc } from '@/hooks/trpc';
-import { TalkArticleMetadata } from '@/services/talk.service';
-import { PaginationResult } from '@/utils/pagination.util';
 import { DateTime } from 'luxon';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
-  preloadedArticlesMetadata: PaginationResult<TalkArticleMetadata>;
   userId: null | string;
 }
 
-export default function TalkArticleList({ preloadedArticlesMetadata, userId }: Props) {
+export default function TalkArticleList({ userId }: Props) {
   const { inView, ref } = useInView({
     rootMargin: '200px',
     threshold: 0,
@@ -26,8 +23,7 @@ export default function TalkArticleList({ preloadedArticlesMetadata, userId }: P
     {},
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
-      initialData: { pageParams: [null], pages: [preloadedArticlesMetadata] },
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
     }
