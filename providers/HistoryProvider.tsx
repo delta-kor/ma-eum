@@ -19,7 +19,7 @@ export default function HistoryProvider({ children }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(-1);
 
   const lastPathnameRef = useRef<null | string>(null);
   const lastSearchRef = useRef<null | string>(null);
@@ -50,8 +50,11 @@ export default function HistoryProvider({ children }: Props) {
 
     if (lastPathname === pathname && lastSearch === search) return;
 
-    const lastHistory = histories[histories.length - 1];
+    const lastHistory = histories.find(
+      ([path, query]) => getMatchingPage(path).path === lastPathname && query === lastSearch
+    );
     if (lastHistory) {
+      console.log('setting scroll', lastHistory[0], scroll);
       lastHistory[2] = scroll;
     }
 
