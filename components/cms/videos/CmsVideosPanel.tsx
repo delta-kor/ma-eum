@@ -7,9 +7,9 @@ import {
 import { revalidate } from '@/actions/revalidate.action';
 import CmsButton from '@/components/cms/CmsButton';
 import CmsVideosInfo, { ExtendedCmsVideo } from '@/components/cms/videos/CmsVideosInfo';
+import { formatTimeAsSixDigit } from '@/utils/time.util';
 import { VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { Category } from '@prisma/client';
-import { format } from 'date-fns';
 import { useState } from 'react';
 
 interface Props {
@@ -93,7 +93,9 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
               className="flex cursor-pointer items-center gap-16 rounded-8 px-18 py-8 text-18 hover:bg-gray-100 data-[active=true]:bg-primary-100"
             >
               <div className="code text-14 text-gray-500">{video.id}</div>
-              <div className="code text-14 text-primary-500">{format(video.date, 'yyMMdd')}</div>
+              <div className="code text-14 text-primary-500">
+                {formatTimeAsSixDigit(video.date)}
+              </div>
               {video.categories.length > 0 && (
                 <div className="flex gap-4">
                   {video.categories.map(category => (

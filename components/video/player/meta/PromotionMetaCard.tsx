@@ -3,8 +3,8 @@ import Translate from '@/components/core/Translate';
 import MetaWrapper from '@/components/video/player/meta/MetaWrapper';
 import { AlbumService } from '@/services/album.service';
 import { ExtendedVideo, VideoService } from '@/services/video.service';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { PromotionVideoMeta, getMetaFromVideo, sliceVideosAround } from '@/utils/video.util';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -55,9 +55,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
               <div className="line-clamp-2 text-16 font-600 text-black">
                 {getMetaFromVideo<PromotionVideoMeta>(item, 'promotion')?.title || video.title}
               </div>
-              <div className="text-14 font-500 text-gray-500">
-                {format(item.date, 'yy. MM. dd.')}
-              </div>
+              <div className="text-14 font-500 text-gray-500">{formatTimeAsDate(video.date)}</div>
             </div>
           </Link>
         ))}

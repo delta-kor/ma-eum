@@ -1,6 +1,6 @@
 import { CmsModelField } from '@/components/cms/model/CmsModelPanel';
 import { trpc } from '@/hooks/trpc';
-import { format } from 'date-fns';
+import { formatTimeAsDateJs, formatTimeAsDateTimeJs } from '@/utils/time.util';
 
 export function getCmsFieldText(field: CmsModelField, item: any): null | string {
   if (field.type === 'boolean') return item[field.key] ? 'on' : 'off';
@@ -13,9 +13,9 @@ export function getCmsFieldText(field: CmsModelField, item: any): null | string 
     : field.type === 'strings'
       ? value.join(',')
       : field.type === 'date'
-        ? format(value, 'yyyy-MM-dd')
+        ? formatTimeAsDateJs(value)
         : field.type === 'datetime'
-          ? format(value, "yyyy-MM-dd'T'HH:mm")
+          ? formatTimeAsDateTimeJs(value)
           : field.type === 'model'
             ? value
             : '';

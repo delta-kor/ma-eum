@@ -16,7 +16,6 @@
     "@trpc/next": "11.0.0-rc.374",
     "@trpc/react-query": "11.0.0-rc.374",
     "@trpc/server": "11.0.0-rc.374",
-    "date-fns": "^3.6.0",
     "framer-motion": "^11.2.10",
     "jsonwebtoken": "^9.0.2",
     "luxon": "^3.4.4",

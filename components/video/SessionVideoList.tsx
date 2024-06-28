@@ -3,7 +3,7 @@ import Translate from '@/components/core/Translate';
 import SessionVideoItem from '@/components/video/SessionVideoItem';
 import { ExtendedSession } from '@/services/session.service';
 import { getSessionTitle } from '@/utils/session.util';
-import { format } from 'date-fns';
+import { formatTimeAsDate } from '@/utils/time.util';
 
 interface Props {
   session: ExtendedSession;
@@ -24,7 +24,7 @@ export default function SessionVideoList({ session }: Props) {
             <Translate>{getSessionTitle(session)}</Translate>
           </div>
         </div>
-        <div className="text-14 font-600 text-gray-500">{format(session.date, 'yy. MM. dd.')}</div>
+        <div className="text-14 font-600 text-gray-500">{formatTimeAsDate(session.date)}</div>
       </div>
       <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-2">
         {videos.map(video => (

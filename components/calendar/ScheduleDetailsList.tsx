@@ -3,7 +3,7 @@ import ScheduleDetailsItem, {
 } from '@/components/calendar/ScheduleDetailsItem';
 import NoItems from '@/components/core/NoItems';
 import { trpc } from '@/hooks/trpc';
-import { format } from 'date-fns';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { DateTime } from 'luxon';
 
 interface Props {
@@ -18,7 +18,7 @@ export default function ScheduleDetailsList({ selectedDate }: Props) {
       date: utcDate,
     },
     {
-      queryHash: format(utcDate, 'yyyy-MM-dd'),
+      queryHash: formatTimeAsDate(utcDate),
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,

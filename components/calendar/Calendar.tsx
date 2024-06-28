@@ -8,13 +8,14 @@ import { useMemo, useState } from 'react';
 
 interface Props {
   dateInfo: CalendarDateInfo;
+  hydrated: boolean;
   selectedDate: DateTime;
   onDateSelect: (date: DateTime) => void;
 }
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props) {
+export default function Calendar({ dateInfo, hydrated, selectedDate, onDateSelect }: Props) {
   const router = useRouter();
 
   const [year, setYear] = useState<number>(selectedDate.year);
@@ -114,32 +115,32 @@ export default function Calendar({ dateInfo, selectedDate, onDateSelect }: Props
           ))}
         </div>
         <div className="grid grid-cols-[repeat(7,40px)] justify-between gap-y-12">
-          {dates.map(date => (
-            <div
-              key={date.toISO()}
-              data-selected={date.toFormat('yyyy-MM-dd') === selectedDate.toFormat('yyyy-MM-dd')}
-              onClick={() => handleDateSelect(date)}
-              className="group relative flex cursor-pointer flex-col gap-4 px-2 py-8"
-            >
-              <div className="absolute inset-0 hidden rounded-4 bg-gradient-primary group-data-[selected=true]:block"></div>
+          {dates.map(date => {
+            const isActive =
+              date.toFormat('yyyy-MM-dd') === selectedDate.toFormat('yyyy-MM-dd') && hydrated;
+
+            return (
               <div
-                data-inactive={date.month !== month}
-                className="relative text-center text-16 font-600 text-black data-[inactive=true]:text-gray-200"
+                key={date.toISO()}
+                data-selected={isActive}
+                onClick={() => handleDateSelect(date)}
+                className="group relative flex cursor-pointer flex-col gap-4 px-2 py-8"
               >
-                <div className="group-data-[selected=true]:text-white">{date.day}</div>
+                <div className="absolute inset-0 hidden rounded-4 bg-gradient-primary group-data-[selected=true]:block"></div>
+                <div
+                  data-inactive={date.month !== month}
+                  className="relative text-center text-16 font-600 text-black data-[inactive=true]:text-gray-200"
+                >
+                  <div className="group-data-[selected=true]:text-white">{date.day}</div>
+                </div>
+                <div className="relative flex h-6 items-center justify-center gap-2">
+                  {dateInfo[date.toFormat('yyyy-MM-dd')]?.map((item, index) => (
+                    <ScheduleTypeChip key={index} active={isActive} kind="dot" type={item} />
+                  ))}
+                </div>
               </div>
-              <div className="relative flex h-6 items-center justify-center gap-2">
-                {dateInfo[date.toFormat('yyyy-MM-dd')]?.map((item, index) => (
-                  <ScheduleTypeChip
-                    key={index}
-                    active={date.toFormat('yyyy-MM-dd') === selectedDate.toFormat('yyyy-MM-dd')}
-                    kind="dot"
-                    type={item}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

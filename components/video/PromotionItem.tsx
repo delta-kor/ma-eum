@@ -1,10 +1,10 @@
 import GradientIcon from '@/components/core/GradientIcon';
 import LazyImage from '@/components/core/LazyImage';
 import { ExtendedVideo } from '@/services/video.service';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { PromotionVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -27,7 +27,7 @@ export default function PromotionItem({ video }: Props) {
       </div>
       <div className="flex grow flex-col gap-12 pb-32 lg:flex-row-reverse lg:justify-end">
         <div className="flex flex-col gap-4">
-          <div className="text-16 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
+          <div className="text-16 font-500 text-gray-500">{formatTimeAsDate(video.date)}</div>
           <div className="text-18 font-600 text-black">{promotionMeta?.title || video.title}</div>
         </div>
         {video.source === VideoSource.YOUTUBE && (

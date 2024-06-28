@@ -2,7 +2,7 @@ import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import { ExtendedSession } from '@/services/session.service';
 import { getSessionTitle } from '@/utils/session.util';
-import { format } from 'date-fns';
+import { formatTimeAsSixDigit } from '@/utils/time.util';
 
 interface Props {
   session: ExtendedSession;
@@ -11,7 +11,7 @@ interface Props {
 
 export default function MixerSelectorPageMenu({ session, onChange }: Props) {
   const title = getSessionTitle(session);
-  const date = format(session.date, 'yyMMdd');
+  const date = formatTimeAsSixDigit(session.date);
 
   return (
     <div className="flex min-w-0 items-center justify-between">

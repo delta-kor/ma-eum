@@ -1,8 +1,8 @@
 import LazyImage from '@/components/core/LazyImage';
 import Translate from '@/components/core/Translate';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Album } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -26,9 +26,7 @@ export default function AlbumCard({ album, menu }: Props) {
         />
         <div className="flex flex-col gap-4">
           <div className="text-20 font-700 text-white">{album.title}</div>
-          <div className="text-16 font-500 text-white/70">
-            {format(album.release, 'yy. MM. dd.')}
-          </div>
+          <div className="text-16 font-500 text-white/70">{formatTimeAsDate(album.release)}</div>
         </div>
       </div>
       {menu && (

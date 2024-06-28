@@ -1,9 +1,9 @@
 import LazyImage from '@/components/core/LazyImage';
 import { ExtendedVideo } from '@/services/video.service';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { OfficialVideoMeta, getMetaFromVideo } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -29,7 +29,7 @@ export default function OfficialVideoItem({ video }: Props) {
         <div className="flex items-center gap-8">
           <div className="line-clamp-2 text-18 font-600 text-black">{title}</div>
         </div>
-        <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
+        <div className="text-14 font-500 text-gray-500">{formatTimeAsDate(video.date)}</div>
       </div>
     </Link>
   );

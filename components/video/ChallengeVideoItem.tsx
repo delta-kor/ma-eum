@@ -5,6 +5,7 @@ import Translate from '@/components/core/Translate';
 import { trpc } from '@/hooks/trpc';
 import { ExtendedVideo } from '@/services/video.service';
 import { getMemberName } from '@/utils/member.util';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import {
   InboundChallengeVideoMeta,
@@ -14,7 +15,6 @@ import {
   getMetaFromVideo,
 } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -85,7 +85,7 @@ export default function ChallengeVideoItem({ video }: Props) {
               <div className="line-clamp-2 text-16 font-500 text-black">{title}</div>
             </div>
             <div className="truncate text-14 font-500 text-gray-500">
-              {format(video.date, 'yy. MM. dd.')}
+              {formatTimeAsDate(video.date)}
             </div>
           </div>
           <div className="flex min-w-0 gap-4 overflow-hidden">

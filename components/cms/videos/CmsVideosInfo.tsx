@@ -10,9 +10,9 @@ import { revalidate } from '@/actions/revalidate.action';
 import CmsModal from '@/components/cms/CmsModal';
 import CmsVideosMeta from '@/components/cms/videos/CmsVideosMeta';
 import { ExtendedVideo } from '@/services/video.service';
+import { formatTimeAsSixDigit } from '@/utils/time.util';
 import { AvailableMetaTypes, VideoMeta, VideoMetaType } from '@/utils/video.util';
 import { Category, Session, VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
 export type ExtendedCmsVideo = { categories: Category[]; session: Session | null } & ExtendedVideo;
@@ -133,7 +133,7 @@ export default function CmsVideosInfo({ categories, selectedVideo }: Props) {
       )}
       <div className="flex flex-col gap-4">
         <div className="code text-16 font-700 text-primary-500">
-          {format(selectedVideo.date, 'yyMMdd')}
+          {formatTimeAsSixDigit(selectedVideo.date)}
         </div>
         <div className="text-16 text-black">{selectedVideo.title}</div>
       </div>

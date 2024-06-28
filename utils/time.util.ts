@@ -61,6 +61,21 @@ export function formatTimeAsDate(date: Date): string {
   return datetime.toFormat('yy. MM. dd.');
 }
 
+export function formatTimeAsSixDigit(date: Date): string {
+  const datetime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
+  return datetime.toFormat('yyMMdd');
+}
+
+export function formatTimeAsDateJs(date: Date): string {
+  const datetime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
+  return datetime.toFormat('yyyy-MM-dd');
+}
+
+export function formatTimeAsDateTimeJs(date: Date): string {
+  const datetime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
+  return datetime.toFormat("yyyy-MM-dd'T'HH:mm");
+}
+
 export function getTime(seconds: number): string {
   const minutes = Math.floor(seconds / 60);
   const sec = Math.floor(seconds % 60);

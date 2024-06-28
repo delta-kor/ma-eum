@@ -1,8 +1,8 @@
 import LazyImage from '@/components/core/LazyImage';
 import Pc from '@/components/core/responsive/Pc';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import { Video, VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -24,7 +24,7 @@ export default function ShortsVideoItem({ video }: Props) {
           {video.title}
         </div>
         <Pc>
-          <div className="text-14 font-400 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
+          <div className="text-14 font-400 text-gray-500">{formatTimeAsDate(video.date)}</div>
         </Pc>
       </div>
     </Link>

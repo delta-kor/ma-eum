@@ -1,6 +1,7 @@
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import { ExtendedVideo } from '@/services/video.service';
+import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import {
   EpisodeVideoMeta,
@@ -9,7 +10,6 @@ import {
   getMetaFromVideo,
 } from '@/utils/video.util';
 import { VideoSource } from '@prisma/client';
-import { format } from 'date-fns';
 import Link from 'next/link';
 
 interface Props {
@@ -65,7 +65,7 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
           <div className="line-clamp-2 text-16 font-600 text-black">{title}</div>
         </div>
         {displayDate && (
-          <div className="text-14 font-500 text-gray-500">{format(video.date, 'yy. MM. dd.')}</div>
+          <div className="text-14 font-500 text-gray-500">{formatTimeAsDate(video.date)}</div>
         )}
       </div>
     </Link>
