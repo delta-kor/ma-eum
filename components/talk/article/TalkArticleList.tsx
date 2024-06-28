@@ -17,7 +17,11 @@ export default function TalkArticleList({ preloadedArticlesMetadata, user }: Pro
     <div className="flex flex-col gap-20">
       {items.map(articleMetadata => (
         <div key={articleMetadata.id} className="flex flex-col gap-20">
-          <TalkArticleItem articleMetadata={articleMetadata} today={today} user={user} />
+          <TalkArticleItem
+            articleMetadata={articleMetadata}
+            today={today}
+            userId={user?.id || null}
+          />
           <div className="h-2 bg-gray-50" />
         </div>
       ))}

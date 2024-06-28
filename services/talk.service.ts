@@ -53,7 +53,6 @@ const TalkRouter = router({
       const content = opts.input.content;
 
       await TalkService.addCommentToArticle(user, articleId, commentId, content);
-      return true;
     }),
 
   createArticle: talkProcedure
@@ -130,7 +129,6 @@ const TalkRouter = router({
       const articleId = opts.input.articleId;
 
       await TalkService.softDeleteArticle(user, articleId);
-      return true;
     }),
 
   softDeleteComment: talkProcedure
@@ -140,7 +138,6 @@ const TalkRouter = router({
       const commentId = opts.input.commentId;
 
       await TalkService.softDeleteComment(user, commentId);
-      return true;
     }),
 });
 
@@ -300,7 +297,13 @@ export class TalkService {
   public static async getArticle(articleId: string): Promise<ExtendedTalkArticle | null> {
     const article = await prisma.talkArticle.findUnique({
       include: {
-        comments: { select: { userId: true } },
+        comments: {
+          select: { userId: true },
+          where: {
+            OR: [{ replyTo: null }, { replyTo: { isDeleted: false } }],
+            isDeleted: false,
+          },
+        },
         likedUsers: { select: { id: true } },
         user: true,
       },
@@ -326,6 +329,9 @@ export class TalkService {
             },
           },
           orderBy: [{ date: 'asc' }],
+          where: {
+            isDeleted: false,
+          },
         },
         user: {
           select: {
@@ -370,6 +376,10 @@ export class TalkService {
         comments: {
           select: {
             userId: true,
+          },
+          where: {
+            OR: [{ replyTo: null }, { replyTo: { isDeleted: false } }],
+            isDeleted: false,
           },
         },
         content: true,

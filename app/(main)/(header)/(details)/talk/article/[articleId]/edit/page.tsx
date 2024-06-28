@@ -17,10 +17,11 @@ export default async function TalkEditPage({ params: { articleId } }: Props) {
   const token = Auth.getTokenCookie();
   if (!token) return redirect('/talk', RedirectType.replace);
 
-  const user = await Auth.verifyToken(token);
-  if (!user) return redirect('/talk', RedirectType.replace);
+  const userData = Auth.verifyToken(token);
+  const articleData = TalkService.getArticle(articleId);
 
-  const article = await TalkService.getArticle(articleId);
+  const [user, article] = await Promise.all([userData, articleData]);
+  if (!user) return redirect('/talk', RedirectType.replace);
   if (!article || article.userId !== user.id) return redirect('/talk', RedirectType.replace);
 
   const nickname = user.nickname;

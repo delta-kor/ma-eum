@@ -16,10 +16,10 @@ interface Props {
 export default async function TalkViewPage({ params: { articleId } }: Props) {
   const token = Auth.getTokenCookie();
 
-  const articleData = TalkService.getArticle(articleId);
   const userData = token ? Auth.verifyToken(token) : null;
+  const articleData = TalkService.getArticle(articleId);
 
-  const [article, user] = await Promise.all([articleData, userData]);
+  const [user, article] = await Promise.all([userData, articleData]);
   if (!article) return notFound();
 
   return (

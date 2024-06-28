@@ -1,16 +1,15 @@
 import Icon from '@/components/core/Icon';
 import { TalkArticleMetadata } from '@/services/talk.service';
 import { getShortPastRelativeTime } from '@/utils/time.util';
-import { TalkUser } from '@prisma/client';
 import Link from 'next/link';
 
 interface Props {
   articleMetadata: TalkArticleMetadata;
   today: Date;
-  user: TalkUser | null;
+  userId: null | string;
 }
 
-export default function TalkArticleItem({ articleMetadata, today, user }: Props) {
+export default function TalkArticleItem({ articleMetadata, today, userId }: Props) {
   return (
     <Link
       href={`/talk/article/${articleMetadata.id}`}
@@ -29,7 +28,7 @@ export default function TalkArticleItem({ articleMetadata, today, user }: Props)
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-8">
             <Icon
-              data-active={user && articleMetadata.likedUsersId.includes(user.id)}
+              data-active={userId && articleMetadata.likedUsersId.includes(userId)}
               type="heart"
               className="w-16 shrink-0 text-gray-200 data-[active=true]:text-c-red"
             />
@@ -39,7 +38,7 @@ export default function TalkArticleItem({ articleMetadata, today, user }: Props)
           </div>
           <div className="flex items-center gap-8">
             <Icon
-              data-active={user && articleMetadata.commentUsersId.includes(user.id)}
+              data-active={userId && articleMetadata.commentUsersId.includes(userId)}
               type="comment"
               className="w-16 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
             />
