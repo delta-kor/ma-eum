@@ -1,9 +1,14 @@
+import { revalidateTalkCommentDelete } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
+import useModal from '@/hooks/modal';
+import { trpc } from '@/hooks/trpc';
+import { ModalResult } from '@/providers/ModalProvider';
+import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { TalkCommentMetadata } from '@/services/talk.service';
 import { getShortPastRelativeTime } from '@/utils/time.util';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 interface Props {
   articleId: string;
@@ -13,6 +18,10 @@ interface Props {
 }
 
 export default function TalkCommentItem({ articleId, comment, reply, userId }: Props) {
+  const modal = useModal();
+  const talkComment = useContext(TalkCommentContext);
+  const deleteComment = trpc.talk.softDeleteComment.useMutation();
+
   const [isReplying, setIsReplying] = useState(false);
 
   function handleReplyOpen() {
@@ -27,6 +36,29 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
     setIsReplying(false);
   }
 
+  function handleDeleteClick() {
+    modal.confirm('$talk_comment_delete_confirm', handleDeleteModalResolve);
+  }
+
+  function handleDeleteModalResolve(result: ModalResult) {
+    if (result.type !== 'confirm') return;
+
+    deleteComment.mutate(
+      {
+        commentId: comment.id,
+      },
+      {
+        onError: error => {
+          modal.alert(error.message);
+        },
+        onSuccess: async () => {
+          await revalidateTalkCommentDelete(articleId);
+          talkComment.refresh();
+        },
+      }
+    );
+  }
+
   const hasReplies = comment.replies.length > 0;
   const isMyComment = userId === comment.userId;
 
@@ -37,26 +69,19 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
           <div className="flex items-center gap-8 self-stretch">
             <div className="truncate text-14 font-600 text-primary-500">{comment.nickname}</div>
             <div className="size-4 shrink-0 rounded-full bg-gray-200" />
-            <div className="shrink-0 text-14 text-gray-500">
+            <div className="shrink-0 grow text-14 text-gray-500">
               {getShortPastRelativeTime(comment.date, new Date())}
             </div>
+            {isMyComment && (
+              <div onClick={handleDeleteClick} className="-m-8 cursor-pointer p-8">
+                <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
+              </div>
+            )}
           </div>
           <div className="whitespace-pre-line text-16 font-400 leading-6 text-black">
             {comment.content}
           </div>
         </div>
-        {isMyComment && (
-          <div className="flex items-center gap-8">
-            <div className="flex items-center self-end">
-              <div className="cursor-pointer p-8">
-                <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
-              </div>
-              <div className="cursor-pointer p-8">
-                <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
       {!reply &&
         (isReplying ? (

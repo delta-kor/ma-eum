@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateTalkDelete } from '@/actions/revalidate.action';
+import { revalidateTalkArticleDelete } from '@/actions/revalidate.action';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import { ModalResult } from '@/providers/ModalProvider';
@@ -33,7 +33,7 @@ export default function TalkArticleDelete({ articleId, login, children, ...props
           modal.alert(error.message);
         },
         onSuccess: async () => {
-          await revalidateTalkDelete(articleId);
+          await revalidateTalkArticleDelete(articleId);
           router.replace('/talk');
         },
       }

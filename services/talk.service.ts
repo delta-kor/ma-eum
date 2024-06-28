@@ -132,6 +132,16 @@ const TalkRouter = router({
       await TalkService.softDeleteArticle(user, articleId);
       return true;
     }),
+
+  softDeleteComment: talkProcedure
+    .input(z.object({ commentId: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const commentId = opts.input.commentId;
+
+      await TalkService.softDeleteComment(user, commentId);
+      return true;
+    }),
 });
 
 export class TalkService {
@@ -327,6 +337,7 @@ export class TalkService {
       orderBy: [{ date: 'desc' }],
       where: {
         articleId,
+        isDeleted: false,
         replyToId: null,
       },
     });
@@ -461,6 +472,27 @@ export class TalkService {
       },
       where: {
         id: articleId,
+      },
+    });
+  }
+
+  public static async softDeleteComment(user: TalkUser, commentId: string): Promise<void> {
+    const comment = await prisma.talkComment.findUnique({
+      where: {
+        id: commentId,
+        isDeleted: false,
+      },
+    });
+
+    if (!comment) throw new TRPCError({ code: 'NOT_FOUND' });
+    if (comment.userId !== user.id) throw new TRPCError({ code: 'FORBIDDEN' });
+
+    await prisma.talkComment.update({
+      data: {
+        isDeleted: true,
+      },
+      where: {
+        id: commentId,
       },
     });
   }
