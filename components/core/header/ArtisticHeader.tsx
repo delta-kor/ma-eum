@@ -70,13 +70,13 @@ export default function ArtisticHeader() {
               >
                 Talk
               </Link>
-              <div
+              <Link
                 data-active={pathname === '/mixer'}
-                onClick={() => handlePush('/mixer')}
+                href={`/mixer`}
                 className="cursor-pointer text-20 font-500 opacity-60 transition-all data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
                 Stage Mixer
-              </div>
+              </Link>
             </div>
           </Pc>
         </div>
@@ -87,6 +87,4 @@ export default function ArtisticHeader() {
       </div>
     </div>
   );
-
-  return null;
 }
