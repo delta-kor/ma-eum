@@ -43,7 +43,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedFeeds] },
       refetchOnMount: !isDefaultFilter,
-      refetchOnReconnect: true,
+      refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
   );

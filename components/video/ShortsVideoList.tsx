@@ -24,7 +24,7 @@ export default function ShortsVideoList({ preloadedVideos }: Props) {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedVideos] },
       refetchOnMount: false,
-      refetchOnReconnect: true,
+      refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
   );

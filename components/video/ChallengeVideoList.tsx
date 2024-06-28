@@ -36,7 +36,7 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
       initialData: { pageParams: [null], pages: [preloadedVideos] },
       queryHash: index.toString(),
       refetchOnMount: !isDefaultMember,
-      refetchOnReconnect: true,
+      refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
   );
