@@ -36,7 +36,7 @@ export default function TalkArticleList({ userId }: Props) {
   }, [inView]);
 
   const items = articles.data?.pages.map(page => page.items).flat() || [];
-  const isLoading = articles.isFetching && !articles.isFetchingNextPage;
+  const isLoading = articles.isLoading;
 
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
 

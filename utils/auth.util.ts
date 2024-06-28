@@ -1,4 +1,5 @@
-import { TalkService } from '@/services/talk.service';
+import prisma from '@/prisma/prisma';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import { TalkUser } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
@@ -17,6 +18,15 @@ export default class Auth {
   public static getTokenCookie(): null | string {
     const cookie = cookies().get(Auth.cookieName);
     return cookie?.value || null;
+  }
+
+  @DataCache('talk.getUser', StaticDataTtl)
+  public static async getUser(userId: string): Promise<TalkUser | null> {
+    return prisma.talkUser.findUnique({
+      where: {
+        id: userId,
+      },
+    });
   }
 
   public static setTokenCookie(token: string): void {
@@ -38,7 +48,7 @@ export default class Auth {
     const userId = decoded.userId;
     if (!userId) return null;
 
-    const user = await TalkService.getUser(userId);
-    return user || null;
+    const user = await Auth.getUser(userId);
+    return user;
   }
 }
