@@ -24,7 +24,11 @@ export default function TalkArticleReport({ articleId, login, children, ...props
   }
 
   function handleAction() {
-    modal.prompt('$article_report_enter_reason', '$article_report_reason', handleModalResolve);
+    modal.prompt(
+      '$talk_article_report_enter_reason',
+      '$talk_article_report_reason',
+      handleModalResolve
+    );
   }
 
   function handleModalResolve(result: ModalResult) {
@@ -40,7 +44,7 @@ export default function TalkArticleReport({ articleId, login, children, ...props
           modal.alert(error.message);
         },
         onSuccess: async () => {
-          modal.alert('신고가 접수되었습니다.');
+          modal.alert('$talk_report_submitted');
         },
       }
     );

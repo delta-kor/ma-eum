@@ -3,8 +3,10 @@
 import { revalidateTalkComment } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
+import useTranslate from '@/hooks/translate';
 import { trpc } from '@/hooks/trpc';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
+import { i18n } from '@/utils/i18n.util';
 import TalkUtil from '@/utils/talk.util';
 import { useContext, useRef, useState } from 'react';
 
@@ -18,6 +20,8 @@ interface Props {
 export default function TalkCommentInput({ articleId, commentId, login, onSubmit }: Props) {
   const modal = useModal();
   const talkComment = useContext(TalkCommentContext);
+  const { language } = useTranslate();
+
   const [isActive, setIsActive] = useState(false);
 
   const addComment = trpc.talk.addCommentToArticle.useMutation();
@@ -81,7 +85,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
         autoCorrect="off"
         maxLength={300}
         name="content"
-        placeholder="댓글을 입력하세요"
+        placeholder={i18n('$talk_comment_placeholder', language)}
         rows={2}
         spellCheck="false"
         onChange={handleTextareaChange}

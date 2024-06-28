@@ -3,7 +3,9 @@
 import { revalidateTalkEdit, revalidateTalkWrite } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import useTranslate from '@/hooks/translate';
 import { trpc } from '@/hooks/trpc';
+import { i18n } from '@/utils/i18n.util';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -22,10 +24,12 @@ interface Props {
 export default function TalkWriteFrame({ edit, nickname }: Props) {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState<null | string>(null);
+
   const createArticle = trpc.talk.createArticle.useMutation();
   const editArticle = trpc.talk.editArticle.useMutation();
 
   const router = useRouter();
+  const { language } = useTranslate();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -109,7 +113,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
             autoFocus={!isEditMode}
             defaultValue={edit?.title}
             name="title"
-            placeholder="제목"
+            placeholder={i18n('$talk_article_title_placeholder', language)}
             spellCheck="false"
             type="text"
             className="text-24 font-700 text-black outline-none placeholder:text-gray-200"
@@ -122,7 +126,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
           className="group flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary"
         >
           <div className="text-16 font-600 text-gray-200 group-data-[active=true]:text-white">
-            <Translate>{isEditMode ? '$article_edit' : '$article_post'}</Translate>
+            <Translate>{isEditMode ? '$talk_article_edit' : '$talk_article_post'}</Translate>
           </div>
           {isLoading && (
             <Icon type="spinner" className="size-16 shrink-0 animate-spin text-white" />
@@ -144,7 +148,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
         defaultValue={edit?.content}
         maxLength={1000}
         name="content"
-        placeholder="내용을 입력해주세요."
+        placeholder={i18n('$talk_article_content_placeholder', language)}
         rows={5}
         spellCheck="false"
         onChange={handleTextareaChange}

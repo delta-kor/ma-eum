@@ -1,5 +1,7 @@
 import Translate from '@/components/core/Translate';
+import useTranslate from '@/hooks/translate';
 import { ModalResolver, PromptModal as PromptModalInterface } from '@/providers/ModalProvider';
+import { i18n } from '@/utils/i18n.util';
 import { useRef } from 'react';
 
 interface Props {
@@ -8,12 +10,15 @@ interface Props {
 }
 
 export default function PromptModal({ modal, onResolve }: Props) {
+  const { language } = useTranslate();
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleConfirmClick() {
     const value = inputRef.current?.value || '';
     onResolve({ type: 'prompt', value });
   }
+
+  const placeholder = i18n(modal.placeholder, language);
 
   return (
     <div className="mx-auto flex max-w-[480px] flex-col gap-24 rounded-16 bg-white p-24">
@@ -26,7 +31,7 @@ export default function PromptModal({ modal, onResolve }: Props) {
           autoCapitalize="off"
           autoComplete="off"
           autoCorrect="off"
-          placeholder={modal.placeholder}
+          placeholder={placeholder}
           spellCheck="false"
           type="text"
           className="w-full rounded-8 bg-gray-100 p-16 text-16 outline-none"

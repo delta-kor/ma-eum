@@ -24,7 +24,7 @@ export default function TalkArticleReact({ article, user }: Props) {
             >
               <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
               <div className="text-16 font-500 text-gray-500">
-                <Translate>$article_edit</Translate>
+                <Translate>$talk_article_edit</Translate>
               </div>
             </Link>
             <TalkArticleDelete
@@ -34,7 +34,7 @@ export default function TalkArticleReact({ article, user }: Props) {
             >
               <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
               <div className="text-16 font-500 text-gray-500">
-                <Translate>$article_delete</Translate>
+                <Translate>$talk_article_delete</Translate>
               </div>
             </TalkArticleDelete>
           </>
@@ -46,7 +46,7 @@ export default function TalkArticleReact({ article, user }: Props) {
           >
             <Icon type="flag" className="w-16 shrink-0 text-gray-200" />
             <div className="text-16 font-500 text-gray-500">
-              <Translate>$article_report</Translate>
+              <Translate>$talk_article_report</Translate>
             </div>
           </TalkArticleReport>
         )}
