@@ -54,7 +54,8 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
   }
 
   const items = videos.data?.pages.map(page => page.items).flat() || [];
-  const isLoading = videos.isFetching && !videos.isFetchingNextPage;
+  const isLoading =
+    videos.isLoading || (videos.isFetching && index !== 0 && !videos.isFetchingNextPage);
 
   const placeholder = (
     <>

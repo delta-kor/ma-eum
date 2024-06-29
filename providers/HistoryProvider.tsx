@@ -50,12 +50,15 @@ export default function HistoryProvider({ children }: Props) {
 
     if (lastPathname === pathname && lastSearch === search) return;
 
-    const lastHistory = histories.find(
-      ([path, query]) => getMatchingPage(path).path === lastPathname && query === lastSearch
-    );
-    if (lastHistory) {
-      console.log('setting scroll', lastHistory[0], scroll);
-      lastHistory[2] = scroll;
+    if (lastPathname) {
+      const lastPage = getMatchingPage(lastPathname);
+      const lastHistory = histories.find(
+        ([path, query]) => getMatchingPage(path).path === lastPage.path && query === lastSearch
+      );
+      if (lastHistory) {
+        console.log('setting scroll', lastHistory[0], scroll);
+        lastHistory[2] = scroll;
+      }
     }
 
     const existingPath = histories.find(

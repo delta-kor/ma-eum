@@ -13,6 +13,7 @@ export default function DetailsContent({ children }: Props) {
   const history = useHistory();
 
   useEffect(() => {
+    console.log('scrolling to', history.scroll);
     window.scrollTo(0, history.scroll);
   }, [pathname]);
 
