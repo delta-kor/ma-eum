@@ -1,6 +1,8 @@
 import { AppService } from '@/services/app.service';
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 
+export const maxDuration = 20;
+
 const handler = (req: Request) =>
   fetchRequestHandler({
     createContext: () => ({}),

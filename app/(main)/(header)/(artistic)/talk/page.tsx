@@ -3,7 +3,7 @@ import TalkArticleList from '@/components/talk/article/TalkArticleList';
 import TalkArticleListMenu from '@/components/talk/article/TalkArticleListMenu';
 import Auth from '@/utils/auth.util';
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export default async function TalkPage() {
   const token = Auth.getTokenCookie();

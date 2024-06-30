@@ -37,6 +37,7 @@ export default function MixerMusicSelector({ musics }: Props) {
             <Icon type="left" className="w-20 text-gray-200" />
           </div>
           <LazyImage
+            key={selectedMusic.id}
             src={ImageUrl.album(selectedMusic.albumId!)}
             className="size-[240px] select-none rounded-16 bg-gray-100"
           />
