@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateTalkComment } from '@/actions/revalidate.action';
+import { revalidateTalkCommentCreate } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
 import useTranslate from '@/hooks/translate';
@@ -67,7 +67,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
         },
         onSuccess: async () => {
           setIsRefreshing(true);
-          await Promise.all([revalidateTalkComment(articleId), talkComment.refresh()]);
+          await Promise.all([revalidateTalkCommentCreate(articleId), talkComment.refresh()]);
           setIsRefreshing(false);
 
           onSubmit?.();

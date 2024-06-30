@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateTalkEdit, revalidateTalkWrite } from '@/actions/revalidate.action';
+import { revalidateTalkArticleEdit, revalidateTalkArticleWrite } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useTranslate from '@/hooks/translate';
@@ -66,7 +66,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
             setError(error.message);
           },
           onSuccess: async () => {
-            await revalidateTalkEdit(edit!.articleId);
+            await revalidateTalkArticleEdit(edit!.articleId);
             router.push(`/talk/article/${edit!.articleId}`);
           },
         }
@@ -79,7 +79,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
             setError(error.message);
           },
           onSuccess: async articleId => {
-            await revalidateTalkWrite();
+            await revalidateTalkArticleWrite();
             router.replace(`/talk/article/${articleId}`);
           },
         }

@@ -11,21 +11,14 @@ export async function revalidateTalkLogin(): Promise<void> {
   revalidatePath('/talk/write', 'page');
 }
 
-export async function revalidateTalkWrite(): Promise<void> {
+export async function revalidateTalkArticleWrite(): Promise<void> {
   revalidateTag('talk.getArticlesMetadata');
   revalidatePath('/talk/write', 'page');
 }
 
-export async function revalidateTalkHeart(articleId: string): Promise<void> {
+export async function revalidateTalkArticleEdit(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
-  revalidatePath(`/talk/article/${articleId}`, 'page');
-}
-
-export async function revalidateTalkComment(articleId: string): Promise<void> {
-  revalidateTag('talk.getArticle');
-  revalidateTag('talk.getArticlesMetadata');
-  revalidateTag('talk.getArticleComments');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
@@ -35,15 +28,22 @@ export async function revalidateTalkArticleDelete(articleId: string): Promise<vo
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
-export async function revalidateTalkCommentDelete(articleId: string): Promise<void> {
+export async function revalidateTalkArticleHeart(articleId: string): Promise<void> {
+  revalidateTag('talk.getArticle');
+  revalidateTag('talk.getArticlesMetadata');
+  revalidatePath(`/talk/article/${articleId}`, 'page');
+}
+
+export async function revalidateTalkCommentCreate(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
   revalidateTag('talk.getArticleComments');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
-export async function revalidateTalkEdit(articleId: string): Promise<void> {
+export async function revalidateTalkCommentDelete(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
+  revalidateTag('talk.getArticleComments');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }

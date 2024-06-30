@@ -1,6 +1,6 @@
 'use client';
 
-import { revalidateTalkHeart } from '@/actions/revalidate.action';
+import { revalidateTalkArticleHeart } from '@/actions/revalidate.action';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
@@ -33,7 +33,7 @@ export default function TalkArticleHeart({ articleId, login, children, ...props 
           modal.alert(error.message);
         },
         onSuccess: async () => {
-          await revalidateTalkHeart(articleId);
+          await revalidateTalkArticleHeart(articleId);
         },
       }
     );
