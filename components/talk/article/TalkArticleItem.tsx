@@ -28,22 +28,22 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
         <div className="flex items-center gap-16">
           <div className="flex items-center gap-8">
             <Icon
-              data-active={userId && articleMetadata.likedUsersId.includes(userId)}
-              type="heart"
-              className="w-16 shrink-0 text-gray-200 data-[active=true]:text-c-red"
-            />
-            <div className="text-16 font-500 text-gray-500">
-              {articleMetadata.likedUsersId.length}
-            </div>
-          </div>
-          <div className="flex items-center gap-8">
-            <Icon
               data-active={userId && articleMetadata.commentUsersId.includes(userId)}
               type="comment"
               className="w-16 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
             />
             <div className="text-16 font-500 text-gray-500">
               {articleMetadata.commentUsersId.length}
+            </div>
+          </div>
+          <div className="flex items-center gap-8">
+            <Icon
+              data-active={userId && articleMetadata.likedUsersId.includes(userId)}
+              type="heart"
+              className="w-16 shrink-0 text-gray-200 data-[active=true]:text-c-red"
+            />
+            <div className="text-16 font-500 text-gray-500">
+              {articleMetadata.likedUsersId.length}
             </div>
           </div>
         </div>
@@ -58,14 +58,14 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
 
 export function TalkArticleItemPlaceholder() {
   return (
-    <div className="flex flex-col gap-12 lg:flex-row lg:items-center">
+    <div className="flex animate-pulse flex-col gap-12 lg:flex-row lg:items-center">
       <div className="flex flex-col gap-4 lg:grow">
         <div className="h-[17px] w-[128px] rounded-4 bg-gray-100" />
         <div className="flex flex-col gap-4">
           <div className="h-24 w-4/5 rounded-4 bg-gray-100" />
-          <div className="flex flex-col gap-2">
-            <div className="h-[19px] w-3/5 rounded-4 bg-gray-50" />
-            <div className="h-[19px] w-2/5 rounded-4 bg-gray-50" />
+          <div className="flex flex-col gap-4">
+            <div className="h-[17px] w-3/5 rounded-4 bg-gray-50" />
+            <div className="h-[17px] w-2/5 rounded-4 bg-gray-50" />
           </div>
         </div>
       </div>

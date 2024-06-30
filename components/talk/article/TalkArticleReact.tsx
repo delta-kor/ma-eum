@@ -52,18 +52,6 @@ export default function TalkArticleReact({ article, user }: Props) {
         )}
       </div>
       <div className="flex items-center gap-24">
-        <TalkArticleHeart
-          articleId={article.id}
-          login={!!user}
-          className="-m-12 flex cursor-pointer items-center gap-8 p-12"
-        >
-          <Icon
-            data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
-            type="heart"
-            className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
-          />
-          <div className="text-18 font-500 text-gray-500">{article.likedUsers.length}</div>
-        </TalkArticleHeart>
         <div className="flex items-center gap-8">
           <Icon
             data-active={user && article.comments.some(comment => comment.userId === user.id)}
@@ -72,6 +60,24 @@ export default function TalkArticleReact({ article, user }: Props) {
           />
           <div className="text-18 font-500 text-gray-500">{article.comments.length}</div>
         </div>
+        <TalkArticleHeart
+          articleId={article.id}
+          login={!!user}
+          className="group -m-12 box-content flex cursor-pointer items-center gap-8 p-12"
+        >
+          <Icon
+            data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
+            type="heart"
+            className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
+          />
+          <div className="text-18 font-500 text-gray-500 group-data-[loading=true]:hidden">
+            {article.likedUsers.length}
+          </div>
+          <Icon
+            type="spinner"
+            className="hidden w-16 animate-spin text-gray-500 group-data-[loading=true]:block"
+          />
+        </TalkArticleHeart>
       </div>
     </div>
   );

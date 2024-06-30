@@ -41,8 +41,10 @@ export default function TalkArticleHeart({ articleId, login, children, ...props 
     );
   }
 
+  const isLoading = likeArticle.isPending;
+
   return (
-    <div {...props} onClick={handleClick}>
+    <div {...props} data-loading={isLoading} onClick={handleClick}>
       {children}
     </div>
   );
