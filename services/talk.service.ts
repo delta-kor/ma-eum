@@ -1,3 +1,11 @@
+import {
+  revalidateTalkArticleDelete,
+  revalidateTalkArticleEdit,
+  revalidateTalkArticleHeart,
+  revalidateTalkArticleWrite,
+  revalidateTalkCommentCreate,
+  revalidateTalkCommentDelete,
+} from '@/actions/revalidate.action';
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router, talkProcedure } from '@/trpc/router';
 import Auth from '@/utils/auth.util';
@@ -6,7 +14,7 @@ import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
 import TalkUtil from '@/utils/talk.util';
-import { Prisma, TalkArticle, TalkUser, TalkUserRole } from '@prisma/client';
+import { Prisma, TalkArticle, TalkComment, TalkUser, TalkUserRole } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import 'server-only';
 import { z } from 'zod';
@@ -53,6 +61,7 @@ const TalkRouter = router({
       const content = opts.input.content;
 
       await TalkService.addCommentToArticle(user, articleId, commentId, content);
+      await revalidateTalkCommentCreate(articleId);
     }),
 
   createArticle: talkProcedure
@@ -72,6 +81,7 @@ const TalkRouter = router({
       };
 
       const article = await TalkService.createArticle(user, payload);
+      await revalidateTalkArticleWrite();
       return article.id;
     }),
 
@@ -95,6 +105,7 @@ const TalkRouter = router({
       };
 
       await TalkService.editArticle(user, articleId, payload);
+      await revalidateTalkArticleEdit(articleId);
     }),
 
   getArticleComments: publicProcedure
@@ -119,6 +130,7 @@ const TalkRouter = router({
     const articleId = opts.input.articleId;
 
     const likesCount = await TalkService.likeArticle(user, articleId);
+    await revalidateTalkArticleHeart(articleId);
     return likesCount;
   }),
 
@@ -149,6 +161,7 @@ const TalkRouter = router({
       const articleId = opts.input.articleId;
 
       await TalkService.softDeleteArticle(user, articleId);
+      await revalidateTalkArticleDelete(articleId);
     }),
 
   softDeleteComment: talkProcedure
@@ -157,7 +170,8 @@ const TalkRouter = router({
       const user = opts.ctx.user;
       const commentId = opts.input.commentId;
 
-      await TalkService.softDeleteComment(user, commentId);
+      const comment = await TalkService.softDeleteComment(user, commentId);
+      await revalidateTalkCommentDelete(comment.articleId);
     }),
 });
 
@@ -556,7 +570,7 @@ export class TalkService {
     });
   }
 
-  public static async softDeleteComment(user: TalkUser, commentId: string): Promise<void> {
+  public static async softDeleteComment(user: TalkUser, commentId: string): Promise<TalkComment> {
     const comment = await prisma.talkComment.findUnique({
       where: {
         id: commentId,
@@ -567,7 +581,7 @@ export class TalkService {
     if (!comment) throw new TRPCError({ code: 'NOT_FOUND' });
     if (comment.userId !== user.id) throw new TRPCError({ code: 'FORBIDDEN' });
 
-    await prisma.talkComment.update({
+    const updatedComment = await prisma.talkComment.update({
       data: {
         isDeleted: true,
       },
@@ -575,5 +589,6 @@ export class TalkService {
         id: commentId,
       },
     });
+    return updatedComment;
   }
 }

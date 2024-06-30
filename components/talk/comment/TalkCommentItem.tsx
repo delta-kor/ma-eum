@@ -1,4 +1,3 @@
-import { revalidateTalkCommentDelete } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
@@ -9,6 +8,7 @@ import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { TalkCommentMetadata } from '@/services/talk.service';
 import TalkUtil from '@/utils/talk.util';
 import { getShortPastRelativeTime } from '@/utils/time.util';
+import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
 interface Props {
@@ -20,6 +20,7 @@ interface Props {
 
 export default function TalkCommentItem({ articleId, comment, reply, userId }: Props) {
   const modal = useModal();
+  const router = useRouter();
   const talkComment = useContext(TalkCommentContext);
   const deleteComment = trpc.talk.softDeleteComment.useMutation();
   const reportComment = trpc.talk.reportComment.useMutation();
@@ -65,9 +66,9 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
         onError: error => {
           modal.alert(error.message);
         },
-        onSuccess: async () => {
-          await revalidateTalkCommentDelete(articleId);
+        onSuccess: () => {
           talkComment.refresh();
+          router.refresh();
         },
       }
     );

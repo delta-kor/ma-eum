@@ -1,6 +1,5 @@
 'use client';
 
-import { revalidateTalkCommentCreate } from '@/actions/revalidate.action';
 import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
 import useTranslate from '@/hooks/translate';
@@ -8,6 +7,7 @@ import { trpc } from '@/hooks/trpc';
 import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { i18n } from '@/utils/i18n.util';
 import TalkUtil from '@/utils/talk.util';
+import { useRouter } from 'next/navigation';
 import { useContext, useRef, useState } from 'react';
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
 
 export default function TalkCommentInput({ articleId, commentId, login, onSubmit }: Props) {
   const modal = useModal();
+  const router = useRouter();
   const talkComment = useContext(TalkCommentContext);
   const { language } = useTranslate();
 
@@ -67,7 +68,8 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
         },
         onSuccess: async () => {
           setIsRefreshing(true);
-          await Promise.all([revalidateTalkCommentCreate(articleId), talkComment.refresh()]);
+          await talkComment.refresh();
+          router.refresh();
           setIsRefreshing(false);
 
           onSubmit?.();
