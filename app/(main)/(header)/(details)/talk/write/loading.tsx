@@ -10,7 +10,7 @@ export default function TalkWriteLoading() {
       <Title>Write</Title>
       <div className="px-24">
         <div className="pb-24 pt-16 lg:mx-auto lg:max-w-screen-lg lg:pt-24">
-          <div className="flex flex-col gap-16">
+          <div className="flex flex-col gap-24">
             <Pc>
               <TalkArticleBack />
             </Pc>
