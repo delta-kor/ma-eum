@@ -1,6 +1,8 @@
 import FeedList from '@/components/feed/FeedList';
 import { FeedService } from '@/services/feed.service';
 import { FeedTypes } from '@/utils/feed.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -16,5 +18,13 @@ export default async function DiscoverPage() {
         <FeedList preloadedFeeds={feeds} />
       </div>
     </div>
+  );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage(
+    'Discover',
+    'Discover the latest photos and videos of CSR(첫사랑) members, all in one place.',
+    '/discover'
   );
 }

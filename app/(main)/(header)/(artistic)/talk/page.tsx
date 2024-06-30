@@ -2,6 +2,8 @@ import ScrollInjector from '@/components/core/ScrollInjector';
 import TalkArticleList from '@/components/talk/article/TalkArticleList';
 import TalkArticleListMenu from '@/components/talk/article/TalkArticleListMenu';
 import Auth from '@/utils/auth.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -21,4 +23,8 @@ export default async function TalkPage() {
       </div>
     </div>
   );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage('Talk', 'Share and discuss about CSR with global fans!', '/talk');
 }

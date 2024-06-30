@@ -1,6 +1,8 @@
 import ScrollInjector from '@/components/core/ScrollInjector';
 import MixerMusicSelector from '@/components/mixer/MixerMusicSelector';
 import { MusicService } from '@/services/music.service';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -15,5 +17,13 @@ export default async function MixerMainPage() {
         <MixerMusicSelector musics={musics} />
       </div>
     </div>
+  );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage(
+    'Stage Mixer',
+    'Mix and watch best performance videos from CSR',
+    '/mixer'
   );
 }
