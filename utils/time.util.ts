@@ -1,22 +1,16 @@
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 
-export function removeTime(date: Date): Date {
-  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-}
+export function getFutureRelativeTime(date: Date, today: Date): string {
+  const targetDateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' }).plus({
+    milliseconds: 1,
+  });
+  const todayDateTime = DateTime.fromISO('2024-07-02T21:00:00.000+09:00', { zone: 'Asia/Seoul' });
+  const interval = Interval.fromDateTimes(todayDateTime, targetDateTime);
+  const diffDays = interval.count('days') - 1;
+  const diffHours = Math.floor(interval.length('hours'));
+  const diffMinutes = Math.floor(interval.length('minutes'));
 
-export function getFutureRelativeTime(date: Date, today: Date, isAllDay: boolean): string {
-  const diff = date.getTime() - today.getTime();
-  const diffMinutes = Math.floor(diff / 1000 / 60);
-  const diffHours = Math.floor(diffMinutes / 60);
-  const diffDays = Math.floor(diffHours / 24);
-
-  if (diffDays > 0 || isAllDay) {
-    const diff = date.getTime() - removeTime(today).getTime();
-    const diffDays = Math.floor(diff / 1000 / 60 / 60 / 24);
-
-    if (diffDays === 0) return 'Today';
-    return `${diffDays}d`;
-  }
+  if (diffDays > 0) return `${diffDays}d`;
   if (diffHours > 0) return `${diffHours}h`;
   if (diffMinutes > 0) return `${diffMinutes}m`;
   return 'Today';

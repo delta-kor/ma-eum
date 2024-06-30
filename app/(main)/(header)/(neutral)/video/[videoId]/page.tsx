@@ -1,6 +1,7 @@
 import VideoPlayerFrame from '@/components/video/player/VideoPlayerFrame';
 import { VideoService } from '@/services/video.service';
 import MetaUtil from '@/utils/meta.util';
+import { Video } from '@prisma/client';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -23,8 +24,8 @@ export default async function VideoPage({ params: { videoId } }: Props) {
 }
 
 export async function generateMetadata({ params: { videoId } }: Props) {
-  const video = await VideoService.getOne(videoId);
+  const video: Video | null = await VideoService.getOne(videoId);
   if (!video) return notFound();
 
-  return MetaUtil.getVideoPage(video.id, video.title);
+  return MetaUtil.getVideoPage(video.id, video.sourceId, video.title);
 }

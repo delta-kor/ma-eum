@@ -1,3 +1,4 @@
+import { ImageUrl } from '@/utils/url.util';
 import { Metadata } from 'next';
 
 export default class MetaUtil {
@@ -14,7 +15,9 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        siteName: 'MAEUM (마음)',
         title,
+        type: 'website',
         url,
       },
       title,
@@ -29,10 +32,11 @@ export default class MetaUtil {
   public static getBase(): Metadata {
     const title = 'MAEUM :: 마음 - CSR(첫사랑) Global Fanbase';
     const description = "It's time to go dive!";
-    const url = process.env.NEXT_PUBLIC_META_URL_BASE || '';
+    const url = process.env.NEXT_PUBLIC_META_URL_BASE || 'https://example.com';
 
     return {
       description,
+      metadataBase: new URL(url),
       openGraph: {
         description,
         siteName: 'MAEUM (마음)',
@@ -78,7 +82,9 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        siteName: 'MAEUM (마음)',
         title,
+        type: 'website',
         url,
       },
       title,
@@ -99,7 +105,9 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        siteName: 'MAEUM (마음)',
         title,
+        type: 'website',
         url,
       },
       title,
@@ -111,7 +119,7 @@ export default class MetaUtil {
     };
   }
 
-  public static getVideoPage(videoId: string, videoTitle: string): Metadata {
+  public static getVideoPage(videoId: string, videoSourceId: string, videoTitle: string): Metadata {
     const title = `${videoTitle} | MAEUM :: 마음`;
     const description = 'Watch and enjoy videos from CSR(첫사랑)';
     const url = `${process.env.NEXT_PUBLIC_META_URL_BASE || ''}/video/${videoId}`;
@@ -120,13 +128,17 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        images: [{ url: ImageUrl.youtubeThumbnail(videoSourceId) }],
+        siteName: 'MAEUM (마음)',
         title,
+        type: 'website',
         url,
       },
       title,
       twitter: {
-        card: 'summary',
+        card: 'summary_large_image',
         description,
+        images: [{ url: ImageUrl.youtubeThumbnail(videoSourceId) }],
         title,
       },
     };
