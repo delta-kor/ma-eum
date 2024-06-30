@@ -23,6 +23,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
   const { language } = useTranslate();
 
   const [isActive, setIsActive] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const addComment = trpc.talk.addCommentToArticle.useMutation();
 
@@ -65,8 +66,10 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
           modal.alert(error.message);
         },
         onSuccess: async () => {
-          await revalidateTalkComment(articleId);
-          talkComment.refresh();
+          setIsRefreshing(true);
+          await Promise.all([revalidateTalkComment(articleId), talkComment.refresh()]);
+          setIsRefreshing(false);
+
           onSubmit?.();
           resetForm();
         },
@@ -74,7 +77,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
     );
   }
 
-  const isLoading = addComment.isPending;
+  const isLoading = addComment.isPending || isRefreshing;
 
   return (
     <form action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">

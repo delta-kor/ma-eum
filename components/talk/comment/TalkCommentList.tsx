@@ -26,7 +26,7 @@ export default function TalkCommentList({ articleId, userId }: Props) {
   const items = comments.data || [];
 
   useEffect(() => {
-    talkCommentContext.setCallback(comments.refetch);
+    talkCommentContext.setCallback(async () => void comments.refetch());
   }, []);
 
   return (
