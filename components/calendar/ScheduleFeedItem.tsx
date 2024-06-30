@@ -16,7 +16,7 @@ export default function ScheduleFeedItem({ schedule }: Props) {
         </div>
       </div>
       <div className="shrink-0 text-16 font-500 text-primary-500">
-        <FutureRelativeTime date={schedule.date} isAllDay={schedule.isAllDay} />
+        <FutureRelativeTime date={schedule.date} />
       </div>
     </div>
   );

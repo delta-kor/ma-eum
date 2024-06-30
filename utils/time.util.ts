@@ -4,7 +4,7 @@ export function getFutureRelativeTime(date: Date, today: Date): string {
   const targetDateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' }).plus({
     milliseconds: 1,
   });
-  const todayDateTime = DateTime.fromISO('2024-07-02T21:00:00.000+09:00', { zone: 'Asia/Seoul' });
+  const todayDateTime = DateTime.fromJSDate(today, { zone: 'Asia/Seoul' });
   const interval = Interval.fromDateTimes(todayDateTime, targetDateTime);
   const diffDays = interval.count('days') - 1;
   const diffHours = Math.floor(interval.length('hours'));

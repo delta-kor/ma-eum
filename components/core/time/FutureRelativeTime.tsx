@@ -5,11 +5,10 @@ import { getFutureRelativeTime } from '@/utils/time.util';
 
 interface Props {
   date: Date;
-  isAllDay: boolean;
 }
 
-export default function CSRFutureRelativeTime({ date, isAllDay }: Props) {
+export default function CSRFutureRelativeTime({ date }: Props) {
   const today = useToday();
-  const text = getFutureRelativeTime(date, today, isAllDay);
+  const text = getFutureRelativeTime(date, today);
   return <>{text}</>;
 }
