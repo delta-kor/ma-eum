@@ -4,7 +4,11 @@ import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
 
-export default function TalkArticleBack() {
+interface Props {
+  inArticle?: boolean;
+}
+
+export default function TalkArticleBack({ inArticle }: Props) {
   const history = useHistory();
 
   function handleClick() {
@@ -18,7 +22,7 @@ export default function TalkArticleBack() {
     >
       <Icon type="left" className="w-16 text-gray-200" />
       <div className="text-18 font-500 text-gray-500">
-        <Translate>$talk_back_to_articles</Translate>
+        <Translate>{inArticle ? '$talk_back_to_article' : '$talk_back_to_articles'}</Translate>
       </div>
     </div>
   );
