@@ -3,6 +3,8 @@ import Pc from '@/components/core/responsive/Pc';
 import TalkArticleBack from '@/components/talk/article/TalkArticleBack';
 import TalkWriteFrame from '@/components/talk/write/TalkWriteFrame';
 import Auth from '@/utils/auth.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { RedirectType, redirect } from 'next/navigation';
 
 export const revalidate = 0;
@@ -30,4 +32,8 @@ export default async function TalkWritePage() {
       </div>
     </DetailsContent>
   );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getIsolatedPage('Write', '/talk/write');
 }

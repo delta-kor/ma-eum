@@ -7,6 +7,8 @@ import StageVideoList from '@/components/video/StageVideoList';
 import PerformanceMusicProvider from '@/providers/PerformanceMusicProvider';
 import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -41,4 +43,11 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
       </DetailsContent>
     </PerformanceMusicProvider>
   );
+}
+
+export async function generateMetadata({ params: { albumId } }: Props): Promise<Metadata> {
+  const album = await AlbumService.getOne(albumId);
+  if (!album) return notFound();
+
+  return MetaUtil.getAlbumPage(album.id, album.title, 'performance');
 }

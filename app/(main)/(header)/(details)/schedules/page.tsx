@@ -1,6 +1,8 @@
 import CalendarSection from '@/components/calendar/CalendarSection';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import { ScheduleService } from '@/services/schedule.service';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -15,5 +17,13 @@ export default async function SchedulesPage() {
         </div>
       </div>
     </DetailsContent>
+  );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage(
+    'Schedules',
+    'Stay updated with the latest events and appearances of CSR(첫사랑).',
+    '/schedules'
   );
 }

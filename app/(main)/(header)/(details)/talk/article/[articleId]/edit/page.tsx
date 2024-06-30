@@ -5,6 +5,8 @@ import TalkArticleBack from '@/components/talk/article/TalkArticleBack';
 import TalkWriteFrame from '@/components/talk/write/TalkWriteFrame';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { RedirectType, redirect } from 'next/navigation';
 
 export const revalidate = 0;
@@ -46,4 +48,8 @@ export default async function TalkEditPage({ params: { articleId } }: Props) {
       </div>
     </DetailsContent>
   );
+}
+
+export function generateMetadata({ params: { articleId } }: Props): Metadata {
+  return MetaUtil.getIsolatedPage('Edit', `/talk/article/${articleId}/edit`);
 }

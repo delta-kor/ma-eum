@@ -23,7 +23,7 @@ export default async function MixerMainPage() {
 export function generateMetadata(): Metadata {
   return MetaUtil.getSubpage(
     'Stage Mixer',
-    'Mix and watch best performance videos from CSR',
+    'Mix and watch best performance videos from CSR(첫사랑).',
     '/mixer'
   );
 }

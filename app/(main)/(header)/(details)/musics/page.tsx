@@ -1,5 +1,7 @@
 import MusicCardList from '@/components/card/MusicCardList';
 import DetailsContent from '@/components/core/header/DetailsContent';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -12,5 +14,13 @@ export default function MusicsPage() {
         </div>
       </div>
     </DetailsContent>
+  );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage(
+    'Musics',
+    'Explore and enjoy the latest tracks from CSR(첫사랑).',
+    '/musics'
   );
 }

@@ -4,6 +4,8 @@ import LineCardList from '@/components/card/LineCardList';
 import ProgramCardList from '@/components/card/ProgramCardList';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import IconMenu from '@/components/menu/IconMenu';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 
 export const revalidate = 3600;
 
@@ -27,4 +29,8 @@ export default function VideosPage() {
       </div>
     </DetailsContent>
   );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getSubpage('Videos', 'Watch the latest videos of CSR(첫사랑).', '/videos');
 }

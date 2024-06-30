@@ -1,6 +1,7 @@
 import PlayFrame from '@/components/play/PlayFrame';
 import { AlbumService } from '@/services/album.service';
 import { MusicService } from '@/services/music.service';
+import MetaUtil from '@/utils/meta.util';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -26,4 +27,16 @@ export async function generateStaticParams() {
 
   const musics = await MusicService.getAll();
   return musics.map(music => ({ musicId: music.id }));
+}
+
+export async function generateMetadata({ params: { musicId } }: Props) {
+  const music = await MusicService.getOne(musicId);
+  if (!music) return notFound();
+
+  const title = `${music.shortTitle}`;
+  return MetaUtil.getSubpage(
+    title,
+    'Explore and enjoy the latest tracks from CSR(첫사랑).',
+    `/play/${musicId}`
+  );
 }

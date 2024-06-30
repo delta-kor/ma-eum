@@ -1,6 +1,8 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
 import TalkLoginPageFrame from '@/components/talk/login/TalkLoginPageFrame';
 import Auth from '@/utils/auth.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { RedirectType, redirect } from 'next/navigation';
 
 export const revalidate = 0;
@@ -21,4 +23,8 @@ export default async function TalkLoginPage() {
       </div>
     </DetailsContent>
   );
+}
+
+export function generateMetadata(): Metadata {
+  return MetaUtil.getIsolatedPage('Login', '/talk/login');
 }

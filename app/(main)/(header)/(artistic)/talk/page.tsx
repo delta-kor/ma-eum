@@ -26,5 +26,9 @@ export default async function TalkPage() {
 }
 
 export function generateMetadata(): Metadata {
-  return MetaUtil.getSubpage('Talk', 'Share and discuss about CSR with global fans!', '/talk');
+  return MetaUtil.getSubpage(
+    'Talk',
+    'Share and discuss about CSR(첫사랑) with global fans!',
+    '/talk'
+  );
 }

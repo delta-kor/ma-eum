@@ -4,6 +4,8 @@ import Title from '@/components/core/header/Title';
 import PromotionList from '@/components/video/PromotionList';
 import { AlbumService } from '@/services/album.service';
 import { VideoService } from '@/services/video.service';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -32,4 +34,11 @@ export default async function AlbumPromotionPage({ params: { albumId } }: Props)
       </div>
     </DetailsContent>
   );
+}
+
+export async function generateMetadata({ params: { albumId } }: Props): Promise<Metadata> {
+  const album = await AlbumService.getOne(albumId);
+  if (!album) return notFound();
+
+  return MetaUtil.getAlbumPage(album.id, album.title, 'promotion');
 }

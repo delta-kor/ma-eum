@@ -3,6 +3,8 @@ import Title from '@/components/core/header/Title';
 import CategoryVideoList from '@/components/video/CategoryVideoList';
 import { CategoryService } from '@/services/category.service';
 import { VideoService } from '@/services/video.service';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
@@ -33,4 +35,13 @@ export async function generateStaticParams() {
 
   const categories = await CategoryService.getAll();
   return categories.map(category => ({ categoryId: category.id }));
+}
+
+export async function generateMetadata({ params: { categoryId } }: Props): Promise<Metadata> {
+  const category = await CategoryService.getOne(categoryId);
+  if (!category) return notFound();
+
+  const title = category.title;
+  const description = `Watch playlist - ${title} of CSR(첫사랑).`;
+  return MetaUtil.getSubpage(title, description, `/videos/categories/${category.id}`);
 }

@@ -5,6 +5,8 @@ import TalkArticleBack from '@/components/talk/article/TalkArticleBack';
 import TalkArticleViewer from '@/components/talk/article/TalkArticleViewer';
 import { TalkService } from '@/services/talk.service';
 import Auth from '@/utils/auth.util';
+import MetaUtil from '@/utils/meta.util';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export const revalidate = 60;
@@ -39,4 +41,11 @@ export default async function TalkViewPage({ params: { articleId } }: Props) {
       </div>
     </DetailsContent>
   );
+}
+
+export async function generateMetadata({ params: { articleId } }: Props): Promise<Metadata> {
+  const article = await TalkService.getArticle(articleId);
+  if (!article) return notFound();
+
+  return MetaUtil.getTalkArticlePage(article.id, article.title);
 }
