@@ -32,7 +32,7 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
               type="comment"
               className="w-16 shrink-0 text-gray-200 data-[active=true]:text-primary-500"
             />
-            <div className="text-16 font-500 text-gray-500">
+            <div className="min-w-12 text-right text-16 font-500 text-gray-500">
               {articleMetadata.commentUsersId.length}
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
               type="heart"
               className="w-16 shrink-0 text-gray-200 data-[active=true]:text-c-red"
             />
-            <div className="text-16 font-500 text-gray-500">
+            <div className="min-w-12 text-right text-16 font-500 text-gray-500">
               {articleMetadata.likedUsersId.length}
             </div>
           </div>
