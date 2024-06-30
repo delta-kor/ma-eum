@@ -28,6 +28,8 @@ export default async function MixerPlayerPage({ params: { musicId } }: Props) {
 }
 
 export async function generateStaticParams() {
+  if (process.env.GENERATE_STATIC_PAGES !== '1') return [];
+
   const musics = await MusicService.getMixableMusics();
   return musics.map(music => ({ musicId: music.id }));
 }

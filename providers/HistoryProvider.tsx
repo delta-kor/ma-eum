@@ -56,7 +56,6 @@ export default function HistoryProvider({ children }: Props) {
         ([path, query]) => getMatchingPage(path).path === lastPage.path && query === lastSearch
       );
       if (lastHistory) {
-        console.log('setting scroll', lastHistory[0], scroll);
         lastHistory[2] = scroll;
       }
     }

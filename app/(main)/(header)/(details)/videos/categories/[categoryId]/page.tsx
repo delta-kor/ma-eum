@@ -29,6 +29,8 @@ export default async function CategoryPage({ params: { categoryId } }: Props) {
 }
 
 export async function generateStaticParams() {
+  if (process.env.GENERATE_STATIC_PAGES !== '1') return [];
+
   const categories = await CategoryService.getAll();
   return categories.map(category => ({ categoryId: category.id }));
 }

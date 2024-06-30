@@ -10,6 +10,8 @@ export default function AlbumLayout({ children }: Props) {
 }
 
 export async function generateStaticParams() {
+  if (process.env.GENERATE_STATIC_PAGES !== '1') return [];
+
   const albums = await AlbumService.getAll();
   return albums.map(album => ({ albumId: album.id }));
 }

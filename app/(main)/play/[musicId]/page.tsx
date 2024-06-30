@@ -22,6 +22,8 @@ export default async function PlayPage({ params: { musicId } }: Props) {
 }
 
 export async function generateStaticParams() {
+  if (process.env.GENERATE_STATIC_PAGES !== '1') return [];
+
   const musics = await MusicService.getAll();
   return musics.map(music => ({ musicId: music.id }));
 }

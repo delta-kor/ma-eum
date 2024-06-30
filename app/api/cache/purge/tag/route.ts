@@ -2,6 +2,7 @@ import Secure from '@/utils/secure.util';
 import { revalidateTag } from 'next/cache';
 import { NextRequest } from 'next/server';
 
+export const runtime = 'edge';
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
