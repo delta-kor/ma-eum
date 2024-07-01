@@ -1,3 +1,4 @@
+import OpenGraphImage from '@/app/(main)/opengraph-image.jpg';
 import { ImageUrl } from '@/utils/url.util';
 import { Metadata } from 'next';
 
@@ -15,6 +16,7 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        images: [{ url: OpenGraphImage.src }],
         siteName: 'MAEUM (마음)',
         title,
         type: 'website',
@@ -39,6 +41,7 @@ export default class MetaUtil {
       metadataBase: new URL(url),
       openGraph: {
         description,
+        images: [{ url: OpenGraphImage.src }],
         siteName: 'MAEUM (마음)',
         title,
         type: 'website',
@@ -59,7 +62,10 @@ export default class MetaUtil {
 
     return {
       openGraph: {
+        images: [{ url: OpenGraphImage.src }],
+        siteName: 'MAEUM (마음)',
         title,
+        type: 'website',
         url,
       },
       robots: {
@@ -71,6 +77,10 @@ export default class MetaUtil {
         nocache: true,
       },
       title,
+      twitter: {
+        card: 'summary',
+        title,
+      },
     };
   }
 
@@ -82,6 +92,7 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        images: [{ url: OpenGraphImage.src }],
         siteName: 'MAEUM (마음)',
         title,
         type: 'website',
@@ -105,6 +116,7 @@ export default class MetaUtil {
       description,
       openGraph: {
         description,
+        images: [{ url: OpenGraphImage.src }],
         siteName: 'MAEUM (마음)',
         title,
         type: 'website',
