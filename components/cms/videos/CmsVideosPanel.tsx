@@ -93,6 +93,7 @@ export default function CmsVideosPanel({ categories, videos }: Props) {
               className="flex cursor-pointer items-center gap-16 rounded-8 px-18 py-8 text-18 hover:bg-gray-100 data-[active=true]:bg-primary-100"
             >
               <div className="code text-14 text-gray-500">{video.id}</div>
+              <div className="code text-14 text-gray-500">{video.index}</div>
               <div className="code text-14 text-primary-500">
                 {formatTimeAsSixDigit(video.date)}
               </div>
