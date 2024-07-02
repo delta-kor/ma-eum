@@ -40,30 +40,12 @@ export default function TalkArticleList({ userId }: Props) {
 
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
 
-  const placeholder = (
-    <>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-    </>
-  );
+  const placeholder = Array.from({ length: 10 }).map((_, index) => (
+    <div key={index} className="flex flex-col gap-20">
+      <TalkArticleItemPlaceholder />
+      <div className="h-2 bg-gray-50" />
+    </div>
+  ));
 
   return (
     <div className="flex flex-col gap-20">
@@ -94,26 +76,12 @@ export default function TalkArticleList({ userId }: Props) {
 export function TalkArticleListPlaceholder() {
   return (
     <div className="flex flex-col gap-20">
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
-      <div className="flex flex-col gap-20">
-        <TalkArticleItemPlaceholder />
-        <div className="h-2 bg-gray-50" />
-      </div>
+      {Array.from({ length: 10 }).map((_, index) => (
+        <div key={index} className="flex flex-col gap-20">
+          <TalkArticleItemPlaceholder />
+          <div className="h-2 bg-gray-50" />
+        </div>
+      ))}
     </div>
   );
 }

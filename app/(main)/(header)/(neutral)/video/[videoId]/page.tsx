@@ -23,6 +23,10 @@ export default async function VideoPage({ params: { videoId } }: Props) {
   );
 }
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({ params: { videoId } }: Props) {
   const video: Video | null = await VideoService.getOne(videoId);
   if (!video) return notFound();
