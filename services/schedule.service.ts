@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prisma';
 import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
-import { DataCache, DynamicDataTtl } from '@/utils/cache.util';
+import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import { Schedule, ScheduleType } from '@prisma/client';
 import { DateTime } from 'luxon';
@@ -49,7 +49,7 @@ const ScheduleRouter = router({
 export class ScheduleService {
   public static router = ScheduleRouter;
 
-  @DataCache('schedule.getCalendarDateInfo', DynamicDataTtl)
+  @DataCache('schedule.getCalendarDateInfo', StaticDataTtl)
   public static async getCalendarDateInfo(): Promise<CalendarDateInfo> {
     const schedules = await prisma.schedule.findMany({
       orderBy: { date: 'asc' },
@@ -67,7 +67,7 @@ export class ScheduleService {
     return result;
   }
 
-  @DataCache('schedule.getScheduleFeeds', DynamicDataTtl)
+  @DataCache('schedule.getScheduleFeeds', StaticDataTtl)
   public static async getScheduleFeeds(date: Date): Promise<Schedule[]> {
     const dateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' }).set({
       hour: 0,
@@ -87,7 +87,7 @@ export class ScheduleService {
     });
   }
 
-  @DataCache('schedule.getSchedules', DynamicDataTtl)
+  @DataCache('schedule.getSchedules', StaticDataTtl)
   public static async getSchedules(date: Date): Promise<Schedule[]> {
     const dateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
 
