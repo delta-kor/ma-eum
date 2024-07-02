@@ -12,12 +12,18 @@ interface Props {
 }
 
 export default function CalendarSection({ attached, dateInfo }: Props) {
-  const todayDateTime = DateTime.now().setZone('Asia/Seoul');
+  const todayDateTime = DateTime.now()
+    .setZone('Asia/Seoul')
+    .set({ hour: 0, millisecond: 0, minute: 0, second: 0 });
+
   const [date, setDate] = useState<DateTime>(todayDateTime);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    const today = DateTime.now().setZone('Asia/Seoul');
+    const today = DateTime.now()
+      .setZone('Asia/Seoul')
+      .set({ hour: 0, millisecond: 0, minute: 0, second: 0 });
+
     setDate(today);
     setIsHydrated(true);
   }, []);

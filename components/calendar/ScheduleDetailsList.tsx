@@ -11,14 +11,12 @@ interface Props {
 }
 
 export default function ScheduleDetailsList({ selectedDate }: Props) {
-  const utcDate = selectedDate.toJSDate();
+  const date = selectedDate.toJSDate();
 
   const schedules = trpc.schedule.getSchedules.useQuery(
+    { date },
     {
-      date: utcDate,
-    },
-    {
-      queryHash: formatTimeAsDate(utcDate),
+      queryHash: formatTimeAsDate(date),
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,

@@ -69,12 +69,19 @@ export class ScheduleService {
 
   @DataCache('schedule.getScheduleFeeds', DynamicDataTtl)
   public static async getScheduleFeeds(date: Date): Promise<Schedule[]> {
+    const dateTime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' }).set({
+      hour: 0,
+      millisecond: 0,
+      minute: 0,
+      second: 0,
+    });
+
     return prisma.schedule.findMany({
       orderBy: { date: 'asc' },
       take: 2,
       where: {
         date: {
-          gte: date,
+          gte: dateTime.toJSDate(),
         },
       },
     });

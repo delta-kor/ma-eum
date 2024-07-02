@@ -13,7 +13,11 @@ export function getFutureRelativeTime(date: Date, today: Date): string {
   if (diffDays > 0) return `${diffDays}d`;
   if (diffHours > 0) return `${diffHours}h`;
   if (diffMinutes > 0) return `${diffMinutes}m`;
-  return 'Today';
+
+  const diffDuration = todayDateTime.diff(targetDateTime, ['hours', 'minutes']);
+  if (diffDuration.hours > 0) return `-${Math.round(diffDuration.hours)}h`;
+  if (diffDuration.minutes > 0) return `-${Math.round(diffDuration.minutes)}m`;
+  return 'Now';
 }
 
 export function getPastRelativeTime(date: Date, today: Date): string {

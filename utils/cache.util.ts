@@ -17,6 +17,9 @@ export function DataCache(name: string, ttl: number) {
 
     const cachedMethod = async (serializedArgs: string) => {
       const args = superjson.parse(serializedArgs) as any;
+      if (process.env.LOG_PRISMA === '1')
+        console.log(`[DataCache] ${name}(${args.map((arg: any) => JSON.stringify(arg))})`);
+
       const result = await originalMethod(...args);
       return superjson.stringify(result);
     };
