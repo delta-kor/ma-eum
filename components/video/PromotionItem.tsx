@@ -34,7 +34,7 @@ export default function PromotionItem({ video }: Props) {
           <LazyImage
             alt={video.title}
             src={ImageUrl.youtubeThumbnail(video.sourceId)}
-            className="aspect-video rounded-16 bg-gray-100 object-cover lg:w-[240px]"
+            className="aspect-video shrink-0 rounded-16 bg-gray-100 object-cover lg:w-[240px]"
           />
         )}
       </div>
