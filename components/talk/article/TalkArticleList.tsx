@@ -90,3 +90,30 @@ export default function TalkArticleList({ userId }: Props) {
     </div>
   );
 }
+
+export function TalkArticleListPlaceholder() {
+  return (
+    <div className="flex flex-col gap-20">
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+      <div className="flex flex-col gap-20">
+        <TalkArticleItemPlaceholder />
+        <div className="h-2 bg-gray-50" />
+      </div>
+    </div>
+  );
+}
