@@ -5,7 +5,7 @@ import Auth from '@/utils/auth.util';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
 export default async function TalkPage() {
   const token = Auth.getTokenCookie();

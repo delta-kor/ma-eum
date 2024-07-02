@@ -5,6 +5,7 @@ import Translate from '@/components/core/Translate';
 import useModal from '@/hooks/modal';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 interface Props {
   login: boolean;
@@ -13,6 +14,10 @@ interface Props {
 export default function TalkWriteButton({ login }: Props) {
   const modal = useModal();
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch('/talk/write');
+  }, []);
 
   function handleClick() {
     TalkUtil.checkLogin({
