@@ -19,7 +19,7 @@ export default function CategoryInfoMenu({ categoryTitle, displayMembers, videos
   return (
     <div
       data-members={displayMembers}
-      className="flex items-center gap-0 rounded-16 bg-gray-50 py-16 data-[members=true]:grid data-[members=true]:grid-cols-[160px_1fr] data-[members=true]:gap-16"
+      className="flex items-center gap-details-header-height rounded-16 bg-gray-50 py-16 data-[members=true]:grid data-[members=true]:grid-cols-[160px_1fr] data-[members=true]:gap-16"
     >
       <div
         onClick={handleClick}

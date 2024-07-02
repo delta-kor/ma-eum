@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 export const revalidate = 3600;
 
 export default async function ChallengeVideosPage() {
-  const videosData = VideoService.getShortsVideos({ cursor: null, limit: 24 });
+  const videosData = VideoService.getShortsVideos({ cursor: null, limit: 30 });
 
   const [videos] = await Promise.all([videosData]);
 
