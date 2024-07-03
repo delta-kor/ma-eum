@@ -18,7 +18,10 @@ export default function AlbumCard({ album, menu }: Props) {
       style={{ background: `linear-gradient(101deg, ${gradientFrom} 7.15%, ${gradientTo} 96.7%)` }}
       className="flex flex-col gap-12 rounded-16 p-12"
     >
-      <div className="flex items-center gap-12">
+      <Link
+        href={`/videos/albums/${album.id}/${album.isMini ? 'promotion' : 'performance'}`}
+        className="flex items-center gap-12"
+      >
         <LazyImage
           alt={album.title}
           src={ImageUrl.album(album.id)}
@@ -28,7 +31,7 @@ export default function AlbumCard({ album, menu }: Props) {
           <div className="text-20 font-700 text-white">{album.title}</div>
           <div className="text-16 font-500 text-white/70">{formatTimeAsDate(album.release)}</div>
         </div>
-      </div>
+      </Link>
       {menu && (
         <div className="relative -mx-8 flex h-32 items-stretch">
           {!album.isMini && (
