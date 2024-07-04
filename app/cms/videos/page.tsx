@@ -5,8 +5,8 @@ import { PrismaUtil } from '@/utils/prisma.util';
 
 export const dynamic = 'force-dynamic';
 
-export default async function CmsMusicsPage() {
-  const sort: any = process.env.CMS_ORDER_BY_DATE ? { date: 'desc' } : { index: 'desc' };
+export default async function CmsVideosPage() {
+  const sort: any = process.env.CMS_ORDER_BY_DATE === '1' ? { date: 'desc' } : { index: 'desc' };
 
   const videosData = prisma.video.findMany({
     include: { categories: true, session: true, ...PrismaUtil.extendVideoAll() },
