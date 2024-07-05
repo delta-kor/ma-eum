@@ -34,6 +34,22 @@ body {
   @apply text-black;
 }
 
+.scrollbar-x::-webkit-scrollbar {
+  @apply lg:h-8;
+}
+
+.scrollbar-x::-webkit-scrollbar-thumb {
+  @apply lg:bg-gray-500/50 lg:rounded-full;
+}
+
+.scrollbar-x::-webkit-scrollbar-thumb:hover {
+  @apply lg:bg-gray-500/80;
+}
+
+.scrollbar-x::-webkit-scrollbar-track {
+  @apply lg:bg-gray-50 lg:rounded-full;
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

@@ -2,6 +2,7 @@ import AlbumCardLarge from '@/components/card/AlbumCardLarge';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import PerformanceMusicMenu from '@/components/menu/PerformanceMusicMenu';
+import MusicChallengeVideoList from '@/components/video/MusicChallengeVideoList';
 import OfficialVideoList from '@/components/video/OfficialVideoList';
 import StageVideoList from '@/components/video/StageVideoList';
 import PerformanceMusicProvider from '@/providers/PerformanceMusicProvider';
@@ -37,6 +38,7 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
             <div className="h-1 self-stretch bg-gray-100" />
             <OfficialVideoList />
             <div className="h-1 self-stretch bg-gray-100" />
+            <MusicChallengeVideoList />
             <StageVideoList />
           </div>
         </div>

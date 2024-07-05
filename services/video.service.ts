@@ -47,6 +47,10 @@ export interface ExtendedVideoWithCategory extends ExtendedVideo {
   categories: Category[];
 }
 
+export interface ChallengeVideoFilter {
+  musicId?: string;
+}
+
 const VideoRouter = router({
   getCategoryVideos: publicProcedure
     .input(
@@ -60,12 +64,27 @@ const VideoRouter = router({
     }),
 
   getChallengeVideos: publicProcedure
-    .input(z.object({ cursor: z.string().nullish(), member: z.string().nullable() }))
+    .input(
+      z.object({
+        cursor: z.string().nullish(),
+        filter: z
+          .object({
+            musicId: z.string(),
+          })
+          .partial()
+          .optional(),
+        member: z.string().nullable(),
+      })
+    )
     .query(opts => {
-      return VideoService.getChallengeVideos(opts.input.member as Member, {
-        cursor: opts.input.cursor || null,
-        limit: 20,
-      });
+      return VideoService.getChallengeVideos(
+        opts.input.member as Member,
+        {
+          cursor: opts.input.cursor || null,
+          limit: 20,
+        },
+        opts.input.filter
+      );
     }),
 
   getCoverVideos: publicProcedure.input(z.object({ member: z.string().nullable() })).query(opts => {
@@ -122,7 +141,8 @@ export class VideoService {
   @DataCache('video.getChallengeVideos', StaticDataTtl)
   public static async getChallengeVideos(
     member: Member | null,
-    pagination: PaginationOptions
+    pagination: PaginationOptions,
+    filter: ChallengeVideoFilter = {}
   ): Promise<PaginationResult<ExtendedVideo>> {
     const videos = await prisma.video.findMany({
       ...PrismaUtil.paginate(pagination),
@@ -144,6 +164,7 @@ export class VideoService {
               },
             },
           ],
+          music: filter.musicId ? { musicId: filter.musicId } : {},
           ...PrismaUtil.filterMember(member),
         },
       },
