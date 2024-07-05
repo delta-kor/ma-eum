@@ -53,7 +53,7 @@ export default function MusicChallengeVideoList() {
         <div className="text-20 font-700 text-black">
           <Translate>$challenge</Translate>
         </div>
-        <div className="scrollbar-x -mx-24 -mb-16 flex gap-16 overflow-x-scroll px-24 pb-16 lg:mx-0 lg:px-0">
+        <div className="scrollbar-x -mx-24 -mb-16 flex snap-x snap-mandatory scroll-px-24 gap-16 overflow-x-scroll px-24 pb-16 lg:mx-0 lg:px-0">
           {isLoading ? (
             placeholder
           ) : (

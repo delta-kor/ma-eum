@@ -12,7 +12,7 @@ export default function MusicChallengeVideoItem({ video }: Props) {
   if (video.source !== VideoSource.YOUTUBE) throw new Error('Invalid video source');
 
   return (
-    <Link href={`/video/${video.id}`} className="flex w-[158px] shrink-0 flex-col gap-8">
+    <Link href={`/video/${video.id}`} className="flex w-[158px] shrink-0 snap-start flex-col gap-8">
       <LazyImage
         src={ImageUrl.youtubeShortsThumbnail(video.sourceId)}
         className="aspect-shorts rounded-16 bg-gray-100"
@@ -27,7 +27,7 @@ export default function MusicChallengeVideoItem({ video }: Props) {
 
 export function MusicChallengeVideoItemPlaceholder() {
   return (
-    <div className="flex w-[158px] shrink-0 flex-col gap-8">
+    <div className="flex w-[158px] shrink-0 snap-start flex-col gap-8">
       <div className="aspect-shorts rounded-16 bg-gray-100" />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-4">
