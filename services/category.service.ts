@@ -39,12 +39,25 @@ const CategoryRouter = router({
   }),
 });
 
+export interface ExtendedCategory extends Category {
+  _count: {
+    videos: number;
+  };
+}
+
 export class CategoryService {
   public static router = CategoryRouter;
 
   @DataCache('category.getAll', StaticDataTtl)
-  public static async getAll(): Promise<Category[]> {
+  public static async getAll(): Promise<ExtendedCategory[]> {
     return prisma.category.findMany({
+      include: {
+        _count: {
+          select: {
+            videos: true,
+          },
+        },
+      },
       orderBy: [{ type: 'asc' }, { order: 'asc' }],
     });
   }

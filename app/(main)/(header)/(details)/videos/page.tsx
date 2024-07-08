@@ -21,7 +21,7 @@ export default function VideosPage() {
               <ProgramCardList />
             </div>
           </div>
-          <div className="flex flex-col gap-32 lg:grid lg:grid-cols-2">
+          <div className="flex flex-col gap-32 lg:grid lg:grid-cols-2 lg:gap-16">
             <ImageCardList />
             <LineCardList />
           </div>
