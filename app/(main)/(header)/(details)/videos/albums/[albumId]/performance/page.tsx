@@ -25,7 +25,7 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
   const musicsData = await MusicService.getPerformedMusics(albumId);
 
   const [album, musics] = await Promise.all([albumData, musicsData]);
-  if (!album || !musics.length) return notFound();
+  if (!album) return notFound();
 
   return (
     <PerformanceMusicProvider musics={musics}>
@@ -36,10 +36,11 @@ export default async function AlbumPerformancePage({ params: { albumId } }: Prop
             <AlbumCardLarge album={album} horizontal />
             <PerformanceMusicMenu musics={musics} />
             <div className="h-1 self-stretch bg-gray-100" />
-            <OfficialVideoList />
-            <div className="h-1 self-stretch bg-gray-100" />
-            <MusicChallengeVideoList />
-            <StageVideoList />
+            <div className="flex flex-col gap-20 divide-y-1 divide-gray-100 [&>*+*]:pt-20">
+              <OfficialVideoList />
+              <MusicChallengeVideoList />
+              <StageVideoList />
+            </div>
           </div>
         </div>
       </DetailsContent>

@@ -68,7 +68,6 @@ export default function MusicChallengeVideoList() {
           )}
         </div>
       </div>
-      <div className="h-1 self-stretch bg-gray-100 lg:bg-transparent" />
     </div>
   );
 }

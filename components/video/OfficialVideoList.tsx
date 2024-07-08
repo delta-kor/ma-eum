@@ -24,14 +24,18 @@ export default function OfficialVideoList() {
       staleTime: Infinity,
     }
   );
+
   const items = videos.data;
+  const isLoading = videos.isFetching;
+
+  if (!isLoading && items && !items.length) return null;
 
   return (
     <div className="flex flex-col gap-12">
       <div className="text-20 font-700 text-black">
         <Translate>$performance</Translate>
       </div>
-      {videos.isFetching || !items ? (
+      {isLoading || !items ? (
         <div className="flex flex-col gap-8">
           <OfficialVideoItemPlaceholder />
           <OfficialVideoItemPlaceholder />

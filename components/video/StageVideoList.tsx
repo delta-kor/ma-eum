@@ -41,6 +41,9 @@ export default function StageVideoList({ attached }: Props) {
   }
 
   const items = sessions.data;
+  const isLoading = sessions.isFetching;
+
+  if (!isLoading && items && !items.length && member === initialMember) return null;
 
   return (
     <div className="flex flex-col gap-12">
@@ -54,7 +57,7 @@ export default function StageVideoList({ attached }: Props) {
           <MemberMenu selected={member} onSelect={handleMemberSelect} />
         </div>
         <div className="flex flex-col gap-16 self-stretch lg:grid lg:grid-cols-2 lg:self-start">
-          {sessions.isFetching || !items ? (
+          {isLoading || !items ? (
             <>
               <SessionVideoListPlaceholder />
               <SessionVideoListPlaceholder />
