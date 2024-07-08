@@ -7,7 +7,7 @@ type PropsBase = HTMLAttributes<HTMLDivElement> & MotionProps;
 interface Props extends PropsBase {
   layoutId: string;
   size?: boolean;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export default function MotionWrapper({ layoutId, size, children, ...props }: Props) {
