@@ -403,6 +403,7 @@ export class TalkService {
     pagination: IndexPaginationOptions
   ): Promise<IndexPaginationResult<TalkArticleMetadata>> {
     const page = pagination.cursor || 0;
+    if (page < 0 || isNaN(page)) throw new TRPCError({ code: 'BAD_REQUEST' });
 
     const [count, articles] = await prisma.$transaction([
       prisma.talkArticle.count({ where: { isDeleted: false } }),
