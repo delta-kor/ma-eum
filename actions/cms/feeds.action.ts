@@ -4,13 +4,14 @@ import prisma from '@/prisma/prisma';
 import createId from '@/utils/id.util';
 import Secure from '@/utils/secure.util';
 import { VividFeed } from '@/utils/vivid.util';
-import { FeedType } from '@prisma/client';
+import { FeedType, PrismaPromise } from '@prisma/client';
 import 'server-only';
 
 export async function importVividFeedsFromJson(data: VividFeed[]) {
   Secure.authorize();
   if (!Array.isArray(data)) throw new Error('Invalid json data');
 
+  const promises: PrismaPromise<any>[] = [];
   for (const item of data) {
     let feedType: FeedType;
     switch (item.type) {
@@ -30,27 +31,31 @@ export async function importVividFeedsFromJson(data: VividFeed[]) {
         throw new Error('Invalid feed type');
     }
 
-    await prisma.feed.upsert({
-      create: {
-        date: item.date,
-        id: createId(6),
-        media: item.media,
-        members: item.members,
-        sourceId: item.id,
-        title: item.title,
-        type: feedType,
-      },
-      update: {
-        media: item.media,
-        members: item.members,
-        title: item.title,
-      },
-      where: {
-        uniqueFeedId: {
+    promises.push(
+      prisma.feed.upsert({
+        create: {
+          date: item.date,
+          id: createId(6),
+          media: item.media,
+          members: item.members,
           sourceId: item.id,
+          title: item.title,
           type: feedType,
         },
-      },
-    });
+        update: {
+          media: item.media,
+          members: item.members,
+          title: item.title,
+        },
+        where: {
+          uniqueFeedId: {
+            sourceId: item.id,
+            type: feedType,
+          },
+        },
+      })
+    );
   }
+
+  await prisma.$transaction(promises);
 }
