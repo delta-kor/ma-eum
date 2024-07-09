@@ -8,6 +8,16 @@ export interface PaginationResult<T> {
   nextCursor: null | string;
 }
 
+export interface IndexPaginationOptions {
+  cursor: null | number;
+  limit: number;
+}
+
+export interface IndexPaginationResult<T> {
+  items: T[];
+  pages: number;
+}
+
 export function paginate<T extends { id: string }>(
   items: T[],
   pagination: PaginationOptions

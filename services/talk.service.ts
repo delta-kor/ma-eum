@@ -11,8 +11,7 @@ import { publicProcedure, router, talkProcedure } from '@/trpc/router';
 import Auth from '@/utils/auth.util';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
-import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
-import { PrismaUtil } from '@/utils/prisma.util';
+import type { IndexPaginationOptions, IndexPaginationResult } from '@/utils/pagination.util';
 import TalkUtil from '@/utils/talk.util';
 import { Prisma, TalkArticle, TalkComment, TalkUser, TalkUserRole } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
@@ -117,7 +116,7 @@ const TalkRouter = router({
     }),
 
   getArticlesMetadata: publicProcedure
-    .input(z.object({ cursor: z.string().nullish() }))
+    .input(z.object({ cursor: z.number().nullish() }))
     .query(opts => {
       return TalkService.getArticlesMetadata({
         cursor: opts.input.cursor || null,
@@ -401,40 +400,46 @@ export class TalkService {
 
   @DataCache('talk.getArticlesMetadata', StaticDataTtl)
   public static async getArticlesMetadata(
-    pagination: PaginationOptions
-  ): Promise<PaginationResult<TalkArticleMetadata>> {
-    const articles = await prisma.talkArticle.findMany({
-      ...PrismaUtil.paginate(pagination),
-      orderBy: [{ date: 'desc' }],
-      select: {
-        comments: {
-          select: {
-            userId: true,
+    pagination: IndexPaginationOptions
+  ): Promise<IndexPaginationResult<TalkArticleMetadata>> {
+    const page = pagination.cursor || 0;
+
+    const [count, articles] = await prisma.$transaction([
+      prisma.talkArticle.count({ where: { isDeleted: false } }),
+      prisma.talkArticle.findMany({
+        orderBy: [{ date: 'desc' }],
+        select: {
+          comments: {
+            select: {
+              userId: true,
+            },
+            where: {
+              OR: [{ replyTo: null }, { replyTo: { isDeleted: false } }],
+              isDeleted: false,
+            },
           },
-          where: {
-            OR: [{ replyTo: null }, { replyTo: { isDeleted: false } }],
-            isDeleted: false,
+          content: true,
+          date: true,
+          id: true,
+          likedUsers: {
+            select: {
+              id: true,
+            },
+          },
+          title: true,
+          user: {
+            select: {
+              nickname: true,
+            },
           },
         },
-        content: true,
-        date: true,
-        id: true,
-        likedUsers: {
-          select: {
-            id: true,
-          },
+        skip: page * pagination.limit,
+        take: pagination.limit,
+        where: {
+          isDeleted: false,
         },
-        title: true,
-        user: {
-          select: {
-            nickname: true,
-          },
-        },
-      },
-      where: {
-        isDeleted: false,
-      },
-    });
+      }),
+    ]);
 
     const metadata: TalkArticleMetadata[] = articles.map(article => ({
       commentUsersId: article.comments.map(comment => comment.userId),
@@ -451,7 +456,11 @@ export class TalkService {
       title: article.title,
     }));
 
-    return PrismaUtil.buildPagination(metadata);
+    const pages = Math.ceil(count / pagination.limit);
+    return {
+      items: metadata,
+      pages,
+    };
   }
 
   public static async likeArticle(user: TalkUser, articleId: string): Promise<void> {
