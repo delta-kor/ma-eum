@@ -14,8 +14,9 @@ export default function MainPage() {
   return (
     <div className="flex min-h-dvh flex-col pb-24 lg:min-h-0">
       <LandingLayer />
-      <div className="bg-gradient-to-b from-primary-200 to-white px-24 lg:from-white">
-        <div className="flex grow flex-col gap-28 pt-48 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-2 lg:gap-48">
+      <div className="relative px-24">
+        <div className="absolute left-0 top-0 -z-10 size-full max-h-[520px] bg-gradient-to-b from-primary-200 to-white lg:from-white" />
+        <div className="relative flex grow flex-col gap-28 pt-48 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-2 lg:gap-48">
           <Mobile>
             <ScheduleFeedList />
           </Mobile>
