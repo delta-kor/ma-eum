@@ -3,6 +3,7 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   inArticle?: boolean;
@@ -10,9 +11,12 @@ interface Props {
 
 export default function TalkArticleBack({ inArticle }: Props) {
   const history = useHistory();
+  const router = useRouter();
 
   function handleClick() {
-    history.back();
+    const previousUrl = history.getPreviousUrl();
+    if (!previousUrl.startsWith('/talk')) router.push('/talk');
+    else history.back();
   }
 
   return (

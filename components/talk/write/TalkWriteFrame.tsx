@@ -2,6 +2,7 @@
 
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import useHistory from '@/hooks/history';
 import useTranslate from '@/hooks/translate';
 import { trpc } from '@/hooks/trpc';
 import { i18n } from '@/utils/i18n.util';
@@ -28,6 +29,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
   const editArticle = trpc.talk.editArticle.useMutation();
 
   const router = useRouter();
+  const history = useHistory();
   const { language } = useTranslate();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -78,6 +80,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
             setError(error.message);
           },
           onSuccess: articleId => {
+            history.reset();
             router.replace(`/talk/article/${articleId}`);
           },
         }

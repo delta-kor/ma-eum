@@ -6,6 +6,8 @@ import { ReactNode, createContext, useEffect, useRef, useState } from 'react';
 
 interface Context {
   back: () => void;
+  getPreviousUrl: () => string;
+  reset: () => void;
   scroll: number;
 }
 
@@ -102,6 +104,32 @@ export default function HistoryProvider({ children }: Props) {
     router.replace(url);
   }
 
+  function getPreviousUrl() {
+    const histories = historiesRef.current;
+    const currentPage = getMatchingPage(pathname);
+
+    for (let i = histories.length - 1; i >= 0; i--) {
+      const [pathname, search] = histories[i];
+      const page = getMatchingPage(pathname);
+
+      if (page.path === currentPage.path) continue;
+      if (page.invisible) continue;
+
+      const url = joinPathSearch(pathname, search);
+      return url;
+    }
+
+    const url = currentPage.back;
+    return url;
+  }
+
+  function reset() {
+    historiesRef.current = [];
+    lastPathnameRef.current = null;
+    lastSearchRef.current = null;
+    scrollRef.current = 0;
+  }
+
   function handleScroll() {
     const lastScroll = scrollRef.current;
     const currentScroll = window.scrollY;
@@ -112,6 +140,8 @@ export default function HistoryProvider({ children }: Props) {
 
   const value: Context = {
     back: handleBack,
+    getPreviousUrl,
+    reset,
     scroll: scrollPosition,
   };
 
