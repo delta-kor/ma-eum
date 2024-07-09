@@ -48,6 +48,8 @@ export interface ExtendedTalkArticle extends TalkArticle {
   user: TalkUser;
 }
 
+export type TalkArticleSort = 'like' | 'newest';
+
 const TalkRouter = router({
   addCommentToArticle: talkProcedure
     .input(
@@ -116,12 +118,15 @@ const TalkRouter = router({
     }),
 
   getArticlesMetadata: publicProcedure
-    .input(z.object({ cursor: z.number().nullish() }))
+    .input(z.object({ cursor: z.number().nullish(), sort: z.string().optional() }))
     .query(opts => {
-      return TalkService.getArticlesMetadata({
-        cursor: opts.input.cursor || null,
-        limit: 10,
-      });
+      return TalkService.getArticlesMetadata(
+        {
+          cursor: opts.input.cursor || null,
+          limit: 10,
+        },
+        opts.input.sort as TalkArticleSort
+      );
     }),
 
   likeArticle: talkProcedure.input(z.object({ articleId: z.string() })).mutation(async opts => {
@@ -400,7 +405,8 @@ export class TalkService {
 
   @DataCache('talk.getArticlesMetadata', StaticDataTtl)
   public static async getArticlesMetadata(
-    pagination: IndexPaginationOptions
+    pagination: IndexPaginationOptions,
+    sort: TalkArticleSort = 'newest'
   ): Promise<IndexPaginationResult<TalkArticleMetadata>> {
     const page = pagination.cursor || 0;
     if (page < 0 || isNaN(page)) throw new TRPCError({ code: 'BAD_REQUEST' });
@@ -408,7 +414,10 @@ export class TalkService {
     const [count, articles] = await prisma.$transaction([
       prisma.talkArticle.count({ where: { isDeleted: false } }),
       prisma.talkArticle.findMany({
-        orderBy: [{ date: 'desc' }],
+        orderBy:
+          sort === 'like'
+            ? [{ likedUsers: { _count: 'desc' } }, { date: 'desc' }]
+            : { date: 'desc' },
         select: {
           comments: {
             select: {

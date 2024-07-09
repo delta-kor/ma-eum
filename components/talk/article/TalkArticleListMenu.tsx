@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import TalkArticleSortMenu from '@/components/talk/article/TalkArticleSortMenu';
 import TalkWriteButton from '@/components/talk/write/TalkWriteButton';
 import { TalkUser } from '@prisma/client';
 
@@ -11,6 +12,7 @@ export default function TalkArticleListMenu({ user }: Props) {
   return (
     <div className="flex items-center justify-between">
       <TalkWriteButton login={!!user} />
+      <TalkArticleSortMenu />
     </div>
   );
 }

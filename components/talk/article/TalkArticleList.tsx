@@ -15,9 +15,10 @@ interface Props {
 export default function TalkArticleList({ userId }: Props) {
   const query = useQuery();
   const currentPage = parseInt(query.get('page') || '1');
+  const sort = query.get('sort') === 'like' ? 'like' : 'newest';
 
   const articles = trpc.talk.getArticlesMetadata.useQuery(
-    { cursor: currentPage - 1 },
+    { cursor: currentPage - 1, sort },
     {
       refetchOnMount: true,
       refetchOnReconnect: true,
