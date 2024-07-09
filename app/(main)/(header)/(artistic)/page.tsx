@@ -4,6 +4,7 @@ import Mobile from '@/components/core/responsive/Mobile';
 import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
+import FeedListMenu from '@/components/menu/FeedListMenu';
 import StrongMenu from '@/components/menu/StrongMenu';
 import TrendingTalkArticlesMenu from '@/components/menu/TrendingTalkArticlesMenu';
 
@@ -27,6 +28,9 @@ export default function MainPage() {
             </Pc>
             <StrongMenu />
             <TrendingTalkArticlesMenu />
+          </div>
+          <div className="col-span-full">
+            <FeedListMenu />
           </div>
         </div>
       </div>

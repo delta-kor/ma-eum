@@ -1,3 +1,5 @@
+'use client';
+
 import Icon from '@/components/core/Icon';
 import FeedText from '@/components/feed/FeedText';
 import useImageLoaded from '@/hooks/image-loaded';
