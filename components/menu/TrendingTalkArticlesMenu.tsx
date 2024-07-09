@@ -1,6 +1,10 @@
+import TrendingTalkArticlesMenuItem from '@/components/menu/TrendingTalkArticlesMenuItem';
+import { TalkService } from '@/services/talk.service';
 import Link from 'next/link';
 
-export default function TrendingTalkArticlesMenu() {
+export default async function TrendingTalkArticlesMenu() {
+  const articles = await TalkService.getTrendingArticlesMetadata();
+
   return (
     <div className="flex flex-col gap-12">
       <div className="flex items-center gap-8">
@@ -9,6 +13,11 @@ export default function TrendingTalkArticlesMenu() {
         <Link href={`/talk`} className="shrink-0 text-16 font-500 text-gray-500">
           전체보기
         </Link>
+      </div>
+      <div className="flex flex-col gap-12">
+        {articles.map(metadata => (
+          <TrendingTalkArticlesMenuItem key={metadata.id} metadata={metadata} />
+        ))}
       </div>
     </div>
   );

@@ -42,6 +42,14 @@ export interface TalkCommentMetadata {
   userId: string;
 }
 
+export interface TrendingTalkArticleMetadata {
+  content: string;
+  id: string;
+  likes: number;
+  nickname: string;
+  title: string;
+}
+
 export interface ExtendedTalkArticle extends TalkArticle {
   comments: { userId: string }[];
   likedUsers: { id: string }[];
@@ -471,6 +479,46 @@ export class TalkService {
       items: metadata,
       pages,
     };
+  }
+
+  @DataCache('talk.getTrendingArticlesMetadata', StaticDataTtl)
+  public static async getTrendingArticlesMetadata(): Promise<TrendingTalkArticleMetadata[]> {
+    const articles = await prisma.talkArticle.findMany({
+      orderBy: [{ likedUsers: { _count: 'desc' } }, { date: 'desc' }],
+      select: {
+        _count: {
+          select: {
+            likedUsers: true,
+          },
+        },
+        content: true,
+        id: true,
+        title: true,
+        user: {
+          select: {
+            nickname: true,
+          },
+        },
+      },
+      skip: 0,
+      take: 3,
+      where: {
+        isDeleted: false,
+      },
+    });
+
+    return articles.map(article => ({
+      content: article.content
+        .split('\n')
+        .filter(item => item.trim())
+        .slice(0, 2)
+        .join('\n')
+        .slice(0, 100),
+      id: article.id,
+      likes: article._count.likedUsers,
+      nickname: article.user.nickname,
+      title: article.title,
+    }));
   }
 
   public static async likeArticle(user: TalkUser, articleId: string): Promise<void> {
