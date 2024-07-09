@@ -43,7 +43,7 @@ export default function CalendarSection({ attached, dateInfo }: Props) {
         selectedDate={date}
         onDateSelect={handleDateSelect}
       />
-      <ScheduleDetailsList selectedDate={date} />
+      {!attached && <ScheduleDetailsList selectedDate={date} />}
     </div>
   );
 }

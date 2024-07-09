@@ -17,13 +17,22 @@ export default async function TrendingTalkArticlesMenu() {
         <div className="grow text-18 font-500 text-gray-500">
           <Translate>$talk_article_trending</Translate>
         </div>
-        <Link href={`/talk`} className="shrink-0 text-16 font-400 text-gray-200">
+        <Link
+          href={`/talk`}
+          className="shrink-0 text-16 font-500 text-gray-500 underline underline-offset-2"
+        >
           <Translate>$view_all</Translate>
         </Link>
       </div>
       <div className="flex flex-col gap-12">
-        {articles.map(metadata => (
-          <TrendingTalkArticlesMenuItem key={metadata.id} metadata={metadata} />
+        {articles.map((metadata, index) => (
+          <div
+            key={metadata.id}
+            data-overflow={index > 2}
+            className="data-[overflow=true]:hidden lg:!block"
+          >
+            <TrendingTalkArticlesMenuItem metadata={metadata} />
+          </div>
         ))}
       </div>
     </div>

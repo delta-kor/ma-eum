@@ -25,7 +25,7 @@ export default async function FeedListMenu() {
           </div>
         ))}
       </FeedListMenuGrid>
-      <Link href={`/discover`} className="-m-16 flex items-center gap-8 self-center p-16">
+      <Link href={`/discover`} className="-mx-16 -mb-16 flex items-center gap-8 self-center p-16">
         <div className="shrink-0 text-18 font-600 text-gray-500">
           <Translate>$view_all</Translate>
         </div>

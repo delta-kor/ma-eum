@@ -496,7 +496,7 @@ export class TalkService {
         },
       },
       skip: 0,
-      take: 3,
+      take: 4,
       where: {
         isDeleted: false,
       },
