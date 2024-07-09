@@ -5,6 +5,7 @@ import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
 import StrongMenu from '@/components/menu/StrongMenu';
+import TrendingTalkArticlesMenu from '@/components/menu/TrendingTalkArticlesMenu';
 
 export const revalidate = 60;
 
@@ -25,6 +26,7 @@ export default function MainPage() {
               <LandingWidget />
             </Pc>
             <StrongMenu />
+            <TrendingTalkArticlesMenu />
           </div>
         </div>
       </div>
