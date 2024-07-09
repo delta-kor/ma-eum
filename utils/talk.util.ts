@@ -40,6 +40,15 @@ export default class TalkUtil {
     });
   }
 
+  public static truncateContent(content: string): string {
+    return content
+      .split('\n')
+      .filter(item => item.trim())
+      .slice(0, 2)
+      .join('\n')
+      .slice(0, 100);
+  }
+
   public static validateArticle(title: any, content: any): ValidateArticleResult {
     if (!title || typeof title !== 'string') {
       return { error: true, message: '$error_enter_title' };

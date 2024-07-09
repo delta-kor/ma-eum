@@ -19,18 +19,21 @@ export async function revalidateTalkArticleWrite(): Promise<void> {
 export async function revalidateTalkArticleEdit(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
+  revalidateTag('talk.getTrendingArticlesMetadata');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
 export async function revalidateTalkArticleDelete(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
+  revalidateTag('talk.getTrendingArticlesMetadata');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
 export async function revalidateTalkArticleHeart(articleId: string): Promise<void> {
   revalidateTag('talk.getArticle');
   revalidateTag('talk.getArticlesMetadata');
+  revalidateTag('talk.getTrendingArticlesMetadata');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
 
