@@ -1,7 +1,7 @@
 import GradientIcon from '@/components/core/GradientIcon';
 import Link from 'next/link';
 
-export type StrongMenuItemType = 'musics' | 'photocards' | 'videos';
+export type StrongMenuItemType = 'mixer' | 'musics' | 'videos';
 
 interface Props {
   type: StrongMenuItemType;
@@ -17,11 +17,11 @@ export default function StrongMenuItem({ type }: Props) {
       shadow = '0px 4px 4px 0px rgba(61, 226, 127, 0.30)';
       url = '/musics';
       break;
-    case 'photocards':
-      text = 'Photo\ncards';
+    case 'mixer':
+      text = 'Stage\nMixer';
       gradient = 'conic-gradient(from 71deg at 0% 67.03%, #967CFF 0deg, #6E4EED 360deg)';
       shadow = '0px 4px 4px 0px rgba(146, 119, 253, 0.30)';
-      url = '/photocards';
+      url = '/mixer';
       break;
     case 'videos':
       text = 'Videos';

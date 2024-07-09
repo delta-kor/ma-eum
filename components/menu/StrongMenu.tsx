@@ -5,7 +5,7 @@ export default function StrongMenu() {
     <div className="flex items-center gap-16">
       <StrongMenuItem type="videos" />
       <StrongMenuItem type="musics" />
-      <StrongMenuItem type="photocards" />
+      <StrongMenuItem type="mixer" />
     </div>
   );
 }

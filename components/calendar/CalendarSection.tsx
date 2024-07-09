@@ -7,11 +7,10 @@ import { useEffect, useState } from 'react';
 import Calendar from './Calendar';
 
 interface Props {
-  attached?: boolean;
   dateInfo: CalendarDateInfo;
 }
 
-export default function CalendarSection({ attached, dateInfo }: Props) {
+export default function CalendarSection({ dateInfo }: Props) {
   const todayDateTime = DateTime.now()
     .setZone('Asia/Seoul')
     .set({ hour: 0, millisecond: 0, minute: 0, second: 0 });
@@ -33,17 +32,14 @@ export default function CalendarSection({ attached, dateInfo }: Props) {
   }
 
   return (
-    <div
-      data-attached={!!attached}
-      className="flex flex-col gap-32 data-[attached=false]:grid-cols-[480px_1fr] data-[attached=false]:lg:grid data-[attached=true]:lg:gap-16"
-    >
+    <div className="flex flex-col gap-32 lg:grid lg:grid-cols-[480px_1fr]">
       <Calendar
         dateInfo={dateInfo}
         hydrated={isHydrated}
         selectedDate={date}
         onDateSelect={handleDateSelect}
       />
-      {!attached && <ScheduleDetailsList selectedDate={date} />}
+      <ScheduleDetailsList selectedDate={date} />
     </div>
   );
 }
