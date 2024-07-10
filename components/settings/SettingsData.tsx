@@ -1,4 +1,4 @@
-export default function SettingsInfoMenu() {
+export default function SettingsData() {
   const hash = process.env.VERCEL_GIT_COMMIT_SHA || 'n/a';
   const deployId = process.env.VERCEL_DEPLOYMENT_ID || 'n/a';
   const region = process.env.VERCEL_REGION || 'n/a';
