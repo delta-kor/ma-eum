@@ -5,9 +5,10 @@ import { ReactNode, createContext, useEffect, useState } from 'react';
 
 interface Translate {
   language: string;
+  setLanguage: (lang: string) => void;
 }
 
-export const TranslateContext = createContext<Translate>({ language: 'en' });
+export const TranslateContext = createContext<Translate>({} as Translate);
 
 interface Props {
   children: ReactNode;
@@ -21,5 +22,9 @@ export default function TranslateProvider({ children }: Props) {
     if (lang) setLanguage(lang);
   }, []);
 
-  return <TranslateContext.Provider value={{ language }}>{children}</TranslateContext.Provider>;
+  return (
+    <TranslateContext.Provider value={{ language, setLanguage }}>
+      {children}
+    </TranslateContext.Provider>
+  );
 }
