@@ -7,6 +7,7 @@ import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
 export const revalidate = 3600;
+export const runtime = 'edge';
 
 export default function SettingsPage() {
   return (
