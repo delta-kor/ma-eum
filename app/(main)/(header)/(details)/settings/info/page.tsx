@@ -1,7 +1,8 @@
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
-import LanguageSettings from '@/components/settings/LanguageSettings';
-import SettingsLink from '@/components/settings/SettingsLink';
+import SettingsData from '@/components/settings/SettingsData';
+import SettingsHeader from '@/components/settings/SettingsHeader';
+import SettingsInfo from '@/components/settings/SettingsInfo';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
@@ -11,18 +12,14 @@ export const runtime = 'edge';
 export default function SettingsPage() {
   return (
     <DetailsContent>
-      <Title>Settings</Title>
+      <Title>Info</Title>
       <div className="px-24">
         <div className="pb-24 lg:mx-auto lg:max-w-screen-lg lg:pt-24">
           <div className="flex flex-col gap-24 pt-36 lg:pt-0">
-            <LanguageSettings />
+            <SettingsHeader />
+            <SettingsData />
             <div className="h-1 self-stretch bg-gray-100" />
-            <div className="grid w-full grid-cols-1 gap-8 lg:max-w-[520px]">
-              <SettingsLink type="info" />
-              <SettingsLink type="notice" />
-              <SettingsLink type="credits" />
-              <SettingsLink type="changelog" />
-            </div>
+            <SettingsInfo />
           </div>
         </div>
       </div>
@@ -31,5 +28,5 @@ export default function SettingsPage() {
 }
 
 export function generateMetadata(): Metadata {
-  return MetaUtil.getSubpage('Settings', 'MAEUM Settings', '/settings');
+  return MetaUtil.getSubpage('Info', 'MAEUM Info', '/settings/info');
 }
