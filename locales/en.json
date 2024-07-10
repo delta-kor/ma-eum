@@ -1,7 +1,10 @@
 {
-  "404_back_to_home": "Back to home",
+  "404_back_to_home": "Main",
   "404_description": "We cannot find the page you’re looking for.",
   "404_title": "Page not found",
+  "500_back_to_home": "Main",
+  "500_retry": "Retry",
+  "500_title": "Error occured",
   "all": "All",
   "all_day": "All day",
   "challenge": "Challenge",

@@ -81,7 +81,7 @@ export default function ArtisticHeader() {
           </Pc>
         </div>
         <Icon
-          type="search"
+          type="settings"
           className="w-24 cursor-pointer transition-all group-data-[floating=true]:w-20 group-data-[floating=true]:text-gray-500"
         />
       </div>

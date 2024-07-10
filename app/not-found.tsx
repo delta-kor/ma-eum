@@ -22,7 +22,7 @@ export default function NotFoundPage() {
       </div>
       <Link
         href="/"
-        className="rounded-8 bg-gradient-primary px-16 py-12 text-20 font-600 text-white"
+        className="rounded-8 bg-gradient-primary px-16 py-12 text-18 font-600 text-white"
       >
         <Translate>$404_back_to_home</Translate>
       </Link>
