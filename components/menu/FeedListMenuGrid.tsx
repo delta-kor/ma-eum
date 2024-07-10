@@ -28,7 +28,7 @@ export default function FeedListMenuGrid({ children }: Props) {
 
     const width = element.clientWidth;
     const newColsCount = Math.floor(width / (minWidth + gap));
-    setColsCount(newColsCount);
+    setColsCount(newColsCount || 1);
   }
 
   const cols: ReactNode[][] = [];
