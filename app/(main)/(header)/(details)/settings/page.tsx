@@ -2,6 +2,7 @@ import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import LanguageSettings from '@/components/settings/LanguageSettings';
 import SettingsHeader from '@/components/settings/SettingsHeader';
+import SettingsInfoMenu from '@/components/settings/SettingsInfoMenu';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
@@ -17,6 +18,8 @@ export default function SettingsPage() {
             <SettingsHeader />
             <div className="h-1 self-stretch bg-gray-100" />
             <LanguageSettings />
+            <div className="h-1 self-stretch bg-gray-100" />
+            <SettingsInfoMenu />
           </div>
         </div>
       </div>
