@@ -35,9 +35,9 @@ export default async function ChallengeMetaCard({
   const challengeVideos = (music && (await VideoService.getMusicChallengeVideos(music.id))) || [];
   const slicedChallengeVideos = sliceVideosAround(challengeVideos, video, 1);
 
-  const link = !challengeVideos
-    ? `/videos/challenge`
-    : `/videos/albums/${music!.albumId}/performance?music=${music!.id}#challenge`;
+  const link = music
+    ? `/videos/albums/${music.albumId}/performance?music=${music.id}#challenge`
+    : `/videos/challenge`;
 
   return (
     <MetaWrapper topFor={isInboundChallenge ? 'inboundChallenge' : 'outboundChallenge'}>

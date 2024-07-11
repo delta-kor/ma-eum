@@ -11,7 +11,7 @@ export default function Navigator() {
     <div className="fixed bottom-0 left-0 flex w-full items-center justify-evenly border-t-1 border-gray-100 bg-white px-24 py-2">
       <Link
         data-active={pathname === '/'}
-        href={'/'}
+        href={`/`}
         className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
       >
         <Icon type="home" className="h-20" />
@@ -19,7 +19,7 @@ export default function Navigator() {
       </Link>
       <Link
         data-active={pathname === '/discover'}
-        href={'/discover'}
+        href={`/discover`}
         className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
       >
         <Icon type="discover" className="h-20" />
@@ -27,7 +27,7 @@ export default function Navigator() {
       </Link>
       <Link
         data-active={pathname === '/talk'}
-        href={'/talk'}
+        href={`/talk`}
         className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
       >
         <Icon type="talk" className="h-20" />
@@ -35,7 +35,7 @@ export default function Navigator() {
       </Link>
       <Link
         data-active={pathname === '/mixer'}
-        href={'/mixer'}
+        href={`/mixer`}
         className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
       >
         <Icon type="mix" className="h-20" />
