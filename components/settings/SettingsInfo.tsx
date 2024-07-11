@@ -1,7 +1,9 @@
 import packageJson from '@/package.json';
 
 export default function SettingsInfo() {
-  const email = 'example@gmail.com';
+  const email = 'csr.maeum.me@gmail.com';
+  const kakao = 'https://open.kakao.com/o/sa4PxhCg';
+  const form = 'https://forms.gle/8L5ZQJjBAdaqxj366';
   const dependencies = Object.keys(packageJson.dependencies);
 
   return (
@@ -9,9 +11,24 @@ export default function SettingsInfo() {
       <div className="flex flex-col gap-10">
         <div className="text-18 font-700 text-primary-500">Contact</div>
         <div className="flex flex-col gap-4 text-16 font-400 text-black">
-          <div>Email: {email}</div>
-          <div>Kakao: https://example.com/</div>
-          <div>Form: https://example.com/</div>
+          <div>
+            Email:{' '}
+            <a href={`mailto:${email}`} className="text-primary-500 underline">
+              {email}
+            </a>
+          </div>
+          <div>
+            Kakao:{' '}
+            <a href={kakao} target="_blank" className="text-primary-500 underline">
+              {kakao}
+            </a>
+          </div>
+          <div>
+            Form:{' '}
+            <a href={form} target="_blank" className="text-primary-500 underline">
+              {form}
+            </a>
+          </div>
         </div>
       </div>
 
