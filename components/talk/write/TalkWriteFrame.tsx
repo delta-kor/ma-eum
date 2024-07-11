@@ -156,15 +156,25 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
         className="resize-none text-16 font-400 leading-6 text-black outline-none placeholder:text-gray-200"
       />
       <div className="text-14 font-400 leading-5 text-gray-500">
-        마음토크는 모두를 위한 공간입니다.
+        <Translate>$talk_article_rules_header_1</Translate>
         <br />
-        따뜻한 소통을 위해 다음과 같은 글은 삼가해 주시기 바랍니다:
+        <Translate>$talk_article_rules_header_2</Translate>
         <ul className="mt-8 list-disc px-20 leading-5">
-          <li>욕설 및 비하</li>
-          <li>차별적 발언</li>
-          <li>정치적 내용</li>
-          <li>비슷한 내용의 도배</li>
-          <li>관련 없는 홍보</li>
+          <li>
+            <Translate>$talk_article_rules_content_1</Translate>
+          </li>
+          <li>
+            <Translate>$talk_article_rules_content_2</Translate>
+          </li>
+          <li>
+            <Translate>$talk_article_rules_content_3</Translate>
+          </li>
+          <li>
+            <Translate>$talk_article_rules_content_4</Translate>
+          </li>
+          <li>
+            <Translate>$talk_article_rules_content_5</Translate>
+          </li>
         </ul>
       </div>
     </form>

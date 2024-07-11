@@ -2,6 +2,7 @@
 
 import GradientIcon from '@/components/core/GradientIcon';
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
 
 interface Props {
@@ -18,16 +19,16 @@ export default function VideoListInfoMenu({ type }: Props) {
   let content: string;
   switch (type) {
     case 'challenge':
-      content = 'Challenge';
+      content = '$challenge';
       break;
     case 'cover':
-      content = 'Cover';
+      content = '$cover';
       break;
     case 'live':
-      content = 'Live';
+      content = '$live';
       break;
     case 'shorts':
-      content = 'Shorts';
+      content = '$shorts';
       break;
   }
 
@@ -42,7 +43,9 @@ export default function VideoListInfoMenu({ type }: Props) {
       </div>
       <div className="flex items-center gap-16">
         <GradientIcon type={type} className="w-24" />
-        <div className="text-24 font-700">{content}</div>
+        <div className="text-24 font-700">
+          <Translate>{content}</Translate>
+        </div>
       </div>
     </div>
   );
