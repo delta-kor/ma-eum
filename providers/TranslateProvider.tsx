@@ -22,8 +22,13 @@ export default function TranslateProvider({ children }: Props) {
     if (lang) setLanguage(lang);
   }, []);
 
+  function handleSetLanguage(lang: string) {
+    setLanguage(lang);
+    Storage.setItem('maeum_lang', lang);
+  }
+
   return (
-    <TranslateContext.Provider value={{ language, setLanguage }}>
+    <TranslateContext.Provider value={{ language, setLanguage: handleSetLanguage }}>
       {children}
     </TranslateContext.Provider>
   );
