@@ -35,7 +35,6 @@ export default function SafeSearchParamsProvider({ children }: Props) {
     const search = window.location.search;
     const params = new URLSearchParams(search);
     setSearchParams(params);
-    console.log('SafeSearchParamsProvider: handleNavigate', params.toString());
   }
 
   function update() {

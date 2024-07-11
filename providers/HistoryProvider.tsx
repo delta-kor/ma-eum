@@ -10,6 +10,7 @@ interface Context {
   getPreviousUrl: () => string;
   reset: () => void;
   scroll: number;
+  setScroll: (scroll: number) => void;
 }
 
 export const HistoryContext = createContext<Context>({} as Context);
@@ -44,6 +45,8 @@ export default function HistoryProvider({ children }: Props) {
     const lastSearch = lastSearchRef.current;
     const histories = historiesRef.current;
     const scroll = scrollRef.current;
+
+    scrollRef.current = 0;
 
     const page = getMatchingPage(pathname);
     const search = searchParams.toString();
@@ -139,11 +142,16 @@ export default function HistoryProvider({ children }: Props) {
     }
   }
 
+  function handleSetScroll(scroll: number) {
+    scrollRef.current = scroll;
+  }
+
   const value: Context = {
     back: handleBack,
     getPreviousUrl,
     reset,
     scroll: scrollPosition,
+    setScroll: handleSetScroll,
   };
 
   return <HistoryContext.Provider value={value}>{children}</HistoryContext.Provider>;
