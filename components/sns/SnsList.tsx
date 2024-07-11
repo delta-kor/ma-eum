@@ -32,7 +32,7 @@ export default async function SnsList() {
   ]);
 
   return (
-    <div className="flex flex-col gap-24">
+    <div className="flex flex-col gap-32">
       <YoutubeSnsFeed videos={videos} />
       <SnsFeed feeds={twitterFeeds.items} type={FeedType.TWITTER} />
       <SnsFeed feeds={tiktokFeeds.items} type={FeedType.TIKTOK} />

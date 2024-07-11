@@ -14,7 +14,7 @@ export default function MainPage() {
       <LandingLayer />
       <div className="relative px-24">
         <div className="absolute left-0 top-0 -z-10 size-full max-h-[520px] bg-gradient-to-b from-primary-200 to-white lg:from-white" />
-        <div className="relative flex grow flex-col gap-28 pt-48 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-2 lg:gap-x-48 lg:gap-y-24">
+        <div className="relative flex grow flex-col gap-28 pt-48 lg:mx-auto lg:grid lg:max-w-screen-lg lg:grid-cols-2 lg:gap-48">
           <div className="flex flex-col gap-28">
             <Pc className="-mb-12 self-start">
               <LandingWidget />
