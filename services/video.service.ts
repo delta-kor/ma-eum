@@ -19,7 +19,7 @@ import {
   ShortsVideoMeta,
   StageVideoMeta,
 } from '@/utils/video.util';
-import { Category, Video } from '@prisma/client';
+import { Category, Video, VideoSource } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
@@ -280,6 +280,20 @@ export class VideoService {
             albumId,
           },
         },
+      },
+    });
+
+    return videos as ExtendedVideo[];
+  }
+
+  @DataCache('video.getRecentVideos', StaticDataTtl)
+  public static async getRecentYoutubeVideos(count: number): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      orderBy: PrismaUtil.sortVideo(),
+      take: count,
+      where: {
+        sessionId: null,
+        source: VideoSource.YOUTUBE,
       },
     });
 

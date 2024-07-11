@@ -74,6 +74,9 @@ const config: Config = {
       },
       screens: {
         lgx: '1072px',
+        pointer: {
+          raw: '(hover: hover) and (pointer: fine)',
+        },
         xlgx: '1328px',
       },
     },

@@ -1,10 +1,10 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
+import PastRelativeTime from '@/components/core/PastRelativeTime';
 import FeedText from '@/components/feed/FeedText';
 import useImageLoaded from '@/hooks/image-loaded';
 import { getFeedUrl, getSanitizedFeedContent } from '@/utils/feed.util';
-import { getPastRelativeTime } from '@/utils/time.util';
 import { VividMedia } from '@/utils/vivid.util';
 import { Feed } from '@prisma/client';
 import { PanInfo, motion } from 'framer-motion';
@@ -121,7 +121,7 @@ export default function FeedContent({ feed }: Props) {
           suppressHydrationWarning
           className="self-start rounded-8 bg-gray-100 px-8 py-4 text-14 font-500 text-gray-500"
         >
-          {getPastRelativeTime(feed.date, new Date())}
+          <PastRelativeTime date={feed.date} />
         </div>
       </div>
       {isHighlighted && (

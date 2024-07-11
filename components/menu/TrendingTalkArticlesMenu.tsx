@@ -11,7 +11,7 @@ export default async function TrendingTalkArticlesMenu() {
     <div className="flex flex-col gap-12">
       <div className="flex items-center gap-8">
         <div className="flex items-center gap-10">
-          <Icon type="talk" className="size-20 text-primary-500 lg:size-20" />
+          <Icon type="talk" className="size-20 text-primary-500" />
           <div className="shrink-0 text-22 font-700 text-primary-500">Talk</div>
         </div>
         <div className="grow text-18 font-500 text-gray-500">

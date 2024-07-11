@@ -15,7 +15,7 @@ export default async function FeedListMenu() {
   return (
     <div className="flex flex-col gap-12">
       <Link href={`/discover`} className="flex items-center gap-10 self-start">
-        <Icon type="discover" className="size-20 text-primary-500 lg:size-20" />
+        <Icon type="discover" className="size-20 text-primary-500" />
         <div className="shrink-0 text-22 font-700 text-primary-500 lg:text-24">Discover</div>
       </Link>
       <FeedListMenuGrid>

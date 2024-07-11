@@ -2,9 +2,9 @@ import ScheduleFeedList from '@/components/calendar/ScheduleFeedList';
 import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
-import FeedListMenu from '@/components/menu/FeedListMenu';
 import StrongMenu from '@/components/menu/StrongMenu';
 import TrendingTalkArticlesMenu from '@/components/menu/TrendingTalkArticlesMenu';
+import SnsList from '@/components/sns/SnsList';
 
 export const revalidate = 60;
 
@@ -26,7 +26,7 @@ export default function MainPage() {
             <TrendingTalkArticlesMenu />
           </div>
           <div className="col-span-full">
-            <FeedListMenu />
+            <SnsList />
           </div>
         </div>
       </div>
