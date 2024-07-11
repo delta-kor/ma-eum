@@ -20,6 +20,7 @@ export default function SessionVideoItem({ musicId, video }: Props) {
     return (
       <Link
         href={`/mixer/${musicId}?video=${video.id}`}
+        prefetch={false}
         className="relative overflow-hidden rounded-8"
       >
         <LazyImage
