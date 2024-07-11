@@ -208,6 +208,25 @@ export class VideoService {
     return videos as ExtendedVideo[];
   }
 
+  @DataCache('video.getMusicChallengeVideos', StaticDataTtl)
+  public static async getMusicChallengeVideos(musicId: string): Promise<ExtendedVideo[]> {
+    const videos = await prisma.video.findMany({
+      orderBy: PrismaUtil.sortVideo(),
+      where: {
+        metaInfo: {
+          inboundChallenge: {
+            isNot: null,
+          },
+          music: {
+            musicId,
+          },
+        },
+      },
+    });
+
+    return videos as ExtendedVideo[];
+  }
+
   @DataCache('video.getOfficialVideos', StaticDataTtl)
   public static async getOfficialVideos(musicId: string): Promise<ExtendedVideo[]> {
     const video = await prisma.video.findMany({

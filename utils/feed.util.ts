@@ -84,27 +84,33 @@ export function getHomepageUrl(feed: Feed): string {
   }
 }
 
+export function separateTags(content: string): [string, string] {
+  const chips = content
+    .replace(/#/g, ' #')
+    .trim()
+    .split(' ')
+    .map(chip => chip.trim())
+    .filter(chip => chip.length > 0);
+
+  const lastTextChipIndex = chips.findLastIndex(chip => !chip.startsWith('#'));
+  const texts = chips
+    .slice(0, lastTextChipIndex + 1)
+    .join(' ')
+    .trim();
+  const tags = chips
+    .slice(lastTextChipIndex + 1)
+    .join(' ')
+    .trim();
+
+  return [texts, tags];
+}
+
 export function getSanitizedFeedContent(feed: Feed): string {
   const content = feed.title;
   if (feed.type === FeedType.TWITTER)
     return content.split('https://').slice(0, -1).join('https://').trim() || content;
   if (feed.type === FeedType.TIKTOK) {
-    const chips = content
-      .replace(/#/g, ' #')
-      .trim()
-      .split(' ')
-      .map(chip => chip.trim())
-      .filter(chip => chip.length > 0);
-
-    const lastTextChipIndex = chips.findLastIndex(chip => !chip.startsWith('#'));
-    const texts = chips
-      .slice(0, lastTextChipIndex + 1)
-      .join(' ')
-      .trim();
-    const tags = chips
-      .slice(lastTextChipIndex + 1)
-      .join(' ')
-      .trim();
+    const [texts, tags] = separateTags(content);
     return texts ? texts + '\n\n' + tags : tags;
   }
 

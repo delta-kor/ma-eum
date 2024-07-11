@@ -87,6 +87,7 @@ export default function VideoPlayerFrame({ video }: Props) {
             inboundChallengeMeta={inboundChallengeMeta}
             musicMeta={musicMeta}
             outboundChallengeMeta={outboundChallengeMeta}
+            video={video}
           />
         )}
       </div>

@@ -1,6 +1,7 @@
 import Icon from '@/components/core/Icon';
 import LazyImage from '@/components/core/LazyImage';
 import { ExtendedVideo } from '@/services/video.service';
+import { separateTags } from '@/utils/feed.util';
 import { formatTimeAsDate } from '@/utils/time.util';
 import { ImageUrl } from '@/utils/url.util';
 import {
@@ -37,6 +38,9 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
       episode = episodeMeta.episode;
       displayDate = episode === null;
     }
+  }
+  if (metaType === 'inboundChallenge') {
+    [title] = separateTags(video.title);
   }
 
   return (
