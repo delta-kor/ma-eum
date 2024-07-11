@@ -11,6 +11,7 @@ export default function ImageCard({ category }: Props) {
   return (
     <Link
       href={`/videos/categories/${category.id}`}
+      prefetch={false}
       className="relative shrink-0 grow cursor-pointer rounded-16 border-3 border-gray-100"
     >
       <LazyImage

@@ -20,11 +20,19 @@ export default function TranslateProvider({ children }: Props) {
   useEffect(() => {
     const lang = Storage.getItem('maeum_lang');
     if (lang) setLanguage(lang);
+    else if (lang === null) handleDetectLanguage();
   }, []);
 
   function handleSetLanguage(lang: string) {
     setLanguage(lang);
     Storage.setItem('maeum_lang', lang);
+  }
+
+  function handleDetectLanguage() {
+    // @ts-ignore
+    const browserLanguage = navigator.language || navigator.userLanguage;
+    const lang = browserLanguage.split('-')[0];
+    handleSetLanguage(lang);
   }
 
   return (

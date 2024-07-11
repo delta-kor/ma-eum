@@ -10,6 +10,7 @@ export default function LineCard({ category }: Props) {
   return (
     <Link
       href={`/videos/categories/${category.id}`}
+      prefetch={false}
       className="flex cursor-pointer items-center gap-12"
     >
       <div className="flex rounded-8 bg-primary-100 p-8">

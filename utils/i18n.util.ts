@@ -1,5 +1,5 @@
 import en from '@/locales/en.json';
-import jp from '@/locales/jp.json';
+import ja from '@/locales/ja.json';
 import ko from '@/locales/ko.json';
 
 function getTranslation(key: string, locale: any): null | string {
@@ -14,8 +14,8 @@ function getTranslation(key: string, locale: any): null | string {
 export function i18n(key: string, lang: string): string {
   let locales: any;
   if (lang === 'ko') locales = ko;
-  else if (lang === 'jp') locales = jp;
+  else if (lang === 'ja') locales = ja;
   else locales = en;
 
-  return getTranslation(key, locales) || getTranslation(key, en) || getTranslation(key, jp) || key;
+  return getTranslation(key, locales) || getTranslation(key, en) || getTranslation(key, ja) || key;
 }

@@ -4,7 +4,7 @@ import useTranslate from '@/hooks/translate';
 
 export default function LanguageSettings() {
   const translate = useTranslate();
-  const language = translate.language === 'ko' ? 'ko' : translate.language === 'jp' ? 'jp' : 'en';
+  const language = translate.language === 'ko' ? 'ko' : translate.language === 'ja' ? 'ja' : 'en';
 
   function handleLanguageChange(language: string) {
     translate.setLanguage(language);
@@ -32,8 +32,8 @@ export default function LanguageSettings() {
           한국어
         </div>
         <div
-          data-active={language === 'jp'}
-          onClick={() => handleLanguageChange('jp')}
+          data-active={language === 'ja'}
+          onClick={() => handleLanguageChange('ja')}
           className="cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
         >
           日本語
