@@ -1,7 +1,8 @@
 'use client';
 
+import useSafeSearchParams from '@/hooks/safe-search-params';
 import { History, getMatchingPage, joinPathSearch } from '@/utils/history.util';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, createContext, useEffect, useRef, useState } from 'react';
 
 interface Context {
@@ -19,7 +20,7 @@ interface Props {
 
 export default function HistoryProvider({ children }: Props) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { searchParams } = useSafeSearchParams();
   const router = useRouter();
   const [scrollPosition, setScrollPosition] = useState<number>(-1);
 

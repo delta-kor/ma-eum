@@ -20,6 +20,7 @@ export default function CategoryVideoItem({ video }: Props) {
   return (
     <Link
       href={{ pathname: `/video/${video.id}`, query: { top: 'episode' } }}
+      prefetch={false}
       className="flex gap-16"
     >
       <LazyImage

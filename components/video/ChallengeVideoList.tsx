@@ -13,7 +13,7 @@ import { trpc } from '@/hooks/trpc';
 import { ExtendedVideo } from '@/services/video.service';
 import { Member, getSanitizedMember } from '@/utils/member.util';
 import { PaginationResult } from '@/utils/pagination.util';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
@@ -81,9 +81,7 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
           ) : items.length > 0 ? (
             <>
               {items.map(video => (
-                <Suspense key={video.id} fallback={<ChallengeVideoItemPlaceholder />}>
-                  <ChallengeVideoItem video={video} />
-                </Suspense>
+                <ChallengeVideoItem key={video.id} video={video} />
               ))}
               {videos.isFetchingNextPage && placeholder}
               {videos.hasNextPage ? (

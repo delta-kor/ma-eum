@@ -6,7 +6,7 @@ import MusicChallengeVideoItem, {
 } from '@/components/video/MusicChallengeVideoItem';
 import { trpc } from '@/hooks/trpc';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
-import { Suspense, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 export default function MusicChallengeVideoList() {
@@ -59,9 +59,7 @@ export default function MusicChallengeVideoList() {
           ) : (
             <>
               {items.map(video => (
-                <Suspense key={video.id} fallback={<MusicChallengeVideoItemPlaceholder />}>
-                  <MusicChallengeVideoItem video={video} />
-                </Suspense>
+                <MusicChallengeVideoItem key={video.id} video={video} />
               ))}
               {videos.hasNextPage && <div ref={ref} className="size-8" />}
             </>

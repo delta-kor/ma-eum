@@ -1,5 +1,6 @@
 'use client';
 
+import useSafeSearchParams from '@/hooks/safe-search-params';
 import { HTMLProps, MouseEvent } from 'react';
 
 interface Props extends HTMLProps<HTMLAnchorElement> {
@@ -9,11 +10,15 @@ interface Props extends HTMLProps<HTMLAnchorElement> {
 }
 
 export default function SoftLink({ href, replace, scroll, children, ...props }: Props) {
+  const { update } = useSafeSearchParams();
+
   function handleClick(e: MouseEvent) {
     e.preventDefault();
 
-    if (replace) window.history.replaceState(null, '', href);
-    else window.history.pushState(null, '', href);
+    if (replace) {
+      window.history.replaceState(null, '', href);
+      update();
+    } else window.history.pushState(null, '', href);
 
     if (scroll) window.scrollTo(0, 0);
   }

@@ -35,7 +35,7 @@ export default function ChallengeVideoItem({ video }: Props) {
   const membersMeta = getMetaFromVideo<MembersVideoMeta>(video, 'members');
   const musicMeta = getMetaFromVideo<MusicVideoMeta>(video, 'music');
 
-  const [music] = trpc.music.getOne.useSuspenseQuery(
+  const music = trpc.music.getOne.useQuery(
     { id: musicMeta?.musicId || null },
     {
       refetchOnMount: false,
@@ -44,7 +44,8 @@ export default function ChallengeVideoItem({ video }: Props) {
       staleTime: Infinity,
     }
   );
-  const title = music?.shortTitle || outboundChallengeMeta?.music;
+  const data = music.data;
+  const title = data?.shortTitle || outboundChallengeMeta?.music;
 
   const isInboundChallenge = !!inboundChallengeMeta;
 
