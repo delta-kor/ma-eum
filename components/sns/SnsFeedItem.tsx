@@ -1,14 +1,16 @@
 import LazyImage from '@/components/core/LazyImage';
 import PastRelativeTime from '@/components/core/PastRelativeTime';
+import { getFeedUrl } from '@/utils/feed.util';
 import { VividMedia } from '@/utils/vivid.util';
 import { Feed } from '@prisma/client';
-import Link from 'next/link';
 
 interface Props {
   feed: Feed;
 }
 
 export default function SnsFeedItem({ feed }: Props) {
+  const link = getFeedUrl(feed);
+
   const media = feed.media as VividMedia[];
   const thumbnails = media
     .map(selectedMedia =>
@@ -21,8 +23,9 @@ export default function SnsFeedItem({ feed }: Props) {
   const isOverflow = media.length > 4;
 
   return (
-    <Link
-      href={`/discover`}
+    <a
+      href={link}
+      target="_blank"
       className="flex w-[256px] shrink-0 snap-start flex-col overflow-hidden rounded-16 border-2 border-gray-50 bg-gray-50"
     >
       <div
@@ -50,6 +53,6 @@ export default function SnsFeedItem({ feed }: Props) {
           <PastRelativeTime date={feed.date} />
         </div>
       </div>
-    </Link>
+    </a>
   );
 }
