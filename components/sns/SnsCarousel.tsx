@@ -50,8 +50,6 @@ export default function SnsCarousel({ children }: Props) {
     else setStick(null);
   }
 
-  console.log(stick);
-
   return (
     <div className="relative">
       <div

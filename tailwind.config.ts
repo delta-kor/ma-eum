@@ -38,6 +38,7 @@ const config: Config = {
       'c-blue': '#3098E1',
       'c-gray': '#8D959B',
       'c-green': '#25CE68',
+      'c-orange': '#EB8D48',
       'c-purple': '#9D44C7',
       'c-red': '#E13065',
       'c-yellow': '#F3C522',

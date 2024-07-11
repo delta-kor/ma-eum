@@ -11,8 +11,8 @@ export default function YoutubeSnsFeed({ videos }: Props) {
   return (
     <div className="flex flex-col gap-12">
       <div className="flex items-center gap-10 self-start">
-        <GradientIcon type="shorts" className="w-24 text-primary-500" />
-        <div className="shrink-0 text-22 font-700 text-black lg:text-24">Youtube</div>
+        <GradientIcon type="shorts" className="w-24" />
+        <div className="shrink-0 text-20 font-700 text-black">Youtube</div>
       </div>
       <SnsCarousel>
         {videos.map(video => (
