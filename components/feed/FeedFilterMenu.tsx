@@ -14,7 +14,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
   const query = useQuery();
 
   function handleFeedTypeClick(type: FeedType) {
-    query.set({ feed: type });
+    query.softSet({ feed: type });
     onFilterSet({
       ...filter,
       types: [type],
@@ -22,7 +22,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
   }
 
   function handleFeedTypeReset() {
-    query.set({ feed: null });
+    query.softSet({ feed: null });
     onFilterSet({
       ...filter,
       types: FeedTypes,
@@ -30,7 +30,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
   }
 
   function handleDirectionClick(direction: 'asc' | 'desc') {
-    query.set({ direction });
+    query.softSet({ direction });
     onFilterSet({
       ...filter,
       direction,

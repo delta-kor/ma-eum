@@ -41,7 +41,7 @@ export default function MixerSelectorSessionMenu({ session }: Props) {
 
   function handleVideoClick(video: ExtendedVideo) {
     mixerControl.selectVideo(video);
-    query.set({ video: video.id });
+    query.softSet({ video: video.id });
   }
 
   return (

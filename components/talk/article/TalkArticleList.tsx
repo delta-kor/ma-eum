@@ -1,12 +1,12 @@
 'use client';
 
+import SoftLink from '@/components/core/SoftLink';
 import TalkArticleItem, {
   TalkArticleItemPlaceholder,
 } from '@/components/talk/article/TalkArticleItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
 import { DateTime } from 'luxon';
-import Link from 'next/link';
 
 interface Props {
   userId: null | string;
@@ -70,16 +70,16 @@ export default function TalkArticleList({ userId }: Props) {
               <div className="text-16 font-600 text-gray-200">...</div>
             </div>
           ) : (
-            <Link
+            <SoftLink
               key={page}
               data-active={page === currentPage}
-              href={query.getQueryUpdatedUrl({ page: page.toString() })}
+              href={query.getQueryUpdatedHref({ page: page.toString() })}
               className="group flex size-36 cursor-pointer items-center justify-center rounded-4 data-[active=true]:bg-primary-500"
             >
               <div className="text-16 font-600 text-gray-500 group-data-[active=true]:text-white">
                 {page}
               </div>
-            </Link>
+            </SoftLink>
           )
         )}
       </div>

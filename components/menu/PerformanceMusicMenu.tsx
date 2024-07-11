@@ -1,10 +1,10 @@
 'use client';
 
 import MotionWrapper from '@/components/core/MotionWrapper';
+import SoftLink from '@/components/core/SoftLink';
 import useQuery from '@/hooks/query';
 import { PerformanceMusicContext } from '@/providers/PerformanceMusicProvider';
 import { Music } from '@prisma/client';
-import Link from 'next/link';
 import { useContext } from 'react';
 
 interface Props {
@@ -20,10 +20,10 @@ export default function PerformanceMusicMenu({ musics }: Props) {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-24 gap-y-12">
       {musics.map(music => (
-        <Link
+        <SoftLink
           key={music.id}
           data-active={music.id === selectedMusicId}
-          href={query.getQueryUpdatedUrl({ music: music.id })}
+          href={query.getQueryUpdatedHref({ music: music.id })}
           replace
           className="group relative -m-8 p-8"
         >
@@ -37,7 +37,7 @@ export default function PerformanceMusicMenu({ musics }: Props) {
               className="absolute inset-x-2 bottom-6 h-10 bg-primary-200"
             />
           )}
-        </Link>
+        </SoftLink>
       ))}
     </div>
   );

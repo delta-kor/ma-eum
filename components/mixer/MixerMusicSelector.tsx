@@ -26,7 +26,7 @@ export default function MixerMusicSelector({ musics }: Props) {
     const nextMusic = musics[nextIndex];
 
     setSelectedMusic(nextMusic);
-    query.set({ music: nextMusic.id });
+    query.softSet({ music: nextMusic.id });
   }
 
   return (

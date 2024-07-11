@@ -14,7 +14,7 @@ export default function MemberMenu({ selected, onSelect }: Props) {
 
   function handleMemberClick(member: Member | null) {
     onSelect(member);
-    query.set({ member });
+    query.softSet({ member });
   }
 
   return (

@@ -41,9 +41,13 @@ export default function useQuery() {
     router.replace(getQueryUpdatedHref(query), { scroll: scrollToTop });
   }
 
+  function softSet(query: Record<string, null | string>, scrollToTop: boolean = false) {
+    window.history.replaceState(null, '', getQueryUpdatedHref(query));
+  }
+
   function get(key: string): null | string {
     return searchParams.get(key);
   }
 
-  return { get, getQueryUpdatedHref, getQueryUpdatedUrl, set };
+  return { get, getQueryUpdatedHref, getQueryUpdatedUrl, set, softSet };
 }
