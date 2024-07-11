@@ -43,6 +43,7 @@ export default function useQuery() {
 
   function softSet(query: Record<string, null | string>, scrollToTop: boolean = false) {
     window.history.replaceState(null, '', getQueryUpdatedHref(query));
+    scrollToTop && window.scrollTo(0, 0);
   }
 
   function get(key: string): null | string {

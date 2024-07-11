@@ -74,6 +74,7 @@ export default function TalkArticleList({ userId }: Props) {
               key={page}
               data-active={page === currentPage}
               href={query.getQueryUpdatedHref({ page: page.toString() })}
+              scroll
               className="group flex size-36 cursor-pointer items-center justify-center rounded-4 data-[active=true]:bg-primary-500"
             >
               <div className="text-16 font-600 text-gray-500 group-data-[active=true]:text-white">
