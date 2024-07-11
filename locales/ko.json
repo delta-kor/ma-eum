@@ -62,13 +62,6 @@
   "talk_article_edit": "수정",
   "talk_article_post": "게시",
   "talk_article_report": "신고",
-  "talk_article_rules_content_1": "욕설 및 비하",
-  "talk_article_rules_content_2": "차별적 발언",
-  "talk_article_rules_content_3": "정치적 내용",
-  "talk_article_rules_content_4": "비슷한 내용의 도배",
-  "talk_article_rules_content_5": "관련없는 홍보",
-  "talk_article_rules_header_1": "마음토크는 모두를 위한 공간입니다.",
-  "talk_article_rules_header_2": "따뜻한 소통을 위해 다음과 같은 글은 삼가해 주시기 바랍니다:",
   "talk_article_title_placeholder": "제목",
   "talk_article_trending": "인기글",
   "talk_back_to_article": "이전",
@@ -84,5 +77,12 @@
   "talk_report_submitted": "신고가 접수되었습니다.",
   "view_all": "전체보기",
   "view_calendar": "달력 보기",
-  "write_article": "글쓰기"
+  "write_article": "글쓰기",
+  "talk_article_rules_content_1": "부적절한 표현",
+  "talk_article_rules_content_2": "차별적 발언",
+  "talk_article_rules_content_3": "정치적 내용",
+  "talk_article_rules_content_4": "비슷한 내용의 도배",
+  "talk_article_rules_content_5": "관련없는 홍보",
+  "talk_article_rules_header_1": "마음토크는 모두를 위한 공간입니다.",
+  "talk_article_rules_header_2": "따뜻한 소통을 위해 다음과 같은 글은 삼가해 주시기 바랍니다:"
 }

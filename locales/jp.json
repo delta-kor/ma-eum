@@ -62,13 +62,6 @@
   "talk_article_edit": "編集",
   "talk_article_post": "投稿",
   "talk_article_report": "申告",
-  "talk_article_rules_content_1": "",
-  "talk_article_rules_content_2": "",
-  "talk_article_rules_content_3": "",
-  "talk_article_rules_content_4": "",
-  "talk_article_rules_content_5": "",
-  "talk_article_rules_header_1": "",
-  "talk_article_rules_header_2": "",
   "talk_article_title_placeholder": "タイトル",
   "talk_article_trending": "トレンド",
   "talk_back_to_article": "前に戻る",
@@ -84,5 +77,12 @@
   "talk_report_submitted": "申告が受け付けられました。",
   "view_all": "全件表示",
   "view_calendar": "カレンダー表示",
-  "write_article": "投稿する"
+  "write_article": "投稿する",
+  "talk_article_rules_content_1": "不適切な表現",
+  "talk_article_rules_content_2": "差別的な発言",
+  "talk_article_rules_content_3": "政治的な内容",
+  "talk_article_rules_content_4": "同様の内容の連投",
+  "talk_article_rules_content_5": "関連性のない広告",
+  "talk_article_rules_header_1": "MAEUMトークは、誰にでも開かれた場所です。",
+  "talk_article_rules_header_2": "思慮深く配慮のある対話を促すため、以下のようなものは避けていただきますようお願いいたします。"
 }
