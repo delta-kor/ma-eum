@@ -33,7 +33,7 @@ export default function SnsFeedItem({ feed }: Props) {
           <div
             key={thumbnail}
             data-full={isTriple && index === 0}
-            className="relative data-[full=true]:col-span-full"
+            className="relative size-full data-[full=true]:col-span-full"
           >
             <LazyImage src={thumbnail} className="size-full" />
             {isOverflow && index === 3 && (
