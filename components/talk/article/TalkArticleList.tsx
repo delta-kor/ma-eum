@@ -11,9 +11,7 @@ import { IndexPaginationResult } from '@/utils/pagination.util';
 import { DateTime } from 'luxon';
 
 interface Props {
-  page: number;
   preloadedArticles: IndexPaginationResult<TalkArticleMetadata>;
-  sort: 'like' | 'newest';
   userId: null | string;
 }
 

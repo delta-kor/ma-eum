@@ -1,15 +1,23 @@
 import FeedList from '@/components/feed/FeedList';
 import { FeedService } from '@/services/feed.service';
-import { FeedTypes } from '@/utils/feed.util';
+import { getSanitizedFeedDirection, getSanitizedFeedType } from '@/utils/feed.util';
 import MetaUtil from '@/utils/meta.util';
+import { SearchParams } from '@/utils/url.util';
 import { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
-export default async function DiscoverPage() {
+interface Props {
+  searchParams: SearchParams;
+}
+
+export default async function DiscoverPage({ searchParams }: Props) {
+  const feedTypes = getSanitizedFeedType(searchParams.feed || null);
+  const direction = getSanitizedFeedDirection(searchParams.direction || null);
+
   const feeds = await FeedService.getFeeds(
     { cursor: null, limit: 15 },
-    { date: null, direction: 'desc', types: FeedTypes }
+    { date: null, direction: direction, types: feedTypes }
   );
 
   return (

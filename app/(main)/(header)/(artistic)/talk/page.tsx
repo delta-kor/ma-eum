@@ -30,12 +30,7 @@ export default async function TalkPage({ searchParams }: Props) {
       <div className="mx-auto mt-artistic-header-height-md w-full max-w-screen-lg lg:mt-artistic-header-height-lg lg:pt-32">
         <div className="flex flex-col gap-16">
           <TalkArticleListMenu user={user} />
-          <TalkArticleList
-            page={page}
-            preloadedArticles={articles}
-            sort={sort}
-            userId={user?.id || null}
-          />
+          <TalkArticleList preloadedArticles={articles} userId={user?.id || null} />
         </div>
       </div>
     </div>

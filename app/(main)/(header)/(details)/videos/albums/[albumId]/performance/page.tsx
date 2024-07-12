@@ -12,7 +12,7 @@ import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
 interface Props {
   params: {

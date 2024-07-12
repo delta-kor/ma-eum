@@ -5,12 +5,7 @@ import FeedFilterMenu from '@/components/feed/FeedFilterMenu';
 import FeedItem, { FeedItemPlaceholder } from '@/components/feed/FeedItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
-import {
-  FeedFilter,
-  FeedTypes,
-  getSanitizedFeedDirection,
-  getSanitizedFeedType,
-} from '@/utils/feed.util';
+import { FeedFilter, getSanitizedFeedDirection, getSanitizedFeedType } from '@/utils/feed.util';
 import { PaginationResult } from '@/utils/pagination.util';
 import { Feed } from '@prisma/client';
 import { useEffect, useState } from 'react';
@@ -35,7 +30,6 @@ export default function FeedList({ preloadedFeeds }: Props) {
     types: feedTypes,
   });
 
-  const isDefaultFilter = filter.types.length === FeedTypes.length && filter.direction === 'desc';
   const feeds = trpc.feed.getFeeds.useInfiniteQuery(
     {
       filter,
@@ -43,7 +37,7 @@ export default function FeedList({ preloadedFeeds }: Props) {
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedFeeds] },
-      refetchOnMount: !isDefaultFilter,
+      refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
