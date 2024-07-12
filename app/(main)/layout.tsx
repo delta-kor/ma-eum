@@ -6,7 +6,7 @@ import SafeSearchParamsProvider from '@/providers/SafeSearchParamsProvider';
 import TitleProvider from '@/providers/TitleProvider';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -17,9 +17,11 @@ export default function MainLayout({ children }: Props) {
     <TitleProvider>
       <ModalProvider>
         <SafeSearchParamsProvider>
-          <HistoryProvider>
-            <Transistor>{children}</Transistor>
-          </HistoryProvider>
+          <Suspense>
+            <HistoryProvider>
+              <Transistor>{children}</Transistor>
+            </HistoryProvider>
+          </Suspense>
         </SafeSearchParamsProvider>
         <ModalFrame />
       </ModalProvider>

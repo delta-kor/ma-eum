@@ -1,5 +1,4 @@
-import useSafeSearchParams from '@/hooks/safe-search-params';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { UrlObject } from 'node:url';
 
 function searchParamsToObject(searchParams: URLSearchParams): Record<string, string> {
@@ -11,7 +10,7 @@ function searchParamsToObject(searchParams: URLSearchParams): Record<string, str
 }
 
 export default function useQuery() {
-  const { searchParams, update } = useSafeSearchParams();
+  const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -44,7 +43,7 @@ export default function useQuery() {
 
   function softSet(query: Record<string, null | string>, scrollToTop: boolean = false) {
     window.history.replaceState(null, '', getQueryUpdatedHref(query));
-    update();
+    // update();
     scrollToTop && window.scrollTo(0, 0);
   }
 
