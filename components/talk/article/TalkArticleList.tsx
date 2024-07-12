@@ -9,6 +9,7 @@ import { trpc } from '@/hooks/trpc';
 import { TalkArticleMetadata } from '@/services/talk.service';
 import { IndexPaginationResult } from '@/utils/pagination.util';
 import { DateTime } from 'luxon';
+import { useEffect, useState } from 'react';
 
 interface Props {
   preloadedArticles: IndexPaginationResult<TalkArticleMetadata>;
@@ -17,6 +18,7 @@ interface Props {
 
 export default function TalkArticleList({ preloadedArticles, userId }: Props) {
   const query = useQuery();
+  const [isInitial, setIsInitial] = useState(true);
 
   const page = parseInt(query.get('page') || '1');
   const sort = query.get('sort') === 'like' ? 'like' : 'newest';
@@ -24,16 +26,20 @@ export default function TalkArticleList({ preloadedArticles, userId }: Props) {
   const articles = trpc.talk.getArticlesMetadata.useQuery(
     { cursor: page - 1, sort },
     {
-      initialData: preloadedArticles,
-      refetchOnMount: false,
+      placeholderData: preloadedArticles,
+      refetchOnMount: true,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
     }
   );
 
+  useEffect(() => {
+    setIsInitial(false);
+  }, [articles.isFetchedAfterMount]);
+
   const items = articles.data?.items || [];
   const totalPages = articles.data?.pages || 1;
-  const isLoading = articles.isFetching;
+  const isLoading = !isInitial && articles.isFetching;
 
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
   const displayedPages: (null | number)[] = [];

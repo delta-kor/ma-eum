@@ -5,7 +5,7 @@ import { SessionService } from '@/services/session.service';
 import MetaUtil from '@/utils/meta.util';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
 interface Props {
   params: {
