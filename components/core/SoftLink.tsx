@@ -15,10 +15,10 @@ export default function SoftLink({ href, replace, scroll, children, ...props }: 
   function handleClick(e: MouseEvent) {
     e.preventDefault();
 
-    if (replace) {
-      window.history.replaceState(null, '', href);
-      update();
-    } else window.history.pushState(null, '', href);
+    if (replace) window.history.replaceState(null, '', href);
+    else window.history.pushState(null, '', href);
+
+    update();
 
     if (scroll) window.scrollTo(0, 0);
   }
