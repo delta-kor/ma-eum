@@ -22,12 +22,11 @@ export default function CoverVideoList({ preloadedVideos }: Props) {
   const [member, setMember] = useState<Member | null>(initialMember);
   const [isFetchingMember, setIsFetchingMember] = useState(false);
 
-  const isDefaultMember = member === null;
   const videos = trpc.video.getCoverVideos.useQuery(
     { member },
     {
       initialData: preloadedVideos,
-      refetchOnMount: !isDefaultMember,
+      refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
