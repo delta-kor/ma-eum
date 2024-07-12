@@ -6,21 +6,28 @@ import TalkArticleItem, {
 } from '@/components/talk/article/TalkArticleItem';
 import useQuery from '@/hooks/query';
 import { trpc } from '@/hooks/trpc';
+import { TalkArticleMetadata } from '@/services/talk.service';
+import { IndexPaginationResult } from '@/utils/pagination.util';
 import { DateTime } from 'luxon';
 
 interface Props {
+  page: number;
+  preloadedArticles: IndexPaginationResult<TalkArticleMetadata>;
+  sort: 'like' | 'newest';
   userId: null | string;
 }
 
-export default function TalkArticleList({ userId }: Props) {
+export default function TalkArticleList({ preloadedArticles, userId }: Props) {
   const query = useQuery();
-  const currentPage = parseInt(query.get('page') || '1');
+
+  const page = parseInt(query.get('page') || '1');
   const sort = query.get('sort') === 'like' ? 'like' : 'newest';
 
   const articles = trpc.talk.getArticlesMetadata.useQuery(
-    { cursor: currentPage - 1, sort },
+    { cursor: page - 1, sort },
     {
-      refetchOnMount: true,
+      initialData: preloadedArticles,
+      refetchOnMount: false,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
     }
@@ -28,13 +35,13 @@ export default function TalkArticleList({ userId }: Props) {
 
   const items = articles.data?.items || [];
   const totalPages = articles.data?.pages || 1;
-  const isLoading = articles.isLoading;
+  const isLoading = articles.isFetching;
 
   const today = DateTime.local({ zone: 'Asia/Seoul' }).toJSDate();
   const displayedPages: (null | number)[] = [];
-  if (currentPage > 4) {
+  if (page > 4) {
     displayedPages.push(1, null);
-    for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+    for (let i = page - 1; i <= page + 1; i++) {
       if (i > totalPages) break;
       displayedPages.push(i);
     }
@@ -64,21 +71,21 @@ export default function TalkArticleList({ userId }: Props) {
             ))}
       </div>
       <div className="flex items-center gap-8 self-center">
-        {displayedPages.map(page =>
-          page === null ? (
+        {displayedPages.map(item =>
+          item === null ? (
             <div key="dot" className="flex size-36 select-none items-center justify-center">
               <div className="text-16 font-600 text-gray-200">...</div>
             </div>
           ) : (
             <SoftLink
-              key={page}
-              data-active={page === currentPage}
-              href={query.getQueryUpdatedHref({ page: page.toString() })}
+              key={item}
+              data-active={page === item}
+              href={query.getQueryUpdatedHref({ page: item.toString() })}
               scroll
               className="group flex size-36 cursor-pointer items-center justify-center rounded-4 data-[active=true]:bg-primary-500"
             >
               <div className="text-16 font-600 text-gray-500 group-data-[active=true]:text-white">
-                {page}
+                {item}
               </div>
             </SoftLink>
           )

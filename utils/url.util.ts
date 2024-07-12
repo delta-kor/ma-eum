@@ -34,3 +34,5 @@ export class VideoUrl {
     return `https://www.youtube.com/watch?v=${id}`;
   }
 }
+
+export type SearchParams = Record<string, string | undefined>;
