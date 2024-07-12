@@ -34,8 +34,8 @@ export default function TalkArticleList({ preloadedArticles, userId }: Props) {
   );
 
   useEffect(() => {
-    setIsInitial(false);
-  }, [articles.isFetchedAfterMount]);
+    if (articles.isFetchedAfterMount && !articles.isFetching) setIsInitial(false);
+  }, [articles.isFetchedAfterMount, articles.isFetching]);
 
   const items = articles.data?.items || [];
   const totalPages = articles.data?.pages || 1;
