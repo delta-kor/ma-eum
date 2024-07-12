@@ -38,6 +38,7 @@ export default function ChallengeVideoItem({ video }: Props) {
   const music = trpc.music.getOne.useQuery(
     { id: musicMeta?.musicId || null },
     {
+      enabled: musicMeta !== null,
       refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
@@ -45,9 +46,10 @@ export default function ChallengeVideoItem({ video }: Props) {
     }
   );
   const data = music.data;
-  const title = data?.shortTitle || outboundChallengeMeta?.music;
+  if (musicMeta !== null && !data) return <ChallengeVideoItemPlaceholder />;
 
   const isInboundChallenge = !!inboundChallengeMeta;
+  const title = isInboundChallenge ? data?.shortTitle : outboundChallengeMeta?.music;
 
   const participant = isInboundChallenge ? inboundChallengeMeta?.from : outboundChallengeMeta?.to;
   const members = !membersMeta || membersMeta.members.length >= 4 ? [] : membersMeta.members;

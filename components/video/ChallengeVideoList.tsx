@@ -31,14 +31,13 @@ export default function ChallengeVideoList({ preloadedVideos }: Props) {
   const [member, setMember] = useState<Member | null>(initialMember);
   const [index, setIndex] = useState<number>(0);
 
-  const isDefaultMember = member === null;
   const videos = trpc.video.getChallengeVideos.useInfiniteQuery(
     { member },
     {
       getNextPageParam: lastPage => lastPage.nextCursor || undefined,
       initialData: { pageParams: [null], pages: [preloadedVideos] },
       queryHash: index.toString(),
-      refetchOnMount: !isDefaultMember,
+      refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }

@@ -26,12 +26,11 @@ export default function CategoryVideoList({ category, preloadedVideos }: Props) 
   const [member, setMember] = useState<Member | null>(initialMember);
   const [isFetchingMember, setIsFetchingMember] = useState(false);
 
-  const isDefaultMember = member === null;
   const videos = trpc.video.getCategoryVideos.useQuery(
     { categoryId: category.id, member },
     {
       initialData: preloadedVideos,
-      refetchOnMount: !isDefaultMember,
+      refetchOnMount: false,
       refetchOnReconnect: false,
       refetchOnWindowFocus: false,
     }
