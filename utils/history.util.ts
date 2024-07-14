@@ -111,6 +111,15 @@ export const Pages: PageInfo[] = [
     back: '/talk',
     path: '/talk/article/:id/edit',
   },
+
+  {
+    back: '/',
+    path: '/settings',
+  },
+  {
+    back: '/settings',
+    path: '/settings/info',
+  },
 ];
 
 export function getMatchingPage(path: string): PageInfo {

@@ -196,6 +196,14 @@ const TalkRouter = router({
       const comment = await TalkService.softDeleteComment(user, commentId);
       await revalidateTalkCommentDelete(comment.articleId);
     }),
+
+  updateUserNickname: talkProcedure
+    .input(z.object({ nickname: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const nickname = opts.input.nickname;
+      await TalkService.updateUserNickname(user, nickname);
+    }),
 });
 
 export class TalkService {
@@ -666,5 +674,36 @@ export class TalkService {
       },
     });
     return updatedComment;
+  }
+
+  public static async updateUserNickname(user: TalkUser, nickname: string): Promise<void> {
+    const validateResult = TalkUtil.validateNickname(nickname);
+    if (validateResult.error)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: validateResult.message!,
+      });
+    const sanitizedNickname = validateResult.nickname!;
+
+    const existingUser = await prisma.talkUser.findFirst({
+      where: {
+        nickname: sanitizedNickname,
+      },
+    });
+
+    if (existingUser)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: '$error_nickname_in_use',
+      });
+
+    await prisma.talkUser.update({
+      data: {
+        nickname: sanitizedNickname,
+      },
+      where: {
+        id: user.id,
+      },
+    });
   }
 }
