@@ -57,6 +57,7 @@ export default function TalkSettings() {
         onSuccess: () => {
           modal.alert('$settings_nickname_updated');
           router.refresh();
+          void user.refetch();
         },
       }
     );
