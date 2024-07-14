@@ -20,7 +20,7 @@ export default function TalkWriteLoading() {
                   <div className="h-[29px] w-full max-w-[512px] rounded-4 bg-gray-100" />
                   <div className="h-[21px] w-[86px] rounded-4 bg-gray-100" />
                 </div>
-                <button className="group flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8">
+                <button className="group flex shrink-0 cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8">
                   <div className="text-16 font-600 text-gray-200">
                     <Translate>$talk_article_post</Translate>
                   </div>

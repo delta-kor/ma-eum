@@ -124,7 +124,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
         <button
           data-active={isActive}
           type="submit"
-          className="group flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary"
+          className="group flex shrink-0 cursor-not-allowed items-center gap-8 rounded-8 bg-gray-100 px-16 py-8 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary"
         >
           <div className="text-16 font-600 text-gray-200 group-data-[active=true]:text-white">
             <Translate>{isEditMode ? '$talk_article_edit' : '$talk_article_post'}</Translate>
