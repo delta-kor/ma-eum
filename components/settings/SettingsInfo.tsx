@@ -127,6 +127,15 @@ export default function SettingsInfo() {
           <div>2024. 7. 27.</div>
         </div>
       </div>
+
+      <div className="h-1 self-stretch bg-gray-100" />
+
+      <div className="flex flex-col gap-4">
+        <div className="text-16 font-500 italic text-gray-500">Crafted by,</div>
+        <div className="text-18 font-700 text-gray-500">msqr labs</div>
+      </div>
+
+      <div className="text-16 font-500 text-gray-200">Made with ♥ in Korea</div>
     </div>
   );
 }
