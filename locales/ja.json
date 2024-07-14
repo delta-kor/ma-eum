@@ -85,6 +85,7 @@
   "talk_comment_reply_cancel": "キャンセル",
   "talk_login_enter_nickname": "あなたのニックネームを入力してください。",
   "talk_login_nickname_can_be_changed": "後で ニックネームを変更することができます。",
+  "talk_login_placeholder": "ニックネーム",
   "talk_report_enter_reason": "申告する理由を入力してください。",
   "talk_report_reason": "申告理由",
   "talk_report_submitted": "申告が受け付けられました。",

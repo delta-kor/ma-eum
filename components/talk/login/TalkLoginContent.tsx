@@ -3,8 +3,10 @@ import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
 import useQuery from '@/hooks/query';
+import useTranslate from '@/hooks/translate';
 import { trpc } from '@/hooks/trpc';
 import { ModalResolver } from '@/providers/ModalProvider';
+import { i18n } from '@/utils/i18n.util';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -21,6 +23,7 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
   const query = useQuery();
   const router = useRouter();
   const history = useHistory();
+  const { language } = useTranslate();
 
   async function handleSubmit(formData: FormData) {
     if (isLoading) return;
@@ -79,7 +82,7 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
           autoCorrect="off"
           maxLength={15}
           name="nickname"
-          placeholder="닉네임"
+          placeholder={i18n('$talk_login_placeholder', language)}
           spellCheck="false"
           type="text"
           autoFocus

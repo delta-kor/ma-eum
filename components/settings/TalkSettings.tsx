@@ -101,7 +101,10 @@ export default function TalkSettings() {
             <div className="text-16 font-400 text-gray-500">
               <Translate>$settings_no_account</Translate>
             </div>
-            <Link href={`/talk/login?next=/settings`} className="text-16 font-500 text-primary-500">
+            <Link
+              href={`/talk/login?next=/settings`}
+              className="text-16 font-500 text-primary-500 underline underline-offset-2"
+            >
               <Translate>$settings_create</Translate>
             </Link>
           </div>

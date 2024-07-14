@@ -85,6 +85,7 @@
   "talk_comment_reply_cancel": "취소",
   "talk_login_enter_nickname": "사용하실 닉네임을 입력해주세요.",
   "talk_login_nickname_can_be_changed": "닉네임은 나중에 바꿀 수 있어요.",
+  "talk_login_placeholder": "닉네임",
   "talk_report_enter_reason": "신고 사유를 입력해주세요.",
   "talk_report_reason": "신고 사유",
   "talk_report_submitted": "신고가 접수되었습니다.",

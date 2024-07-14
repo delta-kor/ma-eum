@@ -85,6 +85,7 @@
   "talk_comment_reply_cancel": "Cancel",
   "talk_login_enter_nickname": "Please enter your nickname.",
   "talk_login_nickname_can_be_changed": "You can change your nickname later.",
+  "talk_login_placeholder": "Nickname",
   "talk_report_enter_reason": "Please enter the reason for reporting.",
   "talk_report_reason": "Reason",
   "talk_report_submitted": "Your report has been submitted.",
