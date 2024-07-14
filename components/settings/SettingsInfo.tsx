@@ -33,6 +33,26 @@ export default function SettingsInfo() {
       </div>
 
       <div className="flex flex-col gap-10">
+        <div className="text-18 font-700 text-primary-500">Repository</div>
+        <div className="flex flex-col gap-4 text-16 font-400 text-black">
+          <div>
+            Github:{' '}
+            <a
+              href="https://github.com/delta-kor/ma-eum"
+              target="_blank"
+              className="text-primary-500 underline"
+            >
+              delta-kor/ma-eum
+            </a>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 text-16 font-400 text-black">
+          This project is completely open-source, permitting unrestricted modification,
+          reproduction, and distribution without the need for further permission.
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-10">
         <div className="text-18 font-700 text-primary-500">Disclaimer</div>
         <div className="flex flex-col gap-12 text-16 font-400 text-black">
           <div>
