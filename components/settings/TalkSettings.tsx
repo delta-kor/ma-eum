@@ -53,7 +53,7 @@ export default function TalkSettings() {
           modal.alert(error.message);
         },
         onSuccess: () => {
-          modal.alert('Nickname updated');
+          modal.alert('$settings_nickname_updated');
           void user.refetch();
         },
       }
@@ -98,9 +98,11 @@ export default function TalkSettings() {
           </div>
         ) : (
           <div className="flex items-center gap-8 py-12">
-            <div className="text-16 font-400 text-gray-500">You do not have an account.</div>
+            <div className="text-16 font-400 text-gray-500">
+              <Translate>$settings_no_account</Translate>
+            </div>
             <Link href={`/talk/login?next=/settings`} className="text-16 font-500 text-primary-500">
-              Create
+              <Translate>$settings_create</Translate>
             </Link>
           </div>
         )}
