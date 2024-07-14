@@ -1,6 +1,7 @@
 'use client';
 
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
@@ -63,8 +64,12 @@ export default function TalkSettings() {
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-12">
         <div className="flex flex-col gap-4">
-          <div className="text-18 font-600 text-black">Nickname</div>
-          <div className="text-16 font-400 text-gray-500">Edit your nickname.</div>
+          <div className="text-18 font-600 text-black">
+            <Translate>$settings_nickname</Translate>
+          </div>
+          <div className="text-16 font-400 text-gray-500">
+            <Translate>$settings_nickname_description</Translate>
+          </div>
         </div>
         {isLoading ? (
           <div className="flex items-center gap-8 py-12">
@@ -88,7 +93,7 @@ export default function TalkSettings() {
               {isUpdating && (
                 <Icon type="spinner" className="w-16 shrink-0 animate-spin text-white" />
               )}
-              Edit
+              <Translate>$settings_edit</Translate>
             </div>
           </div>
         ) : (
