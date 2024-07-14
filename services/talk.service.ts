@@ -5,6 +5,7 @@ import {
   revalidateTalkArticleWrite,
   revalidateTalkCommentCreate,
   revalidateTalkCommentDelete,
+  revalidateTalkUserNicknameUpdate,
 } from '@/actions/revalidate.action';
 import prisma from '@/prisma/prisma';
 import { publicProcedure, router, talkProcedure } from '@/trpc/router';
@@ -203,6 +204,7 @@ const TalkRouter = router({
       const user = opts.ctx.user;
       const nickname = opts.input.nickname;
       await TalkService.updateUserNickname(user, nickname);
+      await revalidateTalkUserNicknameUpdate();
     }),
 });
 

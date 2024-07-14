@@ -50,3 +50,10 @@ export async function revalidateTalkCommentDelete(articleId: string): Promise<vo
   revalidateTag('talk.getArticleComments');
   revalidatePath(`/talk/article/${articleId}`, 'page');
 }
+
+export async function revalidateTalkUserNicknameUpdate(): Promise<void> {
+  revalidateTag('talk.getArticle');
+  revalidateTag('talk.getArticlesMetadata');
+  revalidateTag('talk.getArticleComments');
+  revalidateTag('talk.getTrendingArticlesMetadata');
+}
