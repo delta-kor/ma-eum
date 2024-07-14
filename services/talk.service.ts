@@ -56,6 +56,12 @@ export interface ExtendedTalkArticle extends TalkArticle {
   user: TalkUser;
 }
 
+export interface TalkProfile {
+  id: string;
+  nickname: string;
+  role: string;
+}
+
 export type TalkArticleSort = 'like' | 'newest';
 
 const TalkRouter = router({
@@ -136,6 +142,11 @@ const TalkRouter = router({
         opts.input.sort as TalkArticleSort
       );
     }),
+
+  getProfile: talkProcedure.query(async opts => {
+    const user = opts.ctx.user;
+    return TalkService.getProfileByUser(user);
+  }),
 
   likeArticle: talkProcedure.input(z.object({ articleId: z.string() })).mutation(async opts => {
     const user = opts.ctx.user;
@@ -473,6 +484,14 @@ export class TalkService {
     return {
       items: metadata,
       pages,
+    };
+  }
+
+  public static getProfileByUser(user: TalkUser): TalkProfile {
+    return {
+      id: user.id,
+      nickname: user.nickname,
+      role: user.role,
     };
   }
 
