@@ -25,3 +25,7 @@ export default function TrendingTalkArticlesMenuItem({ metadata }: Props) {
     </Link>
   );
 }
+
+export function TrendingTalkArticlesMenuItemPlaceholder() {
+  return <div className="flex h-[93px] animate-pulse rounded-16 bg-gray-50 px-24 py-16" />;
+}

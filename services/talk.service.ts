@@ -149,6 +149,10 @@ const TalkRouter = router({
     return TalkService.getProfileByUser(user);
   }),
 
+  getTrendingTalkArticlesMetadata: publicProcedure.query(async () => {
+    return TalkService.getTrendingArticlesMetadata();
+  }),
+
   likeArticle: talkProcedure.input(z.object({ articleId: z.string() })).mutation(async opts => {
     const user = opts.ctx.user;
     const articleId = opts.input.articleId;

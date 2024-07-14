@@ -1,11 +1,16 @@
+'use client';
+
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
-import TrendingTalkArticlesMenuItem from '@/components/menu/TrendingTalkArticlesMenuItem';
-import { TalkService } from '@/services/talk.service';
+import TrendingTalkArticlesMenuItem, {
+  TrendingTalkArticlesMenuItemPlaceholder,
+} from '@/components/menu/TrendingTalkArticlesMenuItem';
+import { trpc } from '@/hooks/trpc';
 import Link from 'next/link';
 
-export default async function TrendingTalkArticlesMenu() {
-  const articles = await TalkService.getTrendingArticlesMetadata();
+export default function TrendingTalkArticlesMenu() {
+  const articles = trpc.talk.getTrendingTalkArticlesMetadata.useQuery();
+  const items = articles?.data;
 
   return (
     <div className="flex flex-col gap-12">
@@ -25,15 +30,25 @@ export default async function TrendingTalkArticlesMenu() {
         </Link>
       </div>
       <div className="flex flex-col gap-12">
-        {articles.map((metadata, index) => (
-          <div
-            key={metadata.id}
-            data-overflow={index > 2}
-            className="data-[overflow=true]:hidden lg:!block"
-          >
-            <TrendingTalkArticlesMenuItem metadata={metadata} />
-          </div>
-        ))}
+        {items
+          ? items.map((metadata, index) => (
+              <div
+                key={metadata.id}
+                data-overflow={index > 2}
+                className="data-[overflow=true]:hidden lg:!block"
+              >
+                <TrendingTalkArticlesMenuItem metadata={metadata} />
+              </div>
+            ))
+          : Array.from({ length: 4 }).map((_, index) => (
+              <div
+                key={index}
+                data-overflow={index > 2}
+                className="data-[overflow=true]:hidden lg:!block"
+              >
+                <TrendingTalkArticlesMenuItemPlaceholder />
+              </div>
+            ))}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import type { FeedFilter } from '@/utils/feed.util';
 import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
-import { Feed } from '@prisma/client';
+import { Feed, FeedType } from '@prisma/client';
 import 'server-only';
 import { z } from 'zod';
 
@@ -83,5 +83,31 @@ export class FeedService {
     });
 
     return PrismaUtil.buildPagination(feeds);
+  }
+
+  @DataCache('feed.getRecentFeeds', StaticDataTtl)
+  public static async getRecentFeeds(
+    limit: number
+  ): Promise<
+    [PaginationResult<Feed>, PaginationResult<Feed>, PaginationResult<Feed>, PaginationResult<Feed>]
+  > {
+    const twitterFeedsData = FeedService.getFeeds(
+      { cursor: null, limit },
+      { date: null, direction: 'desc', types: [FeedType.TWITTER] }
+    );
+    const tiktokFeedsData = FeedService.getFeeds(
+      { cursor: null, limit },
+      { date: null, direction: 'desc', types: [FeedType.TIKTOK] }
+    );
+    const bstageFeedsData = FeedService.getFeeds(
+      { cursor: null, limit },
+      { date: null, direction: 'desc', types: [FeedType.BSTAGE] }
+    );
+    const daumFeedsData = FeedService.getFeeds(
+      { cursor: null, limit },
+      { date: null, direction: 'desc', types: [FeedType.DAUM] }
+    );
+
+    return Promise.all([twitterFeedsData, tiktokFeedsData, bstageFeedsData, daumFeedsData]);
   }
 }

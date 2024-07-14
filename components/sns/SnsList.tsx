@@ -6,29 +6,11 @@ import { FeedType } from '@prisma/client';
 
 export default async function SnsList() {
   const videosData = VideoService.getRecentYoutubeVideos(12);
-  const twitterFeedsData = FeedService.getFeeds(
-    { cursor: null, limit: 12 },
-    { date: null, direction: 'desc', types: [FeedType.TWITTER] }
-  );
-  const tiktokFeedsData = FeedService.getFeeds(
-    { cursor: null, limit: 12 },
-    { date: null, direction: 'desc', types: [FeedType.TIKTOK] }
-  );
-  const bstageFeedsData = FeedService.getFeeds(
-    { cursor: null, limit: 12 },
-    { date: null, direction: 'desc', types: [FeedType.BSTAGE] }
-  );
-  const daumFeedsData = FeedService.getFeeds(
-    { cursor: null, limit: 12 },
-    { date: null, direction: 'desc', types: [FeedType.DAUM] }
-  );
+  const feedsData = FeedService.getRecentFeeds(12);
 
-  const [videos, twitterFeeds, tiktokFeeds, bstageFeeds, daumFeeds] = await Promise.all([
+  const [videos, [twitterFeeds, tiktokFeeds, bstageFeeds, daumFeeds]] = await Promise.all([
     videosData,
-    twitterFeedsData,
-    tiktokFeedsData,
-    bstageFeedsData,
-    daumFeedsData,
+    feedsData,
   ]);
 
   return (
