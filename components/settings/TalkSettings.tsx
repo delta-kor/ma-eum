@@ -88,12 +88,14 @@ export default function TalkSettings() {
             <div
               data-active={isActive}
               onClick={editClick}
-              className="flex cursor-not-allowed items-center gap-8 rounded-8 bg-gray-50 px-16 py-12 text-16 font-500 text-gray-500 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary data-[active=true]:text-white"
+              className="flex shrink-0 cursor-not-allowed items-center gap-8 rounded-8 bg-gray-50 px-16 py-12 text-16 font-500 text-gray-500 data-[active=true]:cursor-pointer data-[active=true]:bg-gradient-primary data-[active=true]:text-white"
             >
               {isUpdating && (
                 <Icon type="spinner" className="w-16 shrink-0 animate-spin text-white" />
               )}
-              <Translate>$settings_edit</Translate>
+              <span className="shrink-0">
+                <Translate>$settings_edit</Translate>
+              </span>
             </div>
           </div>
         ) : (

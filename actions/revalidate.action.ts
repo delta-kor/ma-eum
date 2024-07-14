@@ -56,4 +56,5 @@ export async function revalidateTalkUserNicknameUpdate(): Promise<void> {
   revalidateTag('talk.getArticlesMetadata');
   revalidateTag('talk.getArticleComments');
   revalidateTag('talk.getTrendingArticlesMetadata');
+  revalidateTag('talk.getUser');
 }
