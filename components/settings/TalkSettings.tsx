@@ -6,10 +6,12 @@ import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
 import TalkUtil from '@/utils/talk.util';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 export default function TalkSettings() {
   const modal = useModal();
+  const router = useRouter();
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -54,7 +56,7 @@ export default function TalkSettings() {
         },
         onSuccess: () => {
           modal.alert('$settings_nickname_updated');
-          void user.refetch();
+          router.refresh();
         },
       }
     );
