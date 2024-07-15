@@ -57,5 +57,5 @@ export async function importVividFeedsFromJson(data: VividFeed[]) {
     );
   }
 
-  await prisma.$transaction(promises);
+  await Promise.all(promises);
 }
