@@ -34,6 +34,7 @@ export default function CmsCacheController() {
 
   async function handlePurgeFeeds() {
     await purgeTag('feed');
+    await purgePath('/', 'page');
     await purgePath('/discover', 'page');
     alert('Purge success');
   }
