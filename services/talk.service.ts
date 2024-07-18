@@ -237,12 +237,7 @@ export class TalkService {
       });
     const sanitizedContent = validateResult.content!;
 
-    const block = await TalkService.getBlock(user);
-    if (block && TalkUtil.isBlocked(block))
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
-      });
+    await TalkService.checkIfCanWrite(user);
 
     try {
       await prisma.talkComment.create({
@@ -277,6 +272,15 @@ export class TalkService {
     }
   }
 
+  public static async checkIfCanWrite(user: TalkUser): Promise<void> {
+    const block = await TalkService.getBlock(user.id);
+    if (block && TalkUtil.isBlocked(block))
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
+      });
+  }
+
   public static async createArticle(
     user: TalkUser,
     payload: TalkArticlePayload
@@ -290,12 +294,7 @@ export class TalkService {
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
 
-    const block = await TalkService.getBlock(user);
-    if (block && TalkUtil.isBlocked(block))
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
-      });
+    await TalkService.checkIfCanWrite(user);
 
     const article = await prisma.talkArticle.create({
       data: {
@@ -375,12 +374,7 @@ export class TalkService {
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
 
-    const block = await TalkService.getBlock(user);
-    if (block && TalkUtil.isBlocked(block))
-      throw new TRPCError({
-        code: 'FORBIDDEN',
-        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
-      });
+    await TalkService.checkIfCanWrite(user);
 
     await prisma.talkArticle.update({
       data: {
@@ -531,13 +525,13 @@ export class TalkService {
   }
 
   @DataCache('talk.getBlock', StaticDataTtl)
-  public static async getBlock(user: TalkUser): Promise<TalkBlock | null> {
+  public static async getBlock(userId: string): Promise<TalkBlock | null> {
     return prisma.talkBlock.findFirst({
       orderBy: {
         until: 'desc',
       },
       where: {
-        userId: user.id,
+        userId,
       },
     });
   }
@@ -743,6 +737,8 @@ export class TalkService {
         code: 'UNPROCESSABLE_CONTENT',
         message: '$error_nickname_in_use',
       });
+
+    await TalkService.checkIfCanWrite(user);
 
     await prisma.talkUser.update({
       data: {
