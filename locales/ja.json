@@ -24,6 +24,7 @@
   "error_invalid_length_title": "タイトルは50文字以内で入力してください。",
   "error_nickname_in_use": "このニックネームは既に使用されています。",
   "error_not_found": "お探しの内容は利用できません。",
+  "error_too_many_requests": "",
   "error_unauthorized": "ユーザー情報が見つかりませんでした。ページを更新してください。",
   "live": "ライブ",
   "member_duna": "ドゥナ",

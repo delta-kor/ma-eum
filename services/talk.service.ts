@@ -238,6 +238,21 @@ export class TalkService {
     const sanitizedContent = validateResult.content!;
 
     await TalkService.checkIfCanWrite(user);
+    const recentComment = await prisma.talkComment.findFirst({
+      orderBy: { date: 'desc' },
+      select: {
+        date: true,
+        id: true,
+      },
+      skip: 9,
+      take: 1,
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (recentComment && Date.now() - recentComment.date.getTime() < 5 * 60 * 1000)
+      throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
 
     try {
       await prisma.talkComment.create({
@@ -295,6 +310,21 @@ export class TalkService {
     const sanitizedContent = validateResult.content!;
 
     await TalkService.checkIfCanWrite(user);
+    const recentArticle = await prisma.talkArticle.findFirst({
+      orderBy: { date: 'desc' },
+      select: {
+        date: true,
+        id: true,
+      },
+      skip: 4,
+      take: 1,
+      where: {
+        userId: user.id,
+      },
+    });
+
+    if (recentArticle && Date.now() - recentArticle.date.getTime() < 10 * 60 * 1000)
+      throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
 
     const article = await prisma.talkArticle.create({
       data: {

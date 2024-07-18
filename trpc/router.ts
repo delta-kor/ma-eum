@@ -28,6 +28,13 @@ const t = initTRPC.create({
       };
     }
 
+    if (error.code === 'TOO_MANY_REQUESTS') {
+      return {
+        ...shape,
+        message: '$error_too_many_requests',
+      };
+    }
+
     if (error.code === 'FORBIDDEN') {
       return {
         ...shape,
