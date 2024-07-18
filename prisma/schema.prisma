@@ -265,6 +265,7 @@ model TalkUser {
   comments TalkComment[]
 
   likedArticles TalkArticle[]
+  blocks        TalkBlock[]
 }
 
 model TalkArticle {
@@ -301,10 +302,20 @@ model TalkComment {
 }
 
 model TalkReport {
-  id         String   @id
-  reason     String
-  date       DateTime @default(now())
-  userId     String
-  targetType String
-  targetId   String
+  id          String   @id
+  reason      String
+  date        DateTime @default(now())
+  userId      String
+  targetType  String
+  targetId    String
+  isCompleted Boolean  @default(false)
+}
+
+model TalkBlock {
+  id     String   @id
+  user   TalkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  date   DateTime @default(now())
+  until  DateTime
+  reason String
 }

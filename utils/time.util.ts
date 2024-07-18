@@ -59,6 +59,11 @@ export function formatTimeAsDate(date: Date): string {
   return datetime.toFormat('yy. MM. dd.');
 }
 
+export function formatTimeAsTime(date: Date): string {
+  const datetime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
+  return datetime.toFormat('yyyy. MM. dd. HH:mm');
+}
+
 export function formatTimeAsSixDigit(date: Date): string {
   const datetime = DateTime.fromJSDate(date, { zone: 'Asia/Seoul' });
   return datetime.toFormat('yyMMdd');

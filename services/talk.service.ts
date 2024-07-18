@@ -14,7 +14,9 @@ import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
 import type { IndexPaginationOptions, IndexPaginationResult } from '@/utils/pagination.util';
 import TalkUtil from '@/utils/talk.util';
-import { Prisma, TalkArticle, TalkComment, TalkUser, TalkUserRole } from '@prisma/client';
+import { formatTimeAsTime } from '@/utils/time.util';
+import type { TalkUser } from '@prisma/client';
+import { Prisma, TalkArticle, TalkBlock, TalkComment, TalkUserRole } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import 'server-only';
 import { z } from 'zod';
@@ -64,6 +66,12 @@ export interface TalkProfile {
 }
 
 export type TalkArticleSort = 'like' | 'newest';
+
+export interface BlockErrorInfo {
+  reason: string;
+  type: 'block';
+  until: Date;
+}
 
 const TalkRouter = router({
   addCommentToArticle: talkProcedure
@@ -229,6 +237,13 @@ export class TalkService {
       });
     const sanitizedContent = validateResult.content!;
 
+    const block = await TalkService.getBlock(user);
+    if (block && TalkUtil.isBlocked(block))
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
+      });
+
     try {
       await prisma.talkComment.create({
         data: {
@@ -274,6 +289,13 @@ export class TalkService {
       });
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
+
+    const block = await TalkService.getBlock(user);
+    if (block && TalkUtil.isBlocked(block))
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
+      });
 
     const article = await prisma.talkArticle.create({
       data: {
@@ -352,6 +374,13 @@ export class TalkService {
       });
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
+
+    const block = await TalkService.getBlock(user);
+    if (block && TalkUtil.isBlocked(block))
+      throw new TRPCError({
+        code: 'FORBIDDEN',
+        message: `Blocked until ${formatTimeAsTime(block.until)} (KST)\nReason: ${block.reason}`,
+      });
 
     await prisma.talkArticle.update({
       data: {
@@ -499,6 +528,18 @@ export class TalkService {
       items: metadata,
       pages,
     };
+  }
+
+  @DataCache('talk.getBlock', StaticDataTtl)
+  public static async getBlock(user: TalkUser): Promise<TalkBlock | null> {
+    return prisma.talkBlock.findFirst({
+      orderBy: {
+        until: 'desc',
+      },
+      where: {
+        userId: user.id,
+      },
+    });
   }
 
   public static getProfileByUser(user: TalkUser): TalkProfile {

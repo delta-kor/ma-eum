@@ -1,4 +1,5 @@
 import { ModalContext, ModalResult } from '@/providers/ModalProvider';
+import { TalkBlock } from '@prisma/client';
 
 interface ValidateNicknameResult {
   error: boolean;
@@ -38,6 +39,11 @@ export default class TalkUtil {
         config.action();
       }
     });
+  }
+
+  public static isBlocked(block: TalkBlock): boolean {
+    const now = new Date();
+    return block.until.getTime() > now.getTime();
   }
 
   public static truncateContent(content: string): string {

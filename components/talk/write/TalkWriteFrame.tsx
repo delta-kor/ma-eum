@@ -135,7 +135,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
         </button>
       </div>
       {error && (
-        <div className="self-start rounded-8 bg-c-red/20 px-16 py-8 text-16 text-c-red">
+        <div className="self-start whitespace-pre-line rounded-8 bg-c-red/20 px-16 py-8 text-16 text-c-red">
           <Translate>{error}</Translate>
         </div>
       )}

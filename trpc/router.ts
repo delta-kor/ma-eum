@@ -28,6 +28,14 @@ const t = initTRPC.create({
       };
     }
 
+    if (error.code === 'FORBIDDEN') {
+      return {
+        ...shape,
+        cause: error.cause,
+        message: error.message === 'FORBIDDEN' ? '$error_forbidden' : error.message,
+      };
+    }
+
     if (error.code === 'NOT_FOUND') {
       return {
         ...shape,
