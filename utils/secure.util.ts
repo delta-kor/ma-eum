@@ -16,6 +16,10 @@ export default class Secure {
     return cookie.value === Secure.key;
   }
 
+  public static isAuthorizedWithKey(key: string): boolean {
+    return key === Secure.key;
+  }
+
   public static set(key: string): boolean {
     if (key !== Secure.key) return false;
     cookies().set(Secure.cookieName, key);

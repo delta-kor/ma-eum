@@ -46,7 +46,7 @@ export default function FeedExpandedView({
         <Icon type="close" className="w-16 cursor-pointer text-white" />
       </div>
       {hasMultipleMedia && (
-        <div className="">
+        <>
           <div
             onClick={e => {
               e.stopPropagation();
@@ -65,7 +65,7 @@ export default function FeedExpandedView({
           >
             <Icon type="right" className="w-16 text-white" />
           </div>
-        </div>
+        </>
       )}
     </div>
   );
