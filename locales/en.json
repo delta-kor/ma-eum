@@ -16,6 +16,7 @@
   "error_enter_nickname": "Please enter your nickname.",
   "error_enter_title": "Please enter a title.",
   "error_forbidden": "Access denied. Please try again in a moment.",
+  "error_inappropriate_content": "Inappropriate content detected.",
   "error_internal_server": "Server encountered an error, please try again in a moment.",
   "error_invalid_character_nickname": "Nicknames can only include Korean, English letters, and numbers.",
   "error_invalid_length_comment": "Please enter a comment within 300 characters.",

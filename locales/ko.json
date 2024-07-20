@@ -16,6 +16,7 @@
   "error_enter_nickname": "닉네임을 입력해주세요.",
   "error_enter_title": "제목을 입력해주세요.",
   "error_forbidden": "접근이 제한되었어요. 나중에 다시 시도해주세요.",
+  "error_inappropriate_content": "부적절한 내용이 감지되었습니다.",
   "error_internal_server": "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
   "error_invalid_character_nickname": "닉네임은 한글, 영어, 숫자만 사용 가능해요.",
   "error_invalid_length_comment": "댓글은 300자 이내로 입력해주세요.",

@@ -15,6 +15,7 @@ import createId from '@/utils/id.util';
 import type { IndexPaginationOptions, IndexPaginationResult } from '@/utils/pagination.util';
 import TalkUtil from '@/utils/talk.util';
 import { formatTimeAsTime } from '@/utils/time.util';
+import Void from '@/utils/void.util';
 import type { TalkUser } from '@prisma/client';
 import { Prisma, TalkArticle, TalkBlock, TalkComment, TalkUserRole } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
@@ -237,7 +238,7 @@ export class TalkService {
       });
     const sanitizedContent = validateResult.content!;
 
-    await TalkService.checkIfCanWrite(user);
+    await TalkService.checkIfUserCanWrite(user);
     const recentComment = await prisma.talkComment.findFirst({
       orderBy: { date: 'desc' },
       select: {
@@ -253,6 +254,8 @@ export class TalkService {
 
     if (recentComment && Date.now() - recentComment.date.getTime() < 5 * 60 * 1000)
       throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
+
+    await TalkService.checkIfContentCanBePosted(content);
 
     try {
       await prisma.talkComment.create({
@@ -287,7 +290,18 @@ export class TalkService {
     }
   }
 
-  public static async checkIfCanWrite(user: TalkUser): Promise<void> {
+  public static async checkIfContentCanBePosted(content: string): Promise<boolean> {
+    const isVoid = await Void.check(content);
+    if (isVoid === true)
+      throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: '$error_inappropriate_content',
+      });
+
+    return isVoid !== null;
+  }
+
+  public static async checkIfUserCanWrite(user: TalkUser): Promise<void> {
     const block = await TalkService.getBlock(user.id);
     if (block && TalkUtil.isBlocked(block))
       throw new TRPCError({
@@ -309,7 +323,7 @@ export class TalkService {
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
 
-    await TalkService.checkIfCanWrite(user);
+    await TalkService.checkIfUserCanWrite(user);
     const recentArticle = await prisma.talkArticle.findFirst({
       orderBy: { date: 'desc' },
       select: {
@@ -325,6 +339,8 @@ export class TalkService {
 
     if (recentArticle && Date.now() - recentArticle.date.getTime() < 10 * 60 * 1000)
       throw new TRPCError({ code: 'TOO_MANY_REQUESTS' });
+
+    await TalkService.checkIfContentCanBePosted(`${sanitizedTitle};${sanitizedContent}`);
 
     const article = await prisma.talkArticle.create({
       data: {
@@ -404,7 +420,8 @@ export class TalkService {
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
 
-    await TalkService.checkIfCanWrite(user);
+    await TalkService.checkIfUserCanWrite(user);
+    await TalkService.checkIfContentCanBePosted(`${sanitizedTitle};${sanitizedContent}`);
 
     await prisma.talkArticle.update({
       data: {
@@ -768,7 +785,8 @@ export class TalkService {
         message: '$error_nickname_in_use',
       });
 
-    await TalkService.checkIfCanWrite(user);
+    await TalkService.checkIfUserCanWrite(user);
+    await TalkService.checkIfContentCanBePosted(sanitizedNickname);
 
     await prisma.talkUser.update({
       data: {
