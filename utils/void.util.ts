@@ -7,6 +7,8 @@ const openai = new OpenAI({
 
 export default class Void {
   public static async check(content: string): Promise<boolean | null> {
+    if (process.env.ENABLE_VOID === '0') return null;
+
     try {
       const response = await openai.chat.completions.create({
         frequency_penalty: 0,
