@@ -8,7 +8,7 @@ import { TalkCommentContext } from '@/providers/TalkCommentProvider';
 import { i18n } from '@/utils/i18n.util';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
-import { useContext, useRef, useState } from 'react';
+import { FormEvent, useContext, useRef, useState } from 'react';
 
 interface Props {
   articleId: string;
@@ -40,7 +40,10 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
     setIsActive(!!element.value);
   }
 
-  function handleSubmit(formData: FormData) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
     const content = formData.get('content');
     const validateResult = TalkUtil.validateComment(content);
 
@@ -82,7 +85,7 @@ export default function TalkCommentInput({ articleId, commentId, login, onSubmit
   const isLoading = addComment.isPending || isRefreshing;
 
   return (
-    <form action={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
+    <form onSubmit={handleSubmit} className="flex items-stretch rounded-16 bg-gray-50">
       <textarea
         ref={textareaRef}
         autoCapitalize="off"
