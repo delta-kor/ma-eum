@@ -8,7 +8,7 @@ const nextConfig = {
   headers: async () => {
     return [
       {
-        source: '/api/cache/purge/*',
+        source: '/api/cache/purge/:path',
         headers: [
           {
             key: 'Access-Control-Allow-Origin',
