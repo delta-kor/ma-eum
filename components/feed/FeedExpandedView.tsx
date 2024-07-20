@@ -1,4 +1,5 @@
 import Icon from '@/components/core/Icon';
+import LazyImage from '@/components/core/LazyImage';
 import { MouseEvent, useEffect } from 'react';
 
 interface Props {
@@ -31,7 +32,13 @@ export default function FeedExpandedView({
 
   return (
     <div className="fixed inset-0 z-50 flex h-dvh w-full items-center justify-center bg-black-real/90 p-16 lg:p-64">
-      <img key={thumbnailUrl} alt="image" src={thumbnailUrl} className="size-full object-contain" />
+      <LazyImage
+        key={thumbnailUrl}
+        alt="image"
+        src={thumbnailUrl}
+        contain
+        className="size-full object-contain"
+      />
       <div
         onClick={handleClose}
         className="absolute right-16 top-16 cursor-pointer rounded-full bg-black-real/30 p-24"
