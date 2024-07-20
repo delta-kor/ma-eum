@@ -385,6 +385,8 @@ export class TalkService {
         message: '$error_nickname_in_use',
       });
 
+    await TalkService.checkIfContentCanBePosted(sanitizedNickname);
+
     const user = await prisma.talkUser.create({
       data: {
         id: createId(8),
