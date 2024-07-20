@@ -44,10 +44,10 @@ export default function SnsFeed({ feeds, type }: Props) {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex items-center gap-10 self-start">
+      <Link href={link} className="flex items-center gap-10 self-start">
         <Icon type={icon} className={`w-20 ${color}`} />
         <div className="shrink-0 text-20 font-700 text-black">{title}</div>
-      </div>
+      </Link>
       <SnsCarousel>
         {feeds.map(video => (
           <SnsFeedItem key={video.id} feed={video} />

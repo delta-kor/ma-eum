@@ -2,6 +2,7 @@
 
 import Icon from '@/components/core/Icon';
 import PastRelativeTime from '@/components/core/PastRelativeTime';
+import FeedExpandedView from '@/components/feed/FeedExpandedView';
 import FeedText from '@/components/feed/FeedText';
 import useImageLoaded from '@/hooks/image-loaded';
 import { getFeedUrl, getSanitizedFeedContent } from '@/utils/feed.util';
@@ -26,7 +27,7 @@ export default function FeedContent({ feed }: Props) {
 
   const [imageRef, isLoaded, handleImageLoad] = useImageLoaded(selectedMediaThumbnail);
 
-  const isMultipleMedia = media.length > 1;
+  const hasMultipleMedia = media.length > 1;
   const isVideoMedia = selectedMedia.type === 'video';
   const content = getSanitizedFeedContent(feed);
 
@@ -46,12 +47,6 @@ export default function FeedContent({ feed }: Props) {
     e.preventDefault();
     if (!isVideoMedia) setIsHighlighted(true);
     else window.open(getFeedUrl(feed), '_blank');
-  }
-
-  function handleCloseClick(e: MouseEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsHighlighted(false);
   }
 
   return (
@@ -76,7 +71,7 @@ export default function FeedContent({ feed }: Props) {
               <Icon type="play" className="w-16 text-black" />
             </div>
           )}
-          {isMultipleMedia && (
+          {hasMultipleMedia && (
             <div className="lg:opacity-0 lg:transition-opacity lg:duration-200 lg:group-hover:opacity-100">
               <div
                 onClick={e => {
@@ -103,7 +98,7 @@ export default function FeedContent({ feed }: Props) {
             </div>
           )}
         </motion.div>
-        {isMultipleMedia && (
+        {hasMultipleMedia && (
           <div className="flex items-center gap-4 self-center">
             {media.map((item, index) => (
               <div
@@ -124,22 +119,13 @@ export default function FeedContent({ feed }: Props) {
           <PastRelativeTime date={feed.date} />
         </div>
       </div>
-      {isHighlighted && (
-        <div className="fixed inset-0 z-50 flex h-dvh w-full items-center justify-center bg-black-real/90">
-          <img
-            alt={feed.sourceId}
-            data-loaded={isLoaded}
-            src={selectedMediaThumbnail}
-            className="size-full object-contain"
-          />
-          <div
-            onClick={handleCloseClick}
-            className="absolute right-16 top-16 cursor-pointer rounded-full bg-black-real/30 p-24"
-          >
-            <Icon type="close" className="w-16 cursor-pointer text-white" />
-          </div>
-        </div>
-      )}
+      <FeedExpandedView
+        hasMultipleMedia={hasMultipleMedia}
+        open={isHighlighted}
+        setOpen={setIsHighlighted}
+        thumbnailUrl={selectedMediaThumbnail}
+        updateMediaIndex={updateMediaIndex}
+      />
     </div>
   );
 }
