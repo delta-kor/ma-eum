@@ -39,4 +39,6 @@ export async function GET(req: NextRequest) {
     default:
       return Response.json({ message: 'Invalid type', ok: false }, { status: 400 });
   }
+
+  return Response.json({ ok: true });
 }
