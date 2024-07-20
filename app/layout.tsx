@@ -1,5 +1,6 @@
 import TRPCProvider from '@/providers/TRPCProvider';
 import TranslateProvider from '@/providers/TranslateProvider';
+import { GoogleTagManager } from '@next/third-parties/google';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: Props) {
         />
       </head>
       <body>
+        {process.env.GTM_ID && <GoogleTagManager gtmId={process.env.GTM_ID} />}
         <TRPCProvider>
           <TranslateProvider>{children}</TranslateProvider>
         </TRPCProvider>
