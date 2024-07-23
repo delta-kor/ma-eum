@@ -1,4 +1,5 @@
 import Auth from '@/utils/auth.util';
+import Limiter from '@/utils/limiter.util';
 import Secure from '@/utils/secure.util';
 import { TalkUser } from '@prisma/client';
 import { TRPCError, initTRPC } from '@trpc/server';
@@ -6,10 +7,14 @@ import 'server-only';
 import superjson from 'superjson';
 
 export interface TRPCContext {
+  ip: string;
+}
+
+export interface TRPCUserContext extends TRPCContext {
   user: TalkUser;
 }
 
-const t = initTRPC.create({
+const t = initTRPC.context<TRPCContext>().create({
   errorFormatter: opts => {
     const { error, shape } = opts;
 
@@ -54,13 +59,24 @@ const t = initTRPC.create({
   },
   transformer: superjson,
 });
+
 export const router = t.router;
-export const publicProcedure = t.procedure;
+
+export const publicProcedure = t.procedure.use<TRPCContext>(async opts => {
+  const identifier = opts.ctx.ip;
+
+  if (opts.type === 'query') await Limiter.checkQueryLimit(identifier);
+  if (opts.type === 'mutation') await Limiter.checkMutationLimit(identifier);
+
+  return opts.next();
+});
+
 export const cmsProcedure = t.procedure.use(opts => {
   if (!Secure.isAuthorized()) throw new TRPCError({ code: 'FORBIDDEN' });
   return opts.next();
 });
-export const talkProcedure = t.procedure.use<TRPCContext>(async opts => {
+
+export const talkProcedure = publicProcedure.use<TRPCUserContext>(async opts => {
   const token = Auth.getTokenCookie();
   if (!token) throw new TRPCError({ code: 'UNAUTHORIZED' });
 

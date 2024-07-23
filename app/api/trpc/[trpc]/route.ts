@@ -5,7 +5,10 @@ export const maxDuration = 20;
 
 const handler = (req: Request) =>
   fetchRequestHandler({
-    createContext: () => ({}),
+    createContext: opts => {
+      const ip = req.headers.get('x-forwarded-for')!;
+      return { ip };
+    },
     endpoint: '/api/trpc',
     req,
     router: AppService.router,
