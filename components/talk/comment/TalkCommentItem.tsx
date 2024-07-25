@@ -125,7 +125,7 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
         (isReplying ? (
           <div
             onClick={handleReplyClose}
-            className="flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8"
+            className="jelly flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8 hover:scale-105"
           >
             <Icon type="close" className="w-10 shrink-0 text-gray-500" />
             <div className="select-none text-14 font-500 text-gray-500">
@@ -135,7 +135,7 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
         ) : (
           <div
             onClick={handleReplyOpen}
-            className="flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8"
+            className="jelly flex cursor-pointer items-center gap-8 self-start rounded-8 bg-gray-100 px-12 py-8 hover:scale-105"
           >
             <Icon type="comment" className="w-14 shrink-0 text-gray-500" />
             <div className="select-none text-14 font-500 text-gray-500">

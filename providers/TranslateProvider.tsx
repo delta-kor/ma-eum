@@ -23,6 +23,10 @@ export default function TranslateProvider({ children }: Props) {
     else if (lang === null) handleDetectLanguage();
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   function handleSetLanguage(lang: string) {
     setLanguage(lang);
     Storage.setItem('maeum_lang', lang);

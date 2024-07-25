@@ -20,7 +20,7 @@ export default function TalkArticleReact({ article, user }: Props) {
           <>
             <Link
               href={`/talk/article/${article.id}/edit`}
-              className="-m-8 flex cursor-pointer items-center gap-8 p-8"
+              className="jelly select:bg-gray-50 -mx-12 -my-8 flex cursor-pointer items-center gap-8 rounded-8 px-12 py-8 hover:bg-gray-50 selected:bg-gray-50"
             >
               <Icon type="pencil" className="w-14 shrink-0 text-gray-200" />
               <div className="text-16 font-500 text-gray-500">
@@ -30,7 +30,7 @@ export default function TalkArticleReact({ article, user }: Props) {
             <TalkArticleDelete
               articleId={article.id}
               login={!!user}
-              className="-m-8 flex cursor-pointer items-center gap-8 p-8"
+              className="jelly select:bg-gray-50 -mx-12 -my-8 flex cursor-pointer items-center gap-8 rounded-8 px-12 py-8 hover:bg-gray-50 selected:bg-gray-50"
             >
               <Icon type="trash" className="w-16 shrink-0 text-gray-200" />
               <div className="text-16 font-500 text-gray-500">
@@ -42,7 +42,7 @@ export default function TalkArticleReact({ article, user }: Props) {
           <TalkArticleReport
             articleId={article.id}
             login={!!user}
-            className="-m-8 flex cursor-pointer items-center gap-8 p-8"
+            className="jelly select:bg-gray-50 -mx-12 -my-8 flex cursor-pointer items-center gap-8 rounded-8 px-12 py-8 hover:bg-gray-50 selected:bg-gray-50"
           >
             <Icon type="flag" className="w-16 shrink-0 text-gray-200" />
             <div className="text-16 font-500 text-gray-500">
@@ -68,7 +68,7 @@ export default function TalkArticleReact({ article, user }: Props) {
           <Icon
             data-active={user && article.likedUsers.some(likedUser => likedUser.id === user.id)}
             type="heart"
-            className="w-18 shrink-0 text-gray-200 data-[active=true]:text-c-red"
+            className="w-18 shrink-0 text-gray-200 transition-colors group-hover:text-c-red/30 data-[active=true]:!text-c-red"
           />
           <div className="text-18 font-500 text-gray-500 group-data-[loading=true]:hidden">
             {article.likedUsers.length}

@@ -83,7 +83,12 @@ export default function TalkSettings() {
           <div className="flex items-center gap-8 lg:max-w-[520px]">
             <input
               ref={inputRef}
+              autoCapitalize="off"
+              autoComplete="off"
+              autoCorrect="off"
               defaultValue={data.nickname}
+              maxLength={15}
+              spellCheck="false"
               type="text"
               onChange={handleInputChange}
               className="min-w-0 grow rounded-8 bg-gray-50 px-16 py-12 text-16 font-400 text-black"
