@@ -41,7 +41,7 @@ export default function FeedExpandedView({
       />
       <div
         onClick={handleClose}
-        className="absolute right-16 top-16 cursor-pointer rounded-full bg-black-real/30 p-24"
+        className="jelly absolute right-16 top-16 cursor-pointer rounded-full bg-black-real/30 p-24 hover:scale-110"
       >
         <Icon type="close" className="w-16 cursor-pointer text-white" />
       </div>

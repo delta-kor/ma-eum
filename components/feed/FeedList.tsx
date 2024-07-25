@@ -62,18 +62,12 @@ export default function FeedList({ preloadedFeeds }: Props) {
 
   const placeholder = (
     <>
-      <div className="flex flex-col justify-between gap-24">
-        <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
-      </div>
-      <div className="flex flex-col justify-between gap-24">
-        <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
-      </div>
-      <div className="flex flex-col justify-between gap-24">
-        <FeedItemPlaceholder />
-        <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
-      </div>
+      {Array.from({ length: 9 }).map((_, index) => (
+        <div key={index} className="flex flex-col justify-between gap-24">
+          <FeedItemPlaceholder />
+          <div className="-mx-24 h-2 bg-gray-100 lg:mx-0" />
+        </div>
+      ))}
     </>
   );
 

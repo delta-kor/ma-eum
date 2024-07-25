@@ -50,8 +50,9 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              whileTap={{ scale: 0.95 }}
               onClick={handleFeedTypeReset}
-              className="flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12"
+              className="flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12 transition-colors hover:bg-gray-100"
             >
               <Icon
                 type="left"
@@ -67,8 +68,9 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
               key={type}
               data-active={!isAllTypes && filter.types.includes(type)}
               layout="position"
+              whileTap={{ scale: 0.95 }}
               onClick={() => handleFeedTypeClick(type)}
-              className="group flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12 data-[active=true]:bg-gradient-primary"
+              className="group flex cursor-pointer items-center gap-8 rounded-full bg-gray-50 px-16 py-12 transition-colors hover:bg-gray-100 data-[active=true]:bg-gradient-primary"
             >
               <Icon
                 type={getFeedIconName(type)}
@@ -86,18 +88,18 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
         <div
           data-active={filter.direction === 'desc'}
           onClick={() => handleDirectionClick('desc')}
-          className="group flex cursor-pointer items-center"
+          className="group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
         >
-          <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+          <div className="text-16 font-500 transition-colors group-data-[active=true]:font-600">
             <Translate>$sort_newest</Translate>
           </div>
         </div>
         <div
           data-active={filter.direction === 'asc'}
           onClick={() => handleDirectionClick('asc')}
-          className="group flex cursor-pointer items-center"
+          className="group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
         >
-          <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+          <div className="text-16 font-500 transition-colors group-data-[active=true]:font-600">
             <Translate>$sort_oldest</Translate>
           </div>
         </div>

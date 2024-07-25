@@ -48,6 +48,8 @@ const config: Config = {
       'gray-50': '#EEF4F8',
       'gray-100': '#E5EDF2',
       'gray-200': '#CDDAE4',
+      'gray-300': '#C0CCD6',
+      'gray-400': '#A6B2BB',
       'gray-500': '#8D959B',
       'primary-100': '#EDF7FF',
       'primary-200': '#D1ECFF',

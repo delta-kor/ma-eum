@@ -64,7 +64,7 @@ export default function FeedContent({ feed }: Props) {
             data-video={isVideoMedia}
             loading="lazy"
             onLoad={handleImageLoad}
-            className="size-full object-cover opacity-0 transition-opacity duration-200 data-[video=true]:cursor-pointer data-[loaded=true]:opacity-100"
+            className="size-full object-cover opacity-0 transition-all duration-200 hover:scale-105 data-[video=true]:cursor-pointer data-[loaded=true]:opacity-100"
           />
           {isVideoMedia && (
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white p-16">
