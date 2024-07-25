@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [
@@ -9,7 +10,11 @@ const config: Config = {
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('selected', ['&:active:focus', '&:active:hover']);
+    }),
+  ],
   theme: {
     aspectRatio: {
       auto: 'auto',

@@ -12,7 +12,7 @@ export default function Navigator() {
       <Link
         data-active={pathname === '/'}
         href={`/`}
-        className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
+        className="jelly jelly-increased flex min-w-[70px] basis-0 cursor-pointer flex-col items-center gap-4 rounded-8 p-10 text-gray-200 data-[active=true]:text-primary-500 selected:bg-gray-50 selected:text-gray-300"
       >
         <Icon type="home" className="h-20" />
         <div className="text-12 font-600">Home</div>
@@ -20,7 +20,7 @@ export default function Navigator() {
       <Link
         data-active={pathname === '/discover'}
         href={`/discover`}
-        className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
+        className="jelly jelly-increased flex min-w-[70px] basis-0 cursor-pointer flex-col items-center gap-4 rounded-8 p-10 text-gray-200 data-[active=true]:text-primary-500 selected:bg-gray-50 selected:text-gray-300"
       >
         <Icon type="discover" className="h-20" />
         <div className="text-12 font-600">Discover</div>
@@ -28,7 +28,7 @@ export default function Navigator() {
       <Link
         data-active={pathname === '/talk'}
         href={`/talk`}
-        className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
+        className="jelly jelly-increased flex min-w-[70px] basis-0 cursor-pointer flex-col items-center gap-4 rounded-8 p-10 text-gray-200 data-[active=true]:text-primary-500 selected:bg-gray-50 selected:text-gray-300"
       >
         <Icon type="talk" className="h-20" />
         <div className="text-12 font-600">Talk</div>
@@ -36,7 +36,7 @@ export default function Navigator() {
       <Link
         data-active={pathname === '/mixer'}
         href={`/mixer`}
-        className="flex basis-0 cursor-pointer flex-col gap-4 p-10 text-gray-200 data-[active=true]:text-primary-500"
+        className="jelly jelly-increased flex min-w-[70px] basis-0 cursor-pointer flex-col items-center gap-4 rounded-8 p-10 text-gray-200 data-[active=true]:text-primary-500 selected:bg-gray-50 selected:text-gray-300"
       >
         <Icon type="mix" className="h-20" />
         <div className="text-12 font-600">Mixer</div>
