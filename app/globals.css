@@ -72,4 +72,8 @@ body {
   .jelly:active:focus, .jelly:active:hover {
     transform: scale(0.95);
   }
+
+  .jelly-reduced:active:focus, .jelly-reduced:active:hover {
+    transform: scale(0.98);
+  }
 }

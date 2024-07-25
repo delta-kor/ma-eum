@@ -35,7 +35,7 @@ export default function IconMenuItem({ type }: Props) {
   return (
     <Link
       href={link}
-      className="flex shrink-0 grow basis-0 cursor-pointer flex-col items-center gap-8"
+      className="jelly flex shrink-0 grow basis-0 cursor-pointer flex-col items-center gap-8 hover:scale-105"
     >
       <GradientIcon type={type} className="w-32" />
       <div className="text-center text-18 font-500 text-black">

@@ -11,7 +11,7 @@ export default function LineCard({ category }: Props) {
     <Link
       href={`/videos/categories/${category.id}`}
       prefetch={false}
-      className="flex cursor-pointer items-center gap-12"
+      className="jelly jelly-reduced flex cursor-pointer items-center gap-12 rounded-8 hover:-mx-12 hover:-my-4 hover:bg-gray-50/70 hover:px-12 hover:py-4"
     >
       <div className="flex rounded-8 bg-primary-100 p-8">
         <GradientIcon type="live" className="h-16" />

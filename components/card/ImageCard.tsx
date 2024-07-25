@@ -12,7 +12,7 @@ export default function ImageCard({ category }: Props) {
     <Link
       href={`/videos/categories/${category.id}`}
       prefetch={false}
-      className="relative shrink-0 grow cursor-pointer rounded-16 border-3 border-gray-100"
+      className="jelly relative shrink-0 grow cursor-pointer rounded-16 border-3 border-gray-100 hover:scale-[1.03]"
     >
       <LazyImage
         alt={category.title}

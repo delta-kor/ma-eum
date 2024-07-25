@@ -17,7 +17,7 @@ export default function AlbumCard({ album, menu }: Props) {
     <Link
       href={`/videos/albums/${album.id}/performance`}
       style={{ background: `linear-gradient(101deg, ${gradientFrom} 7.15%, ${gradientTo} 96.7%)` }}
-      className="flex items-center gap-12 rounded-16 py-12 pl-12 pr-16"
+      className="jelly jelly-reduced flex items-center gap-12 rounded-16 py-12 pl-12 pr-16 hover:scale-[1.01]"
     >
       <LazyImage
         alt={album.title}
