@@ -57,13 +57,13 @@ export function getFeedIconName(feedType: FeedType): IconType {
 export function getFeedUrl(feed: Feed): string {
   switch (feed.type) {
     case FeedType.TWITTER:
-      return `https://x.com/CSR_offcl/status/${feed.sourceId}`;
+      return `https://x.com/${feed.account}/status/${feed.sourceId}`;
     case FeedType.TIKTOK:
-      return `https://www.tiktok.com/@csr.offcl/video/${feed.sourceId}`;
+      return `https://www.tiktok.com/@${feed.account}/video/${feed.sourceId}`;
     case FeedType.BSTAGE:
-      return `https://csr.bstage.in/story/feed/${feed.sourceId}`;
+      return `https://${feed.account}/story/feed/${feed.sourceId}`;
     case FeedType.DAUM:
-      return `https://cafe.daum.net/csr.official/${feed.sourceId}`;
+      return `https://cafe.daum.net/${feed.account}/${feed.sourceId}`;
     default:
       return '#';
   }
@@ -72,13 +72,13 @@ export function getFeedUrl(feed: Feed): string {
 export function getHomepageUrl(feed: Feed): string {
   switch (feed.type) {
     case FeedType.TWITTER:
-      return 'https://x.com/CSR_offcl/';
+      return `https://x.com/${feed.account}/`;
     case FeedType.TIKTOK:
-      return 'https://www.tiktok.com/@csr.offcl';
+      return `https://www.tiktok.com/@${feed.account}`;
     case FeedType.BSTAGE:
-      return 'https://csr.bstage.in';
+      return `https://${feed.account}`;
     case FeedType.DAUM:
-      return 'https://cafe.daum.net/csr.official';
+      return `https://cafe.daum.net/${feed.account}`;
     default:
       return '#';
   }

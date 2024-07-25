@@ -122,6 +122,7 @@ model Feed {
   id       String   @id
   sourceId String
   type     FeedType
+  account  String?
   title    String
   date     DateTime
   members  String[]
