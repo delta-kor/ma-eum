@@ -17,18 +17,18 @@ export default function TalkArticleSortMenu() {
       <SoftLink
         data-active={currentFilter === 'newest'}
         href={query.getQueryUpdatedHref({ page: '1', sort: 'newest' })}
-        className="group flex cursor-pointer items-center"
+        className="jelly group flex cursor-pointer items-center"
       >
-        <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+        <div className="text-16 font-500 text-gray-200 transition-colors hover:text-gray-400 group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
           <Translate>$sort_newest</Translate>
         </div>
       </SoftLink>
       <SoftLink
         data-active={currentFilter === 'like'}
         href={query.getQueryUpdatedHref({ page: '1', sort: 'like' })}
-        className="group flex cursor-pointer items-center"
+        className="jelly group flex cursor-pointer items-center"
       >
-        <div className="text-16 font-500 text-gray-200 transition-colors group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
+        <div className="text-16 font-500 text-gray-200 transition-colors hover:text-gray-400 group-data-[active=true]:font-600 group-data-[active=true]:text-primary-500">
           <Translate>$sort_like</Translate>
         </div>
       </SoftLink>

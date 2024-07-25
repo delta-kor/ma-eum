@@ -94,11 +94,11 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
           <Translate>{error}</Translate>
         </div>
       )}
-      <div className="flex items-center justify-end gap-32">
+      <div className="flex items-center justify-end gap-24">
         <button
           type="button"
           onClick={handleCancel}
-          className="-m-16 self-start p-16 text-16 font-400 text-gray-500"
+          className="jelly -m-12 self-start rounded-8 p-12 text-16 font-400 text-gray-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
         >
           <Translate>$modal_cancel</Translate>
         </button>
@@ -110,7 +110,10 @@ export default function TalkLoginContent({ type, onResolve }: Props) {
             </span>
           </div>
         ) : (
-          <button type="submit" className="-m-16 self-start p-16 text-16 font-700 text-primary-500">
+          <button
+            type="submit"
+            className="jelly -m-12 self-start rounded-8 p-12 text-16 font-700 text-primary-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
+          >
             <Translate>$modal_confirm</Translate>
           </button>
         )}

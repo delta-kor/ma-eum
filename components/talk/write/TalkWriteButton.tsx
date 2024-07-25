@@ -34,7 +34,7 @@ export default function TalkWriteButton({ login }: Props) {
   return (
     <div
       onClick={handleClick}
-      className="flex cursor-pointer items-center gap-8 rounded-8 bg-gradient-primary px-16 py-8"
+      className="jelly flex cursor-pointer items-center gap-8 rounded-8 bg-gradient-primary px-16 py-8 hover:scale-105"
     >
       <Icon type="pencil" className="w-14 shrink-0 text-white" />
       <div className="text-16 font-600 text-white">

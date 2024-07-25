@@ -15,13 +15,13 @@ export default function ConfirmModal({ modal, onResolve }: Props) {
       <div className="flex items-center justify-end gap-24">
         <div
           onClick={() => onResolve({ type: 'cancel' })}
-          className="-m-12 cursor-pointer p-12 text-center text-16 font-400 text-gray-500"
+          className="jelly -m-12 cursor-pointer rounded-8 p-12 text-center text-16 font-400 text-gray-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
         >
           <Translate>$modal_cancel</Translate>
         </div>
         <div
           onClick={() => onResolve({ type: 'confirm' })}
-          className="-m-12 cursor-pointer p-12 text-center text-16 font-700 text-primary-500"
+          className="jelly -m-12 cursor-pointer rounded-8 p-12 text-center text-16 font-700 text-primary-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
         >
           <Translate>$modal_confirm</Translate>
         </div>

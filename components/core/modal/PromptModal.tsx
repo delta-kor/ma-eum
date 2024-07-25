@@ -35,19 +35,19 @@ export default function PromptModal({ modal, onResolve }: Props) {
           spellCheck="false"
           type="text"
           autoFocus
-          className="w-full rounded-8 bg-gray-100 p-16 text-16 outline-none"
+          className="w-full rounded-8 bg-gray-50 p-16 text-16 outline-none"
         />
       </div>
       <div className="flex items-center justify-end gap-24">
         <div
           onClick={() => onResolve({ type: 'cancel' })}
-          className="-m-12 cursor-pointer p-12 text-center text-16 font-400 text-gray-500"
+          className="jelly -m-12 cursor-pointer rounded-8 p-12 text-center text-16 font-400 text-gray-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
         >
           <Translate>$modal_cancel</Translate>
         </div>
         <div
           onClick={handleConfirmClick}
-          className="-m-12 cursor-pointer p-12 text-center text-16 font-700 text-primary-500"
+          className="jelly -m-12 cursor-pointer rounded-8 p-12 text-center text-16 font-700 text-primary-500 transition-colors hover:bg-gray-50 selected:bg-gray-50"
         >
           <Translate>$modal_confirm</Translate>
         </div>

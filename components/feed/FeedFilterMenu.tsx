@@ -88,7 +88,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
         <div
           data-active={filter.direction === 'desc'}
           onClick={() => handleDirectionClick('desc')}
-          className="group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
+          className="jelly group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
         >
           <div className="text-16 font-500 transition-colors group-data-[active=true]:font-600">
             <Translate>$sort_newest</Translate>
@@ -97,7 +97,7 @@ export default function FeedFilterMenu({ filter, onFilterSet }: Props) {
         <div
           data-active={filter.direction === 'asc'}
           onClick={() => handleDirectionClick('asc')}
-          className="group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
+          className="jelly group flex cursor-pointer items-center text-gray-200 hover:text-gray-400 data-[active=true]:text-primary-500"
         >
           <div className="text-16 font-500 transition-colors group-data-[active=true]:font-600">
             <Translate>$sort_oldest</Translate>

@@ -88,6 +88,12 @@ body {
   }
 
   .jelly-video {
-    @apply jelly jelly-reduced rounded-16 hover:-m-8 hover:bg-gray-50 hover:p-8
+    @apply jelly jelly-reduced rounded-16 hover:-m-8 hover:bg-gray-50 hover:p-8;
+  }
+  
+  @media (hover: none) {
+    .jelly-video {
+      @apply -m-8 p-8 selected:bg-gray-50 ;
+    }
   }
 }
