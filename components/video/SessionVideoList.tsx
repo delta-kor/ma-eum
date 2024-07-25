@@ -16,7 +16,7 @@ export default function SessionVideoList({ session }: Props) {
   if (!musicId) return null;
 
   return (
-    <div className="flex flex-col gap-12 rounded-16 bg-primary-100 p-16">
+    <div className="flex flex-col gap-12 rounded-16 bg-primary-100 p-16 transition-colors">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-8">
           <GradientIcon type="live" className="w-20" />

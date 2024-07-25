@@ -21,11 +21,11 @@ export default function CategoryVideoItem({ video }: Props) {
     <Link
       href={{ pathname: `/video/${video.id}`, query: { top: 'episode' } }}
       prefetch={false}
-      className="flex gap-16"
+      className="jelly-video group box-content flex gap-16"
     >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}
-        className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100"
+        className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100 transition-all"
       />
       <div className="flex flex-col justify-between">
         {episode ? (

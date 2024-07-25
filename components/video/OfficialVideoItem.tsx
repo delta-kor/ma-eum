@@ -19,7 +19,7 @@ export default function OfficialVideoItem({ video }: Props) {
   return (
     <Link
       href={{ pathname: `/video/${video.id}`, query: { top: 'official' } }}
-      className="flex items-center gap-16"
+      className="jelly jelly-reduced flex items-center gap-16"
     >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}

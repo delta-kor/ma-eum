@@ -25,9 +25,9 @@ export default function PerformanceMusicMenu({ musics }: Props) {
           data-active={music.id === selectedMusicId}
           href={query.getQueryUpdatedHref({ music: music.id })}
           replace
-          className="group relative -m-8 p-8"
+          className="jelly group relative -m-8 p-8"
         >
-          <div className="relative z-10 text-18 font-600 text-gray-200 transition-colors group-data-[active=true]:text-black">
+          <div className="relative z-10 text-18 font-600 text-gray-200 transition-colors group-hover:text-gray-400 group-data-[active=true]:text-black">
             {music.shortTitle}
           </div>
           {selectedMusicId === music.id && (

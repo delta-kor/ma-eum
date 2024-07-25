@@ -25,18 +25,25 @@ export default function PromotionItem({ video }: Props) {
         </div>
         <div className="w-1 grow border-l-3 border-gray-100" />
       </div>
-      <div className="flex grow flex-col gap-12 pb-32 lg:flex-row-reverse lg:justify-end">
-        <div className="flex flex-col gap-4">
-          <div className="text-16 font-500 text-gray-500">{formatTimeAsDate(video.date)}</div>
-          <div className="text-18 font-600 text-black">{promotionMeta?.title || video.title}</div>
+      <div className="flex grow flex-col">
+        <div className="jelly-video flex flex-row-reverse justify-end gap-12 self-stretch">
+          <div className="flex flex-col gap-4">
+            <div className="text-14 font-500 text-gray-500 lg:text-16">
+              {formatTimeAsDate(video.date)}
+            </div>
+            <div className="text-16 font-600 text-black lg:text-18">
+              {promotionMeta?.title || video.title}
+            </div>
+          </div>
+          {video.source === VideoSource.YOUTUBE && (
+            <LazyImage
+              alt={video.title}
+              src={ImageUrl.youtubeThumbnail(video.sourceId)}
+              className="aspect-video h-64 shrink-0 rounded-8 bg-gray-100 object-cover lg:h-[110px]"
+            />
+          )}
         </div>
-        {video.source === VideoSource.YOUTUBE && (
-          <LazyImage
-            alt={video.title}
-            src={ImageUrl.youtubeThumbnail(video.sourceId)}
-            className="aspect-video shrink-0 rounded-16 bg-gray-100 object-cover lg:w-[240px]"
-          />
-        )}
+        <div className="h-16 w-full" />
       </div>
     </Link>
   );

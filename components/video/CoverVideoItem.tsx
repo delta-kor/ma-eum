@@ -20,7 +20,7 @@ export default function CoverVideoItem({ video }: Props) {
   return (
     <Link
       href={{ pathname: `/video/${video.id}`, query: { top: 'cover' } }}
-      className="flex gap-16"
+      className="jelly-video flex gap-16"
     >
       <LazyImage
         src={ImageUrl.youtubeThumbnail(video.sourceId)}

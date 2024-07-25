@@ -72,7 +72,7 @@ export default function ChallengeVideoItem({ video }: Props) {
           <div className="text-16 font-600 text-gray-500">CSR</div>
         )}
       </div>
-      <div className="flex gap-16">
+      <div className="jelly-video flex gap-16">
         <LazyImage
           src={ImageUrl.youtubeThumbnail(video.sourceId)}
           className="aspect-video h-[88px] shrink-0 rounded-8 bg-gray-100"

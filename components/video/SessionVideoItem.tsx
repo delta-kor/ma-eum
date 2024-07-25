@@ -21,7 +21,7 @@ export default function SessionVideoItem({ musicId, video }: Props) {
       <Link
         href={`/mixer/${musicId}?video=${video.id}`}
         prefetch={false}
-        className="relative overflow-hidden rounded-8"
+        className="jelly jelly-reduced group relative overflow-hidden rounded-8 hover:scale-[1.02]"
       >
         <LazyImage
           src={ImageUrl.youtubeThumbnail(video.sourceId)}
