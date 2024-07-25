@@ -62,3 +62,14 @@ body {
 .code {
   font-family: monospace;
 }
+
+@layer components {
+  .jelly {
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0,0,.2,1);
+  }
+
+  .jelly:active:focus, .jelly:active:hover {
+    transform: scale(0.95);
+  }
+}

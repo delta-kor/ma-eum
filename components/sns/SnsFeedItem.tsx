@@ -17,7 +17,7 @@ export default function SnsFeedItem({ feed }: Props) {
   );
 
   return (
-    <div className="flex w-[256px] shrink-0 snap-start flex-col overflow-hidden rounded-16 border-2 border-gray-50 bg-gray-50">
+    <div className="flex w-[256px] shrink-0 snap-start flex-col overflow-hidden rounded-16 border-2 border-gray-50 bg-gray-50 transition-colors hover:border-gray-100 hover:bg-gray-100">
       <SnsThumbnailGrid thumbnails={thumbnails} />
       <a
         href={link}

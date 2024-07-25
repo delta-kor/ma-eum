@@ -38,9 +38,9 @@ export default function SnsThumbnailGrid({ thumbnails }: Props) {
           key={thumbnail}
           data-full={isTriple && index === 0}
           onClick={() => handleClick(index)}
-          className="relative size-full data-[full=true]:col-span-full"
+          className="relative size-full cursor-pointer overflow-hidden data-[full=true]:col-span-full"
         >
-          <LazyImage src={thumbnail} className="size-full" />
+          <LazyImage src={thumbnail} className="size-full transition-transform hover:scale-105" />
           {isOverflow && index === 3 && (
             <div className="absolute inset-0 flex items-center justify-center bg-black-real/70">
               <div className="text-24 font-500 text-white">+{thumbnails.length - 4}</div>
