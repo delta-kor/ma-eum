@@ -52,14 +52,14 @@ export default function AlbumCardLarge({ album, horizontal }: Props) {
         >
           <Link
             href={`/videos/albums/${album.id}/performance`}
-            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white/40 group-data-[horizontal=true]:font-700 group-data-[horizontal=true]:text-white"
+            className="jelly flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white/40 hover:text-white/70 group-data-[horizontal=true]:font-700 group-data-[horizontal=true]:text-white"
           >
             <Translate>$performance</Translate>
           </Link>
           <div className="absolute left-1/2 h-full w-2 -translate-x-1/2 bg-white opacity-30" />
           <Link
             href={`/videos/albums/${album.id}/promotion`}
-            className="flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white/40 group-data-[horizontal=false]:font-700 group-data-[horizontal=false]:text-white"
+            className="jelly flex grow basis-0 cursor-pointer items-center justify-center text-center text-16 font-500 text-white/40 hover:text-white/70 group-data-[horizontal=false]:font-700 group-data-[horizontal=false]:text-white"
           >
             <Translate>$promotion</Translate>
           </Link>
