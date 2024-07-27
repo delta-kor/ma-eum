@@ -282,6 +282,7 @@ model TalkArticle {
   comments   TalkComment[]
 
   isDeleted Boolean @default(false)
+  ip        String?
 }
 
 model TalkComment {
@@ -300,6 +301,7 @@ model TalkComment {
   replyComments TalkComment[] @relation("reply")
 
   isDeleted Boolean @default(false)
+  ip        String?
 }
 
 model TalkReport {

@@ -81,11 +81,12 @@ const TalkRouter = router({
     )
     .mutation(async opts => {
       const user = opts.ctx.user;
+      const ip = opts.ctx.ip;
       const articleId = opts.input.articleId;
       const commentId = opts.input.commentId || null;
       const content = opts.input.content;
 
-      await TalkService.addCommentToArticle(user, articleId, commentId, content);
+      await TalkService.addCommentToArticle(user, articleId, commentId, content, ip);
       await revalidateTalkCommentCreate(articleId);
     }),
 
@@ -99,13 +100,14 @@ const TalkRouter = router({
     .mutation(async opts => {
       const input = opts.input;
       const user = opts.ctx.user;
+      const ip = opts.ctx.ip;
 
       const payload: TalkArticlePayload = {
         content: input.content,
         title: input.title,
       };
 
-      const article = await TalkService.createArticle(user, payload);
+      const article = await TalkService.createArticle(user, payload, ip);
       await revalidateTalkArticleWrite();
       return article.id;
     }),
@@ -228,7 +230,8 @@ export class TalkService {
     user: TalkUser,
     articleId: string,
     commentId: null | string,
-    content: string
+    content: string,
+    ip: string
   ): Promise<void> {
     const validateResult = TalkUtil.validateComment(content);
     if (validateResult.error)
@@ -268,6 +271,7 @@ export class TalkService {
           },
           content: sanitizedContent,
           id: createId(8),
+          ip,
           replyTo: commentId
             ? {
                 connect: {
@@ -312,7 +316,8 @@ export class TalkService {
 
   public static async createArticle(
     user: TalkUser,
-    payload: TalkArticlePayload
+    payload: TalkArticlePayload,
+    ip: string
   ): Promise<TalkArticle> {
     const validateResult = TalkUtil.validateArticle(payload.title, payload.content);
     if (validateResult.error)
@@ -346,6 +351,7 @@ export class TalkService {
       data: {
         content: sanitizedContent,
         id: createId(8),
+        ip,
         title: sanitizedTitle,
         userId: user.id,
       },
