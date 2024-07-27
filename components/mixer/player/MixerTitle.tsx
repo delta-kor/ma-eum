@@ -15,6 +15,7 @@ export default function MixerTitle({ music }: Props) {
   const mixerControl = useMixerControl();
   const mixerControlTime = useMixerControlTime();
 
+  const isDown = useRef(false);
   const boxRef = useRef<HTMLDivElement>(null);
 
   const title = music.title;
@@ -27,6 +28,8 @@ export default function MixerTitle({ music }: Props) {
   function handleSeek(x: number) {
     if (!boxRef.current) return;
     if (relativeTime < 0) return handleSkip();
+
+    isDown.current = true;
 
     const { left, width } = boxRef.current.getBoundingClientRect();
     const relativeX = x - left;
@@ -44,10 +47,11 @@ export default function MixerTitle({ music }: Props) {
 
   function handleMouseMove(e: MouseEvent) {
     e.preventDefault();
-    handleSeek(e.clientX);
+    if (isDown.current) handleSeek(e.clientX);
   }
 
   function handleMouseUp() {
+    isDown.current = false;
     window.removeEventListener('mousemove', handleMouseMove);
   }
 
