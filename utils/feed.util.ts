@@ -22,6 +22,7 @@ export function getFeedHeader(feed: Feed): string[] {
     case FeedType.TIKTOK:
       return ['@csr_offcl'];
     case FeedType.BSTAGE:
+      if (feed.members.length === 0) return ['csr'];
       return (feed.members as Member[]).map(getMemberName);
     case FeedType.DAUM:
       return ['csr.official'];

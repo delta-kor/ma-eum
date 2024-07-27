@@ -3,6 +3,7 @@ import ja from '@/locales/ja.json';
 import ko from '@/locales/ko.json';
 
 function getTranslation(key: string, locale: any): null | string {
+  if (!key) return null;
   if (key[0] !== '$') return null;
 
   const slicedKey = key.slice(1);
