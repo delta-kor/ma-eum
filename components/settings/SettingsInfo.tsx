@@ -1,3 +1,4 @@
+import Icon from '@/components/core/Icon';
 import packageJson from '@/package.json';
 
 export default function SettingsInfo() {
@@ -8,6 +9,15 @@ export default function SettingsInfo() {
 
   return (
     <div className="flex flex-col gap-32">
+      <a
+        href="https://x.com/ma_eum_me"
+        target="_blank"
+        className="flex items-center gap-8 self-start rounded-8 bg-gray-50 px-16 py-12"
+      >
+        <Icon type="twitter" className="w-18 text-gray-500" />
+        <div className="text-16 font-600 text-black">@ma_eum_me</div>
+      </a>
+
       <div className="flex flex-col gap-10">
         <div className="text-18 font-700 text-primary-500">Contact</div>
         <div className="flex flex-col gap-4 text-16 font-400 text-black">
@@ -125,6 +135,37 @@ export default function SettingsInfo() {
         <div className="text-18 font-700 text-primary-500">Released on</div>
         <div className="flex flex-col gap-4 text-16 font-400 text-black">
           <div>2024. 7. 27.</div>
+        </div>
+      </div>
+
+      <div className="h-1 self-stretch bg-gray-100" />
+
+      <div className="flex flex-col items-center gap-24 md:grid md:grid-cols-2">
+        <div className="flex w-full flex-col gap-12">
+          <iframe
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            frameBorder="0"
+            src="https://player.vimeo.com/video/990549120?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            title="CSR 2nd Anniversary"
+            className="aspect-video w-full"
+          ></iframe>
+          <div className="flex flex-col gap-4">
+            <div className="text-18 font-600 text-gray-500">CSR 2nd Anniversary</div>
+            <div className="text-16 font-500 text-gray-200">S. Y. Sohn / H. Y. Kwon</div>
+          </div>
+        </div>
+        <div className="flex w-full flex-col gap-12">
+          <iframe
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            frameBorder="0"
+            src="https://player.vimeo.com/video/990228360?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            title="[Final] maeum.me launch trailer"
+            className="aspect-video w-full"
+          ></iframe>
+          <div className="flex flex-col gap-4">
+            <div className="text-18 font-600 text-gray-500">maeum.me Launch Trailer</div>
+            <div className="text-16 font-500 text-gray-200">J. S. Lee / E. S. Kim / S. Y. Sohn</div>
+          </div>
         </div>
       </div>
 
