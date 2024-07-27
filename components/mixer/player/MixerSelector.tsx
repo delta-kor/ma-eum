@@ -23,8 +23,17 @@ export default function MixerSelector({ sessions }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-24 rounded-8 bg-gray-50 px-20 py-16">
+    <div className="relative flex flex-col gap-12 overflow-hidden rounded-8 bg-gray-50 px-20 py-16">
       <MixerSelectorPageMenu session={activeSession} onChange={handlePageChange} />
+      <div className="flex bg-gray-200/40">
+        {sessions.map(session => (
+          <div
+            key={session.id}
+            data-active={activeSession.id === session.id}
+            className="h-4 grow basis-0 rounded-full transition-colors data-[active=true]:bg-primary-500"
+          />
+        ))}
+      </div>
       <MixerSelectorSessionMenu session={activeSession} />
     </div>
   );
