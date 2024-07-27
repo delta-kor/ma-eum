@@ -5,7 +5,7 @@ import { ExtendedMusic } from '@/services/music.service';
 import { rangePercentage } from '@/utils/lily.util';
 import { getVideoAbsoluteTime, getVideoRelativeTime } from '@/utils/session.util';
 import { AnimatePresence, motion } from 'framer-motion';
-import { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, useRef } from 'react';
+import { MouseEvent as ReactMouseEvent, useRef } from 'react';
 
 interface Props {
   music: ExtendedMusic;
@@ -41,8 +41,8 @@ export default function MixerTitle({ music }: Props) {
   function handleMouseDown(e: ReactMouseEvent) {
     handleSeek(e.clientX);
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp, { once: true });
+    window.addEventListener('pointermove', handleMouseMove);
+    window.addEventListener('pointerup', handleMouseUp, { once: true });
   }
 
   function handleMouseMove(e: MouseEvent) {
@@ -52,23 +52,7 @@ export default function MixerTitle({ music }: Props) {
 
   function handleMouseUp() {
     isDown.current = false;
-    window.removeEventListener('mousemove', handleMouseMove);
-  }
-
-  function handleTouchStart(e: ReactTouchEvent) {
-    handleSeek(e.touches[0].clientX);
-
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', handleTouchEnd, { once: true });
-  }
-
-  function handleTouchMove(e: TouchEvent) {
-    e.preventDefault();
-    handleSeek(e.touches[0].clientX);
-  }
-
-  function handleTouchEnd() {
-    window.removeEventListener('touchmove', handleTouchMove);
+    window.removeEventListener('pointermove', handleMouseMove);
   }
 
   function handleSkip() {
@@ -80,8 +64,7 @@ export default function MixerTitle({ music }: Props) {
   return (
     <div
       ref={boxRef}
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
+      onPointerDown={handleMouseDown}
       className="relative h-details-header-height w-full cursor-pointer overflow-hidden rounded-8 bg-gray-50"
     >
       <div

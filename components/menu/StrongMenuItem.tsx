@@ -37,7 +37,7 @@ export default function StrongMenuItem({ type }: Props) {
     <Link
       href={url}
       style={{ background: gradient, boxShadow: shadow }}
-      className="jelly jelly-reduced relative h-[112px] shrink-0 grow cursor-pointer rounded-16 border-3 border-white/70 hover:scale-[1.02]"
+      className="jelly md:jelly-reduced relative h-[112px] shrink-0 grow cursor-pointer rounded-16 border-3 border-white/70 hover:scale-[1.02]"
     >
       <div className="absolute left-16 right-0 top-16 truncate whitespace-pre text-20 font-700 leading-[100%] text-white">
         {text}
