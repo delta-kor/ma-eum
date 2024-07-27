@@ -13,7 +13,7 @@ export default function VideoBack() {
   return (
     <div
       onClick={handleClick}
-      className="-mx-12 flex cursor-pointer items-center self-stretch px-12 lg:hidden"
+      className="jelly jelly-increased -mx-12 flex size-40 cursor-pointer items-center rounded-8 px-12 hover:bg-gray-50 selected:bg-gray-50 lg:hidden"
     >
       <Icon type="left" className="w-16 text-gray-200" />
     </div>

@@ -43,7 +43,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
               query: { top: 'promotion' },
             }}
             prefetch
-            className="relative flex items-center gap-16"
+            className="jelly jelly-reduced relative flex items-center gap-16"
           >
             <div
               data-active={item.id === video.id}
@@ -51,7 +51,7 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
             >
               <Icon type="video" className="w-16 text-white" />
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="jelly-meta flex grow flex-col gap-4">
               <div className="line-clamp-2 text-16 font-600 text-black">
                 {getMetaFromVideo<PromotionVideoMeta>(item, 'promotion')?.title || video.title}
               </div>
@@ -62,9 +62,11 @@ export default async function PromotionMetaCard({ promotionMeta, video }: Props)
       </div>
       <Link
         href={`/videos/albums/${album.id}/promotion`}
-        className="-my-16 py-16 text-center text-16 font-600 text-gray-500"
+        className="jelly group -my-16 flex items-center justify-center py-16 text-16 font-600 text-gray-500"
       >
-        <Translate>$view_all</Translate>
+        <div className="-mx-8 -my-4 rounded-8 px-8 py-4 transition-colors group-hover:bg-gray-200/50">
+          <Translate>$view_all</Translate>
+        </div>
       </Link>
     </MetaWrapper>
   );

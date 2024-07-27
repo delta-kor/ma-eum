@@ -55,7 +55,7 @@ export default function DetailsHeader() {
       <div className="absolute h-24 w-full lg:left-1/2 lg:max-w-screen-lgx lg:-translate-x-1/2">
         <div
           onClick={handleBackClick}
-          className="jelly jelly-increased absolute left-16 top-1/2 -translate-y-1/2 cursor-pointer rounded-8 p-12 text-gray-200 selected:bg-gray-50 selected:text-gray-400"
+          className="jelly jelly-increased absolute left-16 top-1/2 -translate-y-1/2 cursor-pointer rounded-8 p-12 text-gray-200 hover:bg-gray-50 hover:text-gray-400 selected:bg-gray-50 selected:text-gray-400"
         >
           <Icon type="left" className="w-16" />
         </div>

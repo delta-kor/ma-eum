@@ -17,7 +17,7 @@ export default function CoverMetaCard({ coverMeta }: Props) {
       <Link
         data-kind={kind}
         href={`/videos/cover`}
-        className="flex items-center gap-16 rounded-16 bg-gradient-primary px-24 py-16 data-[kind=dance]:bg-gradient-red"
+        className="jelly jelly-reduced flex items-center gap-16 rounded-16 bg-gradient-primary px-24 py-16 hover:scale-[1.01] data-[kind=dance]:bg-gradient-red"
       >
         <div className="flex min-w-0 grow flex-col gap-4">
           <div className="line-clamp-2 text-20 font-700 text-white">{title}</div>

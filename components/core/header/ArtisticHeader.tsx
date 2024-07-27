@@ -83,7 +83,10 @@ export default function ArtisticHeader() {
             </div>
           </Pc>
         </div>
-        <Link href={`/settings`} className="group-data-[floating=true]:jelly -m-8 p-8">
+        <Link
+          href={`/settings`}
+          className="group-data-[floating=true]:jelly group-data-[floating=true]:jelly-increased -m-8 p-8 group-data-[floating=true]:hover:scale-105"
+        >
           <Icon
             type="settings"
             className="w-24 cursor-pointer transition-all group-data-[floating=true]:w-20 group-data-[floating=true]:text-gray-500"

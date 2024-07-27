@@ -50,7 +50,7 @@ export default function MetaVideoItem({ active, metaType, video }: Props) {
         query: { top: metaType },
       }}
       prefetch
-      className="flex items-center gap-16"
+      className="jelly-meta flex items-center gap-16"
     >
       <div className="relative">
         <LazyImage

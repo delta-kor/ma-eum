@@ -33,7 +33,7 @@ export default function VideoShare({ source, sourceId, title }: Props) {
         <Icon type="play" className="w-14 shrink-0 text-white" />
         <div className="text-16 font-500 text-white">YouTube</div>
       </a>
-      <div onClick={handleShareClick} className="shrink-0 p-10">
+      <div onClick={handleShareClick} className="shrink-0 cursor-pointer p-10">
         <Icon type="share" className="w-16 text-gray-200" />
       </div>
     </div>
