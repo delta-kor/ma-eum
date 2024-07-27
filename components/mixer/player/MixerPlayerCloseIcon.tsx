@@ -11,7 +11,7 @@ export default function MixerPlayerCloseIcon() {
   return (
     <div
       onClick={handleClick}
-      className="flex size-details-header-height cursor-pointer items-center justify-center"
+      className="jelly flex size-details-header-height shrink-0 cursor-pointer items-center justify-center rounded-8 hover:bg-gray-50 selected:bg-gray-50"
     >
       <Icon type="close" className="w-16 text-gray-200" />
     </div>

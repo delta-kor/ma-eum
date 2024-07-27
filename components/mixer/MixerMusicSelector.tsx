@@ -33,7 +33,10 @@ export default function MixerMusicSelector({ musics }: Props) {
     <div className="flex flex-col gap-32">
       <div className="flex flex-col gap-16 lg:gap-24">
         <div className="-mx-24 flex items-center justify-evenly self-stretch">
-          <div onClick={() => handleMove(-1)} className="-m-16 cursor-pointer p-16">
+          <div
+            onClick={() => handleMove(-1)}
+            className="jelly -m-16 cursor-pointer rounded-8 p-16 hover:bg-gray-50 selected:bg-gray-50"
+          >
             <Icon type="left" className="w-20 text-gray-200" />
           </div>
           <LazyImage
@@ -41,7 +44,10 @@ export default function MixerMusicSelector({ musics }: Props) {
             src={ImageUrl.album(selectedMusic.albumId!)}
             className="size-[240px] select-none rounded-16 bg-gray-100"
           />
-          <div onClick={() => handleMove(1)} className="-m-16 cursor-pointer p-16">
+          <div
+            onClick={() => handleMove(1)}
+            className="jelly -m-16 cursor-pointer rounded-8 p-16 hover:bg-gray-50 selected:bg-gray-50"
+          >
             <Icon type="right" className="w-20 text-gray-200" />
           </div>
         </div>

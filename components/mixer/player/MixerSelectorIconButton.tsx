@@ -16,7 +16,7 @@ export default function MixerSelectorIconButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="group cursor-pointer rounded-8 bg-gray-200/70 p-10 data-[active=true]:bg-gradient-primary"
+      className="jelly group cursor-pointer rounded-8 bg-gray-200/70 p-10 hover:bg-gray-300/80 data-[active=true]:bg-gradient-primary"
       {...props}
     >
       <Icon

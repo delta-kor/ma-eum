@@ -18,7 +18,7 @@ export default function MixerSelectorTextButton({ active, video, ...props }: Pro
   return (
     <div
       data-active={active}
-      className="group flex grow basis-0 cursor-pointer items-center justify-center gap-12 rounded-8 bg-gray-200/70 px-16 py-10 data-[active=true]:bg-gradient-primary"
+      className="jelly group flex grow basis-0 cursor-pointer items-center justify-center gap-12 rounded-8 bg-gray-200/70 px-16 py-10 hover:bg-gray-300/80 data-[active=true]:bg-gradient-primary"
       {...props}
     >
       <Icon
