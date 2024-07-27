@@ -4,7 +4,7 @@ import { ScheduleService } from '@/services/schedule.service';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const revalidate = 18000;
 
 export default async function SchedulesPage() {
   const dateInfo = await ScheduleService.getCalendarDateInfo();

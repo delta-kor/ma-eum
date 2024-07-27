@@ -4,7 +4,7 @@ import { VideoService } from '@/services/video.service';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const revalidate = 18000;
 
 export default async function LiveVideosPage() {
   const videosData = VideoService.getLiveVideos();

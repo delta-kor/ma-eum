@@ -7,7 +7,7 @@ import TalkSettings from '@/components/settings/TalkSettings';
 import MetaUtil from '@/utils/meta.util';
 import { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const revalidate = 18000;
 export const runtime = 'edge';
 
 export default function SettingsPage() {
