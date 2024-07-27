@@ -1,3 +1,4 @@
+import Coffee from '@/components/core/Coffee';
 import DetailsContent from '@/components/core/header/DetailsContent';
 import Title from '@/components/core/header/Title';
 import LanguageSettings from '@/components/settings/LanguageSettings';
@@ -26,6 +27,7 @@ export default function SettingsPage() {
               <SettingsLink type="credits" />
               <SettingsLink type="changelog" />
             </div>
+            <Coffee />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import Coffee from '@/components/core/Coffee';
 import Icon from '@/components/core/Icon';
 import packageJson from '@/package.json';
 
@@ -119,6 +120,7 @@ export default function SettingsInfo() {
         <div className="text-18 font-700 text-primary-500">Shipped on</div>
         <div className="flex flex-col gap-4 text-16 font-400 text-black">
           <div>Vercel: sin1/ap-southeast-1 (Singapore) / Edge</div>
+          <div>Upstash: sin1/ap-southeast-1 (Singapore)</div>
           <div>Neon: Asia Pacific (Singapore)</div>
           <div>Gcloud: 가산IDC LG U+/KINX (South Korea)</div>
         </div>
@@ -137,6 +139,8 @@ export default function SettingsInfo() {
           <div>2024. 7. 27.</div>
         </div>
       </div>
+
+      <Coffee />
 
       <div className="h-1 self-stretch bg-gray-100" />
 
@@ -170,7 +174,6 @@ export default function SettingsInfo() {
       </div>
 
       <div className="h-1 self-stretch bg-gray-100" />
-
       <div className="flex flex-col gap-4">
         <div className="text-16 font-500 italic text-gray-500">Crafted by,</div>
         <div className="text-18 font-700 text-gray-500">msqr labs</div>
