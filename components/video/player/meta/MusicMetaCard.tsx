@@ -28,7 +28,7 @@ export default async function MusicMetaCard({ musicMeta }: Props) {
         style={{
           background: `linear-gradient(101deg, ${gradientFrom} 7.15%, ${gradientTo} 96.7%)`,
         }}
-        className="flex items-center gap-16 rounded-16 py-12 pl-12 pr-24"
+        className="jelly jelly-reduced flex items-center gap-16 rounded-16 py-12 pl-12 pr-24 hover:scale-[1.01]"
       >
         <LazyImage
           alt={album.title}

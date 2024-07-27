@@ -82,7 +82,10 @@ export default function PlayFrame({ album, music }: Props) {
       className="relative lg:px-24"
     >
       <Pc>
-        <div onClick={handleBackClick} className="absolute right-32 top-32 cursor-pointer p-24">
+        <div
+          onClick={handleBackClick}
+          className="jelly jelly-increased absolute right-32 top-32 cursor-pointer rounded-16 p-24 hover:bg-white/30 selected:bg-white/30"
+        >
           <Icon type="close" className="w-32 text-white" />
         </div>
       </Pc>

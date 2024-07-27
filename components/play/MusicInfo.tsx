@@ -21,7 +21,10 @@ export default function MusicInfo({ album, music, children }: Props) {
   return (
     <div className="flex shrink-0 items-center gap-16 lg:flex-col lg:items-stretch">
       <Mobile>
-        <div onClick={handleBackClick} className="-m-16 shrink-0 cursor-pointer p-16">
+        <div
+          onClick={handleBackClick}
+          className="jelly jelly-increased -m-16 shrink-0 cursor-pointer rounded-8 p-16 hover:bg-white/30 selected:bg-white/30"
+        >
           <Icon type="left" className="w-16 text-white" />
         </div>
       </Mobile>

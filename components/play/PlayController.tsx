@@ -53,7 +53,7 @@ export default function PlayController({
       <Icon
         type={isPlaying ? 'pause' : 'play'}
         onClick={handleActionClick}
-        className="w-48 cursor-pointer self-center text-white"
+        className="jelly jelly-increased w-48 cursor-pointer self-center text-white hover:scale-105"
       />
     </div>
   );
