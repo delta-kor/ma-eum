@@ -1,4 +1,5 @@
 import ScheduleFeedList from '@/components/calendar/ScheduleFeedList';
+import ScrollInjector from '@/components/core/ScrollInjector';
 import Pc from '@/components/core/responsive/Pc';
 import LandingLayer from '@/components/landing/LandingLayer';
 import LandingWidget from '@/components/landing/LandingWidget';
@@ -11,6 +12,7 @@ export const revalidate = 60;
 export default function MainPage() {
   return (
     <div className="flex min-h-dvh flex-col pb-24 lg:min-h-0">
+      <ScrollInjector />
       <LandingLayer />
       <div className="relative px-24">
         <div className="absolute left-0 top-0 -z-10 size-full max-h-[520px] bg-gradient-to-b from-primary-200 to-white lg:from-white" />

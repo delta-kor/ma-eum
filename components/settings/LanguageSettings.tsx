@@ -20,21 +20,21 @@ export default function LanguageSettings() {
         <div
           data-active={language === 'en'}
           onClick={() => handleLanguageChange('en')}
-          className="cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
+          className="jelly cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 hover:scale-105 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
         >
           English
         </div>
         <div
           data-active={language === 'ko'}
           onClick={() => handleLanguageChange('ko')}
-          className="cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
+          className="jelly cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 hover:scale-105 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
         >
           한국어
         </div>
         <div
           data-active={language === 'ja'}
           onClick={() => handleLanguageChange('ja')}
-          className="cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
+          className="jelly cursor-pointer rounded-8 bg-gray-50 px-12 py-8 text-14 font-600 text-gray-500 hover:scale-105 data-[active=true]:bg-primary-500 data-[active=true]:text-white"
         >
           日本語
         </div>

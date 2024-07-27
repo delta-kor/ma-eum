@@ -1,3 +1,4 @@
+import Transistor from '@/components/core/Transitor';
 import DetailsHeader from '@/components/core/header/DetailsHeader';
 import { MobileX } from '@/components/core/responsive/Mobile';
 import { ReactNode } from 'react';
@@ -12,7 +13,7 @@ export default function LeafLayout({ children }: Props) {
       <MobileX>
         <DetailsHeader />
       </MobileX>
-      {children}
+      <Transistor>{children}</Transistor>
     </div>
   );
 }

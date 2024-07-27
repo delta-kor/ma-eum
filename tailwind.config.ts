@@ -66,7 +66,7 @@ const config: Config = {
     },
     extend: {
       animation: {
-        fade: 'fadeIn 1s',
+        fade: 'fadeIn 0.5s',
       },
       backgroundImage: {
         'gradient-gray': 'linear-gradient(90deg, #8D959B 0%, #A8B8C3 100%)',

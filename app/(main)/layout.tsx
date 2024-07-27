@@ -1,4 +1,3 @@
-import Transistor from '@/components/core/Transitor';
 import ModalFrame from '@/components/core/modal/ModalFrame';
 import HistoryProvider from '@/providers/HistoryProvider';
 import ModalProvider from '@/providers/ModalProvider';
@@ -18,9 +17,7 @@ export default function MainLayout({ children }: Props) {
       <ModalProvider>
         <SafeSearchParamsProvider>
           <Suspense>
-            <HistoryProvider>
-              <Transistor>{children}</Transistor>
-            </HistoryProvider>
+            <HistoryProvider>{children}</HistoryProvider>
           </Suspense>
         </SafeSearchParamsProvider>
         <ModalFrame />

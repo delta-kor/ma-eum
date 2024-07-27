@@ -10,11 +10,9 @@ interface Props {
 export default function Transistor({ children }: Props) {
   const pathname = usePathname();
 
-  return children;
-
-  // return (
-  //   <div key={pathname} className="animate-fade">
-  //     {children}
-  //   </div>
-  // );
+  return (
+    <div key={pathname} className="animate-fade">
+      {children}
+    </div>
+  );
 }
