@@ -619,7 +619,7 @@ export class TalkService {
         },
       },
       skip: 0,
-      take: 4,
+      take: 3,
       where: {
         isDeleted: false,
       },

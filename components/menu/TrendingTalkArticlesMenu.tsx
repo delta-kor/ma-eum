@@ -40,7 +40,7 @@ export default function TrendingTalkArticlesMenu() {
                 <TrendingTalkArticlesMenuItem metadata={metadata} />
               </div>
             ))
-          : Array.from({ length: 4 }).map((_, index) => (
+          : Array.from({ length: 3 }).map((_, index) => (
               <div
                 key={index}
                 data-overflow={index > 2}
