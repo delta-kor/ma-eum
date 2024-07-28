@@ -3,7 +3,7 @@ import Translate from '@/components/core/Translate';
 import Link from 'next/link';
 
 interface Props {
-  type: 'changelog' | 'credits' | 'info' | 'notice';
+  type: 'changelog' | 'credits' | 'download' | 'info' | 'notice';
 }
 
 export default function SettingsLink({ type }: Props) {
@@ -15,6 +15,19 @@ export default function SettingsLink({ type }: Props) {
       >
         <div className="grow text-16 font-600 text-black">
           <Translate>$settings_info</Translate>
+        </div>
+        <Icon type="right" className="w-14 text-gray-200" />
+      </Link>
+    );
+
+  if (type === 'download')
+    return (
+      <Link
+        href={`/download`}
+        className="jelly jelly-reduced flex items-center gap-8 rounded-8 bg-gray-50 px-16 py-12 hover:bg-gray-100 selected:bg-gray-100"
+      >
+        <div className="grow text-16 font-600 text-black">
+          <Translate>$settings_app_download</Translate>
         </div>
         <Icon type="right" className="w-14 text-gray-200" />
       </Link>

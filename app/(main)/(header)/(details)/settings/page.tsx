@@ -26,6 +26,7 @@ export default function SettingsPage() {
               <SettingsLink type="notice" />
               <SettingsLink type="credits" />
               <SettingsLink type="changelog" />
+              <SettingsLink type="download" />
             </div>
             <Coffee />
           </div>
