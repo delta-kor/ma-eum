@@ -9,7 +9,7 @@ export default function DownloadMenu() {
       <Pc>
         <div className="text-24 font-600 text-black">Download Mobile App</div>
       </Pc>
-      <div className="flex flex-col gap-8 font-400 leading-7">
+      <div className="flex flex-col gap-8 font-400">
         <p className="text-18 text-black">
           maeum.me supports PWA(Progressive Web App) which allows you to install the app on your
           device.
@@ -31,11 +31,11 @@ export default function DownloadMenu() {
         </div>
       </div>
       <div className="h-1 self-stretch bg-gray-100" />
-      <div className="flex flex-col gap-4 text-16 font-400 leading-7 text-gray-500">
+      <div className="flex flex-col gap-4 text-16 font-400 leading-6 text-gray-500">
+        <p>- Chrome on iOS does not support PWA installation. Please use Safari for iOS.</p>
         <p>
-          Chrome on iOS does not support PWA installation.
-          <br />
-          Please use Safari for iOS.
+          - PWA can be installed on few PC browsers by clicking the install button in the address
+          bar but not recommended.
         </p>
       </div>
     </div>
