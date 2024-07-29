@@ -34,7 +34,7 @@ export default function TalkArticlePagination({ currentPage, totalPages }: Props
   }
 
   return (
-    <div className="flex items-center gap-8 self-center">
+    <div className="-mx-24 flex flex-wrap items-center gap-8 self-center lg:mx-0">
       <Link
         href={query.getQueryUpdatedHref({ page: prevPage.toString() })}
         scroll
