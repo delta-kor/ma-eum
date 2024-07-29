@@ -116,7 +116,7 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
               </div>
             )}
           </div>
-          <div className="whitespace-pre-line text-16 font-400 leading-6 text-black">
+          <div className="whitespace-pre-line break-words text-16 font-400 leading-6 text-black">
             {comment.content}
           </div>
         </div>
