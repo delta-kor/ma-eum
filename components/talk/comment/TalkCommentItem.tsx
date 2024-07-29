@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import Translate from '@/components/core/Translate';
+import UrlHighlighter from '@/components/talk/UrlHighlighter';
 import TalkCommentInput from '@/components/talk/comment/TalkCommentInput';
 import useModal from '@/hooks/modal';
 import { trpc } from '@/hooks/trpc';
@@ -117,7 +118,7 @@ export default function TalkCommentItem({ articleId, comment, reply, userId }: P
             )}
           </div>
           <div className="whitespace-pre-line break-words text-16 font-400 leading-6 text-black">
-            {comment.content}
+            <UrlHighlighter>{comment.content}</UrlHighlighter>
           </div>
         </div>
       </div>
