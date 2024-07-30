@@ -26,7 +26,7 @@ export default function FluidVideo({ src }: Props) {
       loop
       muted
       playsInline
-      className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-1000 data-[active=true]:opacity-30"
+      className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-1000 data-[active=true]:opacity-20"
     />
   );
 }

@@ -1,5 +1,6 @@
 import FluidVideo from '@/components/about/FluidVideo';
-import AboutLandingPage from '@/components/about/pages/LandingPage';
+import AboutIntroductionPage from '@/components/about/page/IntroductionPage';
+import AboutLandingPage from '@/components/about/page/LandingPage';
 import CloseButton from '@/components/about/ui/CloseButton';
 import useAbout from '@/hooks/about';
 import AboutUtil from '@/utils/about.util';
@@ -12,7 +13,10 @@ export default function AboutContent() {
     <div className="relative size-full">
       <FluidVideo src={AboutUtil.getBackgroundVideo(page, index)} />
       <CloseButton />
-      <AnimatePresence mode="wait">{page === 'landing' && <AboutLandingPage />}</AnimatePresence>
+      <AnimatePresence mode="wait">
+        {page === 'landing' && <AboutLandingPage key="landing" />}
+        {page === 'introduction' && <AboutIntroductionPage key="introduction" />}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,11 +1,14 @@
 import Icon from '@/components/core/Icon';
+import useAbout from '@/hooks/about';
 import useHistory from '@/hooks/history';
 
 export default function CloseButton() {
+  const about = useAbout();
   const history = useHistory();
 
   function handleClick() {
-    history.back();
+    if (about.page !== 'landing') about.setPage('landing', 0);
+    else history.back();
   }
 
   return (
