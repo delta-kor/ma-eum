@@ -1,6 +1,5 @@
 import Auth from '@/utils/auth.util';
 import Limiter from '@/utils/limiter.util';
-import Secure from '@/utils/secure.util';
 import { TalkUser } from '@prisma/client';
 import { TRPCError, initTRPC } from '@trpc/server';
 import 'server-only';
@@ -68,11 +67,6 @@ export const publicProcedure = t.procedure.use<TRPCContext>(async opts => {
   if (opts.type === 'query') await Limiter.checkQueryLimit(identifier);
   if (opts.type === 'mutation') await Limiter.checkMutationLimit(identifier);
 
-  return opts.next();
-});
-
-export const cmsProcedure = t.procedure.use(opts => {
-  if (!Secure.isAuthorized()) throw new TRPCError({ code: 'FORBIDDEN' });
   return opts.next();
 });
 

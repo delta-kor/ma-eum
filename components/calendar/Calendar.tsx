@@ -1,4 +1,3 @@
-import { setSecureKey } from '@/actions/secure.action';
 import ScheduleTypeChip from '@/components/calendar/ScheduleTypeChip';
 import Icon from '@/components/core/Icon';
 import type { CalendarDateInfo } from '@/services/schedule.service';
@@ -39,25 +38,6 @@ export default function Calendar({ dateInfo, hydrated, selectedDate, onDateSelec
   }, [startDate, endDate]);
 
   const handleDateSelect = (date: DateTime) => {
-    if (date.toFormat('yyyy-MM-dd') === '2024-01-01') {
-      const key = prompt('Enter the key');
-      if (!key) return false;
-
-      try {
-        setSecureKey(key).then(result => alert(result ? 'Success' : 'Failed'));
-      } catch (e) {
-        console.error(e);
-        alert(e);
-      }
-
-      return true;
-    }
-
-    if (date.toFormat('yyyy-MM-dd') === '2024-01-02') {
-      router.push('/cms');
-      return true;
-    }
-
     if (dateInfo[date.toFormat('yyyy-MM-dd')] === undefined) return false;
 
     setYear(date.year);

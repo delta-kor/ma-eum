@@ -1,8 +1,7 @@
 import prisma from '@/prisma/prisma';
-import { cmsProcedure, publicProcedure, router } from '@/trpc/router';
+import { publicProcedure, router } from '@/trpc/router';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import type { FeedFilter } from '@/utils/feed.util';
-import createId from '@/utils/id.util';
 import type { PaginationOptions, PaginationResult } from '@/utils/pagination.util';
 import { PrismaUtil } from '@/utils/prisma.util';
 import { Feed, FeedType } from '@prisma/client';
@@ -10,25 +9,6 @@ import 'server-only';
 import { z } from 'zod';
 
 const FeedRouter = router({
-  create: cmsProcedure.input(z.object({}).passthrough()).mutation(async opts => {
-    const id = createId(6);
-    await prisma.feed.create({
-      data: {
-        ...(opts.input as any),
-        id,
-      },
-    });
-  }),
-
-  delete: cmsProcedure.input(z.object({ id: z.string() })).mutation(async opts => {
-    const id = opts.input.id;
-    await prisma.feed.delete({
-      where: {
-        id,
-      },
-    });
-  }),
-
   getFeeds: publicProcedure
     .input(
       z.object({
@@ -49,18 +29,6 @@ const FeedRouter = router({
         opts.input.filter
       );
     }),
-
-  update: cmsProcedure.input(z.object({ id: z.string() }).passthrough()).mutation(async opts => {
-    const { id } = opts.input;
-    await prisma.feed.update({
-      data: {
-        ...opts.input,
-      },
-      where: {
-        id,
-      },
-    });
-  }),
 });
 
 export class FeedService {
