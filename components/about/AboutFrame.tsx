@@ -7,7 +7,6 @@ const LazyAboutContent = dynamic(() => import('@/components/about/AboutContent')
 
 export default function AboutFrame() {
   useEffect(() => {
-    // change background color
     document.body.style.backgroundColor = 'black';
 
     return () => {
