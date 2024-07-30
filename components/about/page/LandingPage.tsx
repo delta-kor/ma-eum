@@ -30,9 +30,9 @@ export default function AboutLandingPage() {
       </div>
       {isActive && (
         <motion.div
-          animate={{ opacity: 1, scale: 1 }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          transition={{ bounce: 0.4, duration: 0.8, type: 'spring' }}
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: 1, type: 'spring' }}
           className="absolute inset-x-24 bottom-24 flex flex-col gap-12"
         >
           <div
