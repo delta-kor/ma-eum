@@ -120,6 +120,11 @@ export const Pages: PageInfo[] = [
     back: '/settings',
     path: '/settings/info',
   },
+
+  {
+    back: '/',
+    path: '/about',
+  },
 ];
 
 export function getMatchingPage(path: string): PageInfo {
