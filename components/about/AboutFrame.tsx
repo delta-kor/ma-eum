@@ -1,7 +1,9 @@
 'use client';
 
-import AboutContent from '@/components/about/AboutContent';
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
+
+const LazyAboutContent = dynamic(() => import('@/components/about/AboutContent'), { ssr: false });
 
 export default function AboutFrame() {
   useEffect(() => {
@@ -14,9 +16,9 @@ export default function AboutFrame() {
   }, []);
 
   return (
-    <div className="fixed left-0 top-0 h-dvh w-dvw overflow-hidden md:p-48 lg:bg-black/15">
+    <div className="fixed left-0 top-0 h-dvh w-dvw overflow-hidden md:bg-black/15 md:p-48">
       <div className="relative mx-auto h-full overflow-hidden bg-black-real text-white md:aspect-shorts-full md:rounded-16">
-        <AboutContent />
+        <LazyAboutContent />
       </div>
     </div>
   );

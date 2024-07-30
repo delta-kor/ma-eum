@@ -21,6 +21,7 @@
     "@upstash/redis": "^1.33.0",
     "framer-motion": "11.0.10",
     "jsonwebtoken": "^9.0.2",
+    "lottie-react": "^2.4.0",
     "luxon": "^3.4.4",
     "next": "14.2.3",
     "next-pwa": "^5.6.0",
