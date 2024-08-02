@@ -2,7 +2,7 @@
 
 import { ReactNode, createContext, useState } from 'react';
 
-export type AboutPage = 'introduction' | 'landing';
+export type AboutPage = 'discography' | 'introduction' | 'landing' | 'profile';
 
 interface Context {
   index: number;

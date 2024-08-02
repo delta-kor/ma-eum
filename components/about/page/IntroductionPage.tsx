@@ -1,21 +1,28 @@
+import Icon from '@/components/core/Icon';
 import useAbout from '@/hooks/about';
+import { AboutPage } from '@/providers/AboutProvider';
 import AboutUtil from '@/utils/about.util';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
 
 export default function AboutIntroductionPage() {
   const { index, page, setPage } = useAbout();
-  const [isEnded, setIsEnded] = useState(false);
+  const isEnded = index === AboutUtil.getIntroductionLength();
 
   function handleNext() {
     const length = AboutUtil.getIntroductionLength();
-    if (index + 1 < length) setPage('introduction', index + 1);
-    if (index + 1 === length) setIsEnded(true);
+    if (index + 1 <= length) setPage('introduction', index + 1);
   }
 
   function handleHandleClick(index: number) {
     setPage('introduction', index);
-    setIsEnded(false);
+  }
+
+  function handleReplay() {
+    setPage('introduction', 0);
+  }
+
+  function handleActionClick(page: AboutPage) {
+    setPage(page, 0);
   }
 
   const indexLength = AboutUtil.getIntroductionLength();
@@ -24,14 +31,19 @@ export default function AboutIntroductionPage() {
   return (
     <motion.div
       animate={{ opacity: 1 }}
+      data-ended={isEnded}
       exit={{ opacity: 0 }}
       initial={{ opacity: 0 }}
       onClick={handleNext}
-      className="relative flex size-full cursor-pointer flex-col justify-end gap-16 p-24"
+      className="relative flex size-full flex-col justify-end gap-16 p-24 data-[ended=false]:cursor-pointer"
     >
       <AnimatePresence mode="wait">
         {!isEnded && (
-          <motion.div exit={{ opacity: 0 }} className="flex flex-col justify-end gap-16">
+          <motion.div
+            key="contents"
+            exit={{ opacity: 0 }}
+            className="flex flex-col justify-end gap-16"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}
@@ -68,6 +80,43 @@ export default function AboutIntroductionPage() {
                   <div className="h-4 w-full rounded-full bg-white" />
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+        )}
+
+        {isEnded && (
+          <motion.div
+            key="restart"
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            onClick={handleReplay}
+            className="jelly absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center gap-8 rounded-8 bg-black-real/50 p-32 hover:scale-105"
+          >
+            <Icon type="replay" className="w-32 text-white" />
+            <div className="text-20 font-500 text-white">Restart</div>
+          </motion.div>
+        )}
+
+        {isEnded && (
+          <motion.div
+            key="menu"
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }}
+            className="flex items-center gap-12"
+          >
+            <div
+              onClick={() => handleActionClick('profile')}
+              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white px-12 py-16 text-center text-20 font-600 text-black hover:scale-[1.02]"
+            >
+              Profile
+            </div>
+            <div
+              onClick={() => handleActionClick('discography')}
+              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
+            >
+              Discography
             </div>
           </motion.div>
         )}

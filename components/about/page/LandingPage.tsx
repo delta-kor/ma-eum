@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function AboutLandingPage({ initial }: Props) {
-  const about = useAbout();
+  const { setPage } = useAbout();
   const [isActive, setIsActive] = useState(false);
   const [isInitial] = useState(initial);
 
@@ -18,7 +18,7 @@ export default function AboutLandingPage({ initial }: Props) {
   }
 
   function handleActionClick(page: AboutPage) {
-    about.setPage(page, 0);
+    setPage(page, 0);
   }
 
   return (
@@ -47,10 +47,16 @@ export default function AboutLandingPage({ initial }: Props) {
             Introduction
           </div>
           <div className="flex items-center gap-12">
-            <div className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]">
+            <div
+              onClick={() => handleActionClick('discography')}
+              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
+            >
               Profile
             </div>
-            <div className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]">
+            <div
+              onClick={() => handleActionClick('discography')}
+              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
+            >
               Discography
             </div>
           </div>
