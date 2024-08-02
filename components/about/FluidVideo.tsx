@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface Props {
-  src: string;
+  src: null | string;
 }
 
 export default function FluidVideo({ src }: Props) {
@@ -17,8 +17,8 @@ export default function FluidVideo({ src }: Props) {
 
   return (
     <video
-      data-active={isActive}
-      src={src}
+      data-active={src !== null && isActive}
+      src={src || undefined}
       onCanPlayThrough={handleLoadComplete}
       onLoadStart={handleLoadStart}
       autoPlay

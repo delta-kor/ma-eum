@@ -48,7 +48,7 @@ export default function AboutLandingPage({ initial }: Props) {
           </div>
           <div className="flex items-center gap-12">
             <div
-              onClick={() => handleActionClick('discography')}
+              onClick={() => handleActionClick('profile')}
               className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
             >
               Profile
