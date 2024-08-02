@@ -4,9 +4,14 @@ import { motion } from 'framer-motion';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
 
-export default function AboutLandingPage() {
+interface Props {
+  initial: boolean;
+}
+
+export default function AboutLandingPage({ initial }: Props) {
   const about = useAbout();
   const [isActive, setIsActive] = useState(false);
+  const [isInitial] = useState(initial);
 
   function handleComplete() {
     setIsActive(true);
@@ -28,7 +33,7 @@ export default function AboutLandingPage() {
           onComplete={handleComplete}
         />
       </div>
-      {isActive && (
+      {(isActive || !isInitial) && (
         <motion.div
           animate={{ opacity: 1 }}
           initial={{ opacity: 0 }}
