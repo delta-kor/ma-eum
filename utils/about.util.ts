@@ -14,13 +14,24 @@ const AboutData = {
     ],
   },
   Profile: {
-    ImageBoxes: [[]],
+    ImageBoxes: [
+      [0, 759, 876, 224, 83],
+      [0, 817, 959, 166, 317],
+      [1, 558, 959, 259, 269],
+      [1, 593, 1228, 224, 111],
+      [2, 41, 925, 175, 295],
+      [3, 399, 929, 159, 373],
+      [3, 558, 929, 43, 30],
+      [4, 270, 659, 203, 254],
+      [5, 484, 654, 231, 271],
+      [6, 216, 959, 183, 392],
+      [6, 77, 1220, 139, 167],
+    ],
     ImageFaces: [
       [759, 689, 155, 187],
       [601, 769, 149, 190],
       [89, 758, 127, 167],
       [399, 745, 159, 184],
-      [315, 479, 158, 180],
       [315, 479, 158, 180],
       [508, 474, 156, 180],
       [216, 758, 173, 201],
@@ -50,6 +61,10 @@ export default class AboutUtil {
 
   public static getProfileImage(): StaticImageData {
     return AboutData.Profile.ImageUrl;
+  }
+
+  public static getProfileImageBoxes(): [number, number, number, number, number][] {
+    return AboutData.Profile.ImageBoxes as [number, number, number, number, number][];
   }
 
   public static getProfileImageFaces(): [number, number, number, number][] {
