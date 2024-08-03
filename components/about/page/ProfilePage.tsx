@@ -56,7 +56,7 @@ export default function AboutProfilePage() {
               <Translate>{getMemberName(Members[active])}</Translate>
             </motion.div>
             <div className="truncate text-16 font-400 text-white/70">
-              Tap on the box for more info
+              Tap on the box for details
             </div>
           </motion.div>
         )}

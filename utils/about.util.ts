@@ -38,6 +38,7 @@ const AboutData = {
     ],
     ImageSize: [1000, 1499],
     ImageUrl: ProfileImage,
+    MembersVideo: ['https://vx2.api.izflix.net/deliver/994145002?q=1440'],
   },
 };
 
@@ -48,6 +49,7 @@ export default class AboutUtil {
 
   public static getBackgroundVideo(page: AboutPage, index: number): null | string {
     if (AboutUtil.needAboutVideo(page)) return AboutUtil.getAboutVideo();
+    if (page === 'member') return AboutUtil.getMemberVideo(index);
     return null;
   }
 
@@ -57,6 +59,10 @@ export default class AboutUtil {
 
   public static getIntroductionText(index: number): null | string {
     return AboutData.Introduction.Text[index] || null;
+  }
+
+  public static getMemberVideo(index: number): null | string {
+    return AboutData.Profile.MembersVideo[index] || null;
   }
 
   public static getProfileImage(): StaticImageData {
