@@ -2,6 +2,15 @@ import { AboutPage } from '@/providers/AboutProvider';
 import ProfileImage from '@/public/about/profile.webp';
 import { StaticImageData } from 'next/image';
 
+export interface MemberInfo {
+  birth: string;
+  firstName: string;
+  koreanName: string;
+  lastName: string;
+  position: string;
+  sign: any;
+}
+
 const AboutData = {
   AboutVideoUrl: 'https://vx2.api.izflix.net/deliver/992044763?q=1440',
   Introduction: {
@@ -38,6 +47,64 @@ const AboutData = {
     ],
     ImageSize: [1000, 1499],
     ImageUrl: ProfileImage,
+    MembersInfo: [
+      {
+        birth: '2005. 03. 04.',
+        firstName: 'Geumhee',
+        koreanName: '한금희',
+        lastName: 'Han',
+        position: 'Dancer, Rapper',
+        sign: require('@/public/lottie/sign-geumhee.json'),
+      },
+      {
+        birth: '2005. 03. 12.',
+        firstName: 'Sihyeon',
+        koreanName: '황시현',
+        lastName: 'Hwang',
+        position: 'Dancer, Rapper',
+        sign: require('@/public/lottie/sign-sihyeon.json'),
+      },
+      {
+        birth: '2005. 03. 26.',
+        firstName: 'Seoyeon',
+        koreanName: '안서연',
+        lastName: 'Ahn',
+        position: 'Vocalist, Dancer',
+        sign: require('@/public/lottie/sign-seoyeon.json'),
+      },
+      {
+        birth: '2005. 04. 23.',
+        firstName: 'Yuna',
+        koreanName: '이이무라 유나',
+        lastName: 'Iimura',
+        position: 'Vocalist, Dancer',
+        sign: require('@/public/lottie/sign-yuna.json'),
+      },
+      {
+        birth: '2005. 04. 28.',
+        firstName: 'Duna',
+        koreanName: '강두나',
+        lastName: 'Kang',
+        position: 'Center, Vocalist',
+        sign: require('@/public/lottie/sign-duna.json'),
+      },
+      {
+        birth: '2005. 7. 23.',
+        firstName: 'Sua',
+        koreanName: '유수아',
+        lastName: 'Yoo',
+        position: 'Former Leader, Vocalist',
+        sign: require('@/public/lottie/sign-sua.json'),
+      },
+      {
+        birth: '2005. 10. 07.',
+        firstName: 'Yeham',
+        koreanName: '구예함',
+        lastName: 'Koo',
+        position: 'Main Vocalist',
+        sign: require('@/public/lottie/sign-yeham.json'),
+      },
+    ],
     MembersVideo: ['https://vx2.api.izflix.net/deliver/994145002?q=1440'],
   },
 };
@@ -59,6 +126,10 @@ export default class AboutUtil {
 
   public static getIntroductionText(index: number): null | string {
     return AboutData.Introduction.Text[index] || null;
+  }
+
+  public static getMemberInfo(index: number): MemberInfo | null {
+    return AboutData.Profile.MembersInfo[index] || null;
   }
 
   public static getMemberVideo(index: number): null | string {

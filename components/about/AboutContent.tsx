@@ -1,6 +1,7 @@
 import FluidVideo from '@/components/about/FluidVideo';
 import AboutIntroductionPage from '@/components/about/page/IntroductionPage';
 import AboutLandingPage from '@/components/about/page/LandingPage';
+import AboutMemberPage from '@/components/about/page/MemberPage';
 import AboutProfilePage from '@/components/about/page/ProfilePage';
 import CloseButton from '@/components/about/ui/CloseButton';
 import useAbout from '@/hooks/about';
@@ -24,6 +25,7 @@ export default function AboutContent() {
         {page === 'landing' && <AboutLandingPage key="landing" initial={isInitial} />}
         {page === 'introduction' && <AboutIntroductionPage key="introduction" />}
         {page === 'profile' && <AboutProfilePage key="profile" />}
+        {page === 'member' && <AboutMemberPage key="member" />}
       </AnimatePresence>
     </div>
   );
