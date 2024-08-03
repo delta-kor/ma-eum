@@ -105,7 +105,15 @@ const AboutData = {
         sign: require('@/public/lottie/sign-yeham.json'),
       },
     ],
-    MembersVideo: ['https://vx2.api.izflix.net/deliver/994145002?q=1440'],
+    MembersVideo: [
+      'https://vx2.api.izflix.net/deliver/994145002?q=1440',
+      'https://vx2.api.izflix.net/deliver/994388899?q=1440',
+      'https://vx2.api.izflix.net/deliver/994417254?q=1440',
+      'https://vx2.api.izflix.net/deliver/994417798?q=1440',
+      'https://vx2.api.izflix.net/deliver/994419393?q=1440',
+      'https://vx2.api.izflix.net/deliver/994421762?q=1440',
+      'https://vx2.api.izflix.net/deliver/994423976?q=1440',
+    ],
   },
 };
 
