@@ -86,37 +86,32 @@ export default function AboutIntroductionPage() {
 
         {isEnded && (
           <motion.div
-            key="restart"
+            key="end"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-            onClick={handleReplay}
-            className="jelly absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center gap-8 rounded-8 bg-black-real/50 p-32 hover:scale-105"
           >
-            <Icon type="replay" className="w-32 text-white" />
-            <div className="text-20 font-500 text-white">Restart</div>
-          </motion.div>
-        )}
-
-        {isEnded && (
-          <motion.div
-            key="menu"
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            className="flex items-center gap-12"
-          >
-            <div
-              onClick={() => handleActionClick('profile')}
-              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white px-12 py-16 text-center text-20 font-600 text-black hover:scale-[1.02]"
-            >
-              Profile
+            <div className="flex items-center gap-12">
+              <div
+                onClick={() => handleActionClick('profile')}
+                className="jelly grow basis-0 cursor-pointer rounded-16 bg-white px-12 py-16 text-center text-20 font-600 text-black hover:scale-[1.02]"
+              >
+                Profile
+              </div>
+              <div
+                onClick={() => handleActionClick('discography')}
+                className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
+              >
+                Discography
+              </div>
             </div>
+
             <div
-              onClick={() => handleActionClick('discography')}
-              className="jelly grow basis-0 cursor-pointer rounded-16 bg-white/20 px-12 py-16 text-center text-20 font-400 text-white hover:scale-[1.02]"
+              onClick={handleReplay}
+              className="jelly absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-col items-center gap-8 rounded-8 bg-black-real/50 p-32 hover:scale-105"
             >
-              Discography
+              <Icon type="replay" className="w-32 text-white" />
+              <div className="text-20 font-500 text-white">Restart</div>
             </div>
           </motion.div>
         )}
