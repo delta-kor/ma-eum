@@ -44,6 +44,21 @@ export default function AboutIntroductionPage() {
             exit={{ opacity: 0 }}
             className="flex flex-col justify-end gap-16"
           >
+            <AnimatePresence>
+              {index === 0 && (
+                <motion.div
+                  animate={{ opacity: 0.3, transition: { delay: 1, duration: 0.5 } }}
+                  exit={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: 'easeInOut' }}
+                  className="-mb-4 flex items-center gap-6"
+                >
+                  <span className="text-16 font-400 text-white">Tap anywhere to continue</span>
+                  <Icon type="right" className="w-10 text-white" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={index}

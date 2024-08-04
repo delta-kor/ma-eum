@@ -160,6 +160,10 @@ export default class AboutUtil {
     return AboutData.Profile.ImageSize as [number, number];
   }
 
+  public static isMemberLeader(index: number): boolean {
+    return index === 4;
+  }
+
   public static needAboutVideo(page: AboutPage): boolean {
     return ['introduction', 'landing'].includes(page);
   }
