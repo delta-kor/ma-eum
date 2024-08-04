@@ -67,6 +67,17 @@ const AboutData = {
         title: "L'heure Bleue : Prologue",
         tracks: [{ title: '열아홉 (Hello)' }, { isTitle: true, title: 'Pretty Mob' }],
       },
+      {
+        cover: require('@/public/about/album/l_heure_bleue.jpg'),
+        date: '2024. 07. 03.',
+        title: "L'heure Bleue",
+        tracks: [
+          { title: 'Hello (Japanese Ver.)' },
+          { title: 'Pretty Mob (Japanese Ver.)' },
+          { isTitle: true, title: 'Higher' },
+          { title: 'Blueway' },
+        ],
+      },
     ],
   },
   Introduction: {

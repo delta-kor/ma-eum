@@ -46,7 +46,7 @@ export default function AboutMemberPage() {
   if (!memberInfo) return null;
 
   return (
-    <motion.div exit={{ opacity: 0 }} className="relative size-full">
+    <motion.div exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="relative size-full">
       <motion.div
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}

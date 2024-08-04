@@ -3,7 +3,7 @@ import useAbout from '@/hooks/about';
 import AboutUtil from '@/utils/about.util';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const MotionImage = motion(Image);
 
@@ -24,7 +24,7 @@ export default function AboutDiscographyPage() {
     }
   }, [index]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsActive(false);
     setIsInitial(false);
     clearTimeout(timeoutRef.current);
@@ -52,7 +52,7 @@ export default function AboutDiscographyPage() {
   if (!albumInfo) return null;
 
   return (
-    <motion.div exit={{ opacity: 0 }} className="relative size-full">
+    <motion.div exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="relative size-full">
       <motion.div
         animate={{ opacity: 1 }}
         initial={{ opacity: 0 }}
@@ -88,7 +88,7 @@ export default function AboutDiscographyPage() {
             src={albumInfo.cover}
             variants={{
               active: { height: 60, opacity: 1, scale: 1, width: 60 },
-              initial: { height: 90, opacity: 0, scale: 0, width: 90 },
+              initial: { height: 120, opacity: 0, scale: 0, width: 120 },
               loaded: { opacity: 1, scale: 1 },
             }}
             className="size-[90px] select-none rounded-8"
@@ -135,7 +135,7 @@ export default function AboutDiscographyPage() {
               className="h-1 self-stretch bg-white/30"
             />
             <div className="flex flex-col gap-24">
-              {albumInfo.tracks.map((track, index) => (
+              {albumInfo.tracks.map((track, index, array) => (
                 <motion.div
                   key={index}
                   animate={{
@@ -147,7 +147,24 @@ export default function AboutDiscographyPage() {
                   className="flex items-center gap-16"
                 >
                   <div className="min-w-12 text-18 font-400 text-white/30">{index + 1}</div>
-                  <div className="grow text-18 font-500 text-white">{track.title}</div>
+                  <div className="grow truncate text-18 font-500 text-white">{track.title}</div>
+                  {track.isTitle && (
+                    <motion.div
+                      animate={{
+                        scale: 1,
+                        transition: {
+                          bounce: 0.5,
+                          delay: 0.1 * array.length + 0.4,
+                          duration: 0.5,
+                          type: 'spring',
+                        },
+                      }}
+                      initial={{ scale: 0 }}
+                      className="w-14 shrink-0"
+                    >
+                      <Icon type="star" className="w-14 text-white/30" />
+                    </motion.div>
+                  )}
                 </motion.div>
               ))}
             </div>
