@@ -3,14 +3,17 @@ import useAbout from '@/hooks/about';
 import AboutUtil from '@/utils/about.util';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const MotionImage = motion(Image);
 
 export default function AboutDiscographyPage() {
   const { index, page, setPage } = useAbout();
   const [albumIndex, setAlbumIndex] = useState(index);
-  const [pageState, setPageState] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [isInitial, setIsInitial] = useState(true);
+
+  const timeoutRef = useRef<any>(null);
 
   const albumsCount = AboutUtil.getAlbumsCount();
   const albumInfo = AboutUtil.getAlbumInfo(albumIndex);
@@ -22,10 +25,16 @@ export default function AboutDiscographyPage() {
   }, [index]);
 
   useEffect(() => {
-    setPageState(0);
-    setTimeout(() => {
-      setPageState(1);
-    }, 800);
+    setIsActive(false);
+    setIsInitial(false);
+    clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(
+      () => {
+        setIsActive(true);
+      },
+      isInitial ? 800 : 1500
+    );
   }, [albumIndex]);
 
   function handleLeft() {
@@ -61,18 +70,18 @@ export default function AboutDiscographyPage() {
         <Icon type="right" className="w-16 text-white" />
       </motion.div>
       <div
-        data-active={pageState !== 0}
+        data-active={isActive}
         className="absolute inset-x-24 flex flex-col gap-20 data-[active=false]:top-1/2 data-[active=true]:bottom-24 data-[active=false]:-translate-y-1/2"
       >
         <motion.div
-          data-active={pageState !== 0}
+          data-active={isActive}
           layoutId="discography-album"
           layout
           className="flex items-center gap-16 data-[active=false]:flex-col"
         >
           <MotionImage
             alt={albumInfo.title}
-            animate={pageState !== 0 ? 'active' : 'loaded'}
+            animate={isActive ? 'active' : 'loaded'}
             initial="initial"
             layout="position"
             layoutId="discography-cover"
@@ -82,14 +91,14 @@ export default function AboutDiscographyPage() {
               initial: { height: 90, opacity: 0, scale: 0, width: 90 },
               loaded: { opacity: 1, scale: 1 },
             }}
-            className="size-[90px] rounded-8"
+            className="size-[90px] select-none rounded-8"
           />
           <div
-            data-active={pageState !== 0}
+            data-active={isActive}
             className="flex flex-col gap-4 data-[active=false]:items-center"
           >
             <motion.div
-              animate={pageState !== 0 ? 'active' : 'loaded'}
+              animate={isActive ? 'active' : 'loaded'}
               initial="initial"
               layout="position"
               layoutId="discography-title"
@@ -103,7 +112,7 @@ export default function AboutDiscographyPage() {
               {albumInfo.title}
             </motion.div>
             <motion.div
-              animate={pageState !== 0 ? 'active' : 'loaded'}
+              animate={isActive ? 'active' : 'loaded'}
               initial="initial"
               layout="position"
               layoutId="discography-date"
@@ -118,31 +127,31 @@ export default function AboutDiscographyPage() {
             </motion.div>
           </div>
         </motion.div>
-        <motion.div
-          animate={{ opacity: 1, transition: { delay: 0.8 } }}
-          initial={{ opacity: 0 }}
-          layoutId="discography-line"
-          layout
-          className="h-1 self-stretch bg-white/30"
-        />
-        {pageState === 1 && (
-          <div className="flex flex-col gap-24">
-            {albumInfo.tracks.map((track, index) => (
-              <motion.div
-                key={index}
-                animate={{
-                  opacity: 1,
-                  transition: { delay: 0.1 * index + 0.2 },
-                  y: 0,
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                className="flex items-center gap-16"
-              >
-                <div className="min-w-12 text-18 font-400 text-white/30">{index + 1}</div>
-                <div className="grow text-18 font-500 text-white">{track.title}</div>
-              </motion.div>
-            ))}
-          </div>
+        {isActive && (
+          <>
+            <motion.div
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              className="h-1 self-stretch bg-white/30"
+            />
+            <div className="flex flex-col gap-24">
+              {albumInfo.tracks.map((track, index) => (
+                <motion.div
+                  key={index}
+                  animate={{
+                    opacity: 1,
+                    transition: { delay: 0.1 * index + 0.2 },
+                    y: 0,
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  className="flex items-center gap-16"
+                >
+                  <div className="min-w-12 text-18 font-400 text-white/30">{index + 1}</div>
+                  <div className="grow text-18 font-500 text-white">{track.title}</div>
+                </motion.div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </motion.div>

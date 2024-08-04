@@ -34,6 +34,39 @@ const AboutData = {
           { title: '으랏차 (Euratcha!)' },
         ],
       },
+      {
+        cover: require('@/public/about/album/sequence_17&.jpg'),
+        date: '2022. 11. 17.',
+        title: 'Sequence : 17&',
+        tracks: [{ title: 'Anding (&)' }, { isTitle: true, title: '러브티콘 (♡TiCON)' }],
+      },
+      {
+        cover: require('@/public/about/album/delight.jpg'),
+        date: '2023. 03. 29.',
+        title: 'DELIGHT',
+        tracks: [
+          { title: '열여덟 (Signal)' },
+          { isTitle: true, title: '빛을 따라서 (Shining Bright)' },
+          { title: '소풍 (Picnic)' },
+          { title: '마음이 피어요 (Dandelion)' },
+        ],
+      },
+      {
+        cover: require('@/public/about/album/hbd_to_you.jpg'),
+        date: '2023. 12. 17.',
+        title: 'HBD To You',
+        tracks: [
+          { isTitle: true, title: 'HBD To You' },
+          { isTitle: true, title: 'HBD To You (Midnight ver.)' },
+          { title: 'HBD To You (Inst.)' },
+        ],
+      },
+      {
+        cover: require('@/public/about/album/l_heure_bleue_prologue.jpg'),
+        date: '2024. 06. 11.',
+        title: "L'heure Bleue : Prologue",
+        tracks: [{ title: '열아홉 (Hello)' }, { isTitle: true, title: 'Pretty Mob' }],
+      },
     ],
   },
   Introduction: {
