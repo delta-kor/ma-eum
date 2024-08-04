@@ -47,18 +47,22 @@ export default function AboutMemberPage() {
 
   return (
     <motion.div exit={{ opacity: 0 }} className="relative size-full">
-      <div
+      <motion.div
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
         onClick={handleLeft}
         className="jelly jelly-increased absolute left-32 top-1/2 z-10 -m-16 -translate-y-1/2 cursor-pointer rounded-8 p-16 hover:bg-white/10 selected:bg-white/10"
       >
         <Icon type="left" className="w-16 text-white" />
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }}
         onClick={handleRight}
         className="jelly jelly-increased absolute right-32 top-1/2 z-10 -m-16 -translate-y-1/2 cursor-pointer rounded-8 p-16 hover:bg-white/10 selected:bg-white/10"
       >
         <Icon type="right" className="w-16 text-white" />
-      </div>
+      </motion.div>
       <div className="absolute inset-x-24 bottom-24 flex flex-col gap-24">
         <AnimatePresence>
           {AboutUtil.isMemberLeader(index) && (

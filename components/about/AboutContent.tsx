@@ -1,4 +1,5 @@
 import FluidVideo from '@/components/about/FluidVideo';
+import AboutDiscographyPage from '@/components/about/page/DiscographyPage';
 import AboutIntroductionPage from '@/components/about/page/IntroductionPage';
 import AboutLandingPage from '@/components/about/page/LandingPage';
 import AboutMemberPage from '@/components/about/page/MemberPage';
@@ -26,6 +27,7 @@ export default function AboutContent() {
         {page === 'introduction' && <AboutIntroductionPage key="introduction" />}
         {page === 'profile' && <AboutProfilePage key="profile" />}
         {page === 'member' && <AboutMemberPage key="member" />}
+        {page === 'discography' && <AboutDiscographyPage key="discography" />}
       </AnimatePresence>
     </div>
   );

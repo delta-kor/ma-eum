@@ -11,8 +11,31 @@ export interface MemberInfo {
   sign: any;
 }
 
+export interface AlbumInfo {
+  cover: StaticImageData;
+  date: string;
+  title: string;
+  tracks: { isTitle?: boolean; title: string }[];
+}
+
 const AboutData = {
   AboutVideoUrl: 'https://vx2.api.izflix.net/deliver/992044763?q=1440',
+  Discography: {
+    AlbumsInfo: [
+      {
+        cover: require('@/public/about/album/sequence_7272.jpg'),
+        date: '2022. 07. 27.',
+        title: 'Sequence : 7272',
+        tracks: [
+          { title: '열일곱 (72.72Hz)' },
+          { isTitle: true, title: '첫사랑 (Pop? Pop!)' },
+          { title: '비밀이야 (Manito)' },
+          { title: '지금 너에게 보내 (Toi Et Moi)' },
+          { title: '으랏차 (Euratcha!)' },
+        ],
+      },
+    ],
+  },
   Introduction: {
     Text: [
       'CSR(첫사랑) is a 7 member girlgroup under Pop Music Ent.\n\nPredebut, they were known as ‘05class’, referencing to all the members being born in 2005.',
@@ -122,6 +145,14 @@ export default class AboutUtil {
     return AboutData.AboutVideoUrl;
   }
 
+  public static getAlbumInfo(index: number): AlbumInfo | null {
+    return AboutData.Discography.AlbumsInfo[index] || null;
+  }
+
+  public static getAlbumsCount(): number {
+    return AboutData.Discography.AlbumsInfo.length;
+  }
+
   public static getBackgroundVideo(page: AboutPage, index: number): null | string {
     if (AboutUtil.needAboutVideo(page)) return AboutUtil.getAboutVideo();
     if (page === 'member') return AboutUtil.getMemberVideo(index);
@@ -165,6 +196,6 @@ export default class AboutUtil {
   }
 
   public static needAboutVideo(page: AboutPage): boolean {
-    return ['introduction', 'landing'].includes(page);
+    return ['discography', 'introduction', 'landing'].includes(page);
   }
 }
