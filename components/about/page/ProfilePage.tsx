@@ -62,12 +62,15 @@ export default function AboutProfilePage() {
         )}
       </AnimatePresence>
       <div className="relative aspect-[1000/1499] max-h-full w-full overflow-hidden rounded-16">
-        <div className="absolute top-1/2 -translate-y-1/2">
-          <Image
-            alt="CSR"
-            src={AboutUtil.getProfileImage()}
-            className="h-full object-cover opacity-60"
-          />
+        <div className="absolute top-1/2 w-full -translate-y-1/2">
+          <div className="size-full bg-white/10">
+            <Image
+              alt="CSR"
+              placeholder="blur"
+              src={AboutUtil.getProfileImage()}
+              className="size-full object-cover opacity-60"
+            />
+          </div>
           {mergedBoxes.map(([id, x, y, width, height], index) => (
             <motion.div
               key={index}
