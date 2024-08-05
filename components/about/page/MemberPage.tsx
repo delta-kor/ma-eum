@@ -118,13 +118,20 @@ export default function AboutMemberPage() {
               {memberInfo.position}
             </motion.div>
           </div>
-          <Lottie
-            animationData={memberInfo.sign}
-            autoplay={false}
-            loop={false}
-            lottieRef={lottieRef}
-            className="absolute -right-20 top-1/2 w-[156px] -translate-y-1/2 opacity-30"
-          />
+          <motion.div
+            key={memberIndex}
+            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ delay: 0.4, duration: 0.2 }}
+          >
+            <Lottie
+              animationData={memberInfo.sign}
+              autoplay={false}
+              loop={false}
+              lottieRef={lottieRef}
+              className="absolute -right-20 top-1/2 w-[156px] -translate-y-1/2 opacity-30"
+            />
+          </motion.div>
         </div>
         <div className="flex w-full items-center gap-4">
           {Array.from({ length: membersLength }).map((_, i) => (
