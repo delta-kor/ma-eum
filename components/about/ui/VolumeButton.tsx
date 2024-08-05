@@ -32,10 +32,10 @@ export default function VolumeButton({ muted, setMuted }: Props) {
           <AnimatePresence>
             {muted && (
               <motion.div
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                initial={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 0 }}
+                initial={{ opacity: 0, y: 5 }}
+                transition={{ duration: 0.2, ease: 'easeInOut' }}
                 className="h-16 select-none text-16 font-500 text-white"
               >
                 Unmute
