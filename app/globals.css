@@ -63,7 +63,20 @@ body {
   font-family: monospace;
 }
 
+@keyframes glow {
+  from {
+    box-shadow: 0 0 8px -4px rgba(70, 167, 235, 0.60);
+  }
+  to {
+    box-shadow: 0 0 8px 4px rgba(70, 167, 235, 0.60);
+  }
+}
+
 @layer components {
+  .glow-primary {
+    animation: glow 1s infinite alternate;
+  }
+
   .jelly {
     transition-duration: 0.2s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
