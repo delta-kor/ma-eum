@@ -5,6 +5,7 @@ import {
   revalidateTalkArticleWrite,
   revalidateTalkCommentCreate,
   revalidateTalkCommentDelete,
+  revalidateTalkPollUpdate,
   revalidateTalkUserNicknameUpdate,
 } from '@/actions/revalidate.action';
 import prisma from '@/prisma/prisma';
@@ -32,6 +33,7 @@ export interface TalkArticleMetadata {
   commentUsersId: string[];
   content: string;
   date: Date;
+  hasPoll: boolean;
   id: string;
   likedUsersId: string[];
   nickname: string;
@@ -92,6 +94,7 @@ const TalkRouter = router({
       const option = opts.input.option;
 
       await TalkService.addBallotToPoll(user, pollId, option);
+      await revalidateTalkPollUpdate();
     }),
 
   addCommentToArticle: talkProcedure
@@ -629,6 +632,7 @@ export class TalkService {
               id: true,
             },
           },
+          pollId: true,
           title: true,
           user: {
             select: {
@@ -648,6 +652,7 @@ export class TalkService {
       commentUsersId: article.comments.map(comment => comment.userId),
       content: TalkUtil.truncateContent(article.content),
       date: article.date,
+      hasPoll: !!article.pollId,
       id: article.id,
       likedUsersId: article.likedUsers.map(user => user.id),
       nickname: article.user.nickname,

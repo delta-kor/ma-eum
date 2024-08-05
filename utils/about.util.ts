@@ -19,7 +19,7 @@ export interface AlbumInfo {
 }
 
 const AboutData = {
-  AboutVideoUrl: '/api/video?id=992044763?q=1440',
+  AboutVideoUrl: '/api/video?id=992044763',
   Discography: {
     AlbumsInfo: [
       {

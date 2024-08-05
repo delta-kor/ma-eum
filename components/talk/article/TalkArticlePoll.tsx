@@ -80,7 +80,7 @@ export default function TalkArticlePoll({ login, pollId }: Props) {
         ))}
       </div>
       <div className="flex items-center gap-4 self-end">
-        {isLoading && <Icon type="spinner" className="w-14 animate-spin text-gray-500" />}
+        {isLoading && <Icon type="spinner" className="w-14 shrink-0 animate-spin text-gray-500" />}
         <div className="text-right text-14 font-600 text-gray-500">{data.participants} votes</div>
       </div>
     </div>

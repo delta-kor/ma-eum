@@ -58,3 +58,7 @@ export async function revalidateTalkUserNicknameUpdate(): Promise<void> {
   revalidateTag('talk.getTrendingArticlesMetadata');
   revalidateTag('talk.getUser');
 }
+
+export async function revalidateTalkPollUpdate(): Promise<void> {
+  revalidateTag('talk.getPollMetadata');
+}

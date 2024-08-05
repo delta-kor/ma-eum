@@ -18,7 +18,12 @@ export default function TalkArticleItem({ articleMetadata, today, userId }: Prop
       <div className="flex flex-col gap-4 lg:grow">
         <div className="truncate text-14 font-500 text-gray-500">{articleMetadata.nickname}</div>
         <div className="flex flex-col gap-4">
-          <div className="truncate text-20 font-700 text-black">{articleMetadata.title}</div>
+          <div className="flex items-center gap-4">
+            {articleMetadata.hasPoll && (
+              <Icon type="poll" className="w-16 shrink-0 text-primary-500" />
+            )}
+            <div className="truncate text-20 font-700 text-black">{articleMetadata.title}</div>
+          </div>
           <div className="line-clamp-2 whitespace-pre-line text-16 font-400 text-gray-500">
             {articleMetadata.content}
           </div>
