@@ -1,3 +1,4 @@
+import Adsense from '@/components/core/ad/Adsense';
 import UrlHighlighter from '@/components/talk/UrlHighlighter';
 import { ExtendedTalkArticle } from '@/services/talk.service';
 
@@ -11,6 +12,7 @@ export default function TalkArticleContent({ article }: Props) {
       <div className="whitespace-pre-line break-words text-16 font-400 leading-6 text-black">
         <UrlHighlighter>{article.content}</UrlHighlighter>
       </div>
+      <Adsense />
     </div>
   );
 }

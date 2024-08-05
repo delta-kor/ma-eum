@@ -5,7 +5,7 @@ export default function Adsense() {
       data-ad-format="auto"
       data-ad-slot="8382146491"
       data-full-width-responsive="true"
-      style={{ display: 'block' }}
+      style={{ display: 'block', overflow: 'hidden' }}
       className="adsbygoogle"
     />
   );

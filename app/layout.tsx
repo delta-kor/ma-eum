@@ -1,3 +1,4 @@
+import AdsenseLoader from '@/components/core/ad/AdsenseLoader';
 import TRPCProvider from '@/providers/TRPCProvider';
 import TranslateProvider from '@/providers/TranslateProvider';
 import MetaUtil from '@/utils/meta.util';
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Props) {
       </head>
       <body>
         {process.env.GTM_ID && <GoogleTagManager gtmId={process.env.GTM_ID} />}
+        {process.env.ENABLE_ADSENSE === '1' && <AdsenseLoader />}
         <TRPCProvider>
           <TranslateProvider>{children}</TranslateProvider>
         </TRPCProvider>
