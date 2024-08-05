@@ -36,6 +36,9 @@ export async function GET(req: NextRequest) {
       revalidatePath('/', 'page');
       revalidatePath('/schedules', 'page');
       break;
+    case 'deliver':
+      revalidateTag('deliver');
+      break;
     default:
       return Response.json({ message: 'Invalid type', ok: false }, { status: 400 });
   }
