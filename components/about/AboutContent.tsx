@@ -20,7 +20,10 @@ export default function AboutContent() {
 
   return (
     <div className="relative size-full">
-      <FluidVideo src={AboutUtil.getBackgroundVideo(page, index)} />
+      <FluidVideo
+        muted={AboutUtil.isMutedPage(page)}
+        src={AboutUtil.getBackgroundVideo(page, index)}
+      />
       <CloseButton />
       <AnimatePresence mode="wait">
         {page === 'landing' && <AboutLandingPage key="landing" initial={isInitial} />}

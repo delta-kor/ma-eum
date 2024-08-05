@@ -79,6 +79,7 @@ const AboutData = {
         ],
       },
     ],
+    AlbumsVideo: ['https://vx2.api.izflix.net/deliver/994795645?q=1440'],
   },
   Introduction: {
     Text: [
@@ -193,6 +194,10 @@ export default class AboutUtil {
     return AboutData.Discography.AlbumsInfo[index] || null;
   }
 
+  public static getAlbumVideo(index: number): null | string {
+    return AboutData.Discography.AlbumsVideo[index] || null;
+  }
+
   public static getAlbumsCount(): number {
     return AboutData.Discography.AlbumsInfo.length;
   }
@@ -200,6 +205,7 @@ export default class AboutUtil {
   public static getBackgroundVideo(page: AboutPage, index: number): null | string {
     if (AboutUtil.needAboutVideo(page)) return AboutUtil.getAboutVideo();
     if (page === 'member') return AboutUtil.getMemberVideo(index);
+    if (page === 'discography') return AboutUtil.getAlbumVideo(index);
     return null;
   }
 
@@ -239,7 +245,11 @@ export default class AboutUtil {
     return index === 4;
   }
 
+  public static isMutedPage(page: AboutPage): boolean {
+    return page !== 'discography';
+  }
+
   public static needAboutVideo(page: AboutPage): boolean {
-    return ['discography', 'introduction', 'landing'].includes(page);
+    return ['introduction', 'landing'].includes(page);
   }
 }

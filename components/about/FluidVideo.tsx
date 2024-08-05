@@ -2,10 +2,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 interface Props {
+  muted: boolean;
   src: null | string;
 }
 
-export default function FluidVideo({ src }: Props) {
+export default function FluidVideo({ muted, src }: Props) {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function FluidVideo({ src }: Props) {
         data-active={src !== null && isActive}
         exit="hidden"
         initial="hidden"
+        muted={muted}
         src={src || undefined}
         variants={{
           hidden: { opacity: 0, transition: { duration: 0.5 } },
@@ -38,7 +40,6 @@ export default function FluidVideo({ src }: Props) {
         autoPlay
         disableRemotePlayback
         loop
-        muted
         playsInline
         className="absolute inset-0 size-full object-cover opacity-0"
       />

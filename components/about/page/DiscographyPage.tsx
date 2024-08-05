@@ -95,7 +95,7 @@ export default function AboutDiscographyPage() {
           />
           <div
             data-active={isActive}
-            className="flex flex-col gap-4 data-[active=false]:items-center"
+            className="flex min-w-0 flex-col gap-4 data-[active=false]:items-center"
           >
             <motion.div
               animate={isActive ? 'active' : 'loaded'}
@@ -107,7 +107,7 @@ export default function AboutDiscographyPage() {
                 initial: { fontSize: '24px', opacity: 0, y: 20 },
                 loaded: { opacity: 1, transition: { delay: 0.1 }, y: 0 },
               }}
-              className="font-600 text-white"
+              className="truncate font-600 text-white"
             >
               {albumInfo.title}
             </motion.div>
@@ -121,7 +121,7 @@ export default function AboutDiscographyPage() {
                 initial: { fontSize: '20px', opacity: 0, y: 20 },
                 loaded: { opacity: 1, transition: { delay: 0.2 }, y: 0 },
               }}
-              className="text-16 font-500 text-white/70"
+              className="truncate text-16 font-500 text-white/70"
             >
               {albumInfo.date}
             </motion.div>
