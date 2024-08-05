@@ -81,7 +81,7 @@ export default function AboutMemberPage() {
             </motion.div>
           )}
         </AnimatePresence>
-        <div key={index} className="relative flex items-center">
+        <div key={memberIndex} className="relative flex items-center">
           <div className="flex shrink-0 grow flex-col gap-16">
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-6 overflow-hidden">
