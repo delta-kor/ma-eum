@@ -19,7 +19,7 @@ export interface AlbumInfo {
 }
 
 const AboutData = {
-  AboutVideoUrl: 'https://vx2.api.izflix.net/deliver/992044763?q=1440',
+  AboutVideoUrl: '/api/video?id=992044763?q=1440',
   Discography: {
     AlbumsInfo: [
       {
@@ -79,7 +79,14 @@ const AboutData = {
         ],
       },
     ],
-    AlbumsVideo: ['https://vx2.api.izflix.net/deliver/994795645?q=1440'],
+    AlbumsVideo: [
+      '/api/video?id=994795645',
+      '/api/video?id=994893891',
+      '/api/video?id=994895888',
+      '/api/video?id=994897241',
+      '/api/video?id=994911204',
+      '/api/video?id=994914653',
+    ],
   },
   Introduction: {
     Text: [
@@ -174,13 +181,13 @@ const AboutData = {
       },
     ],
     MembersVideo: [
-      'https://vx2.api.izflix.net/deliver/994145002?q=1440',
-      'https://vx2.api.izflix.net/deliver/994388899?q=1440',
-      'https://vx2.api.izflix.net/deliver/994417254?q=1440',
-      'https://vx2.api.izflix.net/deliver/994417798?q=1440',
-      'https://vx2.api.izflix.net/deliver/994419393?q=1440',
-      'https://vx2.api.izflix.net/deliver/994421762?q=1440',
-      'https://vx2.api.izflix.net/deliver/994423976?q=1440',
+      '/api/video?id=994145002',
+      '/api/video?id=994388899',
+      '/api/video?id=994417254',
+      '/api/video?id=994417798',
+      '/api/video?id=994419393',
+      '/api/video?id=994421762',
+      '/api/video?id=994423976',
     ],
   },
 };

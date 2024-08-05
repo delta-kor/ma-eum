@@ -7,8 +7,8 @@ export default function AdsenseLoader() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // renderAds();
-  }, []);
+    renderAds();
+  }, [pathname]);
 
   function renderAds() {
     // @ts-ignore

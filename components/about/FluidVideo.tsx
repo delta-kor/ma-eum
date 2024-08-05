@@ -33,7 +33,7 @@ export default function FluidVideo({ muted, src }: Props) {
         src={src || undefined}
         variants={{
           hidden: { opacity: 0, transition: { duration: 0.5 } },
-          visible: { opacity: 0.2, transition: { duration: 0.5 } },
+          visible: { opacity: 0.3, transition: { duration: 0.5 } },
         }}
         onCanPlayThrough={handleLoadComplete}
         onLoadStart={handleLoadStart}

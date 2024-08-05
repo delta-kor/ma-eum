@@ -36,8 +36,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Ads.txt
-/public/Ads.txt
+# ads.txt
+/public/ads.txt
 
 # Auto Generated PWA files
 **/public/sw.js
