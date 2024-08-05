@@ -72,6 +72,15 @@ export interface TalkPollPayload {
   title: string;
 }
 
+export interface TalkPollMetadata {
+  id: string;
+  options: string[];
+  participants: number;
+  results: number[];
+  title: string;
+  voted: null | number;
+}
+
 export type TalkArticleSort = 'like' | 'newest';
 
 const TalkRouter = router({
@@ -161,6 +170,12 @@ const TalkRouter = router({
         opts.input.sort as TalkArticleSort
       );
     }),
+
+  getPollMetadata: publicProcedure.input(z.object({ pollId: z.string() })).query(async opts => {
+    const pollId = opts.input.pollId;
+    const user = null;
+    return TalkService.getPollMetadata(pollId, user);
+  }),
 
   getProfile: talkProcedure.query(async opts => {
     const user = opts.ctx.user;
@@ -605,6 +620,29 @@ export class TalkService {
         userId,
       },
     });
+  }
+
+  @DataCache('talk.getPollMetadata', StaticDataTtl)
+  public static async getPollMetadata(
+    pollId: string,
+    user: TalkUser | null
+  ): Promise<TalkPollMetadata | null> {
+    const poll = await prisma.talkPoll.findUnique({
+      where: {
+        id: pollId,
+      },
+    });
+
+    if (!poll) return null;
+
+    return {
+      id: poll.id,
+      options: poll.options,
+      participants: 0,
+      results: poll.options.map(() => 0),
+      title: poll.title,
+      voted: null,
+    };
   }
 
   public static getProfileByUser(user: TalkUser): TalkProfile {
