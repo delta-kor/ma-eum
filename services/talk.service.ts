@@ -24,6 +24,7 @@ import { z } from 'zod';
 
 export interface TalkArticlePayload {
   content: string;
+  poll?: TalkPollPayload;
   title: string;
 }
 
@@ -66,13 +67,12 @@ export interface TalkProfile {
   role: string;
 }
 
-export type TalkArticleSort = 'like' | 'newest';
-
-export interface BlockErrorInfo {
-  reason: string;
-  type: 'block';
-  until: Date;
+export interface TalkPollPayload {
+  options: string[];
+  title: string;
 }
+
+export type TalkArticleSort = 'like' | 'newest';
 
 const TalkRouter = router({
   addCommentToArticle: talkProcedure
@@ -94,6 +94,12 @@ const TalkRouter = router({
     .input(
       z.object({
         content: z.string(),
+        poll: z
+          .object({
+            options: z.array(z.string().trim().min(1).max(50)).min(2).max(5),
+            title: z.string().trim().min(1).max(100),
+          })
+          .optional(),
         title: z.string(),
       })
     )
@@ -104,6 +110,7 @@ const TalkRouter = router({
 
       const payload: TalkArticlePayload = {
         content: input.content,
+        poll: input.poll,
         title: input.title,
       };
 
@@ -352,8 +359,17 @@ export class TalkService {
         content: sanitizedContent,
         id: createId(8),
         ip,
+        poll: payload.poll
+          ? {
+              create: {
+                id: createId(6),
+                options: payload.poll.options,
+                title: payload.poll.title,
+              },
+            }
+          : undefined,
         title: sanitizedTitle,
-        userId: user.id,
+        user: { connect: { id: user.id } },
       },
     });
 

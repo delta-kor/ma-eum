@@ -267,6 +267,7 @@ model TalkUser {
 
   likedArticles TalkArticle[]
   blocks        TalkBlock[]
+  ballots       TalkBallot[]
 }
 
 model TalkArticle {
@@ -283,6 +284,9 @@ model TalkArticle {
 
   isDeleted Boolean @default(false)
   ip        String?
+
+  poll   TalkPoll? @relation(fields: [pollId], references: [id], onDelete: SetNull)
+  pollId String?   @unique
 }
 
 model TalkComment {
@@ -321,4 +325,23 @@ model TalkBlock {
   date   DateTime @default(now())
   until  DateTime
   reason String
+}
+
+model TalkPoll {
+  id      String   @id
+  title   String
+  options String[]
+
+  article TalkArticle?
+  ballots TalkBallot[]
+}
+
+model TalkBallot {
+  id     String @id
+  option Int
+
+  pollId String
+  userId String
+  poll   TalkPoll @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  user   TalkUser @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

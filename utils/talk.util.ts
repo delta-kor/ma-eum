@@ -1,4 +1,5 @@
 import { ModalContext, ModalResult } from '@/providers/ModalProvider';
+import { TalkPollPayload } from '@/services/talk.service';
 import { TalkBlock } from '@prisma/client';
 
 interface ValidateNicknameResult {
@@ -11,6 +12,7 @@ interface ValidateArticleResult {
   content?: string;
   error: boolean;
   message?: string;
+  poll?: TalkPollPayload;
   title?: string;
 }
 
@@ -55,7 +57,7 @@ export default class TalkUtil {
       .slice(0, 100);
   }
 
-  public static validateArticle(title: any, content: any): ValidateArticleResult {
+  public static validateArticle(title: any, content: any, poll?: any): ValidateArticleResult {
     if (!title || typeof title !== 'string') {
       return { error: true, message: '$error_enter_title' };
     }
@@ -74,7 +76,36 @@ export default class TalkUtil {
       return { error: true, message: '$error_invalid_length_content' };
     }
 
-    return { content: sanitizedContent, error: false, title: sanitizedTitle };
+    if (poll) {
+      if (!poll.title || typeof poll.title !== 'string') {
+        return { error: true, message: '$error_enter_poll_title' };
+      }
+
+      if (!poll.options || poll.options.length < 2) {
+        return { error: true, message: '$error_enter_poll_options' };
+      }
+
+      if (poll.options.length > 5) {
+        return { error: true, message: '$error_invalid_length_poll_options' };
+      }
+
+      const sanitizedPollTitle = poll.title.trim().replace(/\n/g, '');
+      if (!sanitizedPollTitle || sanitizedPollTitle.length > 100) {
+        return { error: true, message: '$error_invalid_length_poll_title' };
+      }
+
+      const sanitizedOptions = poll.options.map((option: string) =>
+        option.trim().replace(/\n/g, '')
+      );
+      if (sanitizedOptions.some((option: string) => !option || option.length > 50)) {
+        return { error: true, message: '$error_invalid_length_poll_option' };
+      }
+
+      poll.title = sanitizedPollTitle;
+      poll.options = sanitizedOptions;
+    }
+
+    return { content: sanitizedContent, error: false, poll: poll, title: sanitizedTitle };
   }
 
   public static validateComment(content: any): ValidateCommentResult {

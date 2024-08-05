@@ -74,7 +74,14 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
       );
     } else {
       createArticle.mutate(
-        { content: sanitizedContent, title: sanitizedTitle },
+        {
+          content: sanitizedContent,
+          poll: {
+            options: ['option 1', 'option 2'],
+            title: 'poll title',
+          },
+          title: sanitizedTitle,
+        },
         {
           onError: error => {
             setError(error.message);
@@ -155,6 +162,12 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
         onChange={handleTextareaChange}
         className="resize-none text-16 font-400 leading-6 text-black outline-none placeholder:text-gray-200"
       />
+      <div className="flex items-center">
+        <div className="cursor-pointer rounded-8 bg-gray-50 p-8">
+          <Icon type="poll" className="w-14 text-gray-500" />
+          <div className="text-16 font-500 text-gray-500">Poll</div>
+        </div>
+      </div>
       <div className="text-14 font-400 leading-5 text-gray-500">
         <Translate>$talk_article_rules_header_1</Translate>
         <br />
