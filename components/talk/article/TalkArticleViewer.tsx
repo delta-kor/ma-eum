@@ -18,7 +18,7 @@ export default function TalkArticleViewer({ article, user }: Props) {
       <div className="flex flex-col gap-20">
         <TalkArticleHeader article={article} />
         <div className="h-2 bg-gray-100" />
-        <TalkArticleContent article={article} />
+        <TalkArticleContent article={article} login={!!user} />
         <TalkArticleReact article={article} user={user} />
         <TalkCommentInput articleId={article.id} login={!!user} />
         <TalkCommentList articleId={article.id} userId={user?.id || null} />

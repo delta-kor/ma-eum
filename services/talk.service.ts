@@ -8,7 +8,7 @@ import {
   revalidateTalkUserNicknameUpdate,
 } from '@/actions/revalidate.action';
 import prisma from '@/prisma/prisma';
-import { publicProcedure, router, talkProcedure } from '@/trpc/router';
+import { publicProcedure, router, softTalkProcedure, talkProcedure } from '@/trpc/router';
 import Auth from '@/utils/auth.util';
 import { DataCache, StaticDataTtl } from '@/utils/cache.util';
 import createId from '@/utils/id.util';
@@ -84,6 +84,16 @@ export interface TalkPollMetadata {
 export type TalkArticleSort = 'like' | 'newest';
 
 const TalkRouter = router({
+  addBallotToPoll: talkProcedure
+    .input(z.object({ option: z.number(), pollId: z.string() }))
+    .mutation(async opts => {
+      const user = opts.ctx.user;
+      const pollId = opts.input.pollId;
+      const option = opts.input.option;
+
+      await TalkService.addBallotToPoll(user, pollId, option);
+    }),
+
   addCommentToArticle: talkProcedure
     .input(
       z.object({ articleId: z.string(), commentId: z.string().optional(), content: z.string() })
@@ -171,9 +181,9 @@ const TalkRouter = router({
       );
     }),
 
-  getPollMetadata: publicProcedure.input(z.object({ pollId: z.string() })).query(async opts => {
+  getPollMetadata: softTalkProcedure.input(z.object({ pollId: z.string() })).query(async opts => {
     const pollId = opts.input.pollId;
-    const user = null;
+    const user = opts.ctx.user || null;
     return TalkService.getPollMetadata(pollId, user);
   }),
 
@@ -247,6 +257,37 @@ const TalkRouter = router({
 
 export class TalkService {
   public static router = TalkRouter;
+
+  public static async addBallotToPoll(
+    user: TalkUser,
+    pollId: string,
+    option: number
+  ): Promise<void> {
+    await prisma.$transaction([
+      prisma.talkBallot.deleteMany({
+        where: {
+          pollId,
+          userId: user.id,
+        },
+      }),
+      prisma.talkBallot.create({
+        data: {
+          id: createId(8),
+          option,
+          poll: {
+            connect: {
+              id: pollId,
+            },
+          },
+          user: {
+            connect: {
+              id: user.id,
+            },
+          },
+        },
+      }),
+    ]);
+  }
 
   public static async addCommentToArticle(
     user: TalkUser,
@@ -628,6 +669,9 @@ export class TalkService {
     user: TalkUser | null
   ): Promise<TalkPollMetadata | null> {
     const poll = await prisma.talkPoll.findUnique({
+      include: {
+        ballots: true,
+      },
       where: {
         id: pollId,
       },
@@ -635,13 +679,19 @@ export class TalkService {
 
     if (!poll) return null;
 
+    const voted = poll.ballots.find(ballot => ballot.userId === user?.id)?.option ?? null;
+    const participants = poll.ballots.length;
+    const results = poll.options.map(
+      (_, index) => poll.ballots.filter(ballot => ballot.option === index).length
+    );
+
     return {
       id: poll.id,
       options: poll.options,
-      participants: 0,
-      results: poll.options.map(() => 0),
+      participants,
+      results,
       title: poll.title,
-      voted: null,
+      voted,
     };
   }
 

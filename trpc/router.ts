@@ -13,6 +13,10 @@ export interface TRPCUserContext extends TRPCContext {
   user: TalkUser;
 }
 
+export interface TRPCSoftUserContext extends TRPCContext {
+  user?: TalkUser;
+}
+
 const t = initTRPC.context<TRPCContext>().create({
   errorFormatter: opts => {
     const { error, shape } = opts;
@@ -76,6 +80,20 @@ export const talkProcedure = publicProcedure.use<TRPCUserContext>(async opts => 
 
   const user = await Auth.verifyToken(token);
   if (!user) throw new TRPCError({ code: 'UNAUTHORIZED' });
+
+  return opts.next({
+    ctx: {
+      user,
+    },
+  });
+});
+
+export const softTalkProcedure = publicProcedure.use<TRPCSoftUserContext>(async opts => {
+  const token = Auth.getTokenCookie();
+  if (!token) return opts.next();
+
+  const user = await Auth.verifyToken(token);
+  if (!user) return opts.next();
 
   return opts.next({
     ctx: {
