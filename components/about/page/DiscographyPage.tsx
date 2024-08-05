@@ -45,10 +45,6 @@ export default function AboutDiscographyPage() {
     setPage('discography', (albumIndex + 1) % albumsCount);
   }
 
-  function handleHandleClick(index: number) {
-    setPage('discography', index);
-  }
-
   if (!albumInfo) return null;
 
   return (
@@ -79,20 +75,26 @@ export default function AboutDiscographyPage() {
           layout
           className="flex items-center gap-16 data-[active=false]:flex-col"
         >
-          <MotionImage
-            alt={albumInfo.title}
+          <motion.div
             animate={isActive ? 'active' : 'loaded'}
             initial="initial"
             layout="position"
             layoutId="discography-cover"
-            src={albumInfo.cover}
             variants={{
               active: { height: 60, opacity: 1, scale: 1, width: 60 },
               initial: { height: 120, opacity: 0, scale: 0, width: 120 },
               loaded: { opacity: 1, scale: 1 },
             }}
-            className="size-[90px] select-none rounded-8"
-          />
+            className="size-[90px] select-none overflow-hidden rounded-8 bg-white/30"
+          >
+            <Image
+              key={index}
+              alt={albumInfo.title}
+              placeholder="blur"
+              src={albumInfo.cover}
+              className="size-full"
+            />
+          </motion.div>
           <div
             data-active={isActive}
             className="flex min-w-0 flex-col gap-4 data-[active=false]:items-center"
