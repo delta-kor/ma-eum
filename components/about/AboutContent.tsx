@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 
 export default function AboutContent() {
   const { index, page } = useAbout();
-  const [isInitial, setIsInitial] = useState(false); // TODO: Set initial state to true
+  const [isInitial, setIsInitial] = useState(true);
 
   useEffect(() => {
     setIsInitial(false);
