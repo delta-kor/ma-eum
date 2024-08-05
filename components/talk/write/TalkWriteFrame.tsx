@@ -5,7 +5,9 @@ import Translate from '@/components/core/Translate';
 import useHistory from '@/hooks/history';
 import useTranslate from '@/hooks/translate';
 import { trpc } from '@/hooks/trpc';
+import { TalkPollPayload } from '@/services/talk.service';
 import { i18n } from '@/utils/i18n.util';
+import createId from '@/utils/id.util';
 import TalkUtil from '@/utils/talk.util';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
@@ -23,7 +25,10 @@ interface Props {
 
 export default function TalkWriteFrame({ edit, nickname }: Props) {
   const [isActive, setIsActive] = useState(false);
+  const [isPollActive, setIsPollActive] = useState(false);
+
   const [error, setError] = useState<null | string>(null);
+  const [options, setOptions] = useState(['1', '2']);
 
   const createArticle = trpc.talk.createArticle.useMutation();
   const editArticle = trpc.talk.editArticle.useMutation();
@@ -53,11 +58,22 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
 
     const title = formData.get('title');
     const content = formData.get('content');
-    const validateResult = TalkUtil.validateArticle(title, content);
+
+    let poll: TalkPollPayload | undefined = undefined;
+    if (!isEditMode && isPollActive) {
+      const pollTitle = formData.get('poll-title');
+      const pollOptions = options.map((_, index) => {
+        return formData.get(`poll-option-${index}`);
+      });
+      poll = { options: pollOptions as string[], title: pollTitle as string };
+    }
+
+    const validateResult = TalkUtil.validateArticle(title, content, poll);
 
     if (validateResult.error) return setError(validateResult.message!);
     const sanitizedTitle = validateResult.title!;
     const sanitizedContent = validateResult.content!;
+    const sanitizedPoll = validateResult.poll;
 
     if (isEditMode) {
       editArticle.mutate(
@@ -76,10 +92,7 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
       createArticle.mutate(
         {
           content: sanitizedContent,
-          poll: {
-            options: ['option 1', 'option 2'],
-            title: 'poll title',
-          },
+          poll: sanitizedPoll,
           title: sanitizedTitle,
         },
         {
@@ -103,6 +116,20 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
     setIsActive(!!title && !!content);
   }
 
+  function handlePollButtonClick() {
+    setIsPollActive(!isPollActive);
+  }
+
+  function handleOptionRemove(data: string) {
+    if (options.length <= 2) return;
+    setOptions(options.filter(option => option !== data));
+  }
+
+  function handleOptionAdd() {
+    if (options.length >= 5) return;
+    setOptions([...options, createId(6)]);
+  }
+
   const isEditMode = !!edit;
   const isLoading =
     createArticle.isPending ||
@@ -111,18 +138,22 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
     editArticle.isSuccess;
 
   return (
-    <form action={handleSubmit} onChange={handleChange} className="flex flex-col gap-16">
+    <form
+      action={handleSubmit}
+      autoCapitalize="off"
+      autoComplete="off"
+      autoCorrect="off"
+      spellCheck="false"
+      onChange={handleChange}
+      className="flex flex-col gap-16"
+    >
       <div className="flex items-center gap-16">
         <div className="flex min-w-0 grow flex-col gap-8">
           <input
-            autoCapitalize="off"
-            autoComplete="off"
-            autoCorrect="off"
             autoFocus={!isEditMode}
             defaultValue={edit?.title}
             name="title"
             placeholder={i18n('$talk_article_title_placeholder', language)}
-            spellCheck="false"
             type="text"
             className="text-24 font-700 text-black outline-none placeholder:text-gray-200"
           />
@@ -149,23 +180,60 @@ export default function TalkWriteFrame({ edit, nickname }: Props) {
       <div className="h-2 bg-gray-100" />
       <textarea
         ref={textareaRef}
-        autoCapitalize="off"
-        autoComplete="off"
-        autoCorrect="off"
         autoFocus={isEditMode}
         defaultValue={edit?.content}
         maxLength={1000}
         name="content"
         placeholder={i18n('$talk_article_content_placeholder', language)}
         rows={5}
-        spellCheck="false"
         onChange={handleTextareaChange}
         className="resize-none text-16 font-400 leading-6 text-black outline-none placeholder:text-gray-200"
       />
+      {isPollActive && (
+        <div className="flex flex-col gap-12 rounded-16 border-2 border-gray-100 p-20 md:max-w-[480px]">
+          <input
+            name="poll-title"
+            placeholder="Poll title"
+            type="text"
+            className="-m-8 p-8 text-18 font-600 text-black outline-none placeholder:text-gray-200"
+          />
+          <div className="flex flex-col gap-8">
+            {options.map((data, index) => (
+              <div key={data} className="flex items-center gap-8 rounded-8 bg-gray-50 px-16 py-14">
+                <input
+                  name={`poll-option-${index}`}
+                  placeholder={`Option ${index + 1}`}
+                  type="text"
+                  className="-m-8 block grow bg-transparent p-8 text-16 font-400 text-black outline-none placeholder:text-gray-400"
+                />
+                <div onClick={() => handleOptionRemove(data)} className="-m-8 cursor-pointer p-8">
+                  <Icon type="close" className="w-10 shrink-0 text-gray-500" />
+                </div>
+              </div>
+            ))}
+            <div
+              onClick={handleOptionAdd}
+              className="-mb-12 flex cursor-pointer items-center justify-center gap-8 p-8"
+            >
+              <Icon type="pencil" className="w-12 shrink-0 text-gray-200" />
+              <div className="select-none text-16 font-500 text-gray-200">Add Option</div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex items-center">
-        <div className="cursor-pointer rounded-8 bg-gray-50 p-8">
-          <Icon type="poll" className="w-14 text-gray-500" />
-          <div className="text-16 font-500 text-gray-500">Poll</div>
+        <div
+          onClick={handlePollButtonClick}
+          className="jelly flex cursor-pointer items-center gap-8 rounded-8 bg-gray-50 px-12 py-8 hover:scale-105"
+        >
+          <Icon
+            data-close={isPollActive}
+            type={isPollActive ? 'close' : 'poll'}
+            className="w-14 shrink-0 text-gray-500 data-[close=true]:w-12"
+          />
+          <div className="select-none text-16 font-500 text-gray-500">
+            {isPollActive ? 'Remove' : 'Poll'}
+          </div>
         </div>
       </div>
       <div className="text-14 font-400 leading-5 text-gray-500">

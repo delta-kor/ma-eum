@@ -81,23 +81,24 @@ export default class TalkUtil {
         return { error: true, message: '$error_enter_poll_title' };
       }
 
-      if (!poll.options || poll.options.length < 2) {
-        return { error: true, message: '$error_enter_poll_options' };
-      }
-
-      if (poll.options.length > 5) {
-        return { error: true, message: '$error_invalid_length_poll_options' };
-      }
-
       const sanitizedPollTitle = poll.title.trim().replace(/\n/g, '');
       if (!sanitizedPollTitle || sanitizedPollTitle.length > 100) {
         return { error: true, message: '$error_invalid_length_poll_title' };
       }
 
-      const sanitizedOptions = poll.options.map((option: string) =>
-        option.trim().replace(/\n/g, '')
-      );
-      if (sanitizedOptions.some((option: string) => !option || option.length > 50)) {
+      const sanitizedOptions = poll.options
+        .map((option: string) => option.trim().replace(/\n/g, ''))
+        .filter((option: string) => option);
+
+      if (sanitizedOptions.length < 2) {
+        return { error: true, message: '$error_enter_poll_options' };
+      }
+
+      if (sanitizedOptions.length > 5) {
+        return { error: true, message: '$error_invalid_length_poll_options' };
+      }
+
+      if (sanitizedOptions.some((option: string) => option.length > 50)) {
         return { error: true, message: '$error_invalid_length_poll_option' };
       }
 

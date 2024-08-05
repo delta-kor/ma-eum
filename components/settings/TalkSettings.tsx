@@ -91,7 +91,7 @@ export default function TalkSettings() {
               spellCheck="false"
               type="text"
               onChange={handleInputChange}
-              className="min-w-0 grow rounded-8 bg-gray-50 px-16 py-12 text-16 font-400 text-black"
+              className="min-w-0 grow rounded-8 bg-gray-50 px-16 py-12 text-16 font-400 text-black outline-none"
             />
             <div
               data-active={isActive}
