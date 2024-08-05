@@ -32,9 +32,12 @@ export default function TalkArticlePoll({ login, pollId }: Props) {
   function handleAction(option: number) {
     if (!pollId) return;
 
+    let sanitizedOption: null | number = option;
+    if (data && data.voted !== null && data.voted === option) sanitizedOption = null;
+
     addBallot.mutate(
       {
-        option,
+        option: sanitizedOption,
         pollId,
       },
       {

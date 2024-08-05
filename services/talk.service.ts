@@ -85,7 +85,7 @@ export type TalkArticleSort = 'like' | 'newest';
 
 const TalkRouter = router({
   addBallotToPoll: talkProcedure
-    .input(z.object({ option: z.number(), pollId: z.string() }))
+    .input(z.object({ option: z.number().nullable(), pollId: z.string() }))
     .mutation(async opts => {
       const user = opts.ctx.user;
       const pollId = opts.input.pollId;
@@ -261,8 +261,18 @@ export class TalkService {
   public static async addBallotToPoll(
     user: TalkUser,
     pollId: string,
-    option: number
+    option: null | number
   ): Promise<void> {
+    if (option === null) {
+      await prisma.talkBallot.deleteMany({
+        where: {
+          pollId,
+          userId: user.id,
+        },
+      });
+      return;
+    }
+
     await prisma.$transaction([
       prisma.talkBallot.deleteMany({
         where: {
