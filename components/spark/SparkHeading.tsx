@@ -1,9 +1,12 @@
 import SparkIntro from '@/components/spark/SparkIntro';
 import SparkPromptExamples from '@/components/spark/SparkPromptExamples';
+import useSpark from '@/hooks/spark';
 
 export default function SparkHeading() {
+  const spark = useSpark();
+
   function handleExampleSelected(prompt: string) {
-    console.log(prompt);
+    spark.send(prompt);
   }
 
   return (
