@@ -1,10 +1,12 @@
 'use client';
 
 import createId from '@/utils/id.util';
+import { SparkContent } from '@/utils/spark.util';
 import { ReactNode, createContext, useState } from 'react';
 
 interface Context {
   chatId: string;
+  history: SparkContent[];
   send: (prompt: string) => void;
 }
 
@@ -17,13 +19,20 @@ interface Props {
 export default function SparkProvider({ children }: Props) {
   const initialChatId = createId(32);
   const [chatId, setChatId] = useState<string>(initialChatId);
+  const [history, setHistory] = useState<SparkContent[]>([]);
 
   function handleSend(prompt: string) {
-    console.log('Sending prompt:', prompt);
+    const content: SparkContent = {
+      content: prompt,
+      type: 'user',
+    };
+
+    setHistory(prev => [...prev, content]);
   }
 
   const context: Context = {
     chatId,
+    history,
     send: handleSend,
   };
 

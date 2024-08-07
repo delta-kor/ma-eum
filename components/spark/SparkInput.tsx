@@ -39,6 +39,9 @@ export default function SparkInput() {
             maxLength={200}
             placeholder="Type your message"
             type="text"
+            onKeyDown={e => {
+              if (e.key === 'Enter') handleSend();
+            }}
             className="min-w-0 grow bg-transparent py-16 pl-20 text-16 font-500 text-black outline-none placeholder:text-gray-500"
           />
           <div

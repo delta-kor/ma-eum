@@ -6,10 +6,11 @@ import useSpark from '@/hooks/spark';
 
 export default function SparkContent() {
   const spark = useSpark();
+  const history = spark.history;
 
   return (
     <div className="relative size-full">
-      <SparkHeading />
+      {history.length === 0 && <SparkHeading />}
       <SparkInput />
     </div>
   );
