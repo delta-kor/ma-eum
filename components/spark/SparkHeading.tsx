@@ -10,7 +10,7 @@ export default function SparkHeading() {
   }
 
   return (
-    <div className="absolute left-1/2 top-details-header-height flex w-full -translate-x-1/2 flex-col items-center gap-28">
+    <div className="absolute left-1/2 top-24 flex w-full -translate-x-1/2 flex-col items-center gap-28 lg:top-64">
       <SparkIntro />
       <div className="flex flex-col items-center gap-16 self-stretch">
         <SparkPromptExamples onSelected={handleExampleSelected} />

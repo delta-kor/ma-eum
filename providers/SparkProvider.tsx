@@ -8,6 +8,7 @@ import { ReactNode, createContext, useRef, useState } from 'react';
 interface Context {
   chatId: string;
   history: SparkContent[];
+  reset: () => void;
   response: null | string;
   send: (prompt: string) => void;
   state: SparkState;
@@ -102,9 +103,17 @@ export default function SparkProvider({ children }: Props) {
     });
   }
 
+  function reset() {
+    setChatId(createId(32));
+    setHistory([]);
+    clearResponse();
+    setState(SparkState.IDLE);
+  }
+
   const context: Context = {
     chatId,
     history,
+    reset,
     response,
     send: handleSend,
     state,

@@ -3,7 +3,7 @@ import GradientIcon from '@/components/core/GradientIcon';
 const examples = [
   'When did CSR debut?',
   'Who is the current leader of CSR?',
-  "What are the names of CSR's albums?",
+  "What is CSR's Japanese debut album?",
 ];
 
 interface Props {

@@ -27,7 +27,22 @@ export default function SparkAiBubble({ message, streaming }: Props) {
     );
 
   const state = spark.state;
-  if (state === SparkState.LOADING || state === SparkState.SENDING)
+
+  if (state === SparkState.SENDING)
+    return (
+      <div className="flex flex-col gap-8 rounded-16 bg-gray-50 p-16">
+        <div className="flex items-center gap-8">
+          <GradientIcon type="aiMessage" className="w-16" />
+          <div className="text-16 font-700 text-gray-500">Spark</div>
+        </div>
+        <div className="flex flex-col gap-4">
+          <div className="h-[17px] w-full animate-pulse rounded-8 bg-gray-200" />
+          <div className="h-[17px] w-1/3 animate-pulse rounded-8 bg-gray-200" />
+        </div>
+      </div>
+    );
+
+  if (state === SparkState.LOADING)
     return (
       <div className="flex flex-col gap-8 rounded-16 bg-gray-50 p-16">
         <div className="flex items-center gap-8">

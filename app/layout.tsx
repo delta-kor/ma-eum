@@ -2,7 +2,7 @@ import TRPCProvider from '@/providers/TRPCProvider';
 import TranslateProvider from '@/providers/TranslateProvider';
 import MetaUtil from '@/utils/meta.util';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
@@ -35,3 +35,7 @@ export default function RootLayout({ children }: Props) {
 export function generateMetadata(): Metadata {
   return { ...MetaUtil.getBase(), manifest: '/manifest.json' };
 }
+
+export const viewport: Viewport = {
+  interactiveWidget: 'resizes-visual',
+};
