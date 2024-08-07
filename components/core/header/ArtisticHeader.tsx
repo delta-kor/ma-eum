@@ -28,7 +28,7 @@ export default function ArtisticHeader() {
     router.push(path);
   }
 
-  const isDisplayedOnMobile = ['/', '/discover', '/mixer', '/talk'].includes(pathname);
+  const isDisplayedOnMobile = ['/', '/discover', '/mixer', '/spark', '/talk'].includes(pathname);
   const isExpanded = pathname.startsWith('/video/');
 
   return (

@@ -125,6 +125,11 @@ export const Pages: PageInfo[] = [
     back: '/',
     path: '/about',
   },
+
+  {
+    back: '/',
+    path: '/spark',
+  },
 ];
 
 export function getMatchingPage(path: string): PageInfo {
@@ -133,7 +138,7 @@ export function getMatchingPage(path: string): PageInfo {
     if (pathRegex.test(path)) return page;
   }
 
-  console.log('No matching page found for path:', path);
+  console.warn('No matching page found for path:', path);
   return {
     back: '/',
     path,
