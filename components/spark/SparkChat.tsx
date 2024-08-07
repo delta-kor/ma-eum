@@ -1,11 +1,15 @@
 import SparkAiBubble from '@/components/spark/SparkAiBubble';
 import SparkUserBubble from '@/components/spark/SparkUserBubble';
 import useSpark from '@/hooks/spark';
-import { SparkState } from '@/utils/spark.util';
+import { useEffect } from 'react';
 
 export default function SparkChat() {
   const spark = useSpark();
   const history = spark.history;
+
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [spark]);
 
   return (
     <div className="flex flex-col gap-12 lg:pt-28">
@@ -16,9 +20,7 @@ export default function SparkChat() {
           <SparkAiBubble key={index} message={content.message} streaming={false} />
         )
       )}
-      {spark.state === SparkState.STREAMING && spark.response !== null && (
-        <SparkAiBubble message={spark.response} streaming />
-      )}
+      <SparkAiBubble streaming />
       <div className="h-[110px] w-full lg:h-[124px]" />
     </div>
   );

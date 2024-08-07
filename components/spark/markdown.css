@@ -1,0 +1,45 @@
+ul {
+  list-style-type: disc;
+  margin: 4px 0 4px 20px;
+}
+
+ol {
+  list-style-type: decimal;
+  margin: 4px 0 4px 20px;
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+pre {
+  margin: 16px 0;
+}
+
+code {
+  font-family: monospace;
+  font-size: 13px;
+}
+
+table {
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+table, th, td {
+  border: 1px solid #CDDAE4;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #E5EDF2;
+  font-weight: 600;
+}
+
+th, td {
+  padding: 4px 8px;
+}

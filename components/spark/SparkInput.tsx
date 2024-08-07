@@ -1,5 +1,6 @@
 import Icon from '@/components/core/Icon';
 import useSpark from '@/hooks/spark';
+import { SparkState } from '@/utils/spark.util';
 import { useRef } from 'react';
 
 export default function SparkInput() {
@@ -13,12 +14,17 @@ export default function SparkInput() {
   function handleSend() {
     const input = inputRef.current;
     if (!input) return false;
+    if (!isIdle) return false;
 
     const prompt = input.value.trim();
     if (prompt.length === 0 || prompt.length > 200) return false;
 
     spark.send(prompt);
+    input.blur();
+    input.value = '';
   }
+
+  const isIdle = spark.state === SparkState.IDLE;
 
   return (
     <div className="fixed inset-x-0 bottom-64 border-t-1 border-gray-100 bg-white/30 p-16 backdrop-blur-lg lg:bottom-0 lg:border-none lg:bg-white lg:p-0">
@@ -48,7 +54,11 @@ export default function SparkInput() {
             onClick={handleSendButtonClick}
             className="jelly -m-8 shrink-0 cursor-pointer p-8 hover:scale-105"
           >
-            <Icon type="send" className="w-16 shrink-0 text-primary-500" />
+            <Icon
+              data-idle={isIdle}
+              type={isIdle ? 'send' : 'spinner'}
+              className="w-16 shrink-0 text-primary-500 data-[idle=false]:animate-spin data-[idle=false]:text-gray-500"
+            />
           </div>
         </div>
       </div>
