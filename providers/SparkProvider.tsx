@@ -42,7 +42,7 @@ export default function SparkProvider({ children }: Props) {
     }
 
     const content: SparkContent = {
-      content: prompt,
+      message: prompt,
       type: 'user',
     };
 
@@ -92,7 +92,7 @@ export default function SparkProvider({ children }: Props) {
           clearResponse();
         } else {
           const content: SparkContent = {
-            content: responseRef.current,
+            message: responseRef.current,
             type: 'ai',
           };
           setHistory(prev => [...prev, content]);

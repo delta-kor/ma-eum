@@ -19,7 +19,7 @@ export default function SparkHeading() {
           <object data="/spark/gemini.svg" className="h-20" />
         </div>
       </div>
-      <div className="h-[175px] w-full" />
+      <div className="h-[188px] w-full lg:h-[140px]" />
     </div>
   );
 }

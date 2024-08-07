@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
 export interface SparkContent {
-  content: string;
+  message: string;
   type: 'ai' | 'user';
 }
 
