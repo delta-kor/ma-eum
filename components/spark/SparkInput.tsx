@@ -20,8 +20,8 @@ export default function SparkInput() {
     if (prompt.length === 0 || prompt.length > 200) return false;
 
     spark.send(prompt);
-    input.blur();
     input.value = '';
+    input.blur();
   }
 
   function handleReset() {

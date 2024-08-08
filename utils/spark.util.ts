@@ -17,20 +17,21 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   url.searchParams.append('chatId', chatId);
   url.searchParams.append('prompt', prompt);
 
+  let isConnected: boolean = false;
+
   const emitter = new EventEmitter();
   const eventSource = new EventSource(url.toString());
-  eventSource.onerror = event => {
-    if (event.eventPhase === EventSource.CLOSED) {
+  eventSource.addEventListener('error', event => {
+    if (isConnected) {
       eventSource.close();
       emitter.emit('close');
-      return;
     } else {
       eventSource.close();
       emitter.emit('error');
     }
-  };
+  });
 
-  eventSource.onmessage = event => {
+  eventSource.addEventListener('message', event => {
     try {
       const data = JSON.parse(event.data);
       emitter.emit('data', data);
@@ -38,11 +39,12 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
       console.error(error);
       emitter.emit('error');
     }
-  };
+  });
 
-  eventSource.onopen = () => {
+  eventSource.addEventListener('open', () => {
     emitter.emit('open');
-  };
+    isConnected = true;
+  });
 
   return emitter;
 }
