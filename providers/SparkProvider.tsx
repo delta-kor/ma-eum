@@ -92,7 +92,9 @@ export default function SparkProvider({ children }: Props) {
         if (responseRef.current === null) {
           clearResponse();
         } else {
+          const bubbleId = data.bubbleId;
           const content: SparkContent = {
+            bubbleId,
             message: responseRef.current,
             type: 'ai',
           };

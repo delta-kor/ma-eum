@@ -17,7 +17,7 @@ export default function SparkChat() {
         content.type === 'user' ? (
           <SparkUserBubble key={index} message={content.message} />
         ) : (
-          <SparkAiBubble key={index} message={content.message} streaming={false} />
+          <SparkAiBubble key={index} content={content} streaming={false} />
         )
       )}
       <SparkAiBubble streaming />

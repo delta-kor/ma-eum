@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 
 export interface SparkContent {
+  bubbleId?: string;
   message: string;
   type: 'ai' | 'user';
 }
@@ -17,12 +18,12 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   url.searchParams.append('chatId', chatId);
   url.searchParams.append('prompt', prompt);
 
-  let isConnected: boolean = false;
+  let isEnded: boolean = false;
 
   const emitter = new EventEmitter();
   const eventSource = new EventSource(url.toString());
   eventSource.addEventListener('error', event => {
-    if (isConnected) {
+    if (isEnded) {
       eventSource.close();
       emitter.emit('close');
     } else {
@@ -34,6 +35,7 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   eventSource.addEventListener('message', event => {
     try {
       const data = JSON.parse(event.data);
+      if (data.type === 'end') isEnded = true;
       emitter.emit('data', data);
     } catch (error) {
       console.error(error);
@@ -43,8 +45,24 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
 
   eventSource.addEventListener('open', () => {
     emitter.emit('open');
-    isConnected = true;
   });
 
   return emitter;
+}
+
+export async function flagSpark(bubbleId: string): Promise<boolean> {
+  try {
+    const url = new URL(`${process.env.NEXT_PUBLIC_SPARK_URL_BASE}/evaluate`);
+    url.searchParams.append('bubbleId', bubbleId);
+
+    const response = await fetch(url.toString());
+    if (!response.ok) return false;
+
+    const text = await response.text();
+    const data = JSON.parse(text.split('\n')[0].slice(6));
+    return data.type === 'success';
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
 }
