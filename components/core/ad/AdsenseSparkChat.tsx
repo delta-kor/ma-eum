@@ -17,11 +17,11 @@ export default function AdsenseSparkChat() {
   return (
     <ins
       data-ad-client="ca-pub-7478560982899387"
-      data-ad-format="auto"
+      data-ad-format="horizontal"
       data-ad-slot="1868836318"
-      data-full-width-responsive="true"
-      style={{ display: 'block', height: '64px', overflow: 'hidden' }}
-      className="adsbygoogle"
+      data-full-width-responsive="false"
+      style={{ display: 'block', overflow: 'hidden' }}
+      className="adsbygoogle max-h-[128px]"
     ></ins>
   );
 }

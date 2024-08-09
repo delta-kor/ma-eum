@@ -13,7 +13,7 @@ export default function SparkChat() {
   }, [spark]);
 
   return (
-    <div className="flex flex-col">
+    <div className="-mt-16 flex flex-col gap-8 lg:mt-0">
       <AdsenseSparkChat />
       <div className="flex flex-col gap-12 lg:pt-28">
         {history.map((content, index) =>
