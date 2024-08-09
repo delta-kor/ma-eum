@@ -130,6 +130,14 @@ export const Pages: PageInfo[] = [
     back: '/',
     path: '/spark',
   },
+  {
+    back: '/spark',
+    path: '/spark/disclaimer',
+  },
+  {
+    back: '/spark',
+    path: '/spark/teach',
+  },
 ];
 
 export function getMatchingPage(path: string): PageInfo {
