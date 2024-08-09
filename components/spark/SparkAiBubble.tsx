@@ -2,6 +2,7 @@ import GradientIcon from '@/components/core/GradientIcon';
 import Icon from '@/components/core/Icon';
 import useModal from '@/hooks/modal';
 import useSpark from '@/hooks/spark';
+import { ModalResult } from '@/providers/ModalProvider';
 import { SparkContent, SparkState, flagSpark } from '@/utils/spark.util';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -16,10 +17,16 @@ export default function SparkAiBubble({ content, streaming }: Props) {
   const spark = useSpark();
   const modal = useModal();
 
-  async function handleFlag() {
+  function handleFlagClick() {
+    modal.confirm('$spark_flag_confirm', handleFlag);
+  }
+
+  async function handleFlag(result: ModalResult) {
+    if (result.type !== 'confirm') return;
     if (!content || !content.bubbleId) return;
-    const result = await flagSpark(content.bubbleId);
-    modal.alert(result ? '$spark_flag_success' : '$spark_flag_failure');
+
+    const flagResult = await flagSpark(content.bubbleId);
+    modal.alert(flagResult ? '$spark_flag_success' : '$spark_flag_failure');
   }
 
   if (!streaming)
@@ -36,7 +43,7 @@ export default function SparkAiBubble({ content, streaming }: Props) {
         </div>
         <div className="flex items-center justify-end gap-20">
           <div
-            onClick={handleFlag}
+            onClick={handleFlagClick}
             className="jelly jelly-increased -m-8 shrink-0 cursor-pointer rounded-8 p-8 hover:scale-110 hover:bg-gray-50 selected:bg-gray-50"
           >
             <Icon type="flag" className="w-16 text-gray-200" />

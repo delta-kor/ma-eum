@@ -1,10 +1,15 @@
 import Icon from '@/components/core/Icon';
+import Translate from '@/components/core/Translate';
 import useSpark from '@/hooks/spark';
+import useTranslate from '@/hooks/translate';
+import { i18n } from '@/utils/i18n.util';
 import { SparkState } from '@/utils/spark.util';
 import { useRef } from 'react';
 
 export default function SparkInput() {
   const spark = useSpark();
+  const { language } = useTranslate();
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSendButtonClick() {
@@ -41,17 +46,23 @@ export default function SparkInput() {
               className="jelly flex shrink-0 cursor-pointer select-none items-center gap-8 rounded-16 bg-gray-50 px-12 py-8 hover:scale-105"
             >
               <Icon type="trash" className="w-16 shrink-0 text-gray-500" />
-              <div className="shrink-0 text-16 font-500 text-gray-500">Reset</div>
+              <div className="shrink-0 text-16 font-500 text-gray-500">
+                <Translate>$spark_reset</Translate>
+              </div>
             </div>
           )}
           <div className="jelly flex shrink-0 cursor-pointer select-none items-center gap-8 rounded-16 bg-gray-50 px-12 py-8 hover:scale-105">
             <Icon type="book" className="w-16 shrink-0 text-gray-500" />
-            <div className="shrink-0 text-16 font-500 text-gray-500">Teach Spark</div>
+            <div className="shrink-0 text-16 font-500 text-gray-500">
+              <Translate>$spark_teach</Translate>
+            </div>
           </div>
           {!hasHistory && (
             <div className="jelly flex shrink-0 cursor-pointer select-none items-center gap-8 rounded-16 bg-gray-50 px-12 py-8 hover:scale-105">
               <Icon type="warning" className="w-16 shrink-0 text-gray-500" />
-              <div className="shrink-0 text-16 font-500 text-gray-500">Disclaimer</div>
+              <div className="shrink-0 text-16 font-500 text-gray-500">
+                <Translate>$spark_disclaimer</Translate>
+              </div>
             </div>
           )}
         </div>
@@ -59,7 +70,7 @@ export default function SparkInput() {
           <input
             ref={inputRef}
             maxLength={200}
-            placeholder="Type your message"
+            placeholder={i18n('$spark_prompt_placeholder', language)}
             type="text"
             onKeyDown={e => {
               if (e.key === 'Enter') handleSend();
