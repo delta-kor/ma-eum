@@ -3,7 +3,8 @@
 import useModal from '@/hooks/modal';
 import createId from '@/utils/id.util';
 import { SparkContent, SparkState, connectSpark } from '@/utils/spark.util';
-import { ReactNode, createContext, useRef, useState } from 'react';
+import { SessionStorage } from '@/utils/storage.util';
+import { ReactNode, createContext, useEffect, useRef, useState } from 'react';
 
 interface Context {
   chatId: string;
@@ -30,6 +31,22 @@ export default function SparkProvider({ children }: Props) {
   const [response, setResponse] = useState<null | string>(null);
 
   const responseRef = useRef<null | string>(null);
+
+  useEffect(() => {
+    const preloadedHistory = SessionStorage.getItem('maeum_spark_history');
+    if (preloadedHistory) {
+      try {
+        setHistory(JSON.parse(preloadedHistory));
+      } catch (e) {
+        SessionStorage.removeItem('maeum_spark_history');
+        console.error(e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    history.length > 0 && SessionStorage.setItem('maeum_spark_history', JSON.stringify(history));
+  }, [history]);
 
   function clearResponse() {
     responseRef.current = null;
@@ -98,8 +115,9 @@ export default function SparkProvider({ children }: Props) {
             message: responseRef.current,
             type: 'ai',
           };
-          setHistory(prev => [...prev, content]);
+
           clearResponse();
+          setHistory(prev => [...prev, content]);
         }
       }
     });
@@ -107,9 +125,11 @@ export default function SparkProvider({ children }: Props) {
 
   function reset() {
     setChatId(createId(32));
-    setHistory([]);
     clearResponse();
     setState(SparkState.IDLE);
+
+    setHistory([]);
+    SessionStorage.removeItem('maeum_spark_history');
   }
 
   const context: Context = {
