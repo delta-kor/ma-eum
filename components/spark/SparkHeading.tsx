@@ -1,3 +1,4 @@
+import AdsenseSpark from '@/components/core/ad/AdsenseSpark';
 import SparkIntro from '@/components/spark/SparkIntro';
 import SparkPromptExamples from '@/components/spark/SparkPromptExamples';
 import useSpark from '@/hooks/spark';
@@ -19,6 +20,7 @@ export default function SparkHeading() {
           <object data="/spark/gemini.svg" className="h-20" />
         </div>
       </div>
+      <AdsenseSpark />
       <div className="h-[188px] w-full lg:h-[140px]" />
     </div>
   );

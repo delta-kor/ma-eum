@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-export default function AdsenseSpark() {
+export default function AdsenseSparkChat() {
   useEffect(() => {
     process.env.NEXT_PUBLIC_ENABLE_ADSENSE === '1' && renderAd();
   }, []);
@@ -20,8 +20,8 @@ export default function AdsenseSpark() {
       data-ad-format="auto"
       data-ad-slot="1868836318"
       data-full-width-responsive="true"
-      style={{ display: 'block', overflow: 'hidden' }}
-      className="adsbygoogle aspect-square w-full lg:aspect-auto lg:max-h-[120px]"
+      style={{ display: 'block', height: '64px', overflow: 'hidden' }}
+      className="adsbygoogle"
     ></ins>
   );
 }
