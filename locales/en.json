@@ -80,7 +80,6 @@
   "spark_back": "Back",
   "spark_description": "Ask anything about CSR",
   "spark_disclaimer": "Disclaimer",
-  "spark_flag_confirm": "",
   "spark_flag_failure": "",
   "spark_flag_success": "",
   "spark_prompt_placeholder": "Type your message",
