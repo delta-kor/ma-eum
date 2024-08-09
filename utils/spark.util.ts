@@ -66,3 +66,20 @@ export async function flagSpark(bubbleId: string): Promise<boolean> {
     return false;
   }
 }
+
+export async function teachSpark(content: string): Promise<boolean> {
+  try {
+    const url = new URL(`${process.env.NEXT_PUBLIC_SPARK_URL_BASE}/teach`);
+    url.searchParams.append('content', content);
+
+    const response = await fetch(url.toString());
+    if (!response.ok) return false;
+
+    const text = await response.text();
+    const data = JSON.parse(text.split('\n')[0].slice(6));
+    return data.type === 'success';
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+}

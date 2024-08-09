@@ -38,4 +38,5 @@ export function generateMetadata(): Metadata {
 
 export const viewport: Viewport = {
   interactiveWidget: 'resizes-visual',
+  maximumScale: 1,
 };

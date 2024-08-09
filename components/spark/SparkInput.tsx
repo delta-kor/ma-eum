@@ -52,12 +52,15 @@ export default function SparkInput() {
               </div>
             </div>
           )}
-          <div className="jelly flex shrink-0 cursor-pointer select-none items-center gap-8 rounded-16 bg-gray-50 px-12 py-8 hover:scale-105">
+          <Link
+            href={'/spark/teach'}
+            className="jelly flex shrink-0 cursor-pointer select-none items-center gap-8 rounded-16 bg-gray-50 px-12 py-8 hover:scale-105"
+          >
             <Icon type="book" className="w-16 shrink-0 text-gray-500" />
             <div className="shrink-0 text-16 font-500 text-gray-500">
               <Translate>$spark_teach</Translate>
             </div>
-          </div>
+          </Link>
           {!hasHistory && (
             <Link
               href={'/spark/disclaimer'}
@@ -73,8 +76,12 @@ export default function SparkInput() {
         <div className="flex items-center gap-8 rounded-16 bg-gray-50 pr-16">
           <input
             ref={inputRef}
+            autoCapitalize="off"
+            autoComplete="off"
+            autoCorrect="off"
             maxLength={200}
             placeholder={i18n('$spark_prompt_placeholder', language)}
+            spellCheck="false"
             type="text"
             onKeyDown={e => {
               if (e.key === 'Enter') handleSend();
