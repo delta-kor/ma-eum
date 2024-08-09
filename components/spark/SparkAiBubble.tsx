@@ -29,6 +29,10 @@ export default function SparkAiBubble({ content, streaming }: Props) {
     modal.alert(flagResult ? '$spark_flag_success' : '$spark_flag_failure');
   }
 
+  function handleCopyClick() {
+    void navigator.clipboard.writeText(content!.message);
+  }
+
   if (!streaming)
     return (
       <div className="flex flex-col gap-16">
@@ -48,7 +52,10 @@ export default function SparkAiBubble({ content, streaming }: Props) {
           >
             <Icon type="flag" className="w-16 text-gray-200" />
           </div>
-          <div className="jelly jelly-increased -m-8 shrink-0 cursor-pointer rounded-8 p-8 hover:scale-110 hover:bg-gray-50 selected:bg-gray-50">
+          <div
+            onClick={handleCopyClick}
+            className="jelly jelly-increased -m-8 shrink-0 cursor-pointer rounded-8 p-8 hover:scale-110 hover:bg-gray-50 selected:bg-gray-50"
+          >
             <Icon type="copy" className="w-16 text-gray-200" />
           </div>
         </div>
