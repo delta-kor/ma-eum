@@ -4,6 +4,7 @@ import useModal from '@/hooks/modal';
 import createId from '@/utils/id.util';
 import { SparkContent, SparkState, connectSpark } from '@/utils/spark.util';
 import { SessionStorage } from '@/utils/storage.util';
+import EventEmitter from 'events';
 import { ReactNode, createContext, useEffect, useRef, useState } from 'react';
 
 interface Context {
@@ -31,6 +32,7 @@ export default function SparkProvider({ children }: Props) {
   const [response, setResponse] = useState<null | string>(null);
 
   const responseRef = useRef<null | string>(null);
+  const emitterRef = useRef<EventEmitter | null>(null);
 
   useEffect(() => {
     const preloadedHistory = SessionStorage.getItem('maeum_spark_history');
@@ -68,6 +70,7 @@ export default function SparkProvider({ children }: Props) {
     setState(SparkState.SENDING);
 
     const emitter = connectSpark(chatId, prompt);
+    emitterRef.current = emitter;
 
     emitter.on('open', () => {
       setState(SparkState.LOADING);
@@ -130,6 +133,7 @@ export default function SparkProvider({ children }: Props) {
 
     setHistory([]);
     SessionStorage.removeItem('maeum_spark_history');
+    emitterRef.current?.removeAllListeners();
   }
 
   const context: Context = {
