@@ -18,12 +18,12 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   url.searchParams.append('chatId', chatId);
   url.searchParams.append('prompt', prompt);
 
-  let isEnded: boolean = false;
+  let isConnected: boolean = false;
 
   const emitter = new EventEmitter();
   const eventSource = new EventSource(url.toString());
   eventSource.addEventListener('error', event => {
-    if (isEnded) {
+    if (isConnected) {
       eventSource.close();
       emitter.emit('close');
     } else {
@@ -35,7 +35,6 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   eventSource.addEventListener('message', event => {
     try {
       const data = JSON.parse(event.data);
-      if (data.type === 'end') isEnded = true;
       emitter.emit('data', data);
     } catch (error) {
       console.error(error);
@@ -44,6 +43,7 @@ export function connectSpark(chatId: string, prompt: string): EventEmitter {
   });
 
   eventSource.addEventListener('open', () => {
+    isConnected = true;
     emitter.emit('open');
   });
 

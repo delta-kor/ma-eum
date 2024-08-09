@@ -53,7 +53,7 @@ export default function SparkTeach() {
           autoCapitalize="off"
           autoComplete="off"
           autoCorrect="off"
-          maxLength={300}
+          maxLength={1000}
           name="content"
           placeholder={
             'Write anything about CSR that Spark might not know.\nYou can enter multiple lines of text.\ne.g. The first leader of CSR is Sua.'
