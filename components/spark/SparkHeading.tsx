@@ -14,7 +14,7 @@ export default function SparkHeading() {
   return (
     <div className="absolute left-1/2 top-24 flex w-full -translate-x-1/2 flex-col items-center gap-28 lg:top-64">
       <SparkIntro />
-      <div className="flex flex-col items-center gap-16 self-stretch">
+      <div className="flex flex-col items-center gap-12 self-stretch">
         <SparkPromptExamples onSelected={handleExampleSelected} />
         <a
           href="https://hurricane-jury-959.notion.site/About-Spark-2d2d572775d84a77868b6f19a15d2ea1"

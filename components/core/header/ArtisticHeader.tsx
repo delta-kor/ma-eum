@@ -74,11 +74,11 @@ export default function ArtisticHeader() {
                 Talk
               </Link>
               <Link
-                data-active={pathname === '/mixer'}
-                href={`/mixer`}
+                data-active={pathname === '/spark'}
+                href={`/spark`}
                 className="jelly cursor-pointer text-20 font-500 opacity-60 transition-all hover:opacity-80 data-[active=true]:font-700 data-[active=true]:opacity-100 group-data-[floating=true]:text-16"
               >
-                Stage Mixer
+                Spark
               </Link>
             </div>
           </Pc>
